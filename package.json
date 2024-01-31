@@ -1,0 +1,17 @@
+{
+  "name": "world-of-studies",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "all:lint": "pnpm run -r lint",
+    "all:test": "pnpm run -r test",
+    "start": "docker compose up"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
+  }
+}
