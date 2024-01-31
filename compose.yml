@@ -1,0 +1,11 @@
+services:
+  api:
+    build:
+      args:
+        APP_PATH: ${API_PATH}
+      context: .
+      dockerfile: ${API_PATH}/Dockerfile
+    ports:
+      - ${API_PORT}:${API_PORT}
+    volumes:
+      - ./${API_PATH}/src:/app/${API_PATH}/src
