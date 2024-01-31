@@ -14,10 +14,23 @@ services:
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=dbpassword
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 
 volumes:
   db-data:
+  pgadmin-data:

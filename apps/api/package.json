@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@world-of-studies/api",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -41,6 +41,7 @@
     "@japa/plugin-adonisjs": "^3.0.0",
     "@japa/runner": "^3.1.1",
     "@swc/core": "^1.3.107",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^20.11.10",
     "eslint": "^8.56.0",
     "pino-pretty": "^10.3.1",
@@ -54,6 +55,8 @@
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^20.1.0",
     "@vinejs/vine": "^1.7.1",
+    "luxon": "^3.4.4",
+    "pg": "^8.11.3",
     "reflect-metadata": "^0.2.1"
   },
   "prettier": "@adonisjs/prettier-config"
