@@ -8,10 +8,7 @@ services:
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
-      - ./${API_PATH}/src:/app/${API_PATH}/src
-      - ./${API_PATH}/app:/app/${API_PATH}/app
-      - ./${API_PATH}/start:/app/${API_PATH}/start
-      - ./${API_PATH}/config:/app/${API_PATH}/config
+      - ./${API_PATH}:/app/${API_PATH}
 
   db:
     image: postgres
@@ -24,15 +21,14 @@ services:
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpassword
 
-  pgadmin:
-    image: dpage/pgadmin4
+  adminer:
+    image: adminer
     ports:
-      - "8888:80"
+      - 8080:8080
     environment:
-      PGADMIN_DEFAULT_EMAIL: user@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: password
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ADMINER_DEFAULT_SERVER: db
+      - ADMINER_DESIGN: pepa-linha
+
 
 volumes:
   db-data:
