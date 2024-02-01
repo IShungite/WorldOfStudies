@@ -20,7 +20,10 @@ export default class AuthController {
     const isPasswordValid = await hash.verify(user.password, password)
 
     if (!isPasswordValid) {
-      return response.abort({ error: { message: 'Invalid credentials' } }, StatusCodes.UNAUTHORIZED)
+      return response.abort(
+        { errors: [{ message: 'Invalid credentials' }] },
+        StatusCodes.UNAUTHORIZED
+      )
     }
 
     const token = await User.accessTokens.create(user)
