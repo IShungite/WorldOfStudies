@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const RegisterUserValidator = vine.compile(
+export const registerUserValidator = vine.compile(
   vine.object({
     firstName: vine.string().trim(),
     lastName: vine.string().trim(),
