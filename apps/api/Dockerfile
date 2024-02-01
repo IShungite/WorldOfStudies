@@ -23,5 +23,8 @@ COPY ${APP_PATH} ./${APP_PATH}
 # Install all the dependencies
 RUN pnpm install
 
+# Enable hot reload
+ENV CHOKIDAR_USEPOLLING=true
+
 # Start command
 CMD [ "pnpm", "--filter", "api", "dev" ]
