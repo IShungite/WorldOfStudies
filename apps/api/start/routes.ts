@@ -19,8 +19,15 @@ router.get('/', async () => {
 
 router
   .group(() => {
-    router.post('/register', [AuthController, 'register'])
-    router.post('/login', [AuthController, 'login'])
+    // api routes start
+    router
+      .group(() => {
+        // auth routes start
+        router.post('/register', [AuthController, 'register'])
+        router.post('/login', [AuthController, 'login'])
+        // auth routes end
+      })
+      .prefix('auth')
 
     router
       .get('/protected', ({ auth }) => {
@@ -29,5 +36,6 @@ router
         }
       })
       .use(middleware.auth({ guards: ['api'] }))
+    // api routes end
   })
   .prefix('api')
