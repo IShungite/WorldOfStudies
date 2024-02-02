@@ -11,7 +11,7 @@ export default class AuthController {
     return response.status(StatusCodes.CREATED).send(userCreated)
   }
 
-  async login({ response, request }: HttpContext) {
+  async login({ request }: HttpContext) {
     const { email, password } = await loginUserValidator.validate(request.all())
 
     const user = await User.verifyCredentials(email, password)
