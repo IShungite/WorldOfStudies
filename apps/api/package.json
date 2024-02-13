@@ -15,7 +15,7 @@
     "migration:run": "node ace migration:run"
   },
   "imports": {
-    "#controllers/*": "./app/controllers/*.js",
+    "#controllers/*": "./app/adapters/controllers/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
     "#models/*": "./app/models/*.js",
     "#mails/*": "./app/mails/*.js",
@@ -31,9 +31,10 @@
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-    "#domain/*": "./domain/*.js",
-    "#port/*": "./port/*.js",
-    "#adapter/*": "./adapter/*.js"
+    "#domainServices/*": "./app/domain/services/*.js",
+    "#domainModels/*": "./app/domain/models/*.js",
+    "#domainPorts/*": "./app/domain/ports/*.js",
+    "#repositories/*": "./app/adapters/repositories/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.1",

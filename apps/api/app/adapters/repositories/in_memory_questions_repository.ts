@@ -1,5 +1,5 @@
-import { Question } from '#domain/question'
-import { IQuestionsRepository } from '#port/out/questions_repository'
+import { Question } from '#domainModels/question'
+import { IQuestionsRepository } from '#domainPorts/out/questions_repository'
 
 export class InMemoryQuestionsRepository implements IQuestionsRepository {
   private questions: Record<string, Question> = {}

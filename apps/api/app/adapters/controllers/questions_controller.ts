@@ -1,4 +1,4 @@
-import { QuestionsService } from '#services/questions_service'
+import { QuestionsService } from '#domainServices/questions_service'
 import { storeQuestionValidator } from '#validators/store_question'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'

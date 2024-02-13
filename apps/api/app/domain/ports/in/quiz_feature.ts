@@ -1,4 +1,4 @@
-import { CreateQuizDto, Quiz, UpdateQuizDto } from '#domain/quiz'
+import { CreateQuizDto, Quiz, UpdateQuizDto } from '../../models/quiz.js'
 
 export interface QuizFeature {
   saveQuiz: (createQuizDto: CreateQuizDto) => Promise<Quiz>

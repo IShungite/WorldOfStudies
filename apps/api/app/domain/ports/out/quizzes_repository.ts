@@ -1,4 +1,4 @@
-import { Quiz } from '#domain/quiz'
+import { Quiz } from '#domainModels/quiz'
 
 export abstract class IQuizzesRepository {
   abstract store(quiz: Quiz): Promise<Quiz>

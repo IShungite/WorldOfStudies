@@ -1,5 +1,5 @@
-import { Quiz } from '#domain/quiz'
-import { IQuizzesRepository } from '#port/out/quizzes_repository'
+import { Quiz } from '#domainModels/quiz'
+import { IQuizzesRepository } from '#domainPorts/out/quizzes_repository'
 
 export class InMemoryQuizRepository implements IQuizzesRepository {
   private quizzes: Record<string, Quiz> = {}

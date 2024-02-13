@@ -1,5 +1,5 @@
-import { InMemoryQuizRepository } from '#adapter/in_memory_quizzes_repository'
-import { IQuizzesRepository } from '#port/out/quizzes_repository'
+import { IQuizzesRepository } from '#domainPorts/out/quizzes_repository'
+import { InMemoryQuizRepository } from '#repositories/in_memory_quizzes_repository'
 import type { ApplicationService } from '@adonisjs/core/types'
 
 export default class AppProvider {
