@@ -1,0 +1,31 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/questions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "content": {
+      "type": "qcm",
+      "data": {
+        "choices": [
+          {
+            "label": "Hello",
+            "isCorrect": false
+          },
+          {
+            "label": "World",
+            "isCorrect": true
+          }
+        ]
+      }
+    }
+  }
+}

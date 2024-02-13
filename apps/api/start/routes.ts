@@ -10,6 +10,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const QuestionsController = () => import('#controllers/questions_controller')
 
 router.get('/', async () => {
   return {
@@ -36,6 +37,8 @@ router
         }
       })
       .use(middleware.auth({ guards: ['api'] }))
+
+    router.resource('questions', QuestionsController).apiOnly()
     // api routes end
   })
   .prefix('api')

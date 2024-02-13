@@ -1,21 +1,37 @@
 export type QuestionQcmContent = {
   type: 'qcm'
-  choices: {
-    id: number
-    label: string
-    isCorrect: boolean
-  }[]
+  data: {
+    choices: {
+      id: string
+      label: string
+      isCorrect: boolean
+    }[]
+  }
+}
+
+export type CreateQuestionQcmContentDto = {
+  type: 'qcm'
+  data: {
+    choices: {
+      label: string
+      isCorrect: boolean
+    }[]
+  }
 }
 
 export type QuestionHoleTextContent = {
   type: 'text-hole'
-  text: string
-  answers: string[]
+  data: {
+    text: string
+    answers: string[]
+  }
 }
+
+export type CreateQuestionHoleTextContentDto = QuestionHoleTextContent
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface IQuestion {
-  id: number
+  id: string
   createdAt: Date
   updatedAt: Date
   content: QuestionQcmContent | QuestionHoleTextContent
@@ -24,25 +40,24 @@ export interface IQuestion {
 
 export type AnswerQcmContent = {
   type: 'qcm'
-  selectedId: number
+  data: {
+    selectedId: string
+  }
 }
 
 export type AnswerHoleTextContent = {
   type: 'text-hole'
-  words: string[]
+  data: {
+    words: string[]
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface IUserAnswer {
-  id: number
-  userId: number
-  questionId: number
+  id: string
+  userId: string
+  questionId: string
   createdAt: Date
   updatedAt: Date
   content: AnswerQcmContent | AnswerHoleTextContent
-}
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export interface IQuestionsRepository {
-  getQuestions(): Promise<IQuestion[]>
 }
