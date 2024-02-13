@@ -1,0 +1,22 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/quizzes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Quiz 1",
+    "questions": [
+      {
+        "type": "qcm"
+      }
+    ]
+  }
+}

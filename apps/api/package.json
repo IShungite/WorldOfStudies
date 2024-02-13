@@ -31,7 +31,9 @@
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-    "#domain/*": "./domain/*.js"
+    "#domain/*": "./domain/*.js",
+    "#port/*": "./port/*.js",
+    "#adapter/*": "./adapter/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.1",

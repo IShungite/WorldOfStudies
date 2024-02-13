@@ -21,6 +21,8 @@
       "#start/*": ["./start/*.js"],
       "#config/*": ["./config/*.js"],
       "#domain/*": ["./domain/*.js"],
+      "#port/*": ["./port/*.js"],
+      "#adapter/*": ["./adapter/*.js"],
     },
   },
 }

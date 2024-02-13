@@ -25,13 +25,4 @@ const data = vine.group([
   }),
 ])
 
-// export const storeQuestionValidator = vine.compile(
-//   vine.object({
-//     content: vine
-//       .object({
-//         type: vine.enum(['qcm', 'text-hole']),
-//       })
-//       .merge(data),
-//   })
-// )
 export const storeQuestionValidator = vine.compile(vine.object({}).merge(data))

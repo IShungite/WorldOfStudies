@@ -1,26 +1,26 @@
-import { QuestionsService } from '#services/questions_service'
-import { storeQuestionValidator } from '#validators/store_question'
+import { CreateQuizDto } from '#domain/quiz'
+import { QuizzesService } from '#services/quizzes_service'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
-export default class QuestionsController {
-  constructor(private readonly questionsService: QuestionsService) {}
+export default class QuizzesController {
+  constructor(private readonly quizzesService: QuizzesService) {}
 
   /**
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    // return this.questionsService.getQuestions()
+    return this.quizzesService.getQuizzes()
   }
 
   /**
    * Handle form submission for the create action
    */
   async store({ request }: HttpContext) {
-    const payload = await storeQuestionValidator.validate(request.all())
+    const payload = request.all() as CreateQuizDto
 
-    // return this.questionsService.createQuestion(payload)
+    return this.quizzesService.saveQuiz(payload)
   }
 
   /**
