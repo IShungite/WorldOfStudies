@@ -1,5 +1,6 @@
 services:
   api:
+    container_name: world-of-studies-api
     build:
       args:
         APP_PATH: ${API_PATH}
@@ -11,6 +12,7 @@ services:
       - ./${API_PATH}:/app/${API_PATH}
 
   db:
+    container_name: world-of-studies-db
     image: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -22,6 +24,7 @@ services:
       - POSTGRES_PASSWORD=dbpassword
 
   adminer:
+    container_name: world-of-studies-adminer
     image: adminer
     ports:
       - 8080:8080
