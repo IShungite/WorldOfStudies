@@ -6,9 +6,24 @@ export const questionType = {
 } as const
 export type QuestionType = (typeof questionType)[keyof typeof questionType]
 
-export type CreateQuestionDto = {
+type CreateQuestionDtoBase = {
+  id?: string
   type: QuestionType
+  points: number
 }
+
+export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
+  type: 'qcm'
+  choices: { id: string; label: string; isCorrect: boolean }[]
+}
+
+export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
+  type: 'text-hole'
+  text: string
+  answers: string[]
+}
+
+export type CreateQuestionDto = CreateQuestionDtoQcm | CreateQuestionDtoTextHole
 
 type QuestionProps = { id?: string; type: QuestionType; points: number }
 

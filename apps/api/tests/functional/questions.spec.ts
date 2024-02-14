@@ -1,10 +1,12 @@
-import { QuestionQcm, QuestionTextHole } from '#domainModels/question'
-import { UserAnswerQcm, UserAnswerTextHole } from '#domainModels/user_answer'
+import { questionType } from '#domainModels/question'
 import { test } from '@japa/runner'
+import { QuestionFactory } from '../../app/domain/factories/question_factory.js'
+import { UserAnswerFactory } from '../../app/domain/factories/user_answer_factory.js'
 
 test.group('QCM Question', () => {
-  const questionQCM = new QuestionQcm({
+  const questionQCM = QuestionFactory.create({
     id: '1',
+    type: questionType.QCM,
     points: 2,
     choices: [
       {
@@ -23,7 +25,8 @@ test.group('QCM Question', () => {
   test('It should return the good amount of point if the user answer is correct', async ({
     assert,
   }) => {
-    const userAnswer = new UserAnswerQcm({
+    const userAnswer = UserAnswerFactory.create({
+      type: questionType.QCM,
       id: '1',
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
@@ -35,7 +38,8 @@ test.group('QCM Question', () => {
   test('It should return the good amount of point if the user answer is not correct', async ({
     assert,
   }) => {
-    const userAnswer = new UserAnswerQcm({
+    const userAnswer = UserAnswerFactory.create({
+      type: questionType.QCM,
       id: '1',
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[1].id,
@@ -47,8 +51,9 @@ test.group('QCM Question', () => {
 })
 
 test.group('Text Hole Question', () => {
-  const questionTextHole = new QuestionTextHole({
+  const questionTextHole = QuestionFactory.create({
     id: '1',
+    type: questionType.TEXT_HOLE,
     text: 'Question 1',
     points: 2,
     answers: ['hello', 'world'],
@@ -57,7 +62,8 @@ test.group('Text Hole Question', () => {
   test('It should return the good amount of point if the user answer is 100% correct', async ({
     assert,
   }) => {
-    const userAnswer = new UserAnswerTextHole({
+    const userAnswer = UserAnswerFactory.create({
+      type: questionType.TEXT_HOLE,
       id: '1',
       questionId: questionTextHole.id,
       values: [...questionTextHole.answers],
@@ -70,7 +76,8 @@ test.group('Text Hole Question', () => {
   test('It should return the good amount of point if the user answer is 50% correct', async ({
     assert,
   }) => {
-    const userAnswer = new UserAnswerTextHole({
+    const userAnswer = UserAnswerFactory.create({
+      type: questionType.TEXT_HOLE,
       id: '1',
       questionId: questionTextHole.id,
       values: ['hello'],
@@ -83,7 +90,8 @@ test.group('Text Hole Question', () => {
   test('It should return the good amount of point if the user answer is 0% correct', async ({
     assert,
   }) => {
-    const userAnswer = new UserAnswerTextHole({
+    const userAnswer = UserAnswerFactory.create({
+      type: questionType.TEXT_HOLE,
       id: '1',
       questionId: questionTextHole.id,
       values: ['aaa'],

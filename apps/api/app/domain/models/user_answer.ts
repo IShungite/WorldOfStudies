@@ -7,7 +7,26 @@ type UserAnswerProps = {
   type: QuestionType
 }
 
-export class UserAnswer {
+type CreateUserAnswerDtoBase = {
+  id?: string
+  questionId: string
+  userId: string
+  type: QuestionType
+}
+
+export type CreateUserAnswerDtoQcm = CreateUserAnswerDtoBase & {
+  type: 'qcm'
+  choiceId: string
+}
+
+export type CreateUserAnswerDtoTextHole = CreateUserAnswerDtoBase & {
+  type: 'text-hole'
+  values: string[]
+}
+
+export type CreateUserAnswer = CreateUserAnswerDtoQcm | CreateUserAnswerDtoTextHole
+
+export abstract class UserAnswer {
   readonly id: string
   readonly questionId: string
   readonly userId: string

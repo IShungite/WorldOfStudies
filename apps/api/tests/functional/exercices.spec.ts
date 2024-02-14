@@ -1,10 +1,12 @@
-import { QuestionQcm, QuestionTextHole } from '#domainModels/question'
 import { Exercice } from '#domainModels/exercice'
-import { UserAnswerQcm, UserAnswerTextHole } from '#domainModels/user_answer'
+import { questionType } from '#domainModels/question'
 import { test } from '@japa/runner'
+import { QuestionFactory } from '../../app/domain/factories/question_factory.js'
+import { UserAnswerFactory } from '../../app/domain/factories/user_answer_factory.js'
 
 test.group('Exercices', () => {
-  const questionQCM = new QuestionQcm({
+  const questionQCM = QuestionFactory.create({
+    type: questionType.QCM,
     id: '1',
     points: 2,
     choices: [
@@ -21,8 +23,9 @@ test.group('Exercices', () => {
     ],
   })
 
-  const questionTextHole = new QuestionTextHole({
+  const questionTextHole = QuestionFactory.create({
     id: '2',
+    type: questionType.TEXT_HOLE,
     text: 'Question 1',
     points: 2,
     answers: ['hello', 'world'],
@@ -35,14 +38,16 @@ test.group('Exercices', () => {
   })
 
   test('It should return the good total amount of points', async ({ assert }) => {
-    const userAnswer1 = new UserAnswerQcm({
+    const userAnswer1 = UserAnswerFactory.create({
+      type: questionType.QCM,
       id: '1',
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
       userId: '1',
     })
 
-    const userAnswers2 = new UserAnswerTextHole({
+    const userAnswers2 = UserAnswerFactory.create({
+      type: questionType.TEXT_HOLE,
       id: '1',
       questionId: questionTextHole.id,
       values: ['hello'],
