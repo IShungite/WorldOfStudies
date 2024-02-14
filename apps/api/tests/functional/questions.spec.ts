@@ -5,6 +5,7 @@ import { test } from '@japa/runner'
 test.group('QCM Question', () => {
   const questionQCM = new QuestionQcm({
     id: '1',
+    points: 2,
     choices: [
       {
         id: '1',
@@ -19,7 +20,9 @@ test.group('QCM Question', () => {
     ],
   })
 
-  test('It should return true if the user answer is correct', async ({ assert }) => {
+  test('It should return the good amount of point if the user answer is correct', async ({
+    assert,
+  }) => {
     const userAnswer = new UserAnswerQcm({
       id: '1',
       questionId: questionQCM.id,
@@ -27,9 +30,11 @@ test.group('QCM Question', () => {
       userId: '1',
     })
 
-    assert.isTrue(questionQCM.isCorrectUserAnswer(userAnswer))
+    assert.equal(questionQCM.getUserAnswerPoints(userAnswer), questionQCM.points)
   })
-  test('It should return false if the user answer is not correct', async ({ assert }) => {
+  test('It should return the good amount of point if the user answer is not correct', async ({
+    assert,
+  }) => {
     const userAnswer = new UserAnswerQcm({
       id: '1',
       questionId: questionQCM.id,
@@ -37,7 +42,7 @@ test.group('QCM Question', () => {
       userId: '1',
     })
 
-    assert.isFalse(questionQCM.isCorrectUserAnswer(userAnswer))
+    assert.equal(questionQCM.getUserAnswerPoints(userAnswer), 0)
   })
 })
 
@@ -45,10 +50,13 @@ test.group('Text Hole Question', () => {
   const questionTextHole = new QuestionTextHole({
     id: '1',
     text: 'Question 1',
+    points: 2,
     answers: ['hello', 'world'],
   })
 
-  test('It should return true if the user answer is correct', async ({ assert }) => {
+  test('It should return the good amount of point if the user answer is 100% correct', async ({
+    assert,
+  }) => {
     const userAnswer = new UserAnswerTextHole({
       id: '1',
       questionId: questionTextHole.id,
@@ -56,10 +64,25 @@ test.group('Text Hole Question', () => {
       userId: '1',
     })
 
-    assert.isTrue(questionTextHole.isCorrectUserAnswer(userAnswer))
+    assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points)
   })
 
-  test('It should return false if the user answer is not correct', async ({ assert }) => {
+  test('It should return the good amount of point if the user answer is 50% correct', async ({
+    assert,
+  }) => {
+    const userAnswer = new UserAnswerTextHole({
+      id: '1',
+      questionId: questionTextHole.id,
+      values: ['hello'],
+      userId: '1',
+    })
+
+    assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points / 2)
+  })
+
+  test('It should return the good amount of point if the user answer is 0% correct', async ({
+    assert,
+  }) => {
     const userAnswer = new UserAnswerTextHole({
       id: '1',
       questionId: questionTextHole.id,
@@ -67,6 +90,6 @@ test.group('Text Hole Question', () => {
       userId: '1',
     })
 
-    assert.isFalse(questionTextHole.isCorrectUserAnswer(userAnswer))
+    assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), 0)
   })
 })

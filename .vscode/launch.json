@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Tests API",
+      "localRoot": "${workspaceFolder}/apps/api",
+      "program": "ace.js",
+      "args": [
+        "test"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
+}

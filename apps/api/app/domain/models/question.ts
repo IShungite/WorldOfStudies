@@ -1,4 +1,4 @@
-import { UserAnswerQcm, UserAnswerTextHole } from './user_answer.js'
+import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from './user_answer.js'
 
 export const questionType = {
   QCM: 'qcm',
@@ -10,16 +10,20 @@ export type CreateQuestionDto = {
   type: QuestionType
 }
 
-type QuestionProps = { id?: string; type: QuestionType }
+type QuestionProps = { id?: string; type: QuestionType; points: number }
 
-export class Question {
+export abstract class Question {
   readonly id: string
   readonly type: QuestionType
+  readonly points: number
 
-  constructor({ id, type }: QuestionProps) {
+  constructor({ id, type, points }: QuestionProps) {
     this.id = id ?? String(Math.random())
     this.type = type
+    this.points = points
   }
+
+  abstract getUserAnswerPoints(userAnswer: UserAnswer): number
 }
 
 export class QuestionQcm extends Question {
@@ -27,11 +31,12 @@ export class QuestionQcm extends Question {
 
   constructor({
     id,
+    points,
     choices,
   }: Omit<QuestionProps, 'type'> & {
     choices: { id: string; label: string; isCorrect: boolean }[]
   }) {
-    super({ id, type: questionType.QCM })
+    super({ id, points, type: questionType.QCM })
     this.choices = choices
   }
 
@@ -45,8 +50,15 @@ export class QuestionQcm extends Question {
     return choice.isCorrect
   }
 
-  isCorrectUserAnswer(userAnswer: UserAnswerQcm): boolean {
+  private isCorrectUserAnswer(userAnswer: UserAnswerQcm): boolean {
     return this.isCorrectChoice(userAnswer.choiceId)
+  }
+
+  getUserAnswerPoints(userAnswer: UserAnswerQcm): number {
+    if (this.isCorrectUserAnswer(userAnswer)) {
+      return this.points
+    }
+    return 0
   }
 }
 
@@ -56,19 +68,30 @@ export class QuestionTextHole extends Question {
 
   constructor({
     id,
+    points,
     text,
     answers,
   }: Omit<QuestionProps, 'type'> & { text: string; answers: string[] }) {
-    super({ id, type: questionType.TEXT_HOLE })
+    super({ id, points, type: questionType.TEXT_HOLE })
     this.text = text
     this.answers = answers
   }
 
-  private isCorrectAnswer(answers: string[]): boolean {
-    return this.answers.toSorted().join(',') === answers.toSorted().join(',')
+  private getCorrectAnswers(answers: string[]): string[] {
+    const correctAnswers: string[] = []
+
+    this.answers.forEach((answer, index) => {
+      if (answer === answers[index]) {
+        correctAnswers.push(answer)
+      }
+    })
+
+    return correctAnswers
   }
 
-  isCorrectUserAnswer(userAnswer: UserAnswerTextHole): boolean {
-    return this.isCorrectAnswer(userAnswer.values)
+  getUserAnswerPoints(userAnswer: UserAnswerTextHole): number {
+    const correctAnswers = this.getCorrectAnswers(userAnswer.values)
+
+    return (correctAnswers.length * this.points) / this.answers.length
   }
 }
