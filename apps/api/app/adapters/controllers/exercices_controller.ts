@@ -4,14 +4,14 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
-export default class QuizzesController {
-  constructor(private readonly quizzesService: ExercicesService) {}
+export default class ExercicesController {
+  constructor(private readonly exercicesService: ExercicesService) {}
 
   /**
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    return this.quizzesService.getExercices()
+    return this.exercicesService.getExercices()
   }
 
   /**
@@ -20,7 +20,7 @@ export default class QuizzesController {
   async store({ request }: HttpContext) {
     const payload = request.all() as CreateExerciceDto
 
-    return this.quizzesService.saveExercice(payload)
+    return this.exercicesService.saveExercice(payload)
   }
 
   /**
