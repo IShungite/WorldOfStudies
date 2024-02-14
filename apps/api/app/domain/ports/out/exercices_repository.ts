@@ -5,4 +5,5 @@ export abstract class IExercicesRepository {
   abstract update(exercice: Exercice): Promise<Exercice>
   abstract getById(exerciceId: string): Promise<Exercice | null>
   abstract getAll(): Promise<Exercice[]>
+  abstract deleteById(exerciceId: string): Promise<void>
 }

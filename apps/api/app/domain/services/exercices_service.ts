@@ -1,46 +1,54 @@
-import { Question } from '../models/question.js'
-import { Exercice, CreateExerciceDto, UpdateExerciceDto } from '../models/exercice.js'
-import { ExerciceFeature as ExerciceFeature } from '#domainPorts/in/exercice_feature'
-import { IExercicesRepository as IExercicesRepository } from '#domainPorts/out/exercices_repository'
+import { ExerciceFeature } from '#domainPorts/in/exercice_feature'
+import { IExercicesRepository } from '#domainPorts/out/exercices_repository'
 import { inject } from '@adonisjs/core'
+import { QuestionFactory } from '../factories/question_factory.js'
+import { Exercice, UpdateExerciceDto } from '../models/exercice.js'
 
 @inject()
 export class ExercicesService implements ExerciceFeature {
   constructor(private readonly exercicesRepository: IExercicesRepository) {}
 
-  async getExercice(quizId: string): Promise<Exercice | null> {
-    return this.exercicesRepository.getById(quizId)
+  async getExercice(exerciceId: string): Promise<Exercice | null> {
+    return this.exercicesRepository.getById(exerciceId)
   }
   async getExercices(): Promise<Exercice[]> {
     return this.exercicesRepository.getAll()
   }
 
-  async saveExercice(createExerciceDto: CreateExerciceDto): Promise<Exercice> {
-    const questions = createExerciceDto.questions.map(
-      (question) => new Question({ type: question.type })
-    )
-    const quiz = new Exercice({ name: createExerciceDto.name, questions })
-
-    return this.exercicesRepository.store(quiz)
+  async saveExercice(exercice: Exercice): Promise<Exercice> {
+    return this.exercicesRepository.store(exercice)
   }
 
-  async updateExercice(quizId: string, updateExerciceDto: UpdateExerciceDto): Promise<Exercice> {
-    const quiz = await this.exercicesRepository.getById(quizId)
+  async updateExercice(
+    exerciceId: string,
+    updateExerciceDto: UpdateExerciceDto
+  ): Promise<Exercice> {
+    const exercice = await this.exercicesRepository.getById(exerciceId)
 
-    if (!quiz) {
-      throw new Error('Quiz not found')
+    if (!exercice) {
+      throw new Error('Exercice not found')
     }
 
-    const newQuestions = updateExerciceDto.questions
-      ? updateExerciceDto.questions.map((question) => new Question({ type: question.type }))
-      : null
-
-    const newQuiz = new Exercice({
-      ...quiz,
-      ...(updateExerciceDto.name ? { name: updateExerciceDto.name } : {}),
-      ...(newQuestions ? { questions: newQuestions } : {}),
+    const newExercice = new Exercice({
+      id: exercice.id,
+      name: updateExerciceDto.name ?? exercice.name,
+      questions: updateExerciceDto.questions
+        ? updateExerciceDto.questions.map((q) => QuestionFactory.create(q))
+        : exercice.questions,
     })
 
-    return this.exercicesRepository.update(newQuiz)
+    return this.exercicesRepository.update(newExercice)
+  }
+
+  async deleteExercice(exerciceId: string): Promise<void> {
+    console.log(exerciceId)
+    const exercice = await this.exercicesRepository.getById(exerciceId)
+
+    console.log(exercice)
+    if (!exercice) {
+      throw new Error('Exercice not found')
+    }
+
+    await this.exercicesRepository.deleteById(exerciceId)
   }
 }

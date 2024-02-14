@@ -11,6 +11,7 @@ import {
 export class QuestionFactory {
   static create(createQuestionDto: CreateQuestionDtoQcm): QuestionQcm
   static create(createQuestionDto: CreateQuestionDtoTextHole): QuestionTextHole
+  static create(createQuestionDto: CreateQuestionDto): Question
   static create(createQuestionDto: CreateQuestionDto): Question {
     if (createQuestionDto.type === questionType.QCM) return new QuestionQcm(createQuestionDto)
 

@@ -14,7 +14,7 @@ type CreateQuestionDtoBase = {
 
 export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
   type: 'qcm'
-  choices: { id: string; label: string; isCorrect: boolean }[]
+  choices: { id?: string; label: string; isCorrect: boolean }[]
 }
 
 export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
@@ -49,10 +49,10 @@ export class QuestionQcm extends Question {
     points,
     choices,
   }: Omit<QuestionProps, 'type'> & {
-    choices: { id: string; label: string; isCorrect: boolean }[]
+    choices: { id?: string; label: string; isCorrect: boolean }[]
   }) {
     super({ id, points, type: questionType.QCM })
-    this.choices = choices
+    this.choices = choices.map((c) => ({ ...c, id: c.id ?? String(Math.random()) }))
   }
 
   private isCorrectChoice(choiceId: string): boolean {

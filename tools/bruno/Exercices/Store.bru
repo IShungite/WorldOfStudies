@@ -1,7 +1,7 @@
 meta {
   name: Store
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
@@ -15,7 +15,14 @@ body:json {
     "name": "Quiz 1",
     "questions": [
       {
-        "type": "qcm"
+        "points": 2,
+        "type": "qcm",
+        "choices": [
+          {
+            "label": "hello",
+            "isCorrect": false
+          }
+        ]
       }
     ]
   }

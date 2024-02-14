@@ -21,4 +21,8 @@ export class InMemoryExercicesRepository implements IExercicesRepository {
   async getAll(): Promise<Exercice[]> {
     return Object.values(this.quizzes)
   }
+
+  async deleteById(quizId: string): Promise<void> {
+    delete this.quizzes[quizId]
+  }
 }
