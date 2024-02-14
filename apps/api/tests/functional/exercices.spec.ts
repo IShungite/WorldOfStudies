@@ -1,9 +1,9 @@
 import { QuestionQcm, QuestionTextHole } from '#domainModels/question'
-import { Quiz } from '#domainModels/quiz'
+import { Exercice } from '#domainModels/exercice'
 import { UserAnswerQcm, UserAnswerTextHole } from '#domainModels/user_answer'
 import { test } from '@japa/runner'
 
-test.group('Quiz', () => {
+test.group('Exercices', () => {
   const questionQCM = new QuestionQcm({
     id: '1',
     points: 2,
@@ -28,9 +28,9 @@ test.group('Quiz', () => {
     answers: ['hello', 'world'],
   })
 
-  const quiz = new Quiz({
+  const exercice = new Exercice({
     id: '1',
-    name: 'My Quiz',
+    name: 'My Exo',
     questions: [questionQCM, questionTextHole],
   })
 
@@ -49,6 +49,6 @@ test.group('Quiz', () => {
       userId: '1',
     })
 
-    assert.equal(quiz.getTotalUserPoints([userAnswer1, userAnswers2]), 3)
+    assert.equal(exercice.getTotalUserPoints([userAnswer1, userAnswers2]), 3)
   })
 })

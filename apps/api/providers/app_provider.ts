@@ -1,5 +1,5 @@
-import { IQuizzesRepository } from '#domainPorts/out/quizzes_repository'
-import { InMemoryQuizRepository } from '#repositories/in_memory_quizzes_repository'
+import { IExercicesRepository } from '#domainPorts/out/exercices_repository'
+import { InMemoryExercicesRepository } from '#repositories/in_memory_exercices_repository'
 import type { ApplicationService } from '@adonisjs/core/types'
 
 export default class AppProvider {
@@ -9,8 +9,8 @@ export default class AppProvider {
    * Register bindings to the container
    */
   async register() {
-    this.app.container.singleton(IQuizzesRepository, async () => {
-      return new InMemoryQuizRepository()
+    this.app.container.singleton(IExercicesRepository, async () => {
+      return new InMemoryExercicesRepository()
     })
   }
 

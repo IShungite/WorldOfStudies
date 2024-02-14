@@ -10,7 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 const AuthController = () => import('#controllers/auth_controller')
-const QuizzesController = () => import('#controllers/quizzes_controller')
+const ExercicesController = () => import('#controllers/exercices_controller')
 const QuestionsController = () => import('#controllers/questions_controller')
 
 router.get('/', async () => {
@@ -40,7 +40,7 @@ router
       .use(middleware.auth({ guards: ['api'] }))
 
     router.resource('questions', QuestionsController).apiOnly()
-    router.resource('quizzes', QuizzesController).apiOnly()
+    router.resource('exercices', ExercicesController).apiOnly()
     // api routes end
   })
   .prefix('api')

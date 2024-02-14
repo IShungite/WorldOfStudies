@@ -1,26 +1,26 @@
-import { CreateQuizDto } from '#domainModels/quiz'
-import { QuizzesService } from '#domainServices/quizzes_service'
+import { CreateExerciceDto } from '#domainModels/exercice'
+import { ExercicesService } from '#domainServices/exercices_service'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
 export default class QuizzesController {
-  constructor(private readonly quizzesService: QuizzesService) {}
+  constructor(private readonly quizzesService: ExercicesService) {}
 
   /**
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    return this.quizzesService.getQuizzes()
+    return this.quizzesService.getExercices()
   }
 
   /**
    * Handle form submission for the create action
    */
   async store({ request }: HttpContext) {
-    const payload = request.all() as CreateQuizDto
+    const payload = request.all() as CreateExerciceDto
 
-    return this.quizzesService.saveQuiz(payload)
+    return this.quizzesService.saveExercice(payload)
   }
 
   /**
