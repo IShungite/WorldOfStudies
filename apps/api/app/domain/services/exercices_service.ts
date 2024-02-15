@@ -37,7 +37,7 @@ export class ExercicesService implements ExerciceFeature {
         : exercice.questions,
     })
 
-    return this.exercicesRepository.update(newExercice)
+    return this.exercicesRepository.store(newExercice)
   }
 
   async deleteExercice(exerciceId: string): Promise<void> {
