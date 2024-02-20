@@ -9,7 +9,7 @@ type UserAnswerProps = {
 }
 
 type CreateUserAnswerDtoBase = {
-  id?: string
+  id?: Id
   questionId: Id
   userId: Id
   type: QuestionType

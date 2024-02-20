@@ -8,7 +8,7 @@ export const questionType = {
 export type QuestionType = (typeof questionType)[keyof typeof questionType]
 
 type CreateQuestionDtoBase = {
-  id?: string
+  id?: Id
   type: QuestionType
   points: number
 }
