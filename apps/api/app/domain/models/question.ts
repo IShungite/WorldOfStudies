@@ -53,7 +53,7 @@ export class QuestionQcm extends Question {
     choices: { id?: Id; label: string; isCorrect: boolean }[]
   }) {
     super({ id, points, type: questionType.QCM })
-    this.choices = choices.map((c) => ({ ...c, id: c.id ?? Id.factory() }))
+    this.choices = choices.map((choice) => ({ ...choice, id: choice.id ?? Id.factory() }))
   }
 
   private isCorrectChoice(choiceId: Id): boolean {
