@@ -7,6 +7,13 @@ import { StatusCodes } from 'http-status-codes'
 export default class AuthController {
   async register({ request, response }: HttpContext) {
     const payload = await registerUserValidator.validate(request.all())
+
+    const userExists = await User.findBy('email', payload.email)
+
+    if (userExists) {
+      throw new Error('User already exists')
+    }
+
     const userCreated = await User.create(payload)
     return response.status(StatusCodes.CREATED).send(userCreated)
   }
