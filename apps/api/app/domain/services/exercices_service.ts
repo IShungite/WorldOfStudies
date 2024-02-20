@@ -16,7 +16,7 @@ export class ExercicesService implements ExerciceFeature {
     return this.exercicesRepository.getAll()
   }
 
-  async saveExercice(exercice: Exercice): Promise<Exercice> {
+  async createExercice(exercice: Exercice): Promise<Exercice> {
     return this.exercicesRepository.store(exercice)
   }
 

@@ -1,7 +1,7 @@
 import { Id } from './id.js'
 
 type UserProps = {
-  id: Id
+  id?: Id
   firstName: string
   lastName: string
   email: string
@@ -16,7 +16,7 @@ export class User {
   readonly password: string
 
   constructor({ id, firstName, lastName, email, password }: UserProps) {
-    this.id = id
+    this.id = id ?? Id.factory()
     this.firstName = firstName
     this.lastName = lastName
     this.email = email

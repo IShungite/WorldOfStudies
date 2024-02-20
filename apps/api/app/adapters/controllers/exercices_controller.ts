@@ -26,7 +26,7 @@ export default class ExercicesController {
 
     const exercice = ExerciceFactory.create(payload)
 
-    return this.exercicesService.saveExercice(exercice)
+    return this.exercicesService.createExercice(exercice)
   }
 
   /**
