@@ -4,6 +4,7 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { ExerciceFactory } from '../../domain/factories/exercice_factory.js'
+import { Id } from '#domainModels/id'
 
 @inject()
 export default class ExercicesController {
@@ -31,7 +32,7 @@ export default class ExercicesController {
    * Show individual record
    */
   async show({ params }: HttpContext) {
-    const exercice = await this.exercicesService.getExercice(params.id)
+    const exercice = await this.exercicesService.getExercice(new Id(params.id))
     return exercice
   }
 
@@ -39,7 +40,7 @@ export default class ExercicesController {
    * Handle form submission for the edit action
    */
   async update({ params, request }: HttpContext) {
-    const exercice = await this.exercicesService.updateExercice(params.id, request.all())
+    const exercice = await this.exercicesService.updateExercice(new Id(params.id), request.all())
     return exercice
   }
 

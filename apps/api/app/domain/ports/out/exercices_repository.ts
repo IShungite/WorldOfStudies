@@ -1,8 +1,9 @@
 import { Exercice } from '#domainModels/exercice'
+import { Id } from '#domainModels/id'
 
 export abstract class IExercicesRepository {
   abstract store(exercice: Exercice): Promise<Exercice>
-  abstract getById(exerciceId: string): Promise<Exercice | null>
+  abstract getById(exerciceId: Id): Promise<Exercice | null>
   abstract getAll(): Promise<Exercice[]>
-  abstract deleteById(exerciceId: string): Promise<void>
+  abstract deleteById(exerciceId: Id): Promise<void>
 }

@@ -1,8 +1,5 @@
 export class Id {
-  readonly value: string
-  constructor(value: string) {
-    this.value = value
-  }
+  constructor(private readonly _value: string) {}
 
   static factory() {
     return new Id(this.generateValue())
@@ -10,5 +7,9 @@ export class Id {
 
   private static generateValue() {
     return String(Math.random())
+  }
+
+  toString() {
+    return this._value
   }
 }

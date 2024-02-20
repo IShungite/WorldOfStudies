@@ -1,3 +1,4 @@
+import { Id } from './id.js'
 import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from './user_answer.js'
 
 export const questionType = {
@@ -14,7 +15,7 @@ type CreateQuestionDtoBase = {
 
 export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
   type: 'qcm'
-  choices: { id?: string; label: string; isCorrect: boolean }[]
+  choices: { id?: Id; label: string; isCorrect: boolean }[]
 }
 
 export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
@@ -25,15 +26,15 @@ export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
 
 export type CreateQuestionDto = CreateQuestionDtoQcm | CreateQuestionDtoTextHole
 
-type QuestionProps = { id?: string; type: QuestionType; points: number }
+type QuestionProps = { id?: Id; type: QuestionType; points: number }
 
 export abstract class Question {
-  readonly id: string
+  readonly id: Id
   readonly type: QuestionType
   readonly points: number
 
   constructor({ id, type, points }: QuestionProps) {
-    this.id = id ?? String(Math.random())
+    this.id = id ?? Id.factory()
     this.type = type
     this.points = points
   }
@@ -42,20 +43,20 @@ export abstract class Question {
 }
 
 export class QuestionQcm extends Question {
-  readonly choices: { id: string; label: string; isCorrect: boolean }[]
+  readonly choices: { id: Id; label: string; isCorrect: boolean }[]
 
   constructor({
     id,
     points,
     choices,
   }: Omit<QuestionProps, 'type'> & {
-    choices: { id?: string; label: string; isCorrect: boolean }[]
+    choices: { id?: Id; label: string; isCorrect: boolean }[]
   }) {
     super({ id, points, type: questionType.QCM })
-    this.choices = choices.map((c) => ({ ...c, id: c.id ?? String(Math.random()) }))
+    this.choices = choices.map((c) => ({ ...c, id: c.id ?? Id.factory() }))
   }
 
-  private isCorrectChoice(choiceId: string): boolean {
+  private isCorrectChoice(choiceId: Id): boolean {
     const choice = this.choices.find((c) => c.id === choiceId)
 
     if (!choice) {

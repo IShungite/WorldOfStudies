@@ -1,4 +1,5 @@
 import { CreateQuestionDto, Question } from '#domainModels/question'
+import { Id } from './id.js'
 import { UserAnswer } from './user_answer.js'
 
 export type CreateExerciceDto = {
@@ -11,15 +12,15 @@ export type UpdateExerciceDto = {
   questions?: CreateQuestionDto[]
 }
 
-type ExerciceProps = { id?: string; name: string; questions: Question[] }
+type ExerciceProps = { id?: Id; name: string; questions: Question[] }
 
 export class Exercice {
-  readonly id: string
+  readonly id: Id
   readonly name: string
   readonly questions: Question[]
 
   constructor({ id, name, questions }: ExerciceProps) {
-    this.id = id ?? String(Math.random())
+    this.id = id ?? Id.factory()
     this.name = name
     this.questions = questions
   }

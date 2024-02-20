@@ -1,22 +1,23 @@
+import { Id } from './id.js'
 import { QuestionType, questionType } from './question.js'
 
 type UserAnswerProps = {
-  id?: string
-  questionId: string
-  userId: string
+  id?: Id
+  questionId: Id
+  userId: Id
   type: QuestionType
 }
 
 type CreateUserAnswerDtoBase = {
   id?: string
-  questionId: string
-  userId: string
+  questionId: Id
+  userId: Id
   type: QuestionType
 }
 
 export type CreateUserAnswerDtoQcm = CreateUserAnswerDtoBase & {
   type: 'qcm'
-  choiceId: string
+  choiceId: Id
 }
 
 export type CreateUserAnswerDtoTextHole = CreateUserAnswerDtoBase & {
@@ -27,13 +28,13 @@ export type CreateUserAnswerDtoTextHole = CreateUserAnswerDtoBase & {
 export type CreateUserAnswer = CreateUserAnswerDtoQcm | CreateUserAnswerDtoTextHole
 
 export abstract class UserAnswer {
-  readonly id: string
-  readonly questionId: string
-  readonly userId: string
+  readonly id: Id
+  readonly questionId: Id
+  readonly userId: Id
   readonly type: QuestionType
 
   constructor({ id, questionId, userId, type }: UserAnswerProps) {
-    this.id = id ?? String(Math.random())
+    this.id = id ?? Id.factory()
     this.questionId = questionId
     this.userId = userId
     this.type = type
@@ -41,13 +42,13 @@ export abstract class UserAnswer {
 }
 
 export class UserAnswerQcm extends UserAnswer {
-  readonly choiceId: string
+  readonly choiceId: Id
   constructor({
     id,
     questionId,
     userId,
     choiceId,
-  }: Omit<UserAnswerProps, 'type'> & { choiceId: string }) {
+  }: Omit<UserAnswerProps, 'type'> & { choiceId: Id }) {
     super({ id, questionId, userId, type: questionType.QCM })
     this.choiceId = choiceId
   }

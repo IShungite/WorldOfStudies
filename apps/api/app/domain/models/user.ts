@@ -1,5 +1,7 @@
+import { Id } from './id.js'
+
 type UserProps = {
-  id: string
+  id: Id
   firstName: string
   lastName: string
   email: string
@@ -7,7 +9,7 @@ type UserProps = {
 }
 
 export class User {
-  readonly id: string
+  readonly id: Id
   readonly firstName: string
   readonly lastName: string
   readonly email: string
