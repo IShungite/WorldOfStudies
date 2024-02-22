@@ -1,21 +1,30 @@
-import { ExercicesService } from '#domainServices/exercices.service'
+import { Id } from '#domainModels/id'
+import { CreateExercicesService } from '#domainServices/exercice/create_exercices.service'
+import { DeleteExerciceService } from '#domainServices/exercice/delete_exercice.service'
+import { GetExerciceService } from '#domainServices/exercice/get_exercice.service'
+import { GetExercicesService } from '#domainServices/exercice/get_exercices.service'
+import { UpdateExerciceService } from '#domainServices/exercice/update_exercice.service'
 import { createExerciceValidator } from '#validators/create_exercice.validator'
+import { updateExerciceValidator } from '#validators/update_exercice.validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { ExerciceFactory } from '../../domain/factories/exercice.factory.js'
-import { Id } from '#domainModels/id'
-import { updateExerciceValidator } from '#validators/update_exercice.validator'
 
 @inject()
 export default class ExercicesController {
-  constructor(private readonly exercicesService: ExercicesService) {}
+  constructor(
+    private readonly getExercicesService: GetExercicesService,
+    private readonly getExerciceService: GetExerciceService,
+    private readonly createExerciceService: CreateExercicesService,
+    private readonly updateExerciceService: UpdateExerciceService,
+    private readonly deleteExerciceService: DeleteExerciceService
+  ) {}
 
   /**
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    return this.exercicesService.getExercices()
+    return this.getExercicesService.getAll()
   }
 
   /**
@@ -24,9 +33,7 @@ export default class ExercicesController {
   async store({ request }: HttpContext) {
     const payload = await vine.validate({ schema: createExerciceValidator, data: request.all() })
 
-    const exercice = ExerciceFactory.create(payload)
-
-    return this.exercicesService.createExercice(exercice)
+    return this.createExerciceService.create(payload)
   }
 
   /**
@@ -37,7 +44,7 @@ export default class ExercicesController {
       throw new Error('Exercice id is required')
     }
 
-    const exercice = await this.exercicesService.getExercice(new Id(params.id))
+    const exercice = await this.getExerciceService.get(new Id(params.id))
     return exercice
   }
 
@@ -51,7 +58,7 @@ export default class ExercicesController {
 
     const payload = await vine.validate({ schema: updateExerciceValidator, data: request.all() })
 
-    const exercice = await this.exercicesService.updateExercice(new Id(params.id), payload)
+    const exercice = await this.updateExerciceService.update(new Id(params.id), payload)
     return exercice
   }
 
@@ -59,6 +66,6 @@ export default class ExercicesController {
    * Delete record
    */
   async destroy({ params }: HttpContext) {
-    await this.exercicesService.deleteExercice(params.id)
+    await this.deleteExerciceService.delete(new Id(params.id))
   }
 }

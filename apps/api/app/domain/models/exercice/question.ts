@@ -1,5 +1,5 @@
-import { Id } from './id.js'
-import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from './user_answer.js'
+import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from '#domainModels/exercice/user_answer'
+import { Id } from '#domainModels/id'
 
 export const questionType = {
   QCM: 'qcm',

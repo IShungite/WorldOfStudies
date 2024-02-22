@@ -1,5 +1,5 @@
-import { Id } from './id.js'
-import { QuestionType, questionType } from './question.js'
+import { Id } from '#domainModels/id'
+import { QuestionType, questionType } from '#domainModels/exercice/question'
 
 type UserAnswerProps = {
   id?: Id

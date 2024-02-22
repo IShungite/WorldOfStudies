@@ -1,4 +1,4 @@
-import { questionType } from '#domainModels/question'
+import { questionType } from '#domainModels/exercice/question'
 import {
   CreateUserAnswer,
   CreateUserAnswerDtoQcm,
@@ -6,7 +6,7 @@ import {
   UserAnswer,
   UserAnswerQcm,
   UserAnswerTextHole,
-} from '#domainModels/user_answer'
+} from '#domainModels/exercice/user_answer'
 
 export class UserAnswerFactory {
   static create(createUserAnswer: CreateUserAnswerDtoQcm): UserAnswerQcm

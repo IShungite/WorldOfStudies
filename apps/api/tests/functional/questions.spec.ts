@@ -1,8 +1,8 @@
-import { questionType } from '#domainModels/question'
+import { questionType } from '#domainModels/exercice/question'
 import { test } from '@japa/runner'
-import { QuestionFactory } from '../../app/domain/factories/question.factory.js'
-import { UserAnswerFactory } from '../../app/domain/factories/user_answer.factory.js'
 import { Id } from '#domainModels/id'
+import { UserAnswerFactory } from '#factories/user_answer.factory'
+import { QuestionFactory } from '#factories/question.factory'
 
 test.group('QCM Question', () => {
   const questionQCM = QuestionFactory.create({

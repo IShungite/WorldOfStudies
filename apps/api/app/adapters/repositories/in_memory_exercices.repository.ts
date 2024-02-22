@@ -1,4 +1,4 @@
-import { Exercice } from '#domainModels/exercice'
+import { Exercice } from '#domainModels/exercice/exercice'
 import { Id } from '#domainModels/id'
 import { IExercicesRepository } from '#domainPorts/out/exercices.repository'
 

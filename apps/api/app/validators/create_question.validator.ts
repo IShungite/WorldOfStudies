@@ -1,4 +1,4 @@
-import { questionType } from '#domainModels/question'
+import { questionType } from '#domainModels/exercice/question'
 import vine from '@vinejs/vine'
 
 const data = vine.group([
