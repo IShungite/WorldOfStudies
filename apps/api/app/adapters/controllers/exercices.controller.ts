@@ -30,9 +30,10 @@ export default class ExercicesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createExerciceValidator, data: request.all() })
 
+    response.status(201)
     return this.createExerciceService.create(payload)
   }
 
