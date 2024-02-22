@@ -5,7 +5,7 @@ import { ExerciceFactory } from '#factories/exercice.factory'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class CreateExercicesService implements CreateExerciceUseCase {
+export class CreateExerciceService implements CreateExerciceUseCase {
   constructor(private readonly exercicesRepository: IExercicesRepository) {}
 
   async create(createExerciceDto: CreateExerciceDto): Promise<Exercice> {
