@@ -25,7 +25,7 @@ export type CreateUserAnswerDtoTextHole = CreateUserAnswerDtoBase & {
   values: string[]
 }
 
-export type CreateUserAnswer = CreateUserAnswerDtoQcm | CreateUserAnswerDtoTextHole
+export type CreateUserAnswerDto = CreateUserAnswerDtoQcm | CreateUserAnswerDtoTextHole
 
 export abstract class UserAnswer {
   readonly id: Id

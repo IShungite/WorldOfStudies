@@ -19,5 +19,5 @@ const differentTypeOfQuestion = vine.group([
 ])
 
 export const createQuestionValidator = vine
-  .object({ points: vine.number() })
+  .object({ points: vine.number(), type: vine.enum(questionType) })
   .merge(differentTypeOfQuestion)

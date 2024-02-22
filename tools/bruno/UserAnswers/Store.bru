@@ -1,0 +1,20 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/user-answers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "questionId": "1",
+    "userId": "1",
+    "type": "qcm",
+    "choiceId": "1"
+  }
+}
