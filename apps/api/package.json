@@ -32,10 +32,12 @@
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
+    "#factories/*": "./app/domain/factories/*.js",
     "#domainServices/*": "./app/domain/services/*.js",
     "#domainModels/*": "./app/domain/models/*.js",
     "#domainPorts/*": "./app/domain/ports/*.js",
-    "#repositories/*": "./app/adapters/repositories/*.js"
+    "#repositories/*": "./app/adapters/repositories/*.js",
+    "#mappers/*": "./app/adapters/mappers/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.1",

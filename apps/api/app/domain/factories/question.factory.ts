@@ -6,7 +6,7 @@ import {
   QuestionQcm,
   QuestionTextHole,
   questionType,
-} from '#domainModels/question'
+} from '#domainModels/exercice/question'
 
 export class QuestionFactory {
   static create(createQuestionDto: CreateQuestionDtoQcm): QuestionQcm

@@ -1,7 +1,7 @@
 import { User } from '#domainModels/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
-import { UserMapper } from '../../mappers/user.mapper.js'
 
 export class AdonisUsersRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<User | null> {

@@ -1,5 +1,5 @@
-import { CreateExerciceDto, Exercice } from '#domainModels/exercice'
-import { QuestionFactory } from './question.factory.js'
+import { CreateExerciceDto, Exercice } from '#domainModels/exercice/exercice'
+import { QuestionFactory } from '#factories/question.factory'
 
 export class ExerciceFactory {
   static create(createExercice: CreateExerciceDto): Exercice {

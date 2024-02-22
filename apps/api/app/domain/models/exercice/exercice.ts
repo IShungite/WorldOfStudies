@@ -1,6 +1,6 @@
-import { CreateQuestionDto, Question } from '#domainModels/question'
-import { Id } from './id.js'
-import { UserAnswer } from './user_answer.js'
+import { CreateQuestionDto, Question } from '#domainModels/exercice/question'
+import { Id } from '#domainModels/id'
+import { UserAnswer } from '#domainModels/exercice/user_answer'
 
 export type CreateExerciceDto = {
   name: string

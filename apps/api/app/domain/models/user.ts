@@ -1,4 +1,4 @@
-import { Id } from './id.js'
+import { Id } from '#domainModels/id'
 
 type UserProps = {
   id?: Id
