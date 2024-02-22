@@ -1,6 +1,6 @@
-import { IExercicesRepository } from '#domainPorts/out/exercices_repository'
+import { IExercicesRepository } from '#domainPorts/out/exercices.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
-import { InMemoryExercicesRepository } from '#repositories/in_memory_exercices_repository'
+import { InMemoryExercicesRepository } from '#repositories/in_memory_exercices.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import type { ApplicationService } from '@adonisjs/core/types'
 

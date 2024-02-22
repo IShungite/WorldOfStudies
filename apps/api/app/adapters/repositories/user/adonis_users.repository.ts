@@ -1,7 +1,7 @@
 import { User } from '#domainModels/user'
-import UserEntity from '#models/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
-import { Id } from '#domainModels/id'
+import UserEntity from '#models/user'
+import { UserMapper } from '../../mappers/user.mapper.js'
 
 export class AdonisUsersRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<User | null> {
@@ -9,13 +9,7 @@ export class AdonisUsersRepository implements IUsersRepository {
 
     if (!user) return null
 
-    return new User({
-      id: new Id(user.id.toString()),
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      password: user.password,
-    })
+    return UserMapper.fromAdonisDb(user)
   }
 
   async createToken(user: User): Promise<{ type: string; value: string }> {
@@ -39,24 +33,13 @@ export class AdonisUsersRepository implements IUsersRepository {
         password: user.password,
       }
     )
-    return new User({
-      id: new Id(newUser.id.toString()),
-      email: newUser.email,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      password: newUser.password,
-    })
+
+    return UserMapper.fromAdonisDb(newUser)
   }
 
   async verifyCredentials(email: string, password: string): Promise<User> {
     const user = await UserEntity.verifyCredentials(email, password)
 
-    return new User({
-      id: new Id(user.id.toString()),
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      password: user.password,
-    })
+    return UserMapper.fromAdonisDb(user)
   }
 }

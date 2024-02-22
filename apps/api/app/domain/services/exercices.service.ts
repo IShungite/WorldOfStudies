@@ -1,7 +1,7 @@
-import { ExerciceFeature } from '#domainPorts/in/exercice_feature'
-import { IExercicesRepository } from '#domainPorts/out/exercices_repository'
+import { ExerciceFeature } from '#domainPorts/in/exercice.feature'
+import { IExercicesRepository } from '#domainPorts/out/exercices.repository'
 import { inject } from '@adonisjs/core'
-import { QuestionFactory } from '../factories/question_factory.js'
+import { QuestionFactory } from '../factories/question.factory.js'
 import { Exercice, UpdateExerciceDto } from '../models/exercice.js'
 import { Id } from '#domainModels/id'
 
