@@ -1,6 +1,6 @@
 import { Exercice } from '#domainModels/exercice'
 import { Id } from '#domainModels/id'
-import { IExercicesRepository } from '#domainPorts/out/exercices_repository'
+import { IExercicesRepository } from '#domainPorts/out/exercices.repository'
 
 export class InMemoryExercicesRepository implements IExercicesRepository {
   private quizzes: Record<string, Exercice> = {}

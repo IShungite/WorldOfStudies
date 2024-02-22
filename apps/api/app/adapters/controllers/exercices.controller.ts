@@ -1,11 +1,11 @@
-import { ExercicesService } from '#domainServices/exercices_service'
-import { createExerciceValidator } from '#validators/create_exercice_validator'
+import { ExercicesService } from '#domainServices/exercices.service'
+import { createExerciceValidator } from '#validators/create_exercice.validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { ExerciceFactory } from '../../domain/factories/exercice_factory.js'
+import { ExerciceFactory } from '../../domain/factories/exercice.factory.js'
 import { Id } from '#domainModels/id'
-import { updateExerciceValidator } from '#validators/update_exercice_validator'
+import { updateExerciceValidator } from '#validators/update_exercice.validator'
 
 @inject()
 export default class ExercicesController {
@@ -26,7 +26,7 @@ export default class ExercicesController {
 
     const exercice = ExerciceFactory.create(payload)
 
-    return this.exercicesService.saveExercice(exercice)
+    return this.exercicesService.createExercice(exercice)
   }
 
   /**
