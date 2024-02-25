@@ -5,8 +5,8 @@
   "scripts": {
     "prepare": "husky",
     "pre-commit": "lint-staged",
-    "all:lint": "pnpm run -r lint",
-    "all:test": "pnpm run -r test",
+    "lint:all": "pnpm run -r lint",
+    "test:all": "pnpm run -r test",
     "start": "docker compose up"
   },
   "license": "ISC",
