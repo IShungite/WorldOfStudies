@@ -1,4 +1,4 @@
-name: App test CI
+name: Node.js CI
 
 on:
   push:
@@ -6,8 +6,22 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  TZ: UTC
+  PORT: 3333
+  HOST: 0.0.0.0
+  LOG_LEVEL: info
+  APP_KEY: testKey
+  NODE_ENV: test
+  DB_HOST: db
+  DB_PORT: 5432
+  DB_USER: dbuser
+  DB_PASSWORD: dbpassword
+  DB_DATABASE: mydb
+
+
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v4
@@ -19,4 +33,17 @@ jobs:
         node-version: '20'
         cache: 'pnpm'
     - run: pnpm install
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+    - uses: actions/checkout@v3
+    - run: pnpm lint:all
+
+  test:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+    - uses: actions/checkout@v3
     - run: pnpm run test:all
