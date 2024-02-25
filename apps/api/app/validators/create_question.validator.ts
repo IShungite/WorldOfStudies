@@ -1,9 +1,9 @@
 import { questionType } from '#domainModels/exercice/question'
 import vine from '@vinejs/vine'
 
-const data = vine.group([
+const differentTypeOfQuestion = vine.group([
   vine.group.if((value) => questionType.QCM === value.type, {
-    type: vine.literal('qcm'),
+    type: vine.literal(questionType.QCM),
     choices: vine.array(
       vine.object({
         label: vine.string(),
@@ -12,10 +12,12 @@ const data = vine.group([
     ),
   }),
   vine.group.if((value) => questionType.TEXT_HOLE === value.type, {
-    type: vine.literal('text-hole'),
+    type: vine.literal(questionType.TEXT_HOLE),
     text: vine.string(),
     answers: vine.array(vine.string()),
   }),
 ])
 
-export const createQuestionValidator = vine.object({ points: vine.number() }).merge(data)
+export const createQuestionValidator = vine
+  .object({ points: vine.number(), type: vine.enum(questionType) })
+  .merge(differentTypeOfQuestion)

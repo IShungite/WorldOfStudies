@@ -1,7 +1,9 @@
 import { IExercicesRepository } from '#domainPorts/out/exercices.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { IUserAnswersRepository } from '#domainPorts/out/user_answer.repository'
 import { InMemoryExercicesRepository } from '#repositories/in_memory_exercices.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
+import { InMemoryUserAnswersRepository } from '#repositories/user_answer/in_memory_user_answers.repository'
 import type { ApplicationService } from '@adonisjs/core/types'
 
 export default class AppProvider {
@@ -17,6 +19,10 @@ export default class AppProvider {
 
     this.app.container.singleton(IUsersRepository, async () => {
       return new InMemoryUsersRepository()
+    })
+
+    this.app.container.singleton(IUserAnswersRepository, async () => {
+      return new InMemoryUserAnswersRepository()
     })
   }
 

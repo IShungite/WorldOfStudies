@@ -1,6 +1,6 @@
 import { questionType } from '#domainModels/exercice/question'
 import {
-  CreateUserAnswer,
+  CreateUserAnswerDto,
   CreateUserAnswerDtoQcm,
   CreateUserAnswerDtoTextHole,
   UserAnswer,
@@ -11,7 +11,8 @@ import {
 export class UserAnswerFactory {
   static create(createUserAnswer: CreateUserAnswerDtoQcm): UserAnswerQcm
   static create(createUserAnswer: CreateUserAnswerDtoTextHole): UserAnswerTextHole
-  static create(createUserAnswer: CreateUserAnswer): UserAnswer {
+  static create(createUserAnswer: CreateUserAnswerDto): UserAnswer
+  static create(createUserAnswer: CreateUserAnswerDto): UserAnswer {
     if (createUserAnswer.type === questionType.QCM) return new UserAnswerQcm(createUserAnswer)
 
     if (createUserAnswer.type === questionType.TEXT_HOLE)
