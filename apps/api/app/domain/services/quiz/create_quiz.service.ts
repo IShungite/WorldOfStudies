@@ -11,6 +11,6 @@ export class CreateQuizService implements CreateQuizUseCase {
   async create(createQuizDto: CreateQuizDto): Promise<Quiz> {
     const quiz = QuizFactory.create(createQuizDto)
 
-    return this.quizzesRepository.store(quiz)
+    return this.quizzesRepository.create(quiz)
   }
 }

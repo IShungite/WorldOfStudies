@@ -11,6 +11,6 @@ export class CreateUserAnswerService implements CreateUserAnswerUseCase {
   async create(createUserAnswerDto: CreateUserAnswerDto): Promise<UserAnswer> {
     const userAnswer = UserAnswerFactory.create(createUserAnswerDto)
 
-    return this.userAnswersRepository.store(userAnswer)
+    return this.userAnswersRepository.create(userAnswer)
   }
 }

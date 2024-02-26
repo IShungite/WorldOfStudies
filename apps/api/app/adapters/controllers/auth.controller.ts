@@ -19,7 +19,7 @@ export default class AuthController {
 
     const user = await this.createUserService.createUser(payload)
 
-    return response.status(StatusCodes.CREATED).send({
+    return response.created({
       id: user.id.toString(),
       firstName: user.firstName,
       lastName: user.lastName,

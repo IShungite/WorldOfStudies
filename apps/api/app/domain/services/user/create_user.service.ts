@@ -13,12 +13,12 @@ export class CreateUserService implements CreateUserUseCase {
     email: string
     password: string
   }): Promise<User> {
-    const userExists = await this.usersRepository.findByEmail(createUserDto.email)
+    const userExists = await this.usersRepository.getByEmail(createUserDto.email)
 
     if (userExists) {
       throw new Error('User already exists')
     }
 
-    return this.usersRepository.store(new User(createUserDto))
+    return this.usersRepository.create(new User(createUserDto))
   }
 }

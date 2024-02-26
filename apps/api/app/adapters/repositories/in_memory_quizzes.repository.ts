@@ -5,12 +5,7 @@ import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 export class InMemoryQuizzesRepository implements IQuizzesRepository {
   private quizzes: Record<string, Quiz> = {}
 
-  async store(quiz: Quiz): Promise<Quiz> {
-    this.quizzes[quiz.id.toString()] = quiz
-    return quiz
-  }
-
-  async update(quiz: Quiz): Promise<Quiz> {
+  async create(quiz: Quiz): Promise<Quiz> {
     this.quizzes[quiz.id.toString()] = quiz
     return quiz
   }

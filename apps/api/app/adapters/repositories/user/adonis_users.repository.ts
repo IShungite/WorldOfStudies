@@ -4,7 +4,7 @@ import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
 
 export class AdonisUsersRepository implements IUsersRepository {
-  async findByEmail(email: string): Promise<User | null> {
+  async getByEmail(email: string): Promise<User | null> {
     const user = await UserEntity.find({ email: email })
 
     if (!user) return null
@@ -23,7 +23,7 @@ export class AdonisUsersRepository implements IUsersRepository {
     }
   }
 
-  async store(user: User): Promise<User> {
+  async create(user: User): Promise<User> {
     const newUser = await UserEntity.updateOrCreate(
       { id: Number.parseInt(user.id.toString(), 10) },
       {
