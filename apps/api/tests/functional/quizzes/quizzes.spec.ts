@@ -14,7 +14,7 @@ test.group('Quizzes Controller', (group) => {
     })
   })
 
-  test('It should create an quiz', async ({ client }) => {
+  test('It should create a quiz', async ({ client }) => {
     const response = await client.post('/quizzes').json({
       name: 'Quiz 1',
       questions: [],
@@ -24,8 +24,8 @@ test.group('Quizzes Controller', (group) => {
   })
 
   test('It should return the list of quizzes', async ({ client, assert }) => {
-    quizzesRepository.store(new Quiz({ name: 'Quiz 1', questions: [] }))
-    quizzesRepository.store(new Quiz({ name: 'Quiz 2', questions: [] }))
+    quizzesRepository.create(new Quiz({ name: 'Quiz 1', questions: [] }))
+    quizzesRepository.create(new Quiz({ name: 'Quiz 2', questions: [] }))
 
     const response = await client.get('/quizzes')
     response.assertStatus(200)

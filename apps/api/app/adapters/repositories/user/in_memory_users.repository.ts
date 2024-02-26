@@ -4,7 +4,7 @@ import { IUsersRepository } from '#domainPorts/out/user.repository'
 export class InMemoryUsersRepository implements IUsersRepository {
   private users: Record<string, User> = {}
 
-  async findByEmail(email: string): Promise<User | null> {
+  async getByEmail(email: string): Promise<User | null> {
     return Object.values(this.users).find((user) => user.email === email) ?? null
   }
 
@@ -15,13 +15,13 @@ export class InMemoryUsersRepository implements IUsersRepository {
     }
   }
 
-  async store(user: User): Promise<User> {
+  async create(user: User): Promise<User> {
     this.users[user.id.toString()] = user
     return user
   }
 
   async verifyCredentials(email: string, password: string): Promise<User> {
-    const user = await this.findByEmail(email)
+    const user = await this.getByEmail(email)
     if (user && user.password === password) {
       return user
     }

@@ -24,6 +24,6 @@ export class UpdateQuizService implements UpdateQuizUseCase {
         : quiz.questions,
     })
 
-    return this.quizzesRepository.store(newQuiz)
+    return this.quizzesRepository.create(newQuiz)
   }
 }

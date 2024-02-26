@@ -1,0 +1,17 @@
+meta {
+  name: Store
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/schools
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "School 1"
+  }
+}

@@ -1,7 +1,9 @@
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
+import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { IUserAnswersRepository } from '#domainPorts/out/user_answer.repository'
 import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
+import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { InMemoryUserAnswersRepository } from '#repositories/user_answer/in_memory_user_answers.repository'
 import type { ApplicationService } from '@adonisjs/core/types'
@@ -23,6 +25,10 @@ export default class AppProvider {
 
     this.app.container.singleton(IUserAnswersRepository, async () => {
       return new InMemoryUserAnswersRepository()
+    })
+
+    this.app.container.singleton(ISchoolsRepository, async () => {
+      return new InMemorySchoolsRepository()
     })
   }
 
