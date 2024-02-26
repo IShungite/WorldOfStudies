@@ -1,0 +1,29 @@
+meta {
+  name: Store
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/quizzes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Quiz 1",
+    "questions": [
+      {
+        "points": 2,
+        "type": "qcm",
+        "choices": [
+          {
+            "label": "hello",
+            "isCorrect": false
+          }
+        ]
+      }
+    ]
+  }
+}
