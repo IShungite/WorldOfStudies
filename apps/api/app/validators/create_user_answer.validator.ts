@@ -1,4 +1,4 @@
-import { questionType } from '#domainModels/exercice/question'
+import { questionType } from '#domainModels/quiz/question'
 import { domainIdValidator } from '#validators/domain_id.validator'
 import vine from '@vinejs/vine'
 

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
-import type { QuestionQcmContent, QuestionHoleTextContent } from '#domain/exercice/types'
+import type { QuestionQcmContent, QuestionHoleTextContent } from '#domain/quiz/types'
 export default class Question extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
