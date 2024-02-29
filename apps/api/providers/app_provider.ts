@@ -1,7 +1,9 @@
+import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { IUserAnswersRepository } from '#domainPorts/out/user_answer.repository'
+import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
@@ -29,6 +31,10 @@ export default class AppProvider {
 
     this.app.container.singleton(ISchoolsRepository, async () => {
       return new InMemorySchoolsRepository()
+    })
+
+    this.app.container.singleton(ICharactersRepository, async () => {
+      return new InMemoryCharactersRepository()
     })
   }
 

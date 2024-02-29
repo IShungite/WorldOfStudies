@@ -5,7 +5,7 @@ import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repos
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 
-test.group('Schools Controller', (group) => {
+test.group('Schools', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.each.setup(async () => {

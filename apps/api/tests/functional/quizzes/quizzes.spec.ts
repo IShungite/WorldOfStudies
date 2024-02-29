@@ -4,7 +4,7 @@ import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repos
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 
-test.group('Quizzes Controller', (group) => {
+test.group('Quizzes', (group) => {
   let quizzesRepository: IQuizzesRepository
 
   group.each.setup(async () => {

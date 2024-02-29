@@ -13,6 +13,10 @@ export class Id {
     return String(Math.random())
   }
 
+  equals(id: Id) {
+    return this._value === id._value
+  }
+
   toString() {
     return this._value
   }
