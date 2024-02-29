@@ -1,0 +1,17 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/characters
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Shun"
+  }
+}

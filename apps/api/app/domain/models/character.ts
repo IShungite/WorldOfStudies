@@ -6,6 +6,11 @@ type CharacterProps = {
   userId: Id
 }
 
+export type CreateCharacterDto = {
+  name: string
+  userId: Id
+}
+
 export class Character {
   readonly id: Id
   readonly name: string
