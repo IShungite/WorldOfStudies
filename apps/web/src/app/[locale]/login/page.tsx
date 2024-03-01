@@ -44,7 +44,7 @@ export default function Login({ params }: Readonly<{ params: { locale: string } 
     <form onSubmit={handleSubmit}>
       <input className="nes-input" type="email" name="email" placeholder={t("mail")} required />
       <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
-      <button className="nes-btn is-primary" type="submit">OK</button>
+      <button className="nes-btn is-primary" type="submit">{t("login")}</button>
     </form>
     <p>{t("redirectRegister")} <a href={`/${params.locale}/register`}>{t("here")}</a> {t("redirectRegister2")}</p>
   </div>

@@ -1,13 +1,14 @@
 {
     "Home" : {
-        "title": "Home"
+        "title": "Homepage"
     },
     "Login" : {
         "mail" : "Email",
         "password" : "Password",
         "redirectRegister" : "Click",
         "here": "here",
-        "redirectRegister2" : "to register."
+        "redirectRegister2" : "to register.",
+        "login" : "Log in"
     },
     "Register" : {
         "firstName" : "First name",
