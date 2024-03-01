@@ -15,19 +15,23 @@ export default function Register() {
     const email = formData.get('email')
     const password = formData.get('password')
  
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-      }, 
-      body: JSON.stringify({ "firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password }),
-    })
- 
-    if (response.ok) {
-      router.push('/login');
-    } else {
-      alert("TODO : handle errors");
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify({ "firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password }),
+      })
+      if (response.ok) {
+        router.push('/login');
+      } else {
+        alert(new Error(response.status + ' - ' + response.statusText));
+      }
+    } catch(error) {
+      alert(error);
     }
+
   }
  
   return (

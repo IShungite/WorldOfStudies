@@ -14,21 +14,26 @@ export default function Login() {
     const email = formData.get('email');
     const password = formData.get('password');
  
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-      }, 
-      body: JSON.stringify({ "email" : email, "password" : password }),
-    });
-    const body: AuthResponse = await response.json();
- 
-    if (response.ok && body) {
-      localStorage.setItem("token",JSON.stringify(body.token));
-      router.push('/profile');
-    } else {
-      alert("TODO : handle errors");
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify({ "email" : email, "password" : password }),
+      });
+      const body: AuthResponse = await response.json();
+   
+      if (response.ok && body) {
+        localStorage.setItem("token",JSON.stringify(body.token));
+        router.push('/profile');
+      } else {
+        alert(new Error(response.status + ' - ' + response.statusText));
+      }
+    } catch(error) {
+      alert(error);
     }
+    
   }
  
   return (
