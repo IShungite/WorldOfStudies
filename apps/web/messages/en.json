@@ -8,5 +8,12 @@
         "redirectRegister" : "Click",
         "here": "here",
         "redirectRegister2" : "to register."
+    },
+    "Register" : {
+        "firstName" : "First name",
+        "lastName" : "Last name",
+        "mail" : "Email address",
+        "password" : "Password",
+        "register" : "Register"
     }
 }

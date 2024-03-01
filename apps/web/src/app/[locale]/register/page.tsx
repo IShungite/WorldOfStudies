@@ -2,18 +2,20 @@
 
 import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl';
  
 export default function Register({ params }: Readonly<{ params: { locale: string } }> ) {
-  const router = useRouter()
+  const router = useRouter();
+  const t = useTranslations('Register');
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
  
-    const formData = new FormData(event.currentTarget)
-    const firstName = formData.get('firstName')
-    const lastName = formData.get('lastName')
-    const email = formData.get('email')
-    const password = formData.get('password')
+    const formData = new FormData(event.currentTarget);
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+    const email = formData.get('email');
+    const password = formData.get('password');
  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
@@ -37,11 +39,11 @@ export default function Register({ params }: Readonly<{ params: { locale: string
   return (
     <div className="nes-container with-title is-centered">
       <form onSubmit={handleSubmit}>
-        <input className="nes-input" type="firstName" name="firstName" placeholder="firstName" required />
-        <input className="nes-input" type="lastName" name="lastName" placeholder="lastName" required />
-        <input className="nes-input" type="email" name="email" placeholder="Email" required />
-        <input className="nes-input" type="password" name="password" placeholder="Password" required />
-        <button className="nes-btn is-primary" type="submit">Register</button>
+        <input className="nes-input" type="firstName" name="firstName" placeholder={t("firstName")} required />
+        <input className="nes-input" type="lastName" name="lastName" placeholder={t("lastName")} required />
+        <input className="nes-input" type="email" name="email" placeholder={t("mail")} required />
+        <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
+        <button className="nes-btn is-primary" type="submit">{t("register")}</button>
       </form>
     </div>
 

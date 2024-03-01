@@ -8,5 +8,12 @@
         "redirectRegister" : "Cliquez",
         "here": "ici",
         "redirectRegister2" : "pour vous enregistrer."
+    },
+    "Register" : {
+        "firstName" : "Prénom",
+        "lastName" : "Nom",
+        "mail" : "Addresse mail",
+        "password" : "Mot de passe",
+        "register" : "S'enregistrer"
     }
 }
