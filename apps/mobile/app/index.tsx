@@ -1,11 +1,21 @@
-import { StatusBar } from 'expo-status-bar'
-import { Text, View } from 'react-native'
+import React from 'react'
+import { SafeAreaView, StyleSheet } from 'react-native'
 
-export default function Page() {
+import SignUpScreen from '../screens/SignUpScreen'
+
+const App = () => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home page </Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <SignUpScreen />
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 20,
+  },
+})
+
+export default App
