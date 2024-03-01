@@ -3,9 +3,11 @@
 import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { AuthResponse } from '@/interfaces/authResponse';
+import { useTranslations } from 'next-intl';
 
 export default function Login() {
   const router = useRouter();
+  const t = useTranslations('Login');
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -40,11 +42,11 @@ export default function Login() {
 
   <div className="nes-container with-title is-centered">
     <form onSubmit={handleSubmit}>
-      <input className="nes-input" type="email" name="email" placeholder="Email" required />
-      <input className="nes-input" type="password" name="password" placeholder="Password" required />
-      <button className="nes-btn is-primary" type="submit">Login</button>
+      <input className="nes-input" type="email" name="email" placeholder={t("mail")} required />
+      <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
+      <button className="nes-btn is-primary" type="submit">OK</button>
     </form>
-    <p>Click  <a href='/register'>here</a> to register </p>
+    <p>{t("redirectRegister")} <a href='/register'>{t("here")} </a>{t("redirectRegister2")}</p>
   </div>
 
   )
