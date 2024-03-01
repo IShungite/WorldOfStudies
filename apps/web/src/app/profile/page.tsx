@@ -1,7 +1,7 @@
 'use client'
 
 import isLogged from '@/actions/isLogged';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 export default function Profile() {
 
   const router = useRouter();
@@ -23,9 +23,7 @@ export default function Profile() {
     <main>
       <div>
         {localStorage.getItem("token") ? "Logged in" : "Not logged in"}
-      </div>
-      <div>
-        <button onClick={submit}>Logout</button>
+        <button onClick={submit} className="nes-btn is-primary">Logout</button>
       </div>
     </main>
   );

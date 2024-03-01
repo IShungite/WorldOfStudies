@@ -18,7 +18,6 @@ export default function Login() {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Credentials': 'true'
       }, 
       body: JSON.stringify({ "email" : email, "password" : password }),
     });
@@ -33,10 +32,14 @@ export default function Login() {
   }
  
   return (
+
+  <div className="nes-container with-title is-centered">
     <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <input className="nes-input" type="email" name="email" placeholder="Email" required />
+      <input className="nes-input" type="password" name="password" placeholder="Password" required />
+      <button className="nes-btn is-primary" type="submit">Login</button>
     </form>
+  </div>
+
   )
 }
