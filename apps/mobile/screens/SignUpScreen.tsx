@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
 import { useMutation } from 'react-query'
 
-import axiosInstance from '../api/axiosInstance' // Adjust the path as necessary
+import axiosInstance from '../api/axiosInstance'
 
 const SignUpScreen = () => {
   const [firstName, setFirstName] = useState('')
