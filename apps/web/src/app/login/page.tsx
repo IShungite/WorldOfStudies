@@ -39,6 +39,7 @@ export default function Login() {
       <input className="nes-input" type="password" name="password" placeholder="Password" required />
       <button className="nes-btn is-primary" type="submit">Login</button>
     </form>
+    <p>Click  <a href='/register'>here</a> to register </p>
   </div>
 
   )
