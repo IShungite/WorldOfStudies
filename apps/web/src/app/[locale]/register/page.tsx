@@ -3,7 +3,7 @@
 import { FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
  
-export default function Register() {
+export default function Register({ params }: Readonly<{ params: { locale: string } }> ) {
   const router = useRouter()
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -24,7 +24,7 @@ export default function Register() {
         body: JSON.stringify({ "firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password }),
       })
       if (response.ok) {
-        router.push('/login');
+        router.push(`/${params.locale}/login`);
       } else {
         alert(new Error(response.status + ' - ' + response.statusText));
       }

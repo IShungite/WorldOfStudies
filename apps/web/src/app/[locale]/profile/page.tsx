@@ -2,27 +2,26 @@
 
 import isLogged from '@/actions/isLogged';
 import { useRouter } from 'next/navigation';
-export default function Profile() {
+export default function Profile({ params }: Readonly<{ params: { locale: string } }> ) {
 
   const router = useRouter();
 
   async function submit() {
 
     localStorage.removeItem("token");
-    router.push('/login');
+    router.push(`/${params.locale}/login`);
 
   }
 
   const userState = isLogged();
 
   if(!userState) {
-    router.push('/login');
+    router.push(`/${params.locale}/login`);
   }
 
   return (
     <main>
       <div>
-        {localStorage.getItem("token") ? "Logged in" : "Not logged in"}
         <button onClick={submit} className="nes-btn is-primary">Logout</button>
       </div>
     </main>

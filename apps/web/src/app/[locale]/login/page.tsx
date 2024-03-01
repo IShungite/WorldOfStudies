@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { AuthResponse } from '@/interfaces/authResponse';
 import { useTranslations } from 'next-intl';
 
-export default function Login() {
+export default function Login({ params }: Readonly<{ params: { locale: string } }> ) {
   const router = useRouter();
   const t = useTranslations('Login');
  
@@ -28,7 +28,7 @@ export default function Login() {
    
       if (response.ok && body) {
         localStorage.setItem("token",JSON.stringify(body.token));
-        router.push('/profile');
+        router.push(`/${params.locale}/profile`);
       } else {
         alert(new Error(response.status + ' - ' + response.statusText));
       }
@@ -46,7 +46,7 @@ export default function Login() {
       <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
       <button className="nes-btn is-primary" type="submit">OK</button>
     </form>
-    <p>{t("redirectRegister")} <a href='/register'>{t("here")} </a>{t("redirectRegister2")}</p>
+    <p>{t("redirectRegister")} <a href={`/${params.locale}/register`}>{t("here")}</a> {t("redirectRegister2")}</p>
   </div>
 
   )
