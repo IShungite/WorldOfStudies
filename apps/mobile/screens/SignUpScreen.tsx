@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Alert } from 'react-native'
+import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import { useMutation } from 'react-query'
+
+import axiosInstance from '../api/axiosInstance' // Adjust the path as necessary
 
 const SignUpScreen = () => {
   const [firstName, setFirstName] = useState('')
@@ -7,37 +10,31 @@ const SignUpScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ firstName, lastName, email, password }),
-      })
-
-      if (!response.ok) {
-        // If the server response was not OK, throw an error with the status
-        const errorData = await response.text() // or .json() if your server responds with JSON
-        throw new Error(`Server responded with ${response.status}: ${errorData}`)
-      }
-
-      const data = await response.json() // Assuming the response is JSON
-      // Handle success, for example, navigate or show success message
-      Alert.alert('Success', 'Registration successful, please log in.')
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Registration failed:', error.message)
-        console.log(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`)
+  // Setup mutation using React Query
+  const { mutate, isLoading } = useMutation(
+    async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
+      return await axiosInstance.post('/auth/register', newUser)
+    },
+    {
+      onSuccess: () => {
+        Alert.alert('Success', 'Registration successful, please log in.')
+      },
+      onError: (error: any) => {
         Alert.alert('Error', `Registration failed, please try again. ${error.message}`)
-      } else {
-        // Handle cases where the error is not an Error object
-        console.log(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`)
-        console.error('Registration failed with an unknown error:', error)
-        Alert.alert('Error', 'Registration failed due to an unknown error, please try again.')
-      }
+      },
     }
+  )
+
+  const handleSubmit = () => {
+    mutate({ firstName, lastName, email, password })
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    )
   }
 
   return (
@@ -68,6 +65,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     height: 40,

@@ -1,13 +1,18 @@
 import React from 'react'
 import { SafeAreaView, StyleSheet } from 'react-native'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 import SignUpScreen from '../screens/SignUpScreen'
 
+const queryClient = new QueryClient()
+
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <SignUpScreen />
-    </SafeAreaView>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaView style={styles.container}>
+        <SignUpScreen />
+      </SafeAreaView>
+    </QueryClientProvider>
   )
 }
 
