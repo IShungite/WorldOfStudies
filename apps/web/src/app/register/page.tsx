@@ -31,12 +31,15 @@ export default function Register() {
   }
  
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="firstName" name="firstName" placeholder="firstName" required />
-      <input type="lastName" name="lastName" placeholder="lastName" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
+    <div className="nes-container with-title is-centered">
+      <form onSubmit={handleSubmit}>
+        <input className="nes-input" type="firstName" name="firstName" placeholder="firstName" required />
+        <input className="nes-input" type="lastName" name="lastName" placeholder="lastName" required />
+        <input className="nes-input" type="email" name="email" placeholder="Email" required />
+        <input className="nes-input" type="password" name="password" placeholder="Password" required />
+        <button className="nes-btn is-primary" type="submit">Register</button>
+      </form>
+    </div>
+
   )
 }
