@@ -5,6 +5,7 @@ import type { Config } from '@japa/runner/types'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
 import testUtils from '@adonisjs/core/services/test_utils'
 import env from '#start/env'
+import { authApiClient } from '@adonisjs/auth/plugins/api_client'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file
@@ -20,6 +21,7 @@ export const plugins: Config['plugins'] = [
     baseURL: `http://${env.get('HOST')}:${env.get('PORT')}/api`,
   }),
   pluginAdonisJS(app),
+  authApiClient(app),
 ]
 
 /**
