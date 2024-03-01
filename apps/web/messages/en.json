@@ -1,0 +1,12 @@
+{
+    "Home" : {
+        "title": "Home"
+    },
+    "Login" : {
+        "mail" : "Email",
+        "password" : "Password",
+        "redirectRegister" : "Click",
+        "here": "here",
+        "redirectRegister2" : "to register."
+    }
+}
