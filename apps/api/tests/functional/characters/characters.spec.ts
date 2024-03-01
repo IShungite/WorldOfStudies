@@ -1,5 +1,6 @@
 import { Character } from '#domainModels/character'
 import { Id } from '#domainModels/id'
+import { User } from '#domainModels/user'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
@@ -9,20 +10,32 @@ import { test } from '@japa/runner'
 
 test.group('Characters', (group) => {
   let charactersRepository: ICharactersRepository
+  let usersRepository: IUsersRepository
 
   group.each.setup(async () => {
     charactersRepository = new InMemoryCharactersRepository()
     app.container.swap(ICharactersRepository, () => {
       return charactersRepository
     })
+    usersRepository = new InMemoryUsersRepository()
+    app.container.swap(IUsersRepository, () => {
+      return usersRepository
+    })
   })
 
   test('It should create a character', async ({ client }) => {
-    const response = await client.post('/characters').json({
-      name: 'Shun',
-    })
+    const user = await usersRepository.create(
+      new User({ email: 'a@a', firstName: 'a', lastName: 'a', password: 'a' })
+    )
+
+    const response = await client
+      .post('/characters')
+      .json({
+        name: 'Shun',
+      })
+      .loginAs(user as any)
     response.assertStatus(201)
-    response.assertBodyContains({ name: 'Shun' })
+    response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {

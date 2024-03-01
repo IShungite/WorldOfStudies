@@ -10,7 +10,7 @@ export class Id {
   }
 
   private static generateValue() {
-    return String(Math.random())
+    return Math.floor(Math.random() * 10000).toString()
   }
 
   equals(id: Id) {

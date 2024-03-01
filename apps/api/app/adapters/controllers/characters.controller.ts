@@ -15,15 +15,19 @@ export default class CharactersController {
   ) {}
 
   async store({ request, response, auth }: HttpContext) {
-    // const user = await auth.authenticate()
+    const user = await auth.authenticate()
 
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
     const character = await this.createCharacterService.create({
       ...payload,
-      userId: new Id('1'),
+      userId: new Id(user.id.toString()),
     })
 
-    return response.created(character)
+    return response.created({
+      id: character.id.toString(),
+      name: character.name,
+      userId: character.userId.toString(),
+    })
   }
 
   async charactersByUserId({ request, response, auth }: HttpContext) {
