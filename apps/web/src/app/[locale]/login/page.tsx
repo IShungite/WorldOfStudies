@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AuthResponse } from '@/interfaces/authResponse';
 import { useTranslations } from 'next-intl';
@@ -8,9 +8,11 @@ import { useTranslations } from 'next-intl';
 export default function Login({ params }: Readonly<{ params: { locale: string } }> ) {
   const router = useRouter();
   const t = useTranslations('Login');
+  const [spinner, setSpinner] = useState(false);
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
+    setSpinner(true);
  
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email');
@@ -35,19 +37,25 @@ export default function Login({ params }: Readonly<{ params: { locale: string } 
     } catch(error) {
       alert(error);
     }
-    
+    setSpinner(false);
+  }
+
+  if(spinner) {
+    return (
+      <div className="nes-container with-title is-centered">
+        <p>Loading...</p>
+      </div>
+    )
   }
  
   return (
-
-  <div className="nes-container with-title is-centered">
-    <form onSubmit={handleSubmit}>
-      <input className="nes-input" type="email" name="email" placeholder={t("mail")} required />
-      <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
-      <button className="nes-btn is-primary" type="submit">{t("login")}</button>
-    </form>
-    <p>{t("redirectRegister")} <a href={`/${params.locale}/register`}>{t("here")}</a> {t("redirectRegister2")}</p>
-  </div>
-
+    <div className="nes-container with-title is-centered">
+      <form onSubmit={handleSubmit}>
+        <input className="nes-input" type="email" name="email" placeholder={t("mail")} required />
+        <input className="nes-input" type="password" name="password" placeholder={t("password")} required />
+        <button className="nes-btn is-primary" type="submit">{t("login")}</button>
+      </form>
+      <p>{t("redirectRegister")} <a href={`/${params.locale}/register`}>{t("here")}</a> {t("redirectRegister2")}</p>
+    </div>
   )
 }

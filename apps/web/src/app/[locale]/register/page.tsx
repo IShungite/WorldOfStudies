@@ -1,15 +1,17 @@
 'use client'
 
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl';
  
 export default function Register({ params }: Readonly<{ params: { locale: string } }> ) {
   const router = useRouter();
   const t = useTranslations('Register');
+  const [spinner, setSpinner] = useState(false);
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setSpinner(true);
  
     const formData = new FormData(event.currentTarget);
     const firstName = formData.get('firstName');
@@ -24,7 +26,7 @@ export default function Register({ params }: Readonly<{ params: { locale: string
           'Content-Type': 'application/json',
         }, 
         body: JSON.stringify({ "firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password }),
-      })
+      });
       if (response.ok) {
         router.push(`/${params.locale}/login`);
       } else {
@@ -33,9 +35,17 @@ export default function Register({ params }: Readonly<{ params: { locale: string
     } catch(error) {
       alert(error);
     }
-
+    setSpinner(false);
   }
  
+  if(spinner) {
+    return (
+      <div className="nes-container with-title is-centered">
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="nes-container with-title is-centered">
       <form onSubmit={handleSubmit}>
@@ -46,6 +56,5 @@ export default function Register({ params }: Readonly<{ params: { locale: string
         <button className="nes-btn is-primary" type="submit">{t("register")}</button>
       </form>
     </div>
-
   )
 }
