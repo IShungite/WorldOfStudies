@@ -10,6 +10,6 @@ export class CreateSchoolService implements CreateSchoolUseCase {
   async create(createSchoolDto: CreateSchoolDto): Promise<School> {
     const school = new School(createSchoolDto)
 
-    return this.schoolsRepository.create(school)
+    return this.schoolsRepository.save(school)
   }
 }

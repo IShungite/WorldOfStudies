@@ -5,7 +5,7 @@ import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 export class InMemorySchoolsRepository implements ISchoolsRepository {
   private schools: Record<string, School> = {}
 
-  async create(school: School): Promise<School> {
+  async save(school: School): Promise<School> {
     this.schools[school.id.toString()] = school
     return school
   }

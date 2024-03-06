@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const PromotionsController = () => import('#controllers/promotions.controller')
 const CharactersController = () => import('#controllers/characters.controller')
 const SchoolsController = () => import('#controllers/schools.controller')
 const UserAnswersController = () => import('#controllers/user_answers.controller')
@@ -51,6 +52,12 @@ router
         router.get('/user/:id', [CharactersController, 'charactersByUserId'])
       })
       .prefix('characters')
+
+    router
+      .group(() => {
+        router.post('/', [PromotionsController, 'store'])
+      })
+      .prefix('promotions')
     // api routes end
   })
   .prefix('api')
