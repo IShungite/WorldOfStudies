@@ -16,9 +16,9 @@ export class School {
   readonly name: string
   readonly promotions: Promotion[]
 
-  constructor({ id, name }: SchoolProps) {
+  constructor({ id, name, promotions }: SchoolProps) {
     this.id = id ?? Id.factory()
     this.name = name
-    this.promotions = []
+    this.promotions = promotions ?? []
   }
 }
