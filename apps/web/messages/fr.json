@@ -1,0 +1,20 @@
+{   
+    "Home" : {
+        "title": "Page home"
+    },
+    "Login" : {
+        "mail" : "Addresse mail",
+        "password" : "Mot de passe",
+        "redirectRegister" : "Cliquez",
+        "here": "ici",
+        "redirectRegister2" : "pour vous enregistrer.",
+        "login" : "Connexion"
+    },
+    "Register" : {
+        "firstName" : "Prénom",
+        "lastName" : "Nom",
+        "mail" : "Addresse mail",
+        "password" : "Mot de passe",
+        "register" : "S'enregistrer"
+    }
+}
