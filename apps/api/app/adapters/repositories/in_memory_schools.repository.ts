@@ -13,4 +13,12 @@ export class InMemorySchoolsRepository implements ISchoolsRepository {
   async getById(schoolId: Id): Promise<School | null> {
     return this.schools[schoolId.toString()] ?? null
   }
+
+  async getByPromotionId(promotionId: Id): Promise<School | null> {
+    return (
+      Object.values(this.schools).find((school) =>
+        school.promotions.find((promotion) => promotion.id.equals(promotionId))
+      ) ?? null
+    )
+  }
 }
