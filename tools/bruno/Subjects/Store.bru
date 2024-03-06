@@ -1,0 +1,18 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/subjects
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Subject 1",
+    "promotionId": "1"
+  }
+}

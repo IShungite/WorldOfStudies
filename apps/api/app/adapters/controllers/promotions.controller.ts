@@ -8,7 +8,7 @@ import vine from '@vinejs/vine'
 export default class PromotionsController {
   constructor(private readonly createPromotionService: CreatePromotionService) {}
 
-  async store({ request, response, auth }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createPromotionValidator, data: request.all() })
     const promotion = await this.createPromotionService.create(payload)
 
