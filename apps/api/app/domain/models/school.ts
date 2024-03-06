@@ -1,4 +1,5 @@
 import { Id } from '#domainModels/id'
+import { Promotion } from '#domainModels/promotion'
 
 export type CreateSchoolDto = {
   name: string
@@ -7,14 +8,17 @@ export type CreateSchoolDto = {
 type SchoolProps = {
   id?: Id
   name: string
+  promotions?: Promotion[]
 }
 
 export class School {
   readonly id: Id
   readonly name: string
+  readonly promotions: Promotion[]
 
   constructor({ id, name }: SchoolProps) {
     this.id = id ?? Id.factory()
     this.name = name
+    this.promotions = []
   }
 }

@@ -1,0 +1,19 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/promotions
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Promo 1",
+    "year": 2020,
+    "schoolId": "1"
+  }
+}
