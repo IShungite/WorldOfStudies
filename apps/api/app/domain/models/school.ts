@@ -5,6 +5,10 @@ export type CreateSchoolDto = {
   name: string
 }
 
+export type UpdateSchoolDto = {
+  name?: string
+}
+
 type SchoolProps = {
   id?: Id
   name: string
