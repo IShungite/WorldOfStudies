@@ -21,4 +21,8 @@ export class InMemorySchoolsRepository implements ISchoolsRepository {
       ) ?? null
     )
   }
+
+  async deleteById(schoolId: Id): Promise<void> {
+    delete this.schools[schoolId.toString()]
+  }
 }
