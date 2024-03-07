@@ -19,6 +19,6 @@ export class CreateUserService implements CreateUserUseCase {
       throw new Error('User already exists')
     }
 
-    return this.usersRepository.create(new User(createUserDto))
+    return this.usersRepository.save(new User(createUserDto))
   }
 }

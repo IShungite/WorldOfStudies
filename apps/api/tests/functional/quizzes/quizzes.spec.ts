@@ -24,8 +24,8 @@ test.group('Quizzes', (group) => {
   })
 
   test('It should return the list of quizzes', async ({ client, assert }) => {
-    quizzesRepository.create(new Quiz({ name: 'Quiz 1', questions: [] }))
-    quizzesRepository.create(new Quiz({ name: 'Quiz 2', questions: [] }))
+    quizzesRepository.save(new Quiz({ name: 'Quiz 1', questions: [] }))
+    quizzesRepository.save(new Quiz({ name: 'Quiz 2', questions: [] }))
 
     const response = await client.get('/quizzes')
     response.assertStatus(200)

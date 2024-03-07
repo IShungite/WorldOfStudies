@@ -29,7 +29,7 @@ export class AdonisUsersRepository implements IUsersRepository {
     })
   }
 
-  async create(user: User): Promise<User> {
+  async save(user: User): Promise<User> {
     const newUser = await UserEntity.updateOrCreate(
       { id: Number.parseInt(user.id.toString(), 10) },
       {

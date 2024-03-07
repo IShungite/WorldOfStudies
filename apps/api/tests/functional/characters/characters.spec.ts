@@ -24,7 +24,7 @@ test.group('Characters', (group) => {
   })
 
   test('It should create a character', async ({ client }) => {
-    const user = await usersRepository.create(
+    const user = await usersRepository.save(
       new User({ email: 'a@a', firstName: 'a', lastName: 'a', password: 'a' })
     )
 
@@ -39,8 +39,8 @@ test.group('Characters', (group) => {
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {
-    charactersRepository.create(new Character({ name: 'Shun', userId: new Id('1') }))
-    charactersRepository.create(new Character({ name: 'Bou', userId: new Id('2') }))
+    charactersRepository.save(new Character({ name: 'Shun', userId: new Id('1') }))
+    charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') }))
 
     const response = await client.get('/characters/user/1')
     response.assertStatus(200)

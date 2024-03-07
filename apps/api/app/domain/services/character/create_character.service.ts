@@ -10,6 +10,6 @@ export class CreateCharacterService implements CreateCharacterUseCase {
   async create(createCharacterDto: CreateCharacterDto): Promise<Character> {
     const character = new Character(createCharacterDto)
 
-    return this.charactersRepository.create(character)
+    return this.charactersRepository.save(character)
   }
 }

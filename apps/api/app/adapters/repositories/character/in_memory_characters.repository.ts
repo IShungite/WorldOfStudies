@@ -5,7 +5,7 @@ import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 export class InMemoryCharactersRepository implements ICharactersRepository {
   private characters: Record<string, Character> = {}
 
-  async create(character: Character): Promise<Character> {
+  async save(character: Character): Promise<Character> {
     this.characters[character.id.toString()] = character
     return character
   }
