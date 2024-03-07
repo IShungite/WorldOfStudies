@@ -45,7 +45,7 @@ router
 
     router.resource('quizzes', QuizzesController).apiOnly()
     router.resource('user-answers', UserAnswersController).apiOnly().only(['store'])
-    router.resource('schools', SchoolsController).apiOnly().only(['store', 'show'])
+    router.resource('schools', SchoolsController).apiOnly().only(['store', 'show', 'destroy'])
 
     router
       .group(() => {
