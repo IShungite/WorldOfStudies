@@ -22,7 +22,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
     return token
   }
 
-  async create(user: User): Promise<User> {
+  async save(user: User): Promise<User> {
     this.users[user.id.toString()] = user
     return user
   }
