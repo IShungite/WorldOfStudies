@@ -6,36 +6,52 @@ import { IUserAnswersRepository } from '#domainPorts/out/user_answer.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
+import { AdonisUsersRepository } from '#repositories/user/adonis_users.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { InMemoryUserAnswersRepository } from '#repositories/user_answer/in_memory_user_answers.repository'
+import env from '#start/env'
 import type { ApplicationService } from '@adonisjs/core/types'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
 
+  private registerRepository<
+    T extends abstract new (...args: any[]) => any,
+    U extends new (...args: any[]) => InstanceType<T>,
+  >(repositoryInterface: T, inMemoryImplementation: U, defaultImplementation: U) {
+    this.app.container.singleton(repositoryInterface, async () => {
+      if (env.get('DB_IN_MEMORY')) {
+        return new inMemoryImplementation()
+      }
+      return new defaultImplementation()
+    })
+  }
+
   /**
    * Register bindings to the container
    */
   async register() {
-    this.app.container.singleton(IQuizzesRepository, async () => {
-      return new InMemoryQuizzesRepository()
-    })
-
-    this.app.container.singleton(IUsersRepository, async () => {
-      return new InMemoryUsersRepository()
-    })
-
-    this.app.container.singleton(IUserAnswersRepository, async () => {
-      return new InMemoryUserAnswersRepository()
-    })
-
-    this.app.container.singleton(ISchoolsRepository, async () => {
-      return new InMemorySchoolsRepository()
-    })
-
-    this.app.container.singleton(ICharactersRepository, async () => {
-      return new InMemoryCharactersRepository()
-    })
+    this.registerRepository(
+      IQuizzesRepository,
+      InMemoryQuizzesRepository,
+      InMemoryQuizzesRepository
+    )
+    this.registerRepository(IUsersRepository, InMemoryUsersRepository, AdonisUsersRepository)
+    this.registerRepository(
+      IUserAnswersRepository,
+      InMemoryUserAnswersRepository,
+      InMemoryUserAnswersRepository
+    )
+    this.registerRepository(
+      ISchoolsRepository,
+      InMemorySchoolsRepository,
+      InMemorySchoolsRepository
+    )
+    this.registerRepository(
+      ICharactersRepository,
+      InMemoryCharactersRepository,
+      InMemoryCharactersRepository
+    )
   }
 
   /**
