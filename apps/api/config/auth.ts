@@ -10,11 +10,11 @@ const authConfig = defineConfig({
       provider: tokensUserProvider({
         tokens: 'accessTokens',
         model: (): Promise<typeof import('#models/user')> => {
-          if (env.get('NODE_ENV') === 'production') {
-            return import('#models/user')
+          if (env.get('DB_IN_MEMORY')) {
+            return import('#models/user_in_memory') as any
           }
 
-          return import('#models/user_in_memory') as any
+          return import('#models/user')
         },
       }),
     }),

@@ -63,8 +63,10 @@
     "@adonisjs/core": "^6.2.3",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^20.1.0",
+    "@types/jsonwebtoken": "^9.0.6",
     "@vinejs/vine": "^1.7.1",
     "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.2.1"
