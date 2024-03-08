@@ -1,4 +1,4 @@
-import { User } from '#domainModels/user'
+import { User } from '#domainModels/user/user'
 import { VerifyCredentialsUseCase } from '#domainPorts/in/user/verify_credentials.use_case'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { inject } from '@adonisjs/core'

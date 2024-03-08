@@ -1,5 +1,8 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
+import { errors } from '@vinejs/vine'
+import { StatusCodes } from 'http-status-codes'
+import { UserAlreadyExistsException } from '#domainModels/user/user_already_exists.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -13,6 +16,16 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (error instanceof errors.E_VALIDATION_ERROR) {
+      ctx.response.status(StatusCodes.UNPROCESSABLE_ENTITY).send(error.messages)
+      return
+    }
+
+    if (error instanceof UserAlreadyExistsException) {
+      ctx.response.status(StatusCodes.CONFLICT).send(error.message)
+      return
+    }
+
     return super.handle(error, ctx)
   }
 

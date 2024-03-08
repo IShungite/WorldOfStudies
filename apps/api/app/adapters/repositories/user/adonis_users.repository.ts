@@ -1,5 +1,5 @@
-import { AccessToken } from '#domainModels/access_token'
-import { User } from '#domainModels/user'
+import { AccessToken } from '#domainModels/user/access_token'
+import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
@@ -23,9 +23,9 @@ export class AdonisUsersRepository implements IUsersRepository {
     const token = await UserEntity.accessTokens.create(userEntity)
 
     return new AccessToken({
-      abilities: token.abilities,
-      token: token.value!.release(),
       type: 'auth_token',
+      token: token.value!.release(),
+      role: user.role,
     })
   }
 

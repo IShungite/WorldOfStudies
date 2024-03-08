@@ -1,5 +1,5 @@
-import { AccessToken } from '#domainModels/access_token'
-import { User } from '#domainModels/user'
+import { AccessToken } from '#domainModels/user/access_token'
+import { User } from '#domainModels/user/user'
 
 export abstract class IUsersRepository {
   abstract save(user: User): Promise<User>
