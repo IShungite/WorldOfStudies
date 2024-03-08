@@ -1,8 +1,15 @@
+import { EmptyIdException } from '#domainModels/id/empty_id.exception'
+import { ChoiceNotFoundException } from '#domainModels/quiz/choice_not_found.exception'
+import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_question_type.exception'
+import { PromotionNotFoundException } from '#domainModels/school/promotion_not_found.exception'
+import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
+import { InvalidCredentialsException } from '#domainModels/user/invalid_credentials.exception'
+import { UserAlreadyExistsException } from '#domainModels/user/user_already_exists.exception'
+import { UserNotFoundException } from '#domainModels/user/user_not_found.exception'
+import { ExceptionHandler, HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
-import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import { errors } from '@vinejs/vine'
 import { StatusCodes } from 'http-status-codes'
-import { UserAlreadyExistsException } from '#domainModels/user/user_already_exists.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -23,6 +30,27 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
     if (error instanceof UserAlreadyExistsException) {
       ctx.response.status(StatusCodes.CONFLICT).send(error.message)
+      return
+    }
+
+    if (error instanceof UserNotFoundException) {
+      ctx.response.status(StatusCodes.NOT_FOUND).send(error.message)
+      return
+    }
+
+    if (error instanceof InvalidCredentialsException) {
+      ctx.response.status(StatusCodes.UNAUTHORIZED).send(error.message)
+      return
+    }
+
+    if (
+      error instanceof InvalidQuestionTypeException ||
+      error instanceof EmptyIdException ||
+      error instanceof ChoiceNotFoundException ||
+      error instanceof SchoolNotFoundException ||
+      error instanceof PromotionNotFoundException
+    ) {
+      ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return
     }
 

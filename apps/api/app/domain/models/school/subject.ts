@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 
 export type CreateSubjectDto = {
   name: string

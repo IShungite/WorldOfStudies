@@ -1,4 +1,5 @@
 import { AccessToken } from '#domainModels/user/access_token'
+import { InvalidCredentialsException } from '#domainModels/user/invalid_credentials.exception'
 import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { CreateTestJwtService } from '../../utils/test_jwt/create_test_jwt.service.js'
@@ -33,6 +34,6 @@ export class InMemoryUsersRepository implements IUsersRepository {
       return user
     }
 
-    throw new Error('Invalid credentials')
+    throw new InvalidCredentialsException()
   }
 }

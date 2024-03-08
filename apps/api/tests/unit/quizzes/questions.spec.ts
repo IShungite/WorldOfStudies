@@ -1,6 +1,6 @@
 import { questionType } from '#domainModels/quiz/question'
 import { test } from '@japa/runner'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { UserAnswerFactory } from '#factories/user_answer.factory'
 import { QuestionFactory } from '#factories/question.factory'
 

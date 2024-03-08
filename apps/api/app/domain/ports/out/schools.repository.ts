@@ -1,5 +1,5 @@
-import { Id } from '#domainModels/id'
-import { School } from '#domainModels/school'
+import { Id } from '#domainModels/id/id'
+import { School } from '#domainModels/school/school'
 
 export abstract class ISchoolsRepository {
   abstract save(school: School): Promise<School>

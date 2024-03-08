@@ -1,5 +1,5 @@
 import { CreateQuestionDto, Question } from '#domainModels/quiz/question'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { UserAnswer } from '#domainModels/quiz/user_answer'
 
 export type CreateQuizDto = {

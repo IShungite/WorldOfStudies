@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 
 export interface DeleteQuizUseCase {

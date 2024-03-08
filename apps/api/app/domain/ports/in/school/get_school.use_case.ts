@@ -1,5 +1,5 @@
-import { Id } from '#domainModels/id'
-import { CreateSchoolDto, School } from '#domainModels/school'
+import { Id } from '#domainModels/id/id'
+import { CreateSchoolDto, School } from '#domainModels/school/school'
 
 export interface GetSchoolUseCase {
   get: (schoolId: Id) => Promise<School | null>

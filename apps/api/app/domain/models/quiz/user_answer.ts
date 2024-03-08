@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { QuestionType, questionType } from '#domainModels/quiz/question'
 
 type UserAnswerProps = {

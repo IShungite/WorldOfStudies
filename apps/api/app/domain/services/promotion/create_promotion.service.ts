@@ -1,5 +1,6 @@
-import { CreatePromotionDto, Promotion } from '#domainModels/promotion'
-import { School } from '#domainModels/school'
+import { CreatePromotionDto, Promotion } from '#domainModels/school/promotion'
+import { School } from '#domainModels/school/school'
+import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { CreatePromotionUseCase } from '#domainPorts/in/promotion/create_promotion.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
@@ -14,7 +15,7 @@ export class CreatePromotionService implements CreatePromotionUseCase {
     const school = await this.schoolsRepository.getById(createPromotionDto.schoolId)
 
     if (!school) {
-      throw new Error('School not found')
+      throw new SchoolNotFoundException(createPromotionDto.schoolId)
     }
 
     const newSchool = new School({

@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import vine from '@vinejs/vine'
 
 export const domainIdValidator = vine

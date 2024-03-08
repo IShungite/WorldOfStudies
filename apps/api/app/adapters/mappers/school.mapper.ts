@@ -1,4 +1,4 @@
-import { School } from '#domainModels/school'
+import { School } from '#domainModels/school/school'
 
 export class SchoolMapper {
   static toResponse(school: School): { id: string; name: string } {

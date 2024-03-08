@@ -1,7 +1,9 @@
+import { EmptyIdException } from '#domainModels/id/empty_id.exception'
+
 export class Id {
   constructor(private readonly _value: string) {
     if (!_value) {
-      throw new Error('Id cannot be empty')
+      throw new EmptyIdException()
     }
   }
 

@@ -1,5 +1,5 @@
 import { Character } from '#domainModels/character'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { User } from '#domainModels/user/user'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'

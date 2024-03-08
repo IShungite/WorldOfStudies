@@ -1,5 +1,5 @@
 import { Quiz } from '#domainModels/quiz/quiz'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { GetQuizUseCase } from '#domainPorts/in/quiz/get_quiz.use_case'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { inject } from '@adonisjs/core'

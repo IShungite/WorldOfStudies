@@ -1,5 +1,6 @@
 import { AccessToken } from '#domainModels/user/access_token'
 import { User } from '#domainModels/user/user'
+import { UserNotFoundException } from '#domainModels/user/user_not_found.exception'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
@@ -17,7 +18,7 @@ export class AdonisUsersRepository implements IUsersRepository {
     const userEntity = await UserEntity.find(user.id.toString())
 
     if (!userEntity) {
-      throw new Error('User not found')
+      throw new UserNotFoundException(user.id)
     }
 
     const token = await UserEntity.accessTokens.create(userEntity)

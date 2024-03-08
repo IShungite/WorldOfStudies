@@ -1,4 +1,5 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
+import { QuizNotFoundException } from '#domainModels/quiz/quiz_not_found.exception'
 import { DeleteQuizUseCase } from '#domainPorts/in/quiz/delete_quiz.use_case'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { inject } from '@adonisjs/core'
@@ -11,7 +12,7 @@ export class DeleteQuizService implements DeleteQuizUseCase {
     const quiz = await this.quizzesRepository.getById(quizId)
 
     if (!quiz) {
-      throw new Error('Quiz not found')
+      throw new QuizNotFoundException(quizId)
     }
 
     await this.quizzesRepository.deleteById(quizId)

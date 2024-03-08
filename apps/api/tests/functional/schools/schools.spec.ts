@@ -1,5 +1,5 @@
-import { Id } from '#domainModels/id'
-import { School } from '#domainModels/school'
+import { Id } from '#domainModels/id/id'
+import { School } from '#domainModels/school/school'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
 import app from '@adonisjs/core/services/app'

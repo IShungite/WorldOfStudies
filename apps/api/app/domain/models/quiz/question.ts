@@ -1,5 +1,6 @@
 import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from '#domainModels/quiz/user_answer'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
+import { ChoiceNotFoundException } from '#domainModels/quiz/choice_not_found.exception'
 
 export const questionType = {
   QCM: 'qcm',
@@ -60,7 +61,7 @@ export class QuestionQcm extends Question {
     const choice = this.choices.find((c) => c.id === choiceId)
 
     if (!choice) {
-      throw new Error('Choice not found')
+      throw new ChoiceNotFoundException()
     }
 
     return choice.isCorrect

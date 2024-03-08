@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { User } from '#domainModels/user/user'
 import UserEntity from '#models/user'
 
