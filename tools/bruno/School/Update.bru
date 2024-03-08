@@ -1,0 +1,17 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{host}}/schools/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "School 145"
+  }
+}
