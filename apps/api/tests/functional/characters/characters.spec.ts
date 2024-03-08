@@ -1,6 +1,6 @@
 import { Character } from '#domainModels/character'
 import { Id } from '#domainModels/id'
-import { User } from '#domainModels/user'
+import { User } from '#domainModels/user/user'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'

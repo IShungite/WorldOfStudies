@@ -1,4 +1,4 @@
-import { User } from '#domainModels/user'
+import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { CreateTestJwtService } from '../adapters/utils/test_jwt/create_test_jwt.service.js'
 import UserEntity from '#models/user'

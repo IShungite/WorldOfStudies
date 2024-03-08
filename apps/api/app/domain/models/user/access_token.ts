@@ -1,7 +1,9 @@
+import { Role } from '#domainModels/user/role'
+
 type AccessTokenProps = {
   type: string
   token: string
-  abilities: string[]
+  role: Role
   lastUsedAt?: Date
   expiresAt?: Date
 }
@@ -9,14 +11,14 @@ type AccessTokenProps = {
 export class AccessToken {
   readonly type: string
   readonly token: string
-  readonly abilities: string[]
+  readonly role: Role
   readonly lastUsedAt: Date | null
   readonly expiresAt: Date | null
 
-  constructor({ type, token, abilities, lastUsedAt, expiresAt }: AccessTokenProps) {
+  constructor({ type, token, role, lastUsedAt, expiresAt }: AccessTokenProps) {
     this.type = type
     this.token = token
-    this.abilities = abilities
+    this.role = role
     this.lastUsedAt = lastUsedAt ?? null
     this.expiresAt = expiresAt ?? null
   }

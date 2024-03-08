@@ -1,5 +1,5 @@
-import { AccessToken } from '#domainModels/access_token'
-import { User } from '#domainModels/user'
+import { AccessToken } from '#domainModels/user/access_token'
+import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { CreateTestJwtService } from '../../utils/test_jwt/create_test_jwt.service.js'
 
@@ -16,7 +16,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
     const token = new AccessToken({
       type: 'auth_token',
       token: jwtToken,
-      abilities: ['*'],
+      role: user.role,
     })
 
     return token
