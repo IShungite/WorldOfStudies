@@ -1,4 +1,5 @@
 import vine from '@vinejs/vine'
+import { Infer } from '@vinejs/vine/types'
 
 export const registerUserValidator = vine.object({
   firstName: vine.string().trim(),
@@ -6,3 +7,5 @@ export const registerUserValidator = vine.object({
   email: vine.string().trim().email(),
   password: vine.string().trim(),
 })
+
+export type RegisterUserValidator = Infer<typeof registerUserValidator>
