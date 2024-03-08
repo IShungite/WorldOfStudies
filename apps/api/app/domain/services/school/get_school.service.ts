@@ -1,5 +1,5 @@
-import { Id } from '#domainModels/id'
-import { School } from '#domainModels/school'
+import { Id } from '#domainModels/id/id'
+import { School } from '#domainModels/school/school'
 import { GetSchoolUseCase } from '#domainPorts/in/school/get_school.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'

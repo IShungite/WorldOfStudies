@@ -1,3 +1,4 @@
+import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_question_type.exception'
 import {
   CreateQuestionDto,
   CreateQuestionDtoQcm,
@@ -18,6 +19,6 @@ export class QuestionFactory {
     if (createQuestionDto.type === questionType.TEXT_HOLE)
       return new QuestionTextHole(createQuestionDto)
 
-    throw new Error('Invalid question type')
+    throw new InvalidQuestionTypeException()
   }
 }

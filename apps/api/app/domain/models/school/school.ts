@@ -1,5 +1,5 @@
-import { Id } from '#domainModels/id'
-import { Promotion } from '#domainModels/promotion'
+import { Id } from '#domainModels/id/id'
+import { Promotion } from '#domainModels/school/promotion'
 
 export type CreateSchoolDto = {
   name: string

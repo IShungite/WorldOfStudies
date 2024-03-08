@@ -1,5 +1,5 @@
 import { Character } from '#domainModels/character'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 
 export class InMemoryCharactersRepository implements ICharactersRepository {

@@ -1,5 +1,5 @@
 import { Quiz } from '#domainModels/quiz/quiz'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 
 export abstract class IQuizzesRepository {
   abstract save(quiz: Quiz): Promise<Quiz>

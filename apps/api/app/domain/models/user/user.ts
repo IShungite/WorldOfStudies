@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { Role } from '#domainModels/user/role'
 
 export type CreateUserDto = {

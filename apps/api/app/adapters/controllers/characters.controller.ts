@@ -1,4 +1,4 @@
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { CreateCharacterService } from '#domainServices/character/create_character.service'
 import { GetCharactersByUserIdService } from '#domainServices/character/get_characters_by_user_id.service'
 import { createCharacterValidator } from '#validators/create_character.validator'

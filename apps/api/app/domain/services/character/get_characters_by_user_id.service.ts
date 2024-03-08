@@ -1,5 +1,5 @@
 import { Character } from '#domainModels/character'
-import { Id } from '#domainModels/id'
+import { Id } from '#domainModels/id/id'
 import { GetCharactersByUserIdUseCase } from '#domainPorts/in/character/get_characters_by_user_id.use_case'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { inject } from '@adonisjs/core'

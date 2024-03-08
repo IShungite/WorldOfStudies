@@ -1,5 +1,6 @@
-import { Id } from '#domainModels/id'
-import { School, UpdateSchoolDto } from '#domainModels/school'
+import { Id } from '#domainModels/id/id'
+import { School, UpdateSchoolDto } from '#domainModels/school/school'
+import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { UpdateSchoolUseCase } from '#domainPorts/in/school/update_school.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
@@ -12,7 +13,7 @@ export class UpdateSchoolService implements UpdateSchoolUseCase {
     const school = await this.schoolsRepository.getById(schoolId)
 
     if (!school) {
-      throw new Error('School not found')
+      throw new SchoolNotFoundException(schoolId)
     }
 
     const newSchool = new School({
