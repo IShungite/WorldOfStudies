@@ -27,7 +27,7 @@ test.group('Auth - register', (group) => {
     }
 
     const response = await client.post('/auth/register').json(payload)
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ ...payload, password: undefined })
   })
 
@@ -40,7 +40,7 @@ test.group('Auth - register', (group) => {
     }
 
     const response = await client.post('/auth/register').json(payload)
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ role: role.STUDENT })
   })
 

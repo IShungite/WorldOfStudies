@@ -4,6 +4,7 @@ import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository
@@ -19,7 +20,7 @@ test.group('Characters - characters by user', (group) => {
     const userId = '1'
 
     const response = await client.get(`/characters/user/${userId}`)
-    response.assertStatus(200)
+    response.assertStatus(StatusCodes.OK)
     response.assertBody([])
   })
 
@@ -30,7 +31,7 @@ test.group('Characters - characters by user', (group) => {
     charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') }))
 
     const response = await client.get(`/characters/user/${userId}`)
-    response.assertStatus(200)
+    response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 2)
   })
 })

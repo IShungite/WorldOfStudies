@@ -34,7 +34,7 @@ test.group('Characters - store', (group) => {
         name: 'Shun',
       })
       .loginAs(user as any)
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
   })
 
@@ -59,7 +59,7 @@ test.group('Characters - store', (group) => {
     charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') }))
 
     const response = await client.get('/characters/user/1')
-    response.assertStatus(200)
+    response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 1)
   })
 })
