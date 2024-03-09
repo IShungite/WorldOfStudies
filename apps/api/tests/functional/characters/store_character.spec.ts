@@ -5,10 +5,12 @@ import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
+import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
-test.group('Characters', (group) => {
+test.group('Characters - store', (group) => {
   let charactersRepository: ICharactersRepository
   let usersRepository: IUsersRepository
 
@@ -24,9 +26,7 @@ test.group('Characters', (group) => {
   })
 
   test('It should create a character', async ({ client }) => {
-    const user = await usersRepository.save(
-      new User({ email: 'a@a', firstName: 'a', lastName: 'a', password: 'a' })
-    )
+    const user = await usersRepository.save(new UserBuilderTest().build())
 
     const response = await client
       .post('/characters')
@@ -36,6 +36,22 @@ test.group('Characters', (group) => {
       .loginAs(user as any)
     response.assertStatus(201)
     response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
+  })
+
+  test('It should return a 401 if the user is not authenticated', async ({ client }) => {
+    const response = await client.post('/characters')
+    response.assertStatus(StatusCodes.UNAUTHORIZED)
+  })
+
+  test('It should return a 422 if the payload is invalid', async ({ client }) => {
+    const user = await usersRepository.save(new UserBuilderTest().build())
+
+    const response = await client
+      .post('/characters')
+      .json({})
+      .loginAs(user as any)
+
+    response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {

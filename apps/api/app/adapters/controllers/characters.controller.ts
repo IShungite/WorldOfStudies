@@ -30,7 +30,7 @@ export default class CharactersController {
     })
   }
 
-  async charactersByUserId({ request, response, auth }: HttpContext) {
+  async charactersByUserId({ request, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
     const characters = await this.getCharactersByUserId.get(id)

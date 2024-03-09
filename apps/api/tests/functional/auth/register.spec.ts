@@ -8,7 +8,7 @@ import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 
-test.group('Auth register', (group) => {
+test.group('Auth - register', (group) => {
   let usersRepository: IUsersRepository
 
   group.each.setup(async () => {
