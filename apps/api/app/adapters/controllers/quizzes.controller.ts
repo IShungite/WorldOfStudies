@@ -64,9 +64,11 @@ export default class QuizzesController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
     await this.deleteQuizService.delete(id)
+
+    return response.noContent()
   }
 }
