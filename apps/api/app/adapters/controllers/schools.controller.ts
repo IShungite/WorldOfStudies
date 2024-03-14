@@ -2,6 +2,7 @@ import { CreateSchoolService } from '#domainServices/school/create_school.servic
 import { DeleteSchoolService } from '#domainServices/school/delete_school.service'
 import { GetSchoolService } from '#domainServices/school/get_school.service'
 import { UpdateSchoolService } from '#domainServices/school/update_school.service'
+import { DeleteSubjectService } from '#domainServices/subject/delete_subject.service'
 import { SchoolMapper } from '#mappers/school.mapper'
 import { createSchoolValidator } from '#validators/create_school.validator'
 import { domainIdValidator } from '#validators/domain_id.validator'
@@ -16,6 +17,7 @@ export default class SchoolsController {
     private readonly createSchoolService: CreateSchoolService,
     private readonly getSchoolService: GetSchoolService,
     private readonly deleteSchoolService: DeleteSchoolService,
+    private readonly deleteSubjectService: DeleteSubjectService,
     private readonly updateSchoolService: UpdateSchoolService
   ) {}
 
@@ -52,5 +54,26 @@ export default class SchoolsController {
     await this.deleteSchoolService.delete(id)
 
     return response.noContent()
+  }
+
+  /**
+   * Delete subject within a school
+   */
+
+  async destroySubject({ params }: HttpContext) {
+    const idSchool = await vine.validate({
+      schema: domainIdValidator,
+      data: params.idSchool,
+    })
+    const idSubject = await vine.validate({
+      schema: domainIdValidator,
+      data: params.idPromotion,
+    })
+    const idPromotion = await vine.validate({
+      schema: domainIdValidator,
+      data: params.idSubject,
+    })
+
+    await this.deleteSubjectService.delete(idSchool, idSubject, idPromotion)
   }
 }
