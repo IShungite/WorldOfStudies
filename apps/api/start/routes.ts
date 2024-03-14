@@ -51,6 +51,21 @@ router
       .only(['store', 'show', 'destroy', 'update'])
 
     router
+      .delete('/school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+        SchoolsController,
+        'destroySubject',
+      ])
+      .where('idSchool', {
+        match: /^\d+$/,
+      })
+      .where('idPromotion', {
+        match: /^\d+$/,
+      })
+      .where('idSubject', {
+        match: /^\d+$/,
+      })
+
+    router
       .group(() => {
         router.post('/', [CharactersController, 'store'])
         router.get('/user/:id', [CharactersController, 'charactersByUserId'])
