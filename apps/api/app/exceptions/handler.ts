@@ -1,6 +1,7 @@
 import { EmptyIdException } from '#domainModels/id/empty_id.exception'
 import { ChoiceNotFoundException } from '#domainModels/quiz/choice_not_found.exception'
 import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_question_type.exception'
+import { QuizNotFoundException } from '#domainModels/quiz/quiz_not_found.exception'
 import { PromotionNotFoundException } from '#domainModels/school/promotion_not_found.exception'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { InvalidCredentialsException } from '#domainModels/user/invalid_credentials.exception'
@@ -48,7 +49,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof EmptyIdException ||
       error instanceof ChoiceNotFoundException ||
       error instanceof SchoolNotFoundException ||
-      error instanceof PromotionNotFoundException
+      error instanceof PromotionNotFoundException ||
+      error instanceof QuizNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return
