@@ -4,7 +4,7 @@ import vine from '@vinejs/vine'
 
 const questionValidator = vine.union([
   vine.union.if((value) => 'id' in value, updateQuestionValidator),
-  vine.union.if((value) => 'id' in value, createQuestionValidator),
+  vine.union.if((value) => !('id' in value), createQuestionValidator),
 ])
 
 export const updateQuizValidator = vine.object({
