@@ -17,7 +17,7 @@ test.group('Promotions - store', (group) => {
   })
 
   test('It should create a promotion', async ({ client }) => {
-    schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
+    await schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
 
     const response = await client.post('/promotions').json({
       name: 'Promotion 1',

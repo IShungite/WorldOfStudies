@@ -17,7 +17,7 @@ test.group('Quizzes - show', (group) => {
 
   test('It should return a quiz', async ({ client }) => {
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
-    quizzesRepository.save(quiz)
+    await quizzesRepository.save(quiz)
 
     const response = await client.get(`/quizzes/${quiz.id}`)
 

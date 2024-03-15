@@ -24,12 +24,12 @@ test.group('Quizzes - destroy', (group) => {
 
   test('It should return a 204 if the quiz exists and is deleted', async ({ client, assert }) => {
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
-    quizzesRepository.save(quiz)
+    await quizzesRepository.save(quiz)
 
     const response = await client.delete(`/quizzes/${quiz.id.toString()}`)
-    response.assertStatus(StatusCodes.NO_CONTENT)
-
     const deletedQuiz = await quizzesRepository.getById(quiz.id)
+
+    response.assertStatus(StatusCodes.NO_CONTENT)
     assert.isNull(deletedQuiz)
   })
 })

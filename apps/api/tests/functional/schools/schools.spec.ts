@@ -24,7 +24,7 @@ test.group('Schools', (group) => {
   })
 
   test('It should return the school', async ({ client }) => {
-    schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
+    await schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
 
     const response = await client.get('/schools/1')
     response.assertStatus(200)

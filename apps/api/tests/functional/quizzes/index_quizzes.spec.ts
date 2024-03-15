@@ -16,10 +16,13 @@ test.group('Quizzes - index', (group) => {
   })
 
   test('It should return the list of quizzes', async ({ client, assert }) => {
-    quizzesRepository.save(new Quiz({ name: 'Quiz 1', questions: [] }))
-    quizzesRepository.save(new Quiz({ name: 'Quiz 2', questions: [] }))
+    await Promise.all([
+      quizzesRepository.save(new Quiz({ name: 'Quiz 1', questions: [] })),
+      quizzesRepository.save(new Quiz({ name: 'Quiz 2', questions: [] })),
+    ])
 
     const response = await client.get('/quizzes')
+
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 2)
     response.assertBodyContains([{ name: 'Quiz 1' }, { name: 'Quiz 2' }])

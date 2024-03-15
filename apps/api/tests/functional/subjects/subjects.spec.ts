@@ -17,7 +17,7 @@ test.group('Subjects', (group) => {
   })
 
   test('It should create a subject', async ({ client }) => {
-    schoolsRepository.save(
+    await schoolsRepository.save(
       new School({
         id: new Id('1'),
         name: 'School 1',

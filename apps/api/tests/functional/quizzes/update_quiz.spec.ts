@@ -1,4 +1,4 @@
-import { Question, questionType } from '#domainModels/quiz/question'
+import { questionType } from '#domainModels/quiz/question'
 import { Quiz } from '#domainModels/quiz/quiz'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { QuestionFactory } from '#factories/question.factory'
@@ -25,7 +25,7 @@ test.group('Quizzes - update', (group) => {
 
   test('It should update the name of a quiz', async ({ client }) => {
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
-    quizzesRepository.save(quiz)
+    await quizzesRepository.save(quiz)
 
     const response = await client.patch(`/quizzes/${quiz.id}`).json({ name: 'Quiz 2' })
 
@@ -35,7 +35,7 @@ test.group('Quizzes - update', (group) => {
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
-    quizzesRepository.save(quiz)
+    await quizzesRepository.save(quiz)
 
     const response = await client.patch(`/quizzes/${quiz.id}`).json({
       name: 15,
@@ -54,7 +54,7 @@ test.group('Quizzes - update', (group) => {
       ],
     })
     const quiz = new Quiz({ name: 'Quiz 1', questions: [question] })
-    quizzesRepository.save(quiz)
+    await quizzesRepository.save(quiz)
 
     const updatedQuestion = QuestionFactory.create({
       id: question.id,

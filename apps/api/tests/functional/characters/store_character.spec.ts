@@ -1,6 +1,5 @@
 import { Character } from '#domainModels/character'
 import { Id } from '#domainModels/id/id'
-import { User } from '#domainModels/user/user'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
@@ -55,8 +54,10 @@ test.group('Characters - store', (group) => {
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {
-    charactersRepository.save(new Character({ name: 'Shun', userId: new Id('1') }))
-    charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') }))
+    await Promise.all([
+      charactersRepository.save(new Character({ name: 'Shun', userId: new Id('1') })),
+      charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') })),
+    ])
 
     const response = await client.get('/characters/user/1')
     response.assertStatus(StatusCodes.OK)

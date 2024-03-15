@@ -26,9 +26,12 @@ test.group('Characters - characters by user', (group) => {
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {
     const userId = '1'
-    charactersRepository.save(new Character({ name: 'Shun', userId: new Id(userId) }))
-    charactersRepository.save(new Character({ name: 'Shun2', userId: new Id(userId) }))
-    charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') }))
+
+    await Promise.all([
+      charactersRepository.save(new Character({ name: 'Shun', userId: new Id(userId) })),
+      charactersRepository.save(new Character({ name: 'Shun2', userId: new Id(userId) })),
+      charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') })),
+    ])
 
     const response = await client.get(`/characters/user/${userId}`)
     response.assertStatus(StatusCodes.OK)

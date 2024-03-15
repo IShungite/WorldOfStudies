@@ -1,9 +1,7 @@
 import { role } from '#domainModels/user/role'
 import { CreateUserDto, User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/user.repository'
-import { UserMapper } from '#mappers/user.mapper'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
-import { LoginUserValidator } from '#validators/login_user.validator'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -64,7 +62,7 @@ test.group('Auth - register', (group) => {
       password: '123456',
     }
 
-    usersRepository.save(
+    await usersRepository.save(
       new User({
         email: 'shun@example.com',
         firstName: 'a',
