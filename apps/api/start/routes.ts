@@ -16,6 +16,7 @@ const SchoolsController = () => import('#controllers/schools.controller')
 const UserAnswersController = () => import('#controllers/user_answers.controller')
 const AuthController = () => import('#controllers/auth.controller')
 const QuizzesController = () => import('#controllers/quizzes.controller')
+const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
   return {
@@ -56,13 +57,13 @@ router
         'destroySubject',
       ])
       .where('idSchool', {
-        match: /^\d+$/,
+        match: onlyNumbersRegex,
       })
       .where('idPromotion', {
-        match: /^\d+$/,
+        match: onlyNumbersRegex,
       })
       .where('idSubject', {
-        match: /^\d+$/,
+        match: onlyNumbersRegex,
       })
 
     router
