@@ -61,18 +61,24 @@ export default class SchoolsController {
    */
 
   async destroySubject({ params }: HttpContext) {
-    const idSchool = await vine.validate({
-      schema: domainIdValidator,
-      data: params.idSchool,
-    })
-    const idSubject = await vine.validate({
-      schema: domainIdValidator,
-      data: params.idPromotion,
-    })
-    const idPromotion = await vine.validate({
-      schema: domainIdValidator,
-      data: params.idSubject,
-    })
+    const allPromises = await Promise.all([
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSchool,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idPromotion,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSubject,
+      }),
+    ])
+
+    const idSchool = allPromises[0]
+    const idSubject = allPromises[1]
+    const idPromotion = allPromises[2]
 
     await this.deleteSubjectService.delete(idSchool, idSubject, idPromotion)
   }
