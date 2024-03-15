@@ -5,6 +5,7 @@ import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('Subjects - store', (group) => {
   let schoolsRepository: ISchoolsRepository
@@ -18,7 +19,7 @@ test.group('Subjects - store', (group) => {
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const response = await client.post('/subjects').json({})
-    response.assertStatus(422)
+    response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
 
   test('It should create a subject', async ({ client }) => {
@@ -34,7 +35,7 @@ test.group('Subjects - store', (group) => {
       name: 'Subject 1',
       promotionId: '1',
     })
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.OK)
     response.assertBodyContains({ name: 'Subject 1' })
   })
 })
