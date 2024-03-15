@@ -16,6 +16,7 @@ const SchoolsController = () => import('#controllers/schools.controller')
 const UserAnswersController = () => import('#controllers/user_answers.controller')
 const AuthController = () => import('#controllers/auth.controller')
 const QuizzesController = () => import('#controllers/quizzes.controller')
+const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
   return {
@@ -49,6 +50,21 @@ router
       .resource('schools', SchoolsController)
       .apiOnly()
       .only(['store', 'show', 'destroy', 'update'])
+
+    router
+      .delete('/school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+        SchoolsController,
+        'destroySubject',
+      ])
+      .where('idSchool', {
+        match: onlyNumbersRegex,
+      })
+      .where('idPromotion', {
+        match: onlyNumbersRegex,
+      })
+      .where('idSubject', {
+        match: onlyNumbersRegex,
+      })
 
     router
       .group(() => {
