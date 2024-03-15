@@ -1,4 +1,4 @@
-import { Character } from '#domainModels/character'
+import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
 import { GetCharactersByUserIdUseCase } from '#domainPorts/in/character/get_characters_by_user_id.use_case'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'

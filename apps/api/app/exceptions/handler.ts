@@ -12,6 +12,7 @@ import { ExceptionHandler, HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { errors } from '@vinejs/vine'
 import { StatusCodes } from 'http-status-codes'
+import { CharacterNotFoundException } from '#domainModels/character/character_not_found.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -52,7 +53,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof SchoolNotFoundException ||
       error instanceof PromotionNotFoundException ||
       error instanceof QuizNotFoundException ||
-      error instanceof SubjectNotFoundException
+      error instanceof SubjectNotFoundException ||
+      error instanceof QuizNotFoundException ||
+      error instanceof CharacterNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return
