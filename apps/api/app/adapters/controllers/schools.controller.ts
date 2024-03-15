@@ -29,7 +29,7 @@ export default class SchoolsController {
   async show({ params }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const school = await this.getSchoolService.get(id)
-    return school ? SchoolMapper.toResponse(school) : null
+    return SchoolMapper.toResponse(school)
   }
 
   /**
@@ -40,15 +40,17 @@ export default class SchoolsController {
     const payload = await vine.validate({ schema: updateSchoolValidator, data: request.all() })
 
     const school = await this.updateSchoolService.update(id, payload)
-    return school
+    return SchoolMapper.toResponse(school)
   }
 
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
     await this.deleteSchoolService.delete(id)
+
+    return response.noContent()
   }
 }
