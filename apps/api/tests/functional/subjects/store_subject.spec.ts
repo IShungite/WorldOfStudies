@@ -35,7 +35,7 @@ test.group('Subjects - store', (group) => {
       name: 'Subject 1',
       promotionId: '1',
     })
-    response.assertStatus(StatusCodes.OK)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ name: 'Subject 1' })
   })
 })
