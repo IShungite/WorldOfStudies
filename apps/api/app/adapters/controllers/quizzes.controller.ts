@@ -3,6 +3,7 @@ import { DeleteQuizService } from '#domainServices/quiz/delete_quiz.service'
 import { GetQuizService } from '#domainServices/quiz/get_quiz.service'
 import { GetQuizzesService } from '#domainServices/quiz/get_quizzes.service'
 import { UpdateQuizService } from '#domainServices/quiz/update_quiz.service'
+import { QuizMapper } from '#mappers/quiz.mapper'
 import { createQuizValidator } from '#validators/create_quiz.validator'
 import { domainIdValidator } from '#validators/domain_id.validator'
 import { updateQuizValidator } from '#validators/update_quiz.validator'
@@ -50,20 +51,23 @@ export default class QuizzesController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const payload = await vine.validate({ schema: updateQuizValidator, data: request.all() })
 
     const quiz = await this.updateQuizService.update(id, payload)
-    return quiz
+
+    return response.ok(QuizMapper.toResponse(quiz))
   }
 
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
     await this.deleteQuizService.delete(id)
+
+    return response.noContent()
   }
 }

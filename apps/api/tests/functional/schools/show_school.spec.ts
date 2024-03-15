@@ -4,8 +4,9 @@ import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
-test.group('Schools', (group) => {
+test.group('Schools - show', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.each.setup(async () => {
@@ -15,19 +16,18 @@ test.group('Schools', (group) => {
     })
   })
 
-  test('It should create a school', async ({ client }) => {
-    const response = await client.post('/schools').json({
-      name: 'School 1',
-    })
-    response.assertStatus(201)
-    response.assertBodyContains({ name: 'School 1' })
+  test('It should return a 400 when school does not exist', async ({ client }) => {
+    const response = await client.get('/schools/1')
+
+    response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
   test('It should return the school', async ({ client }) => {
-    schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
+    await schoolsRepository.save(new School({ id: new Id('1'), name: 'School 1' }))
 
     const response = await client.get('/schools/1')
-    response.assertStatus(200)
+
+    response.assertStatus(StatusCodes.OK)
     response.assertBodyContains({ id: '1', name: 'School 1' })
   })
 })

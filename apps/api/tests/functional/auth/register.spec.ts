@@ -6,7 +6,7 @@ import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 
-test.group('Auth', (group) => {
+test.group('Auth - register', (group) => {
   let usersRepository: IUsersRepository
 
   group.each.setup(async () => {
@@ -25,7 +25,7 @@ test.group('Auth', (group) => {
     }
 
     const response = await client.post('/auth/register').json(payload)
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ ...payload, password: undefined })
   })
 
@@ -38,7 +38,7 @@ test.group('Auth', (group) => {
     }
 
     const response = await client.post('/auth/register').json(payload)
-    response.assertStatus(201)
+    response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ role: role.STUDENT })
   })
 
@@ -62,7 +62,7 @@ test.group('Auth', (group) => {
       password: '123456',
     }
 
-    usersRepository.save(
+    await usersRepository.save(
       new User({
         email: 'shun@example.com',
         firstName: 'a',

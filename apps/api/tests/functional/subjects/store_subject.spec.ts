@@ -6,7 +6,7 @@ import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repos
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 
-test.group('Subjects', (group) => {
+test.group('Subjects - store', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.each.setup(async () => {
@@ -16,8 +16,13 @@ test.group('Subjects', (group) => {
     })
   })
 
+  test('It should return a 422 if the payload is invalid', async ({ client }) => {
+    const response = await client.post('/subjects').json({})
+    response.assertStatus(422)
+  })
+
   test('It should create a subject', async ({ client }) => {
-    schoolsRepository.save(
+    await schoolsRepository.save(
       new School({
         id: new Id('1'),
         name: 'School 1',
