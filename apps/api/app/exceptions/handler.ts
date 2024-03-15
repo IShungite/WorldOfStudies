@@ -4,6 +4,7 @@ import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_questio
 import { QuizNotFoundException } from '#domainModels/quiz/quiz_not_found.exception'
 import { PromotionNotFoundException } from '#domainModels/school/promotion_not_found.exception'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
+import { SubjectNotFoundException } from '#domainModels/school/subject_not_found.exception'
 import { InvalidCredentialsException } from '#domainModels/user/invalid_credentials.exception'
 import { UserAlreadyExistsException } from '#domainModels/user/user_already_exists.exception'
 import { UserNotFoundException } from '#domainModels/user/user_not_found.exception'
@@ -50,7 +51,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof ChoiceNotFoundException ||
       error instanceof SchoolNotFoundException ||
       error instanceof PromotionNotFoundException ||
-      error instanceof QuizNotFoundException
+      error instanceof QuizNotFoundException ||
+      error instanceof SubjectNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return
