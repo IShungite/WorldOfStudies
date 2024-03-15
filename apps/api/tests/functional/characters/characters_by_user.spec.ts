@@ -1,4 +1,4 @@
-import { Character } from '#domainModels/character'
+import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'

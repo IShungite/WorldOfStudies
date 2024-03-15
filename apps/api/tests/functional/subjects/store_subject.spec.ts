@@ -19,6 +19,7 @@ test.group('Subjects - store', (group) => {
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const response = await client.post('/subjects').json({})
+
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
 
@@ -35,6 +36,7 @@ test.group('Subjects - store', (group) => {
       name: 'Subject 1',
       promotionId: '1',
     })
+
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ name: 'Subject 1' })
   })

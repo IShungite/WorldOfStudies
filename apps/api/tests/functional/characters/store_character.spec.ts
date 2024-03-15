@@ -1,4 +1,4 @@
-import { Character } from '#domainModels/character'
+import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/user.repository'

@@ -11,6 +11,10 @@ export type CreateCharacterDto = {
   userId: Id
 }
 
+export type UpdateCharacterDto = {
+  name?: string
+}
+
 export class Character {
   readonly id: Id
   readonly name: string

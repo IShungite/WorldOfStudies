@@ -1,4 +1,4 @@
-import { Character, CreateCharacterDto } from '#domainModels/character'
+import { Character, CreateCharacterDto } from '#domainModels/character/character'
 import { CreateCharacterUseCase } from '#domainPorts/in/character/create_character.use_case'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { inject } from '@adonisjs/core'

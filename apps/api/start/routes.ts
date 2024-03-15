@@ -45,11 +45,8 @@ router
       .use(middleware.auth({ guards: ['api'] }))
 
     router.resource('quizzes', QuizzesController).apiOnly()
-    router.resource('user-answers', UserAnswersController).apiOnly().only(['store'])
-    router
-      .resource('schools', SchoolsController)
-      .apiOnly()
-      .only(['store', 'show', 'destroy', 'update'])
+
+    router.resource('user-answers', UserAnswersController).only(['store'])
 
     router
       .delete('/school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
@@ -66,24 +63,15 @@ router
         match: onlyNumbersRegex,
       })
 
-    router
-      .group(() => {
-        router.post('/', [CharactersController, 'store'])
-        router.get('/user/:id', [CharactersController, 'charactersByUserId'])
-      })
-      .prefix('characters')
+    router.resource('schools', SchoolsController).apiOnly()
 
-    router
-      .group(() => {
-        router.post('/', [PromotionsController, 'store'])
-      })
-      .prefix('promotions')
+    router.resource('characters', CharactersController).only(['store', 'update'])
+    router.get('characters/user/:id', [CharactersController, 'charactersByUserId'])
 
-    router
-      .group(() => {
-        router.post('/', [SubjectsController, 'store'])
-      })
-      .prefix('subjects')
+    router.resource('promotions', PromotionsController).only(['store'])
+
+    router.resource('subjects', SubjectsController).only(['store'])
+
     // api routes end
   })
   .prefix('api')

@@ -1,4 +1,4 @@
-import { Character } from '#domainModels/character'
+import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 
@@ -12,5 +12,11 @@ export class InMemoryCharactersRepository implements ICharactersRepository {
 
   async getAllByUserId(userId: Id): Promise<Character[]> {
     return Object.values(this.characters).filter((character) => character.userId.equals(userId))
+  }
+
+  async getById(characterId: Id): Promise<Character | null> {
+    return (
+      Object.values(this.characters).find((character) => character.id.equals(characterId)) ?? null
+    )
   }
 }
