@@ -18,7 +18,7 @@ test.group('Subjects - destroy', (group) => {
     })
   })
 
-  test('It should return a 404 if the payload is invalid', async ({ client }) => {
+  test('It should return a 404 if one or more params are not a number', async ({ client }) => {
     const response = await client.delete('/school/1/promotion/1/subject/bob')
 
     response.assertStatus(StatusCodes.NOT_FOUND)
