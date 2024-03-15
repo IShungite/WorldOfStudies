@@ -7,7 +7,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { UpdateCharacterService } from '#domainServices/character/update_character_service'
-import { CharacterMapper } from '#mappers/cahracter.mapper'
+import { CharacterMapper } from '#mappers/character.mapper'
 
 @inject()
 export default class CharactersController {
