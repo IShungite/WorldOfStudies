@@ -38,7 +38,7 @@ export class DeleteSubjectService implements DeleteSubjectUseCase {
 
     const newSchool = new School({
       ...school,
-      promotions: school.promotions.map((p) => (p.id === newPromotion.id ? newPromotion : p)),
+      promotions: school.promotions.map((p) => (p.id.equals(newPromotion.id) ? newPromotion : p)),
     })
 
     await this.schoolsRepository.save(newSchool)
