@@ -10,7 +10,6 @@ import { updateQuizValidator } from '#validators/update_quiz.validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { StatusCodes } from 'http-status-codes'
 
 @inject()
 export default class QuizzesController {

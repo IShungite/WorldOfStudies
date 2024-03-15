@@ -5,7 +5,6 @@ import UserEntity from '#models/user'
 import { AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { Secret } from '@adonisjs/core/helpers'
 import app from '@adonisjs/core/services/app'
-import jwt from 'jsonwebtoken'
 
 export class AccessTokenTest extends AccessToken {
   value: Secret<string>
