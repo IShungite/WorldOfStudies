@@ -22,7 +22,7 @@ export default class AppProvider {
     U extends new (...args: any[]) => InstanceType<T>,
   >(repositoryInterface: T, inMemoryImplementation: U, defaultImplementation: U) {
     this.app.container.singleton(repositoryInterface, async () => {
-      if (env.get('DB_IN_MEMORY')) {
+      if (env.get('DB_CONNECTION') === 'in_memory') {
         return new inMemoryImplementation()
       }
       return new defaultImplementation()

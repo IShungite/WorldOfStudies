@@ -3,7 +3,7 @@ import app from '@adonisjs/core/services/app'
 import { defineConfig } from '@adonisjs/lucid'
 
 const dbConfig = defineConfig({
-  connection: 'sqlite',
+  connection: env.get('DB_CONNECTION') === 'in_memory' ? 'sqlite' : env.get('DB_CONNECTION'),
   connections: {
     postgres: {
       client: 'pg',

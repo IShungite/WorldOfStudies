@@ -40,15 +40,14 @@ class DbAccessTokensProviderTest extends DbAccessTokensProvider<any> {
 export default class UserEntityForAuthWhenInMemory extends UserEntity {
   static readonly accessTokens = new DbAccessTokensProviderTest({} as any) as any
 
-  constructor(user?: User) {
+  constructor(user: User) {
     super()
-    if (user) {
-      this.id = Number.parseInt(user.id.toString(), 10)
-      this.email = user.email
-      this.firstName = user.firstName
-      this.lastName = user.lastName
-      this.password = user.password
-    }
+    this.id = Number.parseInt(user.id.toString(), 10)
+    this.email = user.email
+    this.firstName = user.firstName
+    this.lastName = user.lastName
+    this.password = user.password
+    this.role = user.role
   }
 
   static async find(token: string): Promise<any> {
