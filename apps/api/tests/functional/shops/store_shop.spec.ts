@@ -29,6 +29,27 @@ test.group('Shops - store', (group) => {
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
 
+  test('It should return a 400 if the price is negative', async ({ client }) => {
+    const payload = {
+      schoolId: '1',
+      categories: [
+        {
+          name: 'Category 1',
+          products: [
+            {
+              name: 'Product 1',
+              price: -10,
+            },
+          ],
+        },
+      ],
+    }
+
+    const response = await client.post('/shops').json(payload)
+
+    response.assertStatus(StatusCodes.BAD_REQUEST)
+  })
+
   test('It should return a 400 if the school does not exist', async ({ client }) => {
     const response = await client.post('/shops').json({
       schoolId: '1',
