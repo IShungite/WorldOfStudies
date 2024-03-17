@@ -2,7 +2,7 @@ import { role } from '#domainModels/user/role'
 import { CreateUserDto, User } from '#domainModels/user/user'
 import { UserAlreadyExistsException } from '#domainModels/user/user_already_exists.exception'
 import { CreateUserUseCase } from '#domainPorts/in/user/create_user.use_case'
-import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()

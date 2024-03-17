@@ -1,5 +1,5 @@
 import { UserAnswer } from '#domainModels/quiz/user_answer'
-import { IUserAnswersRepository } from '#domainPorts/out/user_answer.repository'
+import { IUserAnswersRepository } from '#domainPorts/out/user_answers.repository'
 
 export class InMemoryUserAnswersRepository implements IUserAnswersRepository {
   private userAnswers: Record<string, UserAnswer> = {}

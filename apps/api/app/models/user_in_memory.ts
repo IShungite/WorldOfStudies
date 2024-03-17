@@ -1,5 +1,5 @@
 import { User } from '#domainModels/user/user'
-import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { CreateTestJwtService } from '../adapters/utils/test_jwt/create_test_jwt.service.js'
 import UserEntity from '#models/user'
 import { AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'

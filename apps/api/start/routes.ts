@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const ShopsController = () => import('#controllers/shops.controller')
 const SubjectsController = () => import('#controllers/subjects.controller')
 const PromotionsController = () => import('#controllers/promotions.controller')
 const CharactersController = () => import('#controllers/characters.controller')
@@ -53,15 +54,9 @@ router
         SchoolsController,
         'destroySubject',
       ])
-      .where('idSchool', {
-        match: onlyNumbersRegex,
-      })
-      .where('idPromotion', {
-        match: onlyNumbersRegex,
-      })
-      .where('idSubject', {
-        match: onlyNumbersRegex,
-      })
+      .where('idSchool', onlyNumbersRegex)
+      .where('idPromotion', onlyNumbersRegex)
+      .where('idSubject', onlyNumbersRegex)
 
     router.resource('schools', SchoolsController).apiOnly()
 
@@ -71,6 +66,8 @@ router
     router.resource('promotions', PromotionsController).only(['store'])
 
     router.resource('subjects', SubjectsController).only(['store'])
+
+    router.resource('shops', ShopsController).only(['store'])
 
     // api routes end
   })

@@ -13,6 +13,7 @@ import app from '@adonisjs/core/services/app'
 import { errors } from '@vinejs/vine'
 import { StatusCodes } from 'http-status-codes'
 import { CharacterNotFoundException } from '#domainModels/character/character_not_found.exception'
+import { InvalidPriceException } from '#domainModels/shop/invalid_price.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -55,7 +56,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof QuizNotFoundException ||
       error instanceof SubjectNotFoundException ||
       error instanceof QuizNotFoundException ||
-      error instanceof CharacterNotFoundException
+      error instanceof CharacterNotFoundException ||
+      error instanceof InvalidPriceException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return

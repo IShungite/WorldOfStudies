@@ -1,7 +1,7 @@
 import { AccessToken } from '#domainModels/user/access_token'
 import { User } from '#domainModels/user/user'
 import { UserNotFoundException } from '#domainModels/user/user_not_found.exception'
-import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
 
