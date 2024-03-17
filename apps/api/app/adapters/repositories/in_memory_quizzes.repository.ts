@@ -21,4 +21,8 @@ export class InMemoryQuizzesRepository implements IQuizzesRepository {
   async deleteById(quizId: Id): Promise<void> {
     delete this.quizzes[quizId.toString()]
   }
+
+  async empty(): Promise<void> {
+    this.quizzes = {}
+  }
 }

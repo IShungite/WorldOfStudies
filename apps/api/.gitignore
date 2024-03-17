@@ -1,7 +1,9 @@
 # Dependencies and AdonisJS build
 node_modules
 build
-tmp
+tmp/*
+# Keep tmp folder so the db.sqlite can be created in the github workflow
+!tmp/keep
 
 # Secrets
 .env

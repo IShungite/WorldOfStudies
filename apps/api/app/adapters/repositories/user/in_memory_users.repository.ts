@@ -36,4 +36,8 @@ export class InMemoryUsersRepository implements IUsersRepository {
 
     throw new InvalidCredentialsException()
   }
+
+  async empty(): Promise<void> {
+    this.users = {}
+  }
 }

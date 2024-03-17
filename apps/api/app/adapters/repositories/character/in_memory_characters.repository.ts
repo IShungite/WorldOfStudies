@@ -19,4 +19,8 @@ export class InMemoryCharactersRepository implements ICharactersRepository {
       Object.values(this.characters).find((character) => character.id.equals(characterId)) ?? null
     )
   }
+
+  async empty(): Promise<void> {
+    this.characters = {}
+  }
 }

@@ -4,8 +4,10 @@ import { UserNotFoundException } from '#domainModels/user/user_not_found.excepti
 import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { UserMapper } from '#mappers/user.mapper'
 import UserEntity from '#models/user'
+import testUtils from '@adonisjs/core/services/test_utils'
+import { InvalidCredentialsException } from '#domainModels/user/invalid_credentials.exception'
 
-export class AdonisUsersRepository implements IUsersRepository {
+export class LucidUsersRepository implements IUsersRepository {
   async getByEmail(email: string): Promise<User | null> {
     const user = await UserEntity.findBy('email', email)
 
@@ -38,6 +40,7 @@ export class AdonisUsersRepository implements IUsersRepository {
         firstName: user.firstName,
         lastName: user.lastName,
         password: user.password,
+        role: user.role,
       }
     )
 
@@ -45,10 +48,19 @@ export class AdonisUsersRepository implements IUsersRepository {
   }
 
   async verifyCredentials(email: string, password: string): Promise<User> {
-    console.log(email, password)
-    const user = await UserEntity.verifyCredentials(email, password)
-    console.log('good')
+    try {
+      const user = await UserEntity.verifyCredentials(email, password)
 
-    return UserMapper.fromAdonisDb(user)
+      return UserMapper.fromAdonisDb(user)
+    } catch (e) {
+      throw new InvalidCredentialsException()
+    }
+  }
+
+  async empty(): Promise<void> {
+    await testUtils
+      .db()
+      .truncate()
+      .then((trunc) => trunc())
   }
 }

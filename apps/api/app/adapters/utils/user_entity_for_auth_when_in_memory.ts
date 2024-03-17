@@ -1,6 +1,6 @@
 import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
-import { CreateTestJwtService } from '../adapters/utils/test_jwt/create_test_jwt.service.js'
+import { CreateTestJwtService } from './test_jwt/create_test_jwt.service.js'
 import UserEntity from '#models/user'
 import { AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { Secret } from '@adonisjs/core/helpers'
@@ -37,28 +37,29 @@ class DbAccessTokensProviderTest extends DbAccessTokensProvider<any> {
   }
 }
 
-export default class UserInMemory extends UserEntity {
+export default class UserEntityForAuthWhenInMemory extends UserEntity {
   static readonly accessTokens = new DbAccessTokensProviderTest({} as any) as any
 
-  constructor(user?: User) {
+  constructor(user: User) {
     super()
-    if (user) {
-      this.id = Number.parseInt(user.id.toString(), 10)
-      this.email = user.email
-      this.firstName = user.firstName
-      this.lastName = user.lastName
-      this.password = user.password
-    }
+    this.id = Number.parseInt(user.id.toString(), 10)
+    this.email = user.email
+    this.firstName = user.firstName
+    this.lastName = user.lastName
+    this.password = user.password
+    this.role = user.role
   }
 
-  static async find(email: string): Promise<any> {
-    const decodedValue = CreateTestJwtService.verify(email)
+  static async find(token: string): Promise<any> {
+    const decodedValue = CreateTestJwtService.verify(token)
+
+    if (!decodedValue) return null
 
     const db = await app.container.make(IUsersRepository)
     const user = await db.getByEmail(decodedValue.email)
 
     if (!user) return null
 
-    return new UserInMemory(user)
+    return new UserEntityForAuthWhenInMemory(user)
   }
 }

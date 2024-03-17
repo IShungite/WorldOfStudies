@@ -6,4 +6,5 @@ export abstract class ISchoolsRepository {
   abstract getById(schoolId: Id): Promise<School | null>
   abstract getByPromotionId(promotionId: Id): Promise<School | null>
   abstract deleteById(schoolId: Id): Promise<void>
+  abstract empty(): Promise<void>
 }

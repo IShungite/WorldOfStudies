@@ -1,7 +1,5 @@
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
-import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
-import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
@@ -11,42 +9,50 @@ test.group('Characters - store', (group) => {
   let charactersRepository: ICharactersRepository
   let usersRepository: IUsersRepository
 
+  group.setup(async () => {
+    ;[charactersRepository, usersRepository] = await Promise.all([
+      app.container.make(ICharactersRepository),
+      app.container.make(IUsersRepository),
+    ])
+  })
+
   group.each.setup(async () => {
-    charactersRepository = new InMemoryCharactersRepository()
-    app.container.swap(ICharactersRepository, () => {
-      return charactersRepository
-    })
-    usersRepository = new InMemoryUsersRepository()
-    app.container.swap(IUsersRepository, () => {
-      return usersRepository
-    })
+    await Promise.all([charactersRepository.empty(), usersRepository.empty()])
   })
 
   test('It should create a character', async ({ client }) => {
     const user = await usersRepository.save(new UserBuilderTest().build())
+    const token = await usersRepository.createToken(user)
 
     const response = await client
       .post('/characters')
       .json({
         name: 'Shun',
       })
-      .loginAs(user as any)
+      .headers({
+        Authorization: `Bearer ${token.token}`,
+      })
+
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
   })
 
   test('It should return a 401 if the user is not authenticated', async ({ client }) => {
     const response = await client.post('/characters')
+
     response.assertStatus(StatusCodes.UNAUTHORIZED)
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const user = await usersRepository.save(new UserBuilderTest().build())
+    const token = await usersRepository.createToken(user)
 
     const response = await client
       .post('/characters')
       .json({})
-      .loginAs(user as any)
+      .headers({
+        Authorization: `Bearer ${token.token}`,
+      })
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })

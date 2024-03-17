@@ -1,5 +1,4 @@
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
-import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -9,11 +8,12 @@ import { Id } from '#domainModels/id/id'
 test.group('Characters - update', (group) => {
   let charactersRepository: ICharactersRepository
 
+  group.setup(async () => {
+    charactersRepository = await app.container.make(ICharactersRepository)
+  })
+
   group.each.setup(async () => {
-    charactersRepository = new InMemoryCharactersRepository()
-    app.container.swap(ICharactersRepository, () => {
-      return charactersRepository
-    })
+    await charactersRepository.empty()
   })
 
   test('It should return a 400 if the character does not exist', async ({ client }) => {

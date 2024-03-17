@@ -6,6 +6,10 @@ export class CreateTestJwtService {
   }
 
   static verify(token: string) {
-    return jwt.verify(token, 'secret') as { email: string }
+    const decoded = jwt.verify(token, 'secret')
+
+    if (!decoded) return null
+
+    return decoded as { email: string }
   }
 }

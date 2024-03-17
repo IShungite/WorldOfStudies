@@ -10,8 +10,8 @@ const authConfig = defineConfig({
       provider: tokensUserProvider({
         tokens: 'accessTokens',
         model: (): Promise<typeof import('#models/user')> => {
-          if (env.get('DB_IN_MEMORY')) {
-            return import('#models/user_in_memory') as any
+          if (env.get('DB_CONNECTION') === 'in_memory') {
+            return import('../app/adapters/utils/user_entity_for_auth_when_in_memory.js') as any
           }
 
           return import('#models/user')
