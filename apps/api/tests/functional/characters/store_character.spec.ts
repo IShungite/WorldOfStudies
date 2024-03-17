@@ -1,5 +1,3 @@
-import { Character } from '#domainModels/character/character'
-import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
@@ -51,16 +49,5 @@ test.group('Characters - store', (group) => {
       .loginAs(user as any)
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
-  })
-
-  test('It should return the list of characters by user id', async ({ client, assert }) => {
-    await Promise.all([
-      charactersRepository.save(new Character({ name: 'Shun', userId: new Id('1') })),
-      charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') })),
-    ])
-
-    const response = await client.get('/characters/user/1')
-    response.assertStatus(StatusCodes.OK)
-    assert.lengthOf(response.body(), 1)
   })
 })

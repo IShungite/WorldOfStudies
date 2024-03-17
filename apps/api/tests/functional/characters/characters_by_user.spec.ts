@@ -19,7 +19,7 @@ test.group('Characters - characters by user', (group) => {
   test('It should return an empty array if the user has no characters', async ({ client }) => {
     const userId = '1'
 
-    const response = await client.get(`/characters/user/${userId}`)
+    const response = await client.get(`/user/${userId}/characters`)
     response.assertStatus(StatusCodes.OK)
     response.assertBody([])
   })
@@ -33,7 +33,7 @@ test.group('Characters - characters by user', (group) => {
       charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') })),
     ])
 
-    const response = await client.get(`/characters/user/${userId}`)
+    const response = await client.get(`/user/${userId}/characters`)
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 2)
   })
