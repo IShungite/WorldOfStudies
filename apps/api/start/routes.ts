@@ -31,14 +31,14 @@ router
     router
       .group(() => {
         // auth routes start
-        router.post('/register', [AuthController, 'register'])
-        router.post('/login', [AuthController, 'login'])
+        router.post('register', [AuthController, 'register'])
+        router.post('login', [AuthController, 'login'])
         // auth routes end
       })
       .prefix('auth')
 
     router
-      .get('/protected', ({ auth }) => {
+      .get('protected', ({ auth }) => {
         return {
           hello: `protected ${auth.user?.email}`,
         }
@@ -50,7 +50,7 @@ router
     router.resource('user-answers', UserAnswersController).only(['store'])
 
     router
-      .delete('/school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+      .delete('school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
         SchoolsController,
         'destroySubject',
       ])
@@ -61,7 +61,7 @@ router
     router.resource('schools', SchoolsController).apiOnly()
 
     router.resource('characters', CharactersController).only(['store', 'update'])
-    router.get('characters/user/:id', [CharactersController, 'charactersByUserId'])
+    router.get('user/:id/characters', [CharactersController, 'charactersByUserId'])
 
     router.resource('promotions', PromotionsController).only(['store'])
 
