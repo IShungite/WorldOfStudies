@@ -6,4 +6,5 @@ export abstract class IUsersRepository {
   abstract getByEmail(email: string): Promise<User | null>
   abstract verifyCredentials(email: string, password: string): Promise<User>
   abstract createToken(user: User): Promise<AccessToken>
+  abstract empty(): Promise<void>
 }

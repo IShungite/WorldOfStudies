@@ -6,7 +6,7 @@ import { IUserAnswersRepository } from '#domainPorts/out/user_answers.repository
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
 import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
-import { AdonisUsersRepository } from '#repositories/user/adonis_users.repository'
+import { LucidUsersRepository } from '#repositories/user/lucid_users.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { InMemoryUserAnswersRepository } from '#repositories/user_answer/in_memory_user_answers.repository'
 import env from '#start/env'
@@ -38,7 +38,7 @@ export default class AppProvider {
       InMemoryQuizzesRepository,
       InMemoryQuizzesRepository
     )
-    this.registerRepository(IUsersRepository, InMemoryUsersRepository, AdonisUsersRepository)
+    this.registerRepository(IUsersRepository, InMemoryUsersRepository, LucidUsersRepository)
     this.registerRepository(
       IUserAnswersRepository,
       InMemoryUserAnswersRepository,

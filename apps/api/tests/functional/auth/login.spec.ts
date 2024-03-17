@@ -1,7 +1,6 @@
 import { role } from '#domainModels/user/role'
 import { User } from '#domainModels/user/user'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
-import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { LoginUserValidator } from '#validators/login_user.validator'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
@@ -10,11 +9,12 @@ import { StatusCodes } from 'http-status-codes'
 test.group('Auth - login', (group) => {
   let usersRepository: IUsersRepository
 
+  group.setup(async () => {
+    usersRepository = await app.container.make(IUsersRepository)
+  })
+
   group.each.setup(async () => {
-    usersRepository = new InMemoryUsersRepository()
-    app.container.swap(IUsersRepository, () => {
-      return usersRepository
-    })
+    await usersRepository.empty()
   })
 
   test('It should return a 401 if the credentials are invalid', async ({ client }) => {

@@ -6,4 +6,5 @@ export abstract class IQuizzesRepository {
   abstract getById(quizId: Id): Promise<Quiz | null>
   abstract getAll(): Promise<Quiz[]>
   abstract deleteById(quizId: Id): Promise<void>
+  abstract empty(): Promise<void>
 }

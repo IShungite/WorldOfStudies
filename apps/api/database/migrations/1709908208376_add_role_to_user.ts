@@ -5,9 +5,7 @@ export default class extends BaseSchema {
   protected tableName = 'users'
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table
-        .enum('role', [role.ADMIN, role.SCHOOL_ADMIN, role.TEACHER, role.STUDENT])
-        .defaultTo(role.STUDENT)
+      table.enum('role', [role.ADMIN, role.SCHOOL_ADMIN, role.TEACHER, role.STUDENT])
     })
   }
 

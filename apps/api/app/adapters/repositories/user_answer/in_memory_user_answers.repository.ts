@@ -8,4 +8,8 @@ export class InMemoryUserAnswersRepository implements IUserAnswersRepository {
     this.userAnswers[userAnswer.id.toString()] = userAnswer
     return userAnswer
   }
+
+  async empty(): Promise<void> {
+    this.userAnswers = {}
+  }
 }
