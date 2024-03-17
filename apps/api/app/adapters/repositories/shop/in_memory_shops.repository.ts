@@ -11,6 +11,8 @@ export class InMemoryShopsRepository implements IShopsRepository {
   }
 
   async getBySchoolId(schoolId: Id): Promise<Shop | null> {
-    return Object.values(this.shops).find((shop) => shop.schoolId.equals(schoolId)) ?? null
+    return (
+      Object.values(this.shops).find((shopToFind) => shopToFind.schoolId.equals(schoolId)) ?? null
+    )
   }
 }
