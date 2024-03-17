@@ -1,6 +1,6 @@
 import { role } from '#domainModels/user/role'
 import { CreateUserDto, User } from '#domainModels/user/user'
-import { IUsersRepository } from '#domainPorts/out/user.repository'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
