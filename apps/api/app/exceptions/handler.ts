@@ -14,6 +14,7 @@ import { errors } from '@vinejs/vine'
 import { StatusCodes } from 'http-status-codes'
 import { CharacterNotFoundException } from '#domainModels/character/character_not_found.exception'
 import { InvalidPriceException } from '#domainModels/shop/invalid_price.exception'
+import { ShopNotFoundException } from '#domainModels/shop/shop_not_found_exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -57,7 +58,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof SubjectNotFoundException ||
       error instanceof QuizNotFoundException ||
       error instanceof CharacterNotFoundException ||
-      error instanceof InvalidPriceException
+      error instanceof InvalidPriceException ||
+      error instanceof ShopNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
       return

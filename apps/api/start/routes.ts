@@ -59,6 +59,7 @@ router
       .where('idSubject', onlyNumbersRegex)
 
     router.resource('schools', SchoolsController).apiOnly()
+    router.get('schools/:id/shop', [SchoolsController, 'getShop'])
 
     router.resource('characters', CharactersController).only(['store', 'update'])
     router.get('user/:id/characters', [CharactersController, 'charactersByUserId'])

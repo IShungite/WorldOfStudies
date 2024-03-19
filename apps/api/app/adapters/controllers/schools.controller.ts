@@ -10,6 +10,8 @@ import { updateSchoolValidator } from '#validators/update_school.validator'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { ShopMapper } from '#mappers/shop.mapper'
+import { GetShopBySchoolService } from '#domainServices/shop/get_shop_by_school.service'
 
 @inject()
 export default class SchoolsController {
@@ -18,7 +20,8 @@ export default class SchoolsController {
     private readonly getSchoolService: GetSchoolService,
     private readonly deleteSchoolService: DeleteSchoolService,
     private readonly deleteSubjectService: DeleteSubjectService,
-    private readonly updateSchoolService: UpdateSchoolService
+    private readonly updateSchoolService: UpdateSchoolService,
+    private readonly getShopBySchoolService: GetShopBySchoolService
   ) {}
 
   async store({ request, response }: HttpContext) {
@@ -77,5 +80,11 @@ export default class SchoolsController {
     ])
 
     await this.deleteSubjectService.delete(idSchool, idSubject, idPromotion)
+  }
+
+  async getShop({ params, response }: HttpContext) {
+    const id = await vine.validate({ schema: domainIdValidator, data: params.id })
+    const shop = await this.getShopBySchoolService.getShopBySchoolId(id)
+    return response.ok(ShopMapper.toResponse(shop))
   }
 }
