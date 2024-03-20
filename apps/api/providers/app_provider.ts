@@ -13,6 +13,7 @@ import env from '#start/env'
 import type { ApplicationService } from '@adonisjs/core/types'
 import { IShopsRepository } from '#domainPorts/out/shops.repository'
 import { InMemoryShopsRepository } from '#repositories/shop/in_memory_shops.repository'
+import { LucidCharactersRepository } from '#repositories/character/lucid_characters.repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -52,7 +53,7 @@ export default class AppProvider {
     this.registerRepository(
       ICharactersRepository,
       InMemoryCharactersRepository,
-      InMemoryCharactersRepository
+      LucidCharactersRepository
     )
     this.registerRepository(IShopsRepository, InMemoryShopsRepository, InMemoryShopsRepository)
   }

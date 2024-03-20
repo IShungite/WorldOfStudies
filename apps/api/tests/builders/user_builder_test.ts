@@ -3,7 +3,7 @@ import { Role, role } from '#domainModels/user/role'
 import { User } from '#domainModels/user/user'
 
 export class UserBuilderTest {
-  private _id = '1'
+  private _id = Math.floor(Math.random() * 100000).toString()
   private _firstName = 'bou'
   private _lastName = 'bin'
   private _email = 'bou@example.com'

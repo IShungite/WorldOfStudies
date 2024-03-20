@@ -13,7 +13,7 @@ export class LucidUsersRepository implements IUsersRepository {
 
     if (!user) return null
 
-    return UserMapper.fromAdonisDb(user)
+    return UserMapper.fromLucid(user)
   }
 
   async createToken(user: User): Promise<AccessToken> {
@@ -44,14 +44,14 @@ export class LucidUsersRepository implements IUsersRepository {
       }
     )
 
-    return UserMapper.fromAdonisDb(newUser)
+    return UserMapper.fromLucid(newUser)
   }
 
   async verifyCredentials(email: string, password: string): Promise<User> {
     try {
       const user = await UserEntity.verifyCredentials(email, password)
 
-      return UserMapper.fromAdonisDb(user)
+      return UserMapper.fromLucid(user)
     } catch (e) {
       throw new InvalidCredentialsException()
     }

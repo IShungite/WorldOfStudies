@@ -1,19 +1,24 @@
 import { Character } from '#domainModels/character/character'
-import { Id } from '#domainModels/id/id'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import { UserBuilderTest } from '#tests/builders/user_builder_test'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository
+  let usersRepository: IUsersRepository
 
   group.setup(async () => {
-    charactersRepository = await app.container.make(ICharactersRepository)
+    ;[charactersRepository, usersRepository] = await Promise.all([
+      app.container.make(ICharactersRepository),
+      app.container.make(IUsersRepository),
+    ])
   })
 
   group.each.setup(async () => {
-    await charactersRepository.empty()
+    await Promise.all([charactersRepository.empty(), usersRepository.empty()])
   })
 
   test('It should return an empty array if the user has no characters', async ({ client }) => {
@@ -25,15 +30,19 @@ test.group('Characters - characters by user', (group) => {
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {
-    const userId = '1'
+    const user = new UserBuilderTest().build()
+    const user2 = new UserBuilderTest().withEmail('helo@mail.com').build()
+
+    Promise.all([usersRepository.save(user), usersRepository.save(user2)])
 
     await Promise.all([
-      charactersRepository.save(new Character({ name: 'Shun', userId: new Id(userId) })),
-      charactersRepository.save(new Character({ name: 'Shun2', userId: new Id(userId) })),
-      charactersRepository.save(new Character({ name: 'Bou', userId: new Id('2') })),
+      charactersRepository.save(new Character({ name: 'Shun', userId: user.id })),
+      charactersRepository.save(new Character({ name: 'Shun2', userId: user.id })),
+      charactersRepository.save(new Character({ name: 'Bou', userId: user2.id })),
     ])
 
-    const response = await client.get(`/users/${userId}/characters`)
+    const response = await client.get(`/users/${user.id.toString()}/characters`)
+
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 2)
   })

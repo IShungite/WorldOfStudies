@@ -3,7 +3,7 @@ import { User } from '#domainModels/user/user'
 import UserEntity from '#models/user'
 
 export class UserMapper {
-  static fromAdonisDb(user: UserEntity): User {
+  static fromLucid(user: UserEntity): User {
     return new User({
       id: new Id(user.id.toString()),
       email: user.email,
