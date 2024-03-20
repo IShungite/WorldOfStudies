@@ -21,4 +21,11 @@ export class Subject {
     this.id = id ?? Id.factory()
     this.name = name
   }
+
+  toJson() {
+    return {
+      id: this.id.toString(),
+      name: this.name,
+    }
+  }
 }

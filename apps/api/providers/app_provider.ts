@@ -5,7 +5,7 @@ import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { IUserAnswersRepository } from '#domainPorts/out/user_answers.repository'
 import { InMemoryCharactersRepository } from '#repositories/character/in_memory_characters.repository'
 import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
-import { InMemorySchoolsRepository } from '#repositories/in_memory_schools.repository'
+import { InMemorySchoolsRepository } from '#repositories/school/in_memory_schools.repository'
 import { LucidUsersRepository } from '#repositories/user/lucid_users.repository'
 import { InMemoryUsersRepository } from '#repositories/user/in_memory_users.repository'
 import { InMemoryUserAnswersRepository } from '#repositories/user_answer/in_memory_user_answers.repository'
@@ -14,6 +14,7 @@ import type { ApplicationService } from '@adonisjs/core/types'
 import { IShopsRepository } from '#domainPorts/out/shops.repository'
 import { InMemoryShopsRepository } from '#repositories/shop/in_memory_shops.repository'
 import { LucidCharactersRepository } from '#repositories/character/lucid_characters.repository'
+import { LucidSchoolsRepository } from '#repositories/school/lucid_schools.repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -45,11 +46,7 @@ export default class AppProvider {
       InMemoryUserAnswersRepository,
       InMemoryUserAnswersRepository
     )
-    this.registerRepository(
-      ISchoolsRepository,
-      InMemorySchoolsRepository,
-      InMemorySchoolsRepository
-    )
+    this.registerRepository(ISchoolsRepository, InMemorySchoolsRepository, LucidSchoolsRepository)
     this.registerRepository(
       ICharactersRepository,
       InMemoryCharactersRepository,

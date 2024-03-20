@@ -1,22 +1,16 @@
 import { IShopsRepository } from '#domainPorts/out/shops.repository'
 import { Shop } from '#domainModels/shop/shop'
 import { Id } from '#domainModels/id/id'
+import ShopEntity from '#models/shop'
 
-export class InMemoryShopsRepository implements IShopsRepository {
-  private shops: Record<string, Shop> = {}
-
+export class LucidShopsRepository implements IShopsRepository {
   async save(shop: Shop): Promise<Shop> {
-    this.shops[shop.id.toString()] = shop
-    return shop
+    const shop = ShopEntity.updateOrCreate()
   }
 
   async getBySchoolId(schoolId: Id): Promise<Shop | null> {
     return (
       Object.values(this.shops).find((shopToFind) => shopToFind.schoolId.equals(schoolId)) ?? null
     )
-  }
-
-  async empty(): Promise<void> {
-    this.shops = {}
   }
 }
