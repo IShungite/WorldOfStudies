@@ -29,17 +29,17 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare password: string
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-
   @column()
   declare role: Role
 
   @hasMany(() => Character)
   declare characters: HasMany<typeof Character>
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 
   static readonly accessTokens = DbAccessTokensProvider.forModel(User, {
     prefix: 'wos',

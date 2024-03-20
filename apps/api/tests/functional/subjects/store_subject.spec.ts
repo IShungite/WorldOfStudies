@@ -13,6 +13,10 @@ test.group('Subjects - store', (group) => {
     ;[schoolsRepository] = await Promise.all([app.container.make(ISchoolsRepository)])
   })
 
+  group.each.setup(async () => {
+    await Promise.all([schoolsRepository.empty()])
+  })
+
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const response = await client.post('/subjects').json({})
 

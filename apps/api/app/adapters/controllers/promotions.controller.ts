@@ -1,5 +1,5 @@
 import { CreatePromotionService } from '#domainServices/promotion/create_promotion.service'
-import { createPromotionValidator } from '#validators/create_promotion.validator'
+import { createPromotionValidator } from '#validators/school/create_promotion.validator'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'

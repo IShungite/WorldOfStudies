@@ -10,15 +10,15 @@ export default class Character extends BaseModel {
   @column()
   declare name: string
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-
   @column()
   declare userId: number
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 }

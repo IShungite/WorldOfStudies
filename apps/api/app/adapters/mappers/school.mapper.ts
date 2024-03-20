@@ -1,9 +1,8 @@
 import { Id } from '#domainModels/id/id'
 import { School } from '#domainModels/school/school'
 import SchoolEntity from '#models/school'
-import { createPromotionsValidator } from '#validators/create_promotion.validator'
-import vine from '@vinejs/vine'
 import { Promotion } from '#domainModels/school/promotion'
+import { Subject } from '#domainModels/school/subject'
 
 export class SchoolMapper {
   static toResponse(school: School): { id: string; name: string } {
@@ -13,15 +12,25 @@ export class SchoolMapper {
     }
   }
 
-  static async fromAdonis(newSchool: SchoolEntity): Promise<School> {
-    const promotionsData = await vine.validate({
-      schema: createPromotionsValidator,
-      data: newSchool.promotions,
-    })
+  static async fromAdonis(schoolEntity: SchoolEntity): Promise<School> {
     return new School({
-      id: new Id(newSchool.id.toString()),
-      name: newSchool.name,
-      promotions: promotionsData.map((promotionData) => new Promotion(promotionData)),
+      id: new Id(schoolEntity.id.toString()),
+      name: schoolEntity.name,
+      promotions: schoolEntity.promotions.map(
+        (promotionEntity) =>
+          new Promotion({
+            id: new Id(promotionEntity.id.toString()),
+            name: promotionEntity.name,
+            year: promotionEntity.year,
+            subjects: promotionEntity.subjects.map(
+              (s) =>
+                new Subject({
+                  id: new Id(s.id.toString()),
+                  name: s.name,
+                })
+            ),
+          })
+      ),
     })
   }
 }

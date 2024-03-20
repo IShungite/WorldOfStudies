@@ -7,15 +7,15 @@ export default class Shop extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-
   @column()
   declare schoolId: number
 
   @belongsTo(() => School)
   declare school: BelongsTo<typeof School>
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 }
