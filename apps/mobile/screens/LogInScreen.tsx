@@ -1,5 +1,6 @@
+import { Input, Button } from '@rneui/themed'
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, Alert } from 'react-native'
 import { useMutation } from 'react-query'
 
 import axiosInstance from '../api/axiosInstance'
@@ -15,7 +16,7 @@ const LogInScreen = () => {
     },
     {
       onSuccess: (data) => {
-        console.log(data) // TODO: Save token to AsyncStorage and navigate to home screen
+        console.log(data) // TODO: Save token to AsyncStorage and navigate to the home screen
       },
       onError: (error) => {
         Alert.alert('Login failed', 'Please check your credentials and try again.')
@@ -32,29 +33,25 @@ const LogInScreen = () => {
     loginMutation.mutate({ email, password })
   }
 
-  if (isLoading) {
-    return <ActivityIndicator size="large" />
-  }
-
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        disabled={isLoading}
       />
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
+        disabled={isLoading}
       />
-      <Button title="Login" onPress={handleSubmit} />
+      <Button title="Login" onPress={handleSubmit} loading={isLoading} />
     </View>
   )
 }
@@ -64,12 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-  },
-  input: {
-    height: 40,
-    marginBottom: 12,
-    borderWidth: 1,
-    padding: 10,
   },
 })
 
