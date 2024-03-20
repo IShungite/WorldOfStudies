@@ -50,7 +50,7 @@ router
     router.resource('user-answers', UserAnswersController).only(['store'])
 
     router
-      .delete('school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+      .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
         SchoolsController,
         'destroySubject',
       ])
@@ -59,7 +59,7 @@ router
       .where('idSubject', onlyNumbersRegex)
 
     router
-      .patch('school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+      .patch('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
         SchoolsController,
         'updateSubject',
       ])
