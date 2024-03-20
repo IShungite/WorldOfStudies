@@ -50,9 +50,18 @@ router
     router.resource('user-answers', UserAnswersController).only(['store'])
 
     router
-      .delete('school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+      .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
         SchoolsController,
         'destroySubject',
+      ])
+      .where('idSchool', onlyNumbersRegex)
+      .where('idPromotion', onlyNumbersRegex)
+      .where('idSubject', onlyNumbersRegex)
+
+    router
+      .patch('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
+        SchoolsController,
+        'updateSubject',
       ])
       .where('idSchool', onlyNumbersRegex)
       .where('idPromotion', onlyNumbersRegex)

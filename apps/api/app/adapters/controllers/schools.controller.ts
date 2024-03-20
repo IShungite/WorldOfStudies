@@ -12,6 +12,9 @@ import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { ShopMapper } from '#mappers/shop.mapper'
 import { GetShopBySchoolService } from '#domainServices/shop/get_shop_by_school.service'
+import { SubjectMapper } from '#mappers/subject.mapper'
+import { updateSubjectValidator } from '#validators/update_subject.validator'
+import { UpdateSubjectService } from '#domainServices/subject/update_subject.service'
 
 @inject()
 export default class SchoolsController {
@@ -21,7 +24,8 @@ export default class SchoolsController {
     private readonly deleteSchoolService: DeleteSchoolService,
     private readonly deleteSubjectService: DeleteSubjectService,
     private readonly updateSchoolService: UpdateSchoolService,
-    private readonly getShopBySchoolService: GetShopBySchoolService
+    private readonly getShopBySchoolService: GetShopBySchoolService,
+    private readonly updateSubjectService: UpdateSubjectService
   ) {}
 
   async store({ request, response }: HttpContext) {
@@ -80,6 +84,34 @@ export default class SchoolsController {
     ])
 
     await this.deleteSubjectService.delete(idSchool, idSubject, idPromotion)
+  }
+
+  async updateSubject({ params, request, response }: HttpContext) {
+    const [idSchool, idSubject, idPromotion] = await Promise.all([
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSchool,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idPromotion,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSubject,
+      }),
+    ])
+
+    const payload = await vine.validate({ schema: updateSubjectValidator, data: request.all() })
+
+    const subject = await this.updateSubjectService.update(
+      idSchool,
+      idSubject,
+      idPromotion,
+      payload
+    )
+
+    return response.ok(SubjectMapper.toResponse(subject))
   }
 
   async getShop({ params, response }: HttpContext) {

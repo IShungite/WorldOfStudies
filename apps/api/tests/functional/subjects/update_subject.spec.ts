@@ -10,7 +10,7 @@ import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 
-test.group('Subjects - destroy', (group) => {
+test.group('Subjects - update', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
@@ -22,14 +22,14 @@ test.group('Subjects - destroy', (group) => {
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {
-    const response = await client.delete('/schools/1/promotions/1/subjects/bob')
+    const response = await client.patch('/schools/1/promotions/1/subjects/bob')
 
     response.assertStatus(StatusCodes.NOT_FOUND)
   })
 
   test('It should return an exception if the school does not exist', async ({ client }) => {
     const id = new Id('1')
-    const response = await client.delete(`/schools/${id.toString()}/promotions/1/subjects/1`)
+    const response = await client.patch(`/schools/${id.toString()}/promotions/1/subjects/1`)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
     response.assertTextIncludes(new SchoolNotFoundException(id).message)
@@ -41,7 +41,7 @@ test.group('Subjects - destroy', (group) => {
 
     await schoolsRepository.save(school)
 
-    const response = await client.delete(
+    const response = await client.patch(
       `/schools/${school.id.toString()}/promotions/${id.toString()}/subjects/1`
     )
 
@@ -56,7 +56,7 @@ test.group('Subjects - destroy', (group) => {
 
     await schoolsRepository.save(school)
 
-    const response = await client.delete(
+    const response = await client.patch(
       `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${id.toString()}`
     )
 
@@ -64,7 +64,7 @@ test.group('Subjects - destroy', (group) => {
     response.assertTextIncludes(new SubjectNotFoundException(id).message)
   })
 
-  test('It should destroy a subject', async ({ client }) => {
+  test('It should return a 422 when the payload is invalid', async ({ client }) => {
     const subject = new Subject({ name: 'Subject 1' })
     const promotion = new Promotion({
       name: 'Promotion 1',
@@ -77,10 +77,39 @@ test.group('Subjects - destroy', (group) => {
     })
     await schoolsRepository.save(school)
 
-    const response = await client.delete(
-      `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${subject.id.toString()}`
-    )
+    const response = await client
+      .patch(
+        `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${subject.id.toString()}`
+      )
+      .json({
+        name: {},
+      })
+
+    response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
+  })
+
+  test('It should update a subject', async ({ client }) => {
+    const subject = new Subject({ name: 'Subject 1' })
+    const promotion = new Promotion({
+      name: 'Promotion 1',
+      year: 2022,
+      subjects: [subject],
+    })
+    const school = new School({
+      name: 'School 1',
+      promotions: [promotion],
+    })
+    await schoolsRepository.save(school)
+
+    const response = await client
+      .patch(
+        `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${subject.id.toString()}`
+      )
+      .json({
+        name: 'Subject 99',
+      })
 
     response.assertStatus(StatusCodes.OK)
+    response.assertBodyContains({ name: 'Subject 99' })
   })
 })
