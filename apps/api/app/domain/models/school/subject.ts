@@ -6,7 +6,7 @@ export type CreateSubjectDto = {
 }
 
 export type UpdateSubjectDto = {
-  name: string
+  name?: string
 }
 
 type SubjectProps = {
