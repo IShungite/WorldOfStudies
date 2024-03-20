@@ -5,6 +5,10 @@ export type CreateSubjectDto = {
   promotionId: Id
 }
 
+export type UpdateSubjectDto = {
+  name: string
+}
+
 type SubjectProps = {
   id?: Id
   name: string
