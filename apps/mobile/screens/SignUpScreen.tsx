@@ -1,10 +1,12 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator, Text } from 'react-native'
 import { useMutation } from 'react-query'
 
 import axiosInstance from '../api/axiosInstance'
 
 const SignUpScreen = () => {
+  const navigation = useNavigation<any>()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
@@ -56,6 +58,7 @@ const SignUpScreen = () => {
         secureTextEntry
       />
       <Button title="Register" onPress={handleSubmit} />
+      <Text onPress={() => navigation.navigate('LogIn')}>Vous avez déjà un compte ? Cliquez ici</Text>
     </View>
   )
 }
