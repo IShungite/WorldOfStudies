@@ -58,6 +58,15 @@ router
       .where('idPromotion', onlyNumbersRegex)
       .where('idSubject', onlyNumbersRegex)
 
+    router
+      .patch('school/:idSchool/promotion/:idPromotion/subject/:idSubject', [
+        SchoolsController,
+        'updateSubject',
+      ])
+      .where('idSchool', onlyNumbersRegex)
+      .where('idPromotion', onlyNumbersRegex)
+      .where('idSubject', onlyNumbersRegex)
+
     router.resource('schools', SchoolsController).apiOnly()
     router.get('schools/:id/shop', [SchoolsController, 'getShop'])
 
