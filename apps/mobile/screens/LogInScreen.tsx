@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
 import { useMutation } from 'react-query'
 
-import axiosInstance from '../api/axiosInstance' // Ensure this is correctly set up to point to your API
+import axiosInstance from '../api/axiosInstance'
 
 const LogInScreen = () => {
   const [email, setEmail] = useState('')
@@ -15,7 +15,7 @@ const LogInScreen = () => {
     },
     {
       onSuccess: (data) => {
-        console.log(data) // Placeholder: Save the token, navigate, etc.
+        console.log(data) // TODO: Save token to AsyncStorage and navigate to home screen
       },
       onError: (error) => {
         Alert.alert('Login failed', 'Please check your credentials and try again.')
