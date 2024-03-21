@@ -67,6 +67,11 @@ router
       .where('idPromotion', onlyNumbersRegex)
       .where('idSubject', onlyNumbersRegex)
 
+    router
+      .delete('schools/:idSchool/promotions/:idPromotion', [SchoolsController, 'destroyPromotion'])
+      .where('idSchool', onlyNumbersRegex)
+      .where('idPromotion', onlyNumbersRegex)
+
     router.resource('schools', SchoolsController).apiOnly()
     router.get('schools/:id/shop', [SchoolsController, 'getShop'])
 

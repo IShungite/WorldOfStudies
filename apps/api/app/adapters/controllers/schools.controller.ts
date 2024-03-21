@@ -15,6 +15,7 @@ import { GetShopBySchoolService } from '#domainServices/shop/get_shop_by_school.
 import { SubjectMapper } from '#mappers/subject.mapper'
 import { updateSubjectValidator } from '#validators/update_subject.validator'
 import { UpdateSubjectService } from '#domainServices/subject/update_subject.service'
+import { DeletePromotionService } from '#domainServices/promotion/delete_promotion.service'
 
 @inject()
 export default class SchoolsController {
@@ -25,7 +26,8 @@ export default class SchoolsController {
     private readonly deleteSubjectService: DeleteSubjectService,
     private readonly updateSchoolService: UpdateSchoolService,
     private readonly getShopBySchoolService: GetShopBySchoolService,
-    private readonly updateSubjectService: UpdateSubjectService
+    private readonly updateSubjectService: UpdateSubjectService,
+    private readonly deletePromotionService: DeletePromotionService
   ) {}
 
   async store({ request, response }: HttpContext) {
@@ -118,5 +120,25 @@ export default class SchoolsController {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const shop = await this.getShopBySchoolService.getShopBySchoolId(id)
     return response.ok(ShopMapper.toResponse(shop))
+  }
+
+  /**
+   * Delete promotion within a school
+   */
+  async destroyPromotion({ params, response }: HttpContext) {
+    const [idSchool, idSubject] = await Promise.all([
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSchool,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idPromotion,
+      }),
+    ])
+
+    await this.deletePromotionService.delete(idSchool, idSubject)
+
+    return response.noContent()
   }
 }
