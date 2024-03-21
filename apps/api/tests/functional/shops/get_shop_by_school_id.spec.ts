@@ -3,17 +3,22 @@ import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { IShopsRepository } from '#domainPorts/out/shops.repository'
-import { InMemoryShopsRepository } from '#repositories/shop/in_memory_shops.repository'
 import { Shop } from '#domainModels/shop/shop'
+import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 
 test.group('Shops - get by school id', (group) => {
+  let schoolsRepository: ISchoolsRepository
   let shopsRepository: IShopsRepository
 
+  group.setup(async () => {
+    ;[schoolsRepository, shopsRepository] = await Promise.all([
+      app.container.make(ISchoolsRepository),
+      app.container.make(IShopsRepository),
+    ])
+  })
+
   group.each.setup(async () => {
-    shopsRepository = new InMemoryShopsRepository()
-    app.container.swap(IShopsRepository, () => {
-      return shopsRepository
-    })
+    await Promise.all([schoolsRepository.empty(), shopsRepository.empty()])
   })
 
   test('It should return a 400 if the shop not found', async ({ client }) => {
@@ -22,7 +27,7 @@ test.group('Shops - get by school id', (group) => {
     response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
-  test('It should return the shop', async ({ client }) => {
+  test('It should return the shop of the school', async ({ client }) => {
     const school = new School({
       name: 'School 1',
       promotions: [],
@@ -32,6 +37,7 @@ test.group('Shops - get by school id', (group) => {
       categories: [],
     })
 
+    await schoolsRepository.save(school)
     await shopsRepository.save(shop)
 
     const response = await client.get(`/schools/${school.id.toString()}/shop`)

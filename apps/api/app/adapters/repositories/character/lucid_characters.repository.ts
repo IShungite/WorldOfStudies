@@ -19,10 +19,7 @@ export class LucidCharactersRepository implements ICharactersRepository {
   }
 
   async getAllByUserId(userId: Id): Promise<Character[]> {
-    const characters = (await CharacterEntity.findManyBy(
-      'userId',
-      userId.toString()
-    )) as CharacterEntity[]
+    const characters = await CharacterEntity.query().where('userId', userId.toString())
 
     return characters.map((character) => CharacterMapper.fromLucid(character))
   }

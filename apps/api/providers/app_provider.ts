@@ -15,6 +15,7 @@ import { IShopsRepository } from '#domainPorts/out/shops.repository'
 import { InMemoryShopsRepository } from '#repositories/shop/in_memory_shops.repository'
 import { LucidCharactersRepository } from '#repositories/character/lucid_characters.repository'
 import { LucidSchoolsRepository } from '#repositories/school/lucid_schools.repository'
+import { LucidShopsRepository } from '#repositories/shop/lucid_shops.repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -52,7 +53,7 @@ export default class AppProvider {
       InMemoryCharactersRepository,
       LucidCharactersRepository
     )
-    this.registerRepository(IShopsRepository, InMemoryShopsRepository, InMemoryShopsRepository)
+    this.registerRepository(IShopsRepository, InMemoryShopsRepository, LucidShopsRepository)
   }
 
   /**

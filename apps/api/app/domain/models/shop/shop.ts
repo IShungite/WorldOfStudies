@@ -1,9 +1,9 @@
 import { Id } from '#domainModels/id/id'
-import { ShopCategory } from '#domainModels/shop/shop_category'
+import { CreateShopCategoryDto, ShopCategory } from '#domainModels/shop/shop_category'
 
 export type CreateShopDto = {
   schoolId: Id
-  categories: ShopCategory[]
+  categories: CreateShopCategoryDto[]
 }
 
 type ShopProps = {
