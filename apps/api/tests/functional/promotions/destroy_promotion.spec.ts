@@ -47,7 +47,7 @@ test.group('Promotions - destroy', (group) => {
     response.assertTextIncludes(new PromotionNotFoundException(id).message)
   })
 
-  test('It should destroy a promotion', async ({ client }) => {
+  test('It should destroy a promotion', async ({ client, assert }) => {
     const promotion = new Promotion({
       name: 'Promotion 1',
       year: 2022,
@@ -57,12 +57,16 @@ test.group('Promotions - destroy', (group) => {
       name: 'School 1',
       promotions: [promotion],
     })
+
     await schoolsRepository.save(school)
 
     const response = await client.delete(
       `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}`
     )
 
-    response.assertStatus(StatusCodes.OK)
+    const updatedSchool = await schoolsRepository.getById(school.id)
+
+    response.assertStatus(StatusCodes.NO_CONTENT)
+    assert.isUndefined(updatedSchool?.promotions.find((p) => p.id.equals(promotion.id)))
   })
 })

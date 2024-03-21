@@ -125,7 +125,7 @@ export default class SchoolsController {
   /**
    * Delete promotion within a school
    */
-  async destroyPromotion({ params }: HttpContext) {
+  async destroyPromotion({ params, response }: HttpContext) {
     const [idSchool, idSubject] = await Promise.all([
       vine.validate({
         schema: domainIdValidator,
@@ -138,5 +138,7 @@ export default class SchoolsController {
     ])
 
     await this.deletePromotionService.delete(idSchool, idSubject)
+
+    return response.noContent()
   }
 }
