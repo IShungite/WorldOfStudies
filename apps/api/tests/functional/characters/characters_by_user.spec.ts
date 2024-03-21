@@ -33,7 +33,7 @@ test.group('Characters - characters by user', (group) => {
     const user = new UserBuilderTest().build()
     const user2 = new UserBuilderTest().withEmail('helo@mail.com').build()
 
-    Promise.all([usersRepository.save(user), usersRepository.save(user2)])
+    await Promise.all([usersRepository.save(user), usersRepository.save(user2)])
 
     await Promise.all([
       charactersRepository.save(new Character({ name: 'Shun', userId: user.id })),
