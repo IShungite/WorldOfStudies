@@ -1,4 +1,5 @@
 import { Question, QuestionQcm, QuestionTextHole } from '#domainModels/quiz/question'
+import QuestionEntity from '#models/question'
 
 export class QuestionMapper {
   static toResponse(question: Question) {
@@ -34,5 +35,9 @@ export class QuestionMapper {
       text: question.text,
       answers: question.answers,
     }
+  }
+
+  static fromAdonis(question: QuestionEntity): Question {
+    throw new Error('Method not implemented.')
   }
 }
