@@ -18,7 +18,6 @@ import { UpdateSubjectService } from '#domainServices/subject/update_subject.ser
 import { DeletePromotionService } from '#domainServices/promotion/delete_promotion.service'
 import { UpdatePromotionService } from '#domainServices/promotion/update_promotion.service'
 import { updatePromotionValidator } from '#validators/update_promotion.validator'
-import { StatusCodes } from 'http-status-codes'
 import { getUrl } from '#utils/get_url'
 
 @inject()
@@ -164,7 +163,7 @@ export default class SchoolsController {
     await this.updatePromotionService.update(idSchool, idPromotion, payload)
 
     return response
-      .status(StatusCodes.NO_CONTENT)
       .append('location', getUrl(`schools/${idSchool}/promotions/${idPromotion}`))
+      .noContent()
   }
 }
