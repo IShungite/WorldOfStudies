@@ -31,7 +31,7 @@ test.group('QCM Question', () => {
       id: new Id('1'),
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(questionQCM.getUserAnswerPoints(userAnswer), questionQCM.points)
@@ -44,7 +44,7 @@ test.group('QCM Question', () => {
       id: new Id('1'),
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[1].id,
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(questionQCM.getUserAnswerPoints(userAnswer), 0)
@@ -68,7 +68,7 @@ test.group('Text Hole Question', () => {
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: [...questionTextHole.answers],
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points)
@@ -82,7 +82,7 @@ test.group('Text Hole Question', () => {
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: ['hello'],
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points / 2)
@@ -96,7 +96,7 @@ test.group('Text Hole Question', () => {
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: ['aaa'],
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), 0)

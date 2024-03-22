@@ -7,18 +7,23 @@ import { QuizFactory } from '#factories/quiz.factory'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { ICharactersRepository } from '#domainPorts/out/characters.repository'
+import { Character } from '#domainModels/character/character'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
   let quizzesRepository: IQuizzesRepository
   let usersRepository: IUsersRepository
+  let charactersRepository: ICharactersRepository
 
   group.setup(async () => {
-    ;[userAnswersRepository, quizzesRepository, usersRepository] = await Promise.all([
-      app.container.make(IUserAnswersRepository),
-      app.container.make(IQuizzesRepository),
-      app.container.make(IUsersRepository),
-    ])
+    ;[userAnswersRepository, quizzesRepository, usersRepository, charactersRepository] =
+      await Promise.all([
+        app.container.make(IUserAnswersRepository),
+        app.container.make(IQuizzesRepository),
+        app.container.make(IUsersRepository),
+        app.container.make(ICharactersRepository),
+      ])
   })
 
   group.each.setup(async () => {
@@ -26,6 +31,7 @@ test.group('User-answers - store', (group) => {
       userAnswersRepository.empty(),
       quizzesRepository.empty(),
       usersRepository.empty(),
+      charactersRepository.empty(),
     ])
   })
 
@@ -37,6 +43,7 @@ test.group('User-answers - store', (group) => {
 
   test('It should create a user-answer of type QCM', async ({ client }) => {
     const user = new UserBuilderTest().build()
+    const character = new Character({ name: 'test', userId: user.id })
     const quiz = QuizFactory.create({
       name: 'Quiz 1',
       questions: [
@@ -52,6 +59,7 @@ test.group('User-answers - store', (group) => {
     })
 
     await Promise.all([usersRepository.save(user), quizzesRepository.save(quiz)])
+    await charactersRepository.save(character)
 
     const question = quiz.questions[0] as QuestionQcm
 
@@ -59,7 +67,7 @@ test.group('User-answers - store', (group) => {
       type: questionType.QCM,
       questionId: question.id.toString(),
       choiceId: question.choices[0].id.toString(),
-      userId: user.id.toString(),
+      characterId: character.id.toString(),
     }
 
     const response = await client.post('/user-answers').json(payload)
@@ -68,7 +76,7 @@ test.group('User-answers - store', (group) => {
     response.assertBodyContains({
       type: questionType.QCM,
       questionId: payload.questionId,
-      userId: payload.userId,
+      characterId: payload.characterId,
     })
   })
 })

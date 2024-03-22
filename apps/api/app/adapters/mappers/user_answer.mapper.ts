@@ -5,7 +5,7 @@ export class UserAnswerMapper {
     return {
       id: userAnswer.id.toString(),
       type: userAnswer.type,
-      userId: userAnswer.userId.toString(),
+      characterId: userAnswer.characterId.toString(),
       questionId: userAnswer.questionId.toString(),
     }
   }

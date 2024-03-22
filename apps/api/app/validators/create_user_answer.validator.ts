@@ -16,7 +16,7 @@ const differentTypeOfUserAnswer = vine.group([
 export const createUserAnswerValidator = vine
   .object({
     questionId: domainIdValidator,
-    userId: domainIdValidator,
+    characterId: domainIdValidator,
     type: vine.enum(questionType),
   })
   .merge(differentTypeOfUserAnswer)
