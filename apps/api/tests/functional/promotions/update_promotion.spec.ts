@@ -4,6 +4,7 @@ import { PromotionNotFoundException } from '#domainModels/school/promotion_not_f
 import { School } from '#domainModels/school/school'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
+import { getUrl } from '#utils/get_url'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -90,6 +91,10 @@ test.group('Promotions - update', (group) => {
     const updatedPromotion = updatedSchool?.promotions.find((p) => p.id.equals(promotion.id))
 
     response.assertStatus(StatusCodes.NO_CONTENT)
+    response.assertHeader(
+      'location',
+      getUrl(`schools/${school.id.toString()}/promotions/${promotion.id.toString()}`)
+    )
     assert.isTrue(updatedPromotion?.name === 'Promotion 99')
   })
 })
