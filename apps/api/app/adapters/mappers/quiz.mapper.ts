@@ -12,11 +12,11 @@ export class QuizMapper {
     }
   }
 
-  static fromAdonis(quizEntity: QuizEntity): Quiz {
+  static fromLucid(quizEntity: QuizEntity): Quiz {
     return new Quiz({
       id: new Id(quizEntity.id.toString()),
       name: quizEntity.name,
-      questions: quizEntity.questions.map((question) => QuestionMapper.fromAdonis(question)),
+      questions: quizEntity.questions.map((question) => QuestionMapper.fromLucid(question)),
     })
   }
 }

@@ -39,11 +39,13 @@ export class QuestionMapper {
     }
   }
 
-  static fromAdonis(question: QuestionEntity): Question {
+  static fromLucid(question: QuestionEntity): Question {
     const extra = JSON.parse(question.extra)
+    const id = new Id(question.id.toString())
+
     if (question.type === questionType.QCM) {
       return new QuestionQcm({
-        id: new Id(question.id.toString()),
+        id: id,
         points: question.points,
         choices: extra.choices,
       })
@@ -51,7 +53,7 @@ export class QuestionMapper {
 
     if (question.type === questionType.TEXT_HOLE) {
       return new QuestionTextHole({
-        id: new Id(question.id.toString()),
+        id: id,
         points: question.points,
         text: extra.text,
         answers: extra.answers,

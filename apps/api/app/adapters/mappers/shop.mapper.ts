@@ -20,7 +20,7 @@ export class ShopMapper {
     }
   }
 
-  static fromAdonis(shopEntity: ShopEntity): Shop {
+  static fromLucid(shopEntity: ShopEntity): Shop {
     return new Shop({
       id: new Id(shopEntity.id.toString()),
       schoolId: new Id(shopEntity.schoolId.toString()),

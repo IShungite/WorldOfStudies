@@ -49,7 +49,7 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
       .preload('promotions', (query) => query.preload('subjects'))
       .first()
 
-    return school ? SchoolMapper.fromAdonis(school) : null
+    return school ? SchoolMapper.fromLucid(school) : null
   }
 
   async getByPromotionId(promotionId: Id): Promise<School | null> {
@@ -59,7 +59,7 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
       )
       .first()
 
-    return school ? SchoolMapper.fromAdonis(school) : null
+    return school ? SchoolMapper.fromLucid(school) : null
   }
 
   async deleteById(schoolId: Id): Promise<void> {

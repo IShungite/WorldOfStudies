@@ -57,7 +57,7 @@ export class LucidShopsRepository implements IShopsRepository {
       .where('schoolId', Number.parseInt(schoolId.toString(), 10))
       .first()
 
-    return shop ? ShopMapper.fromAdonis(shop) : null
+    return shop ? ShopMapper.fromLucid(shop) : null
   }
 
   async empty(): Promise<void> {

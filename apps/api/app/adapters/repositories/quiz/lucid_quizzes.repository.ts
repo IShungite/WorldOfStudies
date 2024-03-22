@@ -60,13 +60,13 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
       .where('id', quizId.toString())
       .first()
 
-    return quiz ? QuizMapper.fromAdonis(quiz) : null
+    return quiz ? QuizMapper.fromLucid(quiz) : null
   }
 
   async getAll(): Promise<Quiz[]> {
     const quizzes = await QuizEntity.query().preload('questions')
 
-    return quizzes.map((quiz) => QuizMapper.fromAdonis(quiz))
+    return quizzes.map((quiz) => QuizMapper.fromLucid(quiz))
   }
 
   async deleteById(quizId: Id): Promise<void> {
