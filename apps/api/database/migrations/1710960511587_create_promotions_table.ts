@@ -9,7 +9,12 @@ export default class extends BaseSchema {
 
       table.string('name').notNullable()
       table.integer('year').notNullable()
-      table.integer('school_id').unsigned().references('schools.id').onDelete('CASCADE')
+      table
+        .integer('school_id')
+        .unsigned()
+        .references('schools.id')
+        .onDelete('CASCADE')
+        .notNullable()
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

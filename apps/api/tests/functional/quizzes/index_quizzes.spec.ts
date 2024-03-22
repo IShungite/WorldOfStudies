@@ -1,6 +1,5 @@
 import { Quiz } from '#domainModels/quiz/quiz'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
-import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -8,11 +7,12 @@ import { StatusCodes } from 'http-status-codes'
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
 
+  group.setup(async () => {
+    quizzesRepository = await app.container.make(IQuizzesRepository)
+  })
+
   group.each.setup(async () => {
-    quizzesRepository = new InMemoryQuizzesRepository()
-    app.container.swap(IQuizzesRepository, () => {
-      return quizzesRepository
-    })
+    await quizzesRepository.empty()
   })
 
   test('It should return the list of quizzes', async ({ client, assert }) => {

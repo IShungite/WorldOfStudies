@@ -16,6 +16,7 @@ import { InMemoryShopsRepository } from '#repositories/shop/in_memory_shops.repo
 import { LucidCharactersRepository } from '#repositories/character/lucid_characters.repository'
 import { LucidSchoolsRepository } from '#repositories/school/lucid_schools.repository'
 import { LucidShopsRepository } from '#repositories/shop/lucid_shops.repository'
+import { LucidQuizzesRepository } from '#repositories/quiz/lucid_quizzes.repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -36,11 +37,7 @@ export default class AppProvider {
    * Register bindings to the container
    */
   async register() {
-    this.registerRepository(
-      IQuizzesRepository,
-      InMemoryQuizzesRepository,
-      InMemoryQuizzesRepository
-    )
+    this.registerRepository(IQuizzesRepository, InMemoryQuizzesRepository, LucidQuizzesRepository)
     this.registerRepository(IUsersRepository, InMemoryUsersRepository, LucidUsersRepository)
     this.registerRepository(
       IUserAnswersRepository,

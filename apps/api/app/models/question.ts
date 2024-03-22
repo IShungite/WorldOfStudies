@@ -21,7 +21,7 @@ export default class Question extends BaseModel {
   declare points: number
 
   @column()
-  declare extra: unknown
+  declare extra: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

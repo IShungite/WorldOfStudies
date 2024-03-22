@@ -1,5 +1,7 @@
-import { Question, QuestionQcm, QuestionTextHole } from '#domainModels/quiz/question'
+import { Question, QuestionQcm, QuestionTextHole, questionType } from '#domainModels/quiz/question'
 import QuestionEntity from '#models/question'
+import { Id } from '#domainModels/id/id'
+import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_question_type.exception'
 
 export class QuestionMapper {
   static toResponse(question: Question) {
@@ -38,6 +40,24 @@ export class QuestionMapper {
   }
 
   static fromAdonis(question: QuestionEntity): Question {
-    throw new Error('Method not implemented.')
+    const extra = JSON.parse(question.extra)
+    if (question.type === questionType.QCM) {
+      return new QuestionQcm({
+        id: new Id(question.id.toString()),
+        points: question.points,
+        choices: extra.choices,
+      })
+    }
+
+    if (question.type === questionType.TEXT_HOLE) {
+      return new QuestionTextHole({
+        id: new Id(question.id.toString()),
+        points: question.points,
+        text: extra.text,
+        answers: extra.answers,
+      })
+    }
+
+    throw new InvalidQuestionTypeException()
   }
 }
