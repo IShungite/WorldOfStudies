@@ -165,6 +165,6 @@ export default class SchoolsController {
 
     return response
       .status(StatusCodes.NO_CONTENT)
-      .append('location', getUrl(`/schools/${idSchool}/promotions/${idPromotion}`))
+      .append('location', getUrl(`schools/${idSchool}/promotions/${idPromotion}`))
   }
 }
