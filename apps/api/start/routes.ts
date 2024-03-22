@@ -72,6 +72,11 @@ router
       .where('idSchool', onlyNumbersRegex)
       .where('idPromotion', onlyNumbersRegex)
 
+    router
+      .patch('schools/:idSchool/promotions/:idPromotion', [SchoolsController, 'updatePromotion'])
+      .where('idSchool', onlyNumbersRegex)
+      .where('idPromotion', onlyNumbersRegex)
+
     router.resource('schools', SchoolsController).apiOnly()
     router.get('schools/:id/shop', [SchoolsController, 'getShop'])
 
