@@ -16,6 +16,9 @@ import { SubjectMapper } from '#mappers/subject.mapper'
 import { updateSubjectValidator } from '#validators/update_subject.validator'
 import { UpdateSubjectService } from '#domainServices/subject/update_subject.service'
 import { DeletePromotionService } from '#domainServices/promotion/delete_promotion.service'
+import { UpdatePromotionService } from '#domainServices/promotion/update_promotion.service'
+import { updatePromotionValidator } from '#validators/update_promotion.validator'
+import { getUrl } from '#utils/get_url'
 
 @inject()
 export default class SchoolsController {
@@ -27,7 +30,8 @@ export default class SchoolsController {
     private readonly updateSchoolService: UpdateSchoolService,
     private readonly getShopBySchoolService: GetShopBySchoolService,
     private readonly updateSubjectService: UpdateSubjectService,
-    private readonly deletePromotionService: DeletePromotionService
+    private readonly deletePromotionService: DeletePromotionService,
+    private readonly updatePromotionService: UpdatePromotionService
   ) {}
 
   async store({ request, response }: HttpContext) {
@@ -140,5 +144,26 @@ export default class SchoolsController {
     await this.deletePromotionService.delete(idSchool, idSubject)
 
     return response.noContent()
+  }
+
+  async updatePromotion({ params, response, request }: HttpContext) {
+    const [idSchool, idPromotion] = await Promise.all([
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idSchool,
+      }),
+      vine.validate({
+        schema: domainIdValidator,
+        data: params.idPromotion,
+      }),
+    ])
+
+    const payload = await vine.validate({ schema: updatePromotionValidator, data: request.all() })
+
+    await this.updatePromotionService.update(idSchool, idPromotion, payload)
+
+    return response
+      .append('location', getUrl(`schools/${idSchool}/promotions/${idPromotion}`))
+      .noContent()
   }
 }

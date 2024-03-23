@@ -7,6 +7,10 @@ export type CreatePromotionDto = {
   schoolId: Id
 }
 
+export type UpdatePromotionDto = {
+  name?: string
+}
+
 type PromotionProps = {
   id?: Id
   name: string

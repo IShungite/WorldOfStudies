@@ -26,6 +26,7 @@
       "#domainPorts/*": ["./app/domain/ports/*.js"],
       "#repositories/*": ["./app/adapters/repositories/*.js"],
       "#mappers/*": ["./app/adapters/mappers/*.js"],
+      "#utils/*": ["./utils/*.js"],
     },
   },
 }
