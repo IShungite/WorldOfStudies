@@ -20,6 +20,10 @@ export class InMemoryCharactersRepository implements ICharactersRepository {
     )
   }
 
+  async deleteById(characterId: Id): Promise<void> {
+    delete this.characters[characterId.toString()]
+  }
+
   async empty(): Promise<void> {
     this.characters = {}
   }
