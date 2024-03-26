@@ -1,11 +1,13 @@
 import { Input, Button } from '@rneui/themed'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useMutation } from 'react-query'
 
 import axiosInstance from '../api/axiosInstance'
 
 const LogInScreen = () => {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -36,7 +38,7 @@ const LogInScreen = () => {
   return (
     <View style={styles.container}>
       <Input
-        placeholder="Email"
+        placeholder={t('email')}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -44,14 +46,14 @@ const LogInScreen = () => {
         disabled={isLoading}
       />
       <Input
-        placeholder="Password"
+        placeholder={t('password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
         disabled={isLoading}
       />
-      <Button title="Login" onPress={handleSubmit} loading={isLoading} />
+      <Button title={t('login')} onPress={handleSubmit} loading={isLoading} />
     </View>
   )
 }

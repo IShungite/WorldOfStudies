@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 import { Input, Button } from '@rneui/themed'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, StyleSheet, Alert } from 'react-native'
 import { useMutation } from 'react-query'
 
 import axiosInstance from '../api/axiosInstance'
 
 const SignUpScreen = () => {
+  const { t } = useTranslation()
   const navigation = useNavigation<any>()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -34,10 +36,10 @@ const SignUpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Input placeholder="First Name" value={firstName} onChangeText={setFirstName} disabled={isLoading} />
-      <Input placeholder="Last Name" value={lastName} onChangeText={setLastName} disabled={isLoading} />
+      <Input placeholder={t('first_name')} value={firstName} onChangeText={setFirstName} disabled={isLoading} />
+      <Input placeholder={t('last_name')} value={lastName} onChangeText={setLastName} disabled={isLoading} />
       <Input
-        placeholder="Email"
+        placeholder={t('email')}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -45,16 +47,16 @@ const SignUpScreen = () => {
         disabled={isLoading}
       />
       <Input
-        placeholder="Password"
+        placeholder={t('password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         autoCapitalize="none"
         disabled={isLoading}
       />
-      <Button title="Register" onPress={handleSubmit} loading={isLoading} />
+      <Button title={t('register')} onPress={handleSubmit} loading={isLoading} />
       <Button
-        title="Vous avez déjà un compte ? Cliquez ici"
+        title={t('already_have_account')}
         type="clear"
         onPress={() => navigation.navigate('LogIn')}
         disabled={isLoading}

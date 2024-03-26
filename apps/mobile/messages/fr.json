@@ -1,0 +1,12 @@
+{
+    "register": "S'inscrire",
+    "already_have_account": "Vous avez déjà un compte ? Cliquez ici",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "registration_successful": "Inscription réussie, veuillez vous connecter.",
+    "registration_failed": "L'inscription a échoué, veuillez réessayer.",
+    "login": "Se connecter"
+}
+  
