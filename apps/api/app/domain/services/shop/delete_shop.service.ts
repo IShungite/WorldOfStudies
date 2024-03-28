@@ -7,7 +7,7 @@ import { inject } from '@adonisjs/core'
 export class DeleteShopService {
   constructor(private readonly shopRepository: IShopsRepository) {}
 
-  async delete(schoolId: Id): Promise<void> {
+  async execute(schoolId: Id): Promise<void> {
     const shop = await this.shopRepository.getBySchoolId(schoolId)
 
     if (!shop) {

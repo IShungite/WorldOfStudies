@@ -131,7 +131,7 @@ export default class SchoolsController {
   async destroyShop({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    await this.deleteShopService.delete(id)
+    await this.deleteShopService.execute(id)
 
     return response.noContent()
   }
