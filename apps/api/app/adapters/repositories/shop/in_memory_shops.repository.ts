@@ -16,6 +16,10 @@ export class InMemoryShopsRepository implements IShopsRepository {
     )
   }
 
+  async deleteById(shopId: Id): Promise<void> {
+    delete this.shops[shopId.toString()]
+  }
+
   async empty(): Promise<void> {
     this.shops = {}
   }
