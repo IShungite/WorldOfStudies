@@ -6,9 +6,58 @@ import { SchoolMapper } from '#mappers/school.mapper'
 import testUtils from '@adonisjs/core/services/test_utils'
 import PromotionEntity from '#models/promotion'
 import SubjectEntity from '#models/subject'
+import { Promotion } from '#domainModels/school/promotion'
 
 export class LucidSchoolsRepository implements ISchoolsRepository {
+  private async deleteExistingNestedEntity(school: School) {
+    const existingSchoolEntity = await this.getById(school.id)
+
+    if (!existingSchoolEntity) return
+
+    const promotionsGrouped = existingSchoolEntity.promotions.reduce(
+      (groupedPromotions, promotion) => {
+        if (school.promotions.find((newPromotion) => newPromotion.id.equals(promotion.id))) {
+          groupedPromotions.toKeep.push(promotion)
+        } else {
+          groupedPromotions.toRemove.push(promotion)
+        }
+
+        return groupedPromotions
+      },
+      { toRemove: [] as Promotion[], toKeep: [] as Promotion[] }
+    )
+
+    const subjectsToRemove = promotionsGrouped.toKeep.flatMap((existingPromotion) =>
+      existingPromotion.subjects.filter(
+        (existingSubject) =>
+          !school.promotions.find((newPromotion) =>
+            newPromotion.subjects.find((newSubject) => newSubject.id.equals(existingSubject.id))
+          )
+      )
+    )
+
+    if (promotionsGrouped.toRemove.length > 0) {
+      await PromotionEntity.query()
+        .whereIn(
+          'id',
+          promotionsGrouped.toRemove.map((promotion) => promotion.id.toString())
+        )
+        .delete()
+    }
+
+    if (subjectsToRemove.length > 0) {
+      await SubjectEntity.query()
+        .whereIn(
+          'id',
+          subjectsToRemove.map((subject) => subject.id.toString())
+        )
+        .delete()
+    }
+  }
+
   async save(school: School): Promise<School> {
+    await this.deleteExistingNestedEntity(school)
+
     await SchoolEntity.updateOrCreate(
       {
         id: Number.parseInt(school.id.toString(), 10),
