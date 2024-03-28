@@ -3,13 +3,12 @@ import { Id } from '#domainModels/id/id'
 import { Character, UpdateCharacterDto } from '#domainModels/character/character'
 import { CharacterNotFoundException } from '#domainModels/character/character_not_found.exception'
 import { inject } from '@adonisjs/core'
-import { UpdateCharacterUseCase } from '#domainPorts/in/character/update_character.use_case'
 
 @inject()
-export class UpdateCharacterService implements UpdateCharacterUseCase {
+export class UpdateCharacterService {
   constructor(readonly charactersRepository: ICharactersRepository) {}
 
-  async update(characterId: Id, updateCharacterDto: UpdateCharacterDto): Promise<Character> {
+  async execute(characterId: Id, updateCharacterDto: UpdateCharacterDto): Promise<Character> {
     const character = await this.charactersRepository.getById(characterId)
 
     if (!character) {

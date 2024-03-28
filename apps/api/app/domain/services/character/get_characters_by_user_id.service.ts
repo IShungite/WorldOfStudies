@@ -1,14 +1,13 @@
 import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
-import { GetCharactersByUserIdUseCase } from '#domainPorts/in/character/get_characters_by_user_id.use_case'
 import { ICharactersRepository } from '#domainPorts/out/characters.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class GetCharactersByUserIdService implements GetCharactersByUserIdUseCase {
+export class GetCharactersByUserIdService {
   constructor(private readonly charactersRepository: ICharactersRepository) {}
 
-  async get(userId: Id): Promise<Character[]> {
+  async execute(userId: Id): Promise<Character[]> {
     return this.charactersRepository.getAllByUserId(userId)
   }
 }

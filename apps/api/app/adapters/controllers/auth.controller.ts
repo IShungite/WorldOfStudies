@@ -18,7 +18,7 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: registerUserValidator, data: request.all() })
 
-    const user = await this.createUserService.createUser(payload)
+    const user = await this.createUserService.execute(payload)
     return response.created(UserMapper.toResponse(user))
   }
 
@@ -28,8 +28,8 @@ export default class AuthController {
       data: request.all(),
     })
 
-    const user = await this.verifyCredentialsService.verifyCredentials(email, password)
-    const token = await this.createTokenService.createToken(user)
+    const user = await this.verifyCredentialsService.execute(email, password)
+    const token = await this.createTokenService.execute(user)
 
     return token
   }

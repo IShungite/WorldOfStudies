@@ -15,7 +15,7 @@ export default class UserAnswersController {
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createUserAnswerValidator, data: request.all() })
 
-    const userAnswer = await this.createUserAnswer.create(payload)
+    const userAnswer = await this.createUserAnswer.execute(payload)
     return response.created(UserAnswerMapper.toResponse(userAnswer))
   }
 }

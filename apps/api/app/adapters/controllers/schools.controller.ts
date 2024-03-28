@@ -36,14 +36,14 @@ export default class SchoolsController {
 
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createSchoolValidator, data: request.all() })
-    const school = await this.createSchoolService.create(payload)
+    const school = await this.createSchoolService.execute(payload)
 
     return response.created(school)
   }
 
   async show({ params }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
-    const school = await this.getSchoolService.get(id)
+    const school = await this.getSchoolService.execute(id)
     return SchoolMapper.toResponse(school)
   }
 
@@ -54,7 +54,7 @@ export default class SchoolsController {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const payload = await vine.validate({ schema: updateSchoolValidator, data: request.all() })
 
-    const school = await this.updateSchoolService.update(id, payload)
+    const school = await this.updateSchoolService.execute(id, payload)
     return SchoolMapper.toResponse(school)
   }
 
@@ -64,7 +64,7 @@ export default class SchoolsController {
   async destroy({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    await this.deleteSchoolService.delete(id)
+    await this.deleteSchoolService.execute(id)
 
     return response.noContent()
   }
@@ -89,7 +89,7 @@ export default class SchoolsController {
       }),
     ])
 
-    await this.deleteSubjectService.delete(idSchool, idSubject, idPromotion)
+    await this.deleteSubjectService.execute(idSchool, idSubject, idPromotion)
   }
 
   async updateSubject({ params, request, response }: HttpContext) {
@@ -110,7 +110,7 @@ export default class SchoolsController {
 
     const payload = await vine.validate({ schema: updateSubjectValidator, data: request.all() })
 
-    const subject = await this.updateSubjectService.update(
+    const subject = await this.updateSubjectService.execute(
       idSchool,
       idSubject,
       idPromotion,
@@ -122,7 +122,7 @@ export default class SchoolsController {
 
   async getShop({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
-    const shop = await this.getShopBySchoolService.getShopBySchoolId(id)
+    const shop = await this.getShopBySchoolService.execute(id)
     return response.ok(ShopMapper.toResponse(shop))
   }
 
@@ -141,7 +141,7 @@ export default class SchoolsController {
       }),
     ])
 
-    await this.deletePromotionService.delete(idSchool, idSubject)
+    await this.deletePromotionService.execute(idSchool, idSubject)
 
     return response.noContent()
   }
@@ -160,7 +160,7 @@ export default class SchoolsController {
 
     const payload = await vine.validate({ schema: updatePromotionValidator, data: request.all() })
 
-    await this.updatePromotionService.update(idSchool, idPromotion, payload)
+    await this.updatePromotionService.execute(idSchool, idPromotion, payload)
 
     return response
       .append('location', getUrl(`schools/${idSchool}/promotions/${idPromotion}`))

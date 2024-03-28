@@ -10,7 +10,7 @@ export default class SubjectsController {
 
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createSubjectValidator, data: request.all() })
-    const subject = await this.createSubjectService.create(payload)
+    const subject = await this.createSubjectService.execute(payload)
 
     return response.created({
       id: subject.id.toString(),

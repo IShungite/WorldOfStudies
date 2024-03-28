@@ -2,15 +2,14 @@ import { Id } from '#domainModels/id/id'
 import { PromotionNotFoundException } from '#domainModels/school/promotion_not_found.exception'
 import { School } from '#domainModels/school/school'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
-import { DeletePromotionUseCase } from '#domainPorts/in/promotion/delete_promotion.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class DeletePromotionService implements DeletePromotionUseCase {
+export class DeletePromotionService {
   constructor(private readonly schoolsRepository: ISchoolsRepository) {}
 
-  async delete(schoolId: Id, promotionId: Id): Promise<void> {
+  async execute(schoolId: Id, promotionId: Id): Promise<void> {
     const school = await this.schoolsRepository.getById(schoolId)
 
     if (!school) {

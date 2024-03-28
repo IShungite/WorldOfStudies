@@ -3,15 +3,14 @@ import { PromotionNotFoundException } from '#domainModels/school/promotion_not_f
 import { School } from '#domainModels/school/school'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { CreateSubjectDto, Subject } from '#domainModels/school/subject'
-import { CreateSubjectUseCase } from '#domainPorts/in/subject/create_subject.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class CreateSubjectService implements CreateSubjectUseCase {
+export class CreateSubjectService {
   constructor(private readonly schoolRepository: ISchoolsRepository) {}
 
-  async create(createSubjectDto: CreateSubjectDto): Promise<Subject> {
+  async execute(createSubjectDto: CreateSubjectDto): Promise<Subject> {
     const subject = new Subject(createSubjectDto)
 
     const school = await this.schoolRepository.getByPromotionId(createSubjectDto.promotionId)

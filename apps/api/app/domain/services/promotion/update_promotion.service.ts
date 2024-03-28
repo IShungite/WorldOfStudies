@@ -3,15 +3,14 @@ import { Promotion, UpdatePromotionDto } from '#domainModels/school/promotion'
 import { PromotionNotFoundException } from '#domainModels/school/promotion_not_found.exception'
 import { School } from '#domainModels/school/school'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
-import { UpdatePromotionUseCase } from '#domainPorts/in/promotion/update_promotion.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class UpdatePromotionService implements UpdatePromotionUseCase {
+export class UpdatePromotionService {
   constructor(private readonly schoolsRepository: ISchoolsRepository) {}
 
-  async update(
+  async execute(
     schoolId: Id,
     promotionId: Id,
     updatePromotionDto: UpdatePromotionDto

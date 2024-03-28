@@ -15,7 +15,7 @@ export default class ShopsController {
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createShopValidator, data: request.all() })
 
-    const shop = await this.createShopService.create(payload)
+    const shop = await this.createShopService.execute(payload)
 
     return response.created(ShopMapper.toResponse(shop))
   }

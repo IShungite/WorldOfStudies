@@ -23,7 +23,7 @@ export default class CharactersController {
     const user = await auth.authenticate()
 
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
-    const character = await this.createCharacterService.create({
+    const character = await this.createCharacterService.execute({
       ...payload,
       userId: new Id(user.id.toString()),
     })
@@ -34,7 +34,7 @@ export default class CharactersController {
   async charactersByUserId({ request, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    const characters = await this.getCharactersByUserId.get(id)
+    const characters = await this.getCharactersByUserId.execute(id)
     return response.ok(CharacterMapper.toResponseList(characters))
   }
 
@@ -42,14 +42,14 @@ export default class CharactersController {
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
 
-    const character = await this.updateCharacterService.update(id, payload)
+    const character = await this.updateCharacterService.execute(id, payload)
 
     return response.ok(CharacterMapper.toResponse(character))
   }
   async destroy({ request, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    await this.deleteCharacterService.delete(id)
+    await this.deleteCharacterService.execute(id)
 
     return response.noContent()
   }

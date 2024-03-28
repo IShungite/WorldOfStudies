@@ -13,7 +13,7 @@ export class CreateShopService {
     private readonly schoolsRepository: ISchoolsRepository
   ) {}
 
-  async create(createShopDto: CreateShopDto) {
+  async execute(createShopDto: CreateShopDto) {
     const school = await this.schoolsRepository.getById(createShopDto.schoolId)
 
     if (!school) {
