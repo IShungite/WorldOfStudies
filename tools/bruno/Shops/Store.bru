@@ -1,0 +1,18 @@
+meta {
+  name: Store
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/shops
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "schoolId": "1",
+    "categories": []
+  }
+}
