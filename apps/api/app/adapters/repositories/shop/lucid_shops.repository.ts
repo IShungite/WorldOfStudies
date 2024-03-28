@@ -60,6 +60,10 @@ export class LucidShopsRepository implements IShopsRepository {
     return shop ? ShopMapper.fromLucid(shop) : null
   }
 
+  async deleteById(shopId: Id): Promise<void> {
+    await ShopEntity.query().where('id', shopId.toString()).delete()
+  }
+
   async empty(): Promise<void> {
     await testUtils
       .db()
