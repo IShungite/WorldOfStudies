@@ -10,7 +10,7 @@ export default class PromotionsController {
 
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createPromotionValidator, data: request.all() })
-    const promotion = await this.createPromotionService.create(payload)
+    const promotion = await this.createPromotionService.execute(payload)
 
     return response.created({
       id: promotion.id.toString(),

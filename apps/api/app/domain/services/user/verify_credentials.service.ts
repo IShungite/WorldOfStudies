@@ -1,12 +1,11 @@
 import { User } from '#domainModels/user/user'
-import { VerifyCredentialsUseCase } from '#domainPorts/in/user/verify_credentials.use_case'
 import { IUsersRepository } from '#domainPorts/out/users.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class VerifyCredentialsService implements VerifyCredentialsUseCase {
+export class VerifyCredentialsService {
   constructor(private readonly usersRepository: IUsersRepository) {}
-  async verifyCredentials(email: string, password: string): Promise<User> {
+  async execute(email: string, password: string): Promise<User> {
     return this.usersRepository.verifyCredentials(email, password)
   }
 }

@@ -6,7 +6,7 @@ import { inject } from '@adonisjs/core'
 @inject()
 export class GetShopBySchoolService {
   constructor(private readonly shopRepository: IShopsRepository) {}
-  async getShopBySchoolId(id: Id) {
+  async execute(id: Id) {
     const shop = await this.shopRepository.getBySchoolId(id)
 
     if (!shop) {

@@ -5,15 +5,14 @@ import { School } from '#domainModels/school/school'
 import { SchoolNotFoundException } from '#domainModels/school/school_not_found.exception'
 import { Subject, UpdateSubjectDto } from '#domainModels/school/subject'
 import { SubjectNotFoundException } from '#domainModels/school/subject_not_found.exception'
-import { UpdateSubjectUseCase } from '#domainPorts/in/subject/update_subject.use_case'
 import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class UpdateSubjectService implements UpdateSubjectUseCase {
+export class UpdateSubjectService {
   constructor(private readonly schoolsRepository: ISchoolsRepository) {}
 
-  async update(
+  async execute(
     schoolId: Id,
     promotionId: Id,
     subjectId: Id,

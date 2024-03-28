@@ -25,7 +25,7 @@ export default class QuizzesController {
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    return this.getQuizzesService.getAll()
+    return this.getQuizzesService.execute()
   }
 
   /**
@@ -34,7 +34,7 @@ export default class QuizzesController {
   async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createQuizValidator, data: request.all() })
 
-    const quiz = await this.createQuizService.create(payload)
+    const quiz = await this.createQuizService.execute(payload)
 
     return response.created(quiz)
   }
@@ -45,7 +45,7 @@ export default class QuizzesController {
   async show({ params }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    return this.getQuizService.get(id)
+    return this.getQuizService.execute(id)
   }
 
   /**
@@ -55,7 +55,7 @@ export default class QuizzesController {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const payload = await vine.validate({ schema: updateQuizValidator, data: request.all() })
 
-    const quiz = await this.updateQuizService.update(id, payload)
+    const quiz = await this.updateQuizService.execute(id, payload)
 
     return response.ok(QuizMapper.toResponse(quiz))
   }
@@ -66,7 +66,7 @@ export default class QuizzesController {
   async destroy({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    await this.deleteQuizService.delete(id)
+    await this.deleteQuizService.execute(id)
 
     return response.noContent()
   }
