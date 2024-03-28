@@ -84,7 +84,7 @@ router
       .resource('characters', CharactersController)
       .only(['store', 'update', 'destroy'])
       .where('id', onlyNumbersRegex)
-    router.get('user/:id/characters', [CharactersController, 'charactersByUserId'])
+    router.get('users/:id/characters', [CharactersController, 'charactersByUserId'])
 
     router.resource('promotions', PromotionsController).only(['store'])
 
