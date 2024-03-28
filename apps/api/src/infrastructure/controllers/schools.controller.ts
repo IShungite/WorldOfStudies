@@ -19,7 +19,7 @@ import { DeletePromotionService } from '#domain/services/promotion/delete_promot
 import { UpdatePromotionService } from '#domain/services/promotion/update_promotion.service'
 import { updatePromotionValidator } from '#infrastructure/validators/update_promotion.validator'
 import { getUrl } from '#utils/get_url'
-import { DeleteShopService } from '#domainServices/shop/delete_shop.service'
+import { DeleteShopService } from '#domain/services/shop/delete_shop.service'
 
 @inject()
 export default class SchoolsController {
