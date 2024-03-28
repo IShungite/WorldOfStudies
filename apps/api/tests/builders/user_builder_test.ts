@@ -1,6 +1,6 @@
-import { Id } from '#domainModels/id/id'
-import { Role, role } from '#domainModels/user/role'
-import { User } from '#domainModels/user/user'
+import { Id } from '#domain/models/id/id'
+import { Role, role } from '#domain/models/user/role'
+import { User } from '#domain/models/user/user'
 
 export class UserBuilderTest {
   private _id = Math.floor(Math.random() * 100000).toString()

@@ -32,7 +32,7 @@ export default defineConfig({
     () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
-    () => import('#providers/app_provider'),
+    () => import('#infrastructure/adonis/providers/app_provider'),
   ],
 
   /*
@@ -43,7 +43,10 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
+  preloads: [
+    () => import('#infrastructure/adonis/routes'),
+    () => import('#infrastructure/adonis/kernel'),
+  ],
 
   /*
   |--------------------------------------------------------------------------

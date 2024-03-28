@@ -1,9 +1,9 @@
-import { Quiz } from '#domainModels/quiz/quiz'
-import { questionType } from '#domainModels/quiz/question'
+import { Quiz } from '#domain/models/quiz/quiz'
+import { questionType } from '#domain/models/quiz/question'
 import { test } from '@japa/runner'
-import { Id } from '#domainModels/id/id'
-import { QuestionFactory } from '#factories/question.factory'
-import { UserAnswerFactory } from '#factories/user_answer.factory'
+import { Id } from '#domain/models/id/id'
+import { QuestionFactory } from '#domain/factories/question.factory'
+import { UserAnswerFactory } from '#domain/factories/user_answer.factory'
 
 test.group('Quizzes', () => {
   const questionQCM = QuestionFactory.create({

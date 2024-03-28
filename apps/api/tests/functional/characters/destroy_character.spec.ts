@@ -1,9 +1,9 @@
-import { ICharactersRepository } from '#domainPorts/out/characters.repository'
+import { ICharactersRepository } from '#domain/ports/out/characters.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { Character } from '#domainModels/character/character'
-import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { Character } from '#domain/models/character/character'
+import { IUsersRepository } from '#domain/ports/out/users.repository'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 
 test.group('Characters - delete', (group) => {

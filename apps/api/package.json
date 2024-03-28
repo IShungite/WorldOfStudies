@@ -16,29 +16,13 @@
     "test:mutation": "stryker run"
   },
   "imports": {
-    "#controllers/*": "./app/adapters/controllers/*.js",
-    "#exceptions/*": "./app/exceptions/*.js",
-    "#models/*": "./app/models/*.js",
-    "#mails/*": "./app/mails/*.js",
-    "#services/*": "./app/services/*.js",
-    "#listeners/*": "./app/listeners/*.js",
-    "#events/*": "./app/events/*.js",
-    "#middleware/*": "./app/middleware/*.js",
-    "#validators/*": "./app/validators/*.js",
-    "#providers/*": "./providers/*.js",
-    "#policies/*": "./app/policies/*.js",
-    "#abilities/*": "./app/abilities/*.js",
+    "#infrastructure/*": "./src/infrastructure/*.js",
+    "#domain/*": "./src/domain/*.js",
+
     "#database/*": "./database/*.js",
-    "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-    "#factories/*": "./app/domain/factories/*.js",
-    "#domainServices/*": "./app/domain/services/*.js",
-    "#domainModels/*": "./app/domain/models/*.js",
-    "#domainPorts/*": "./app/domain/ports/*.js",
-    "#repositories/*": "./app/adapters/repositories/*.js",
-    "#mappers/*": "./app/adapters/mappers/*.js",
-    "#utils/*": "./utils/*.js"
+    "#utils/*": "./src/utils/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.2.3",

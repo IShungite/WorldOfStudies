@@ -36,14 +36,14 @@ const IMPORTER = (filePath: string) => {
 new Ignitor(APP_ROOT, { importer: IMPORTER })
   .tap((app) => {
     app.booting(async () => {
-      await import('#start/env')
+      await import('#infrastructure/adonis/env')
     })
     app.listen('SIGTERM', () => app.terminate())
     app.listenIf(app.managedByPm2, 'SIGINT', () => app.terminate())
   })
   .testRunner()
   .configure(async (app) => {
-    const { runnerHooks, ...config } = await import('../tests/bootstrap.js')
+    const { runnerHooks, ...config } = await import('#tests/bootstrap')
 
     processCLIArgs(process.argv.splice(2))
     configure({

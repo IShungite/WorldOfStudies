@@ -1,7 +1,7 @@
 import { defineConfig } from '@adonisjs/auth'
 import { tokensGuard, tokensUserProvider } from '@adonisjs/auth/access_tokens'
 import { Authenticators, InferAuthEvents } from '@adonisjs/auth/types'
-import env from '#start/env'
+import env from '#infrastructure/adonis/env'
 
 const authConfig = defineConfig({
   default: 'api',
@@ -9,12 +9,12 @@ const authConfig = defineConfig({
     api: tokensGuard({
       provider: tokensUserProvider({
         tokens: 'accessTokens',
-        model: (): Promise<typeof import('#models/user')> => {
+        model: (): Promise<typeof import('#infrastructure/models/user')> => {
           if (env.get('DB_CONNECTION') === 'in_memory') {
-            return import('../app/adapters/utils/user_entity_for_auth_when_in_memory.js') as any
+            return import('#utils/user_entity_for_auth_when_in_memory') as any
           }
 
-          return import('#models/user')
+          return import('#infrastructure/models/user')
         },
       }),
     }),

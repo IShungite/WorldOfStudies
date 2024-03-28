@@ -1,10 +1,10 @@
-import { Character } from '#domainModels/character/character'
-import { ICharactersRepository } from '#domainPorts/out/characters.repository'
+import { Character } from '#domain/models/character/character'
+import { ICharactersRepository } from '#domain/ports/out/characters.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { IUsersRepository } from '#domain/ports/out/users.repository'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository

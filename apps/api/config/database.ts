@@ -1,4 +1,4 @@
-import env from '#start/env'
+import env from '#infrastructure/adonis/env'
 import app from '@adonisjs/core/services/app'
 import { defineConfig } from '@adonisjs/lucid'
 

@@ -1,4 +1,4 @@
-import { role } from '#domainModels/user/role'
+import { role } from '#domain/models/user/role'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {

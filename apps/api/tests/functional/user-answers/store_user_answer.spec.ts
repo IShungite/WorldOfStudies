@@ -1,14 +1,14 @@
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IUserAnswersRepository } from '#domainPorts/out/user_answers.repository'
-import { QuestionQcm, questionType } from '#domainModels/quiz/question'
-import { QuizFactory } from '#factories/quiz.factory'
+import { IUserAnswersRepository } from '#domain/ports/out/user_answers.repository'
+import { QuestionQcm, questionType } from '#domain/models/quiz/question'
+import { QuizFactory } from '#domain/factories/quiz.factory'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
-import { IUsersRepository } from '#domainPorts/out/users.repository'
-import { ICharactersRepository } from '#domainPorts/out/characters.repository'
-import { Character } from '#domainModels/character/character'
+import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
+import { IUsersRepository } from '#domain/ports/out/users.repository'
+import { ICharactersRepository } from '#domain/ports/out/characters.repository'
+import { Character } from '#domain/models/character/character'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
