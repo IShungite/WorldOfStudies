@@ -29,6 +29,10 @@ export class LucidCharactersRepository implements ICharactersRepository {
     return character ? CharacterMapper.fromLucid(character) : null
   }
 
+  async deleteById(characterId: Id): Promise<void> {
+    await CharacterEntity.query().where('id', characterId.toString()).delete()
+  }
+
   async empty(): Promise<void> {
     await testUtils
       .db()
