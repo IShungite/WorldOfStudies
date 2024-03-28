@@ -80,8 +80,11 @@ router
     router.resource('schools', SchoolsController).apiOnly()
     router.get('schools/:id/shop', [SchoolsController, 'getShop'])
 
-    router.resource('characters', CharactersController).only(['store', 'update'])
-    router.get('user/:id/characters', [CharactersController, 'charactersByUserId'])
+    router
+      .resource('characters', CharactersController)
+      .only(['store', 'update', 'destroy'])
+      .where('id', onlyNumbersRegex)
+    router.get('users/:id/characters', [CharactersController, 'charactersByUserId'])
 
     router.resource('promotions', PromotionsController).only(['store'])
 

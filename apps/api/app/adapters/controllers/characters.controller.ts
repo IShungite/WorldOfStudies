@@ -8,13 +8,15 @@ import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { UpdateCharacterService } from '#domainServices/character/update_character_service'
 import { CharacterMapper } from '#mappers/character.mapper'
+import { DeleteCharacterService } from '#domainServices/character/delete_character.service'
 
 @inject()
 export default class CharactersController {
   constructor(
     private readonly createCharacterService: CreateCharacterService,
     private readonly getCharactersByUserId: GetCharactersByUserIdService,
-    private readonly updateCharacterService: UpdateCharacterService
+    private readonly updateCharacterService: UpdateCharacterService,
+    private readonly deleteCharacterService: DeleteCharacterService
   ) {}
 
   async store({ request, response, auth }: HttpContext) {
@@ -43,5 +45,12 @@ export default class CharactersController {
     const character = await this.updateCharacterService.update(id, payload)
 
     return response.ok(CharacterMapper.toResponse(character))
+  }
+  async destroy({ request, response }: HttpContext) {
+    const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
+
+    await this.deleteCharacterService.delete(id)
+
+    return response.noContent()
   }
 }

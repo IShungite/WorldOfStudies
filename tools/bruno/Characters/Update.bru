@@ -1,0 +1,17 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{host}}/characters/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Shan"
+  }
+}
