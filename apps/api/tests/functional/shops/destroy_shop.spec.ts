@@ -39,7 +39,9 @@ test.group('Shops - destroy', (group) => {
 
   test('It should destroy the shop', async ({ client }) => {
     const schoolId = new Id('1')
+    const school = new School({ id: schoolId, name: 'School 1' })
     const shop = new Shop({ schoolId: schoolId, categories: [] })
+    await schoolsRepository.save(school)
     await shopsRepository.save(shop)
 
     const response = await client.delete(`/schools/${schoolId}/shop`)

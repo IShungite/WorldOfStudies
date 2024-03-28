@@ -1,11 +1,10 @@
 import { Id } from '#domainModels/id/id'
 import { ShopNotFoundException } from '#domainModels/shop/shop_not_found_exception'
-import { DeleteShopUseCase } from '#domainPorts/in/shop/delete_shop.use_case'
 import { IShopsRepository } from '#domainPorts/out/shops.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()
-export class DeleteShopService implements DeleteShopUseCase {
+export class DeleteShopService {
   constructor(private readonly shopRepository: IShopsRepository) {}
 
   async delete(schoolId: Id): Promise<void> {
