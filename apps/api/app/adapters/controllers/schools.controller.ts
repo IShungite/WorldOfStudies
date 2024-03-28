@@ -19,6 +19,7 @@ import { DeletePromotionService } from '#domainServices/promotion/delete_promoti
 import { UpdatePromotionService } from '#domainServices/promotion/update_promotion.service'
 import { updatePromotionValidator } from '#validators/update_promotion.validator'
 import { getUrl } from '#utils/get_url'
+import { DeleteShopService } from '#domainServices/shop/delete_shop.service'
 
 @inject()
 export default class SchoolsController {
@@ -31,7 +32,8 @@ export default class SchoolsController {
     private readonly getShopBySchoolService: GetShopBySchoolService,
     private readonly updateSubjectService: UpdateSubjectService,
     private readonly deletePromotionService: DeletePromotionService,
-    private readonly updatePromotionService: UpdatePromotionService
+    private readonly updatePromotionService: UpdatePromotionService,
+    private readonly deleteShopService: DeleteShopService
   ) {}
 
   async store({ request, response }: HttpContext) {
@@ -124,6 +126,14 @@ export default class SchoolsController {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const shop = await this.getShopBySchoolService.execute(id)
     return response.ok(ShopMapper.toResponse(shop))
+  }
+
+  async destroyShop({ params, response }: HttpContext) {
+    const id = await vine.validate({ schema: domainIdValidator, data: params.id })
+
+    await this.deleteShopService.delete(id)
+
+    return response.noContent()
   }
 
   /**

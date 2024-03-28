@@ -78,7 +78,10 @@ router
       .where('idPromotion', onlyNumbersRegex)
 
     router.resource('schools', SchoolsController).apiOnly()
-    router.get('schools/:id/shop', [SchoolsController, 'getShop'])
+    router.get('schools/:id/shop', [SchoolsController, 'getShop']).where('id', onlyNumbersRegex)
+    router
+      .delete('schools/:id/shop', [SchoolsController, 'destroyShop'])
+      .where('id', onlyNumbersRegex)
 
     router
       .resource('characters', CharactersController)
