@@ -25,7 +25,8 @@ export default class AppProvider {
   private registerRepository<
     T extends abstract new (...args: any[]) => any,
     U extends new (...args: any[]) => InstanceType<T>,
-  >(repositoryInterface: T, inMemoryImplementation: U, defaultImplementation: U) {
+    V extends new (...args: any[]) => InstanceType<T>,
+  >(repositoryInterface: T, inMemoryImplementation: U, defaultImplementation: V) {
     this.app.container.singleton(repositoryInterface, async () => {
       if (env.get('DB_CONNECTION') === 'in_memory') {
         return new inMemoryImplementation()
