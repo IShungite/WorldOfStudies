@@ -1,4 +1,4 @@
-import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'

@@ -1,5 +1,5 @@
-import { ICharactersRepository } from '#domainPorts/out/characters.repository'
-import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'

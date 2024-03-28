@@ -1,4 +1,4 @@
-import { questionType } from '#domainModels/quiz/question'
+import { questionType } from '#domain/models/quiz/question'
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {

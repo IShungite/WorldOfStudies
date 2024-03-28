@@ -1,11 +1,11 @@
-import { ISchoolsRepository } from '#domainPorts/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { School } from '#domainModels/school/school'
-import { IShopsRepository } from '#domainPorts/out/shops.repository'
-import { Shop } from '#domainModels/shop/shop'
-import { Id } from '#domainModels/id/id'
+import { School } from '#domain/models/school/school'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
+import { Shop } from '#domain/models/shop/shop'
+import { Id } from '#domain/models/id/id'
 
 test.group('Shops - destroy', (group) => {
   let schoolsRepository: ISchoolsRepository
