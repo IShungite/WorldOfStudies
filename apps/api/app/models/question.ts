@@ -1,11 +1,27 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import QuizEntity from '#models/quiz'
+import type { QuestionType } from '#domainModels/quiz/question'
+
 export default class Question extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare content: any
+  declare quizId: number
+
+  @belongsTo(() => QuizEntity)
+  declare quiz: BelongsTo<typeof QuizEntity>
+
+  @column()
+  declare type: QuestionType
+
+  @column()
+  declare points: number
+
+  @column()
+  declare extra: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

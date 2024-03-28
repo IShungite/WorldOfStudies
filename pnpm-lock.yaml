@@ -106,6 +106,97 @@ importers:
         specifier: ^5.4.2
         version: 5.4.2
 
+  apps/api/build:
+    dependencies:
+      '@adonisjs/auth':
+        specifier: ^9.1.1
+        version: 9.1.1(@adonisjs/assembler@7.2.3)(@adonisjs/core@6.3.1)(@adonisjs/lucid@20.4.0)(@japa/api-client@2.0.2)(@japa/plugin-adonisjs@3.0.0)
+      '@adonisjs/core':
+        specifier: ^6.3.1
+        version: 6.3.1(@adonisjs/assembler@7.2.3)(@vinejs/vine@1.8.0)
+      '@adonisjs/cors':
+        specifier: ^2.2.1
+        version: 2.2.1(@adonisjs/core@6.3.1)
+      '@adonisjs/lucid':
+        specifier: ^20.4.0
+        version: 20.4.0(@adonisjs/assembler@7.2.3)(@adonisjs/core@6.3.1)(better-sqlite3@9.4.3)(luxon@3.4.4)(pg@8.11.3)
+      '@types/jsonwebtoken':
+        specifier: ^9.0.6
+        version: 9.0.6
+      '@vinejs/vine':
+        specifier: ^1.8.0
+        version: 1.8.0
+      better-sqlite3:
+        specifier: ^9.4.3
+        version: 9.4.3
+      http-status-codes:
+        specifier: ^2.3.0
+        version: 2.3.0
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
+      luxon:
+        specifier: ^3.4.4
+        version: 3.4.4
+      pg:
+        specifier: ^8.11.3
+        version: 8.11.3
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+    devDependencies:
+      '@adonisjs/assembler':
+        specifier: ^7.2.3
+        version: 7.2.3(typescript@5.4.2)
+      '@adonisjs/eslint-config':
+        specifier: ^1.3.0
+        version: 1.3.0(eslint@8.57.0)(prettier@3.2.5)(typescript@5.4.2)
+      '@adonisjs/prettier-config':
+        specifier: ^1.3.0
+        version: 1.3.0
+      '@adonisjs/tsconfig':
+        specifier: ^1.3.0
+        version: 1.3.0
+      '@japa/api-client':
+        specifier: ^2.0.2
+        version: 2.0.2(@japa/assert@2.1.0)(@japa/runner@3.1.1)
+      '@japa/assert':
+        specifier: ^2.1.0
+        version: 2.1.0(@japa/runner@3.1.1)(openapi-types@12.1.3)
+      '@japa/plugin-adonisjs':
+        specifier: ^3.0.0
+        version: 3.0.0(@adonisjs/core@6.3.1)(@japa/api-client@2.0.2)(@japa/runner@3.1.1)
+      '@japa/runner':
+        specifier: ^3.1.1
+        version: 3.1.1
+      '@stryker-mutator/core':
+        specifier: ^8.2.6
+        version: 8.2.6
+      '@swc/core':
+        specifier: ^1.4.8
+        version: 1.4.8
+      '@types/luxon':
+        specifier: ^3.4.2
+        version: 3.4.2
+      '@types/node':
+        specifier: ^20.11.28
+        version: 20.11.28
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      pino-pretty:
+        specifier: ^10.3.1
+        version: 10.3.1
+      prettier:
+        specifier: ^3.2.5
+        version: 3.2.5
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@swc/core@1.4.8)(@types/node@20.11.28)(typescript@5.4.2)
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.2
+
   apps/mobile:
     dependencies:
       axios:

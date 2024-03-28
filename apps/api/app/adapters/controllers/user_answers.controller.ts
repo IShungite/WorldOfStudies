@@ -3,6 +3,7 @@ import { createUserAnswerValidator } from '#validators/create_user_answer.valida
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { UserAnswerMapper } from '#mappers/user_answer.mapper'
 
 @inject()
 export default class UserAnswersController {
@@ -11,9 +12,10 @@ export default class UserAnswersController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const payload = await vine.validate({ schema: createUserAnswerValidator, data: request.all() })
 
-    return this.createUserAnswer.create(payload)
+    const userAnswer = await this.createUserAnswer.create(payload)
+    return response.created(UserAnswerMapper.toResponse(userAnswer))
   }
 }

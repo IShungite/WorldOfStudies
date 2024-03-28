@@ -13,6 +13,7 @@ env:
   LOG_LEVEL: info
   APP_KEY: testKeytestkeytestkey
   NODE_ENV: test
+  DB_CONNECTION: sqlite
   DB_HOST: db
   DB_PORT: 5432
   DB_USER: dbuser

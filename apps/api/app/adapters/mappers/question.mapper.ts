@@ -1,4 +1,7 @@
-import { Question, QuestionQcm, QuestionTextHole } from '#domainModels/quiz/question'
+import { Question, QuestionQcm, QuestionTextHole, questionType } from '#domainModels/quiz/question'
+import QuestionEntity from '#models/question'
+import { Id } from '#domainModels/id/id'
+import { InvalidQuestionTypeException } from '#domainModels/quiz/invalid_question_type.exception'
 
 export class QuestionMapper {
   static toResponse(question: Question) {
@@ -34,5 +37,29 @@ export class QuestionMapper {
       text: question.text,
       answers: question.answers,
     }
+  }
+
+  static fromLucid(question: QuestionEntity): Question {
+    const extra = JSON.parse(question.extra)
+    const id = new Id(question.id.toString())
+
+    if (question.type === questionType.QCM) {
+      return new QuestionQcm({
+        id: id,
+        points: question.points,
+        choices: extra.choices,
+      })
+    }
+
+    if (question.type === questionType.TEXT_HOLE) {
+      return new QuestionTextHole({
+        id: id,
+        points: question.points,
+        text: extra.text,
+        answers: extra.answers,
+      })
+    }
+
+    throw new InvalidQuestionTypeException()
   }
 }

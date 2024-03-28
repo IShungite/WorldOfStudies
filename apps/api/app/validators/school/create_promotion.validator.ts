@@ -6,3 +6,5 @@ export const createPromotionValidator = vine.object({
   year: vine.number(),
   schoolId: domainIdValidator,
 })
+
+export const createPromotionsValidator = vine.array(createPromotionValidator)

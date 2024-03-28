@@ -4,14 +4,14 @@ import { QuestionType, questionType } from '#domainModels/quiz/question'
 type UserAnswerProps = {
   id?: Id
   questionId: Id
-  userId: Id
+  characterId: Id
   type: QuestionType
 }
 
 type CreateUserAnswerDtoBase = {
   id?: Id
   questionId: Id
-  userId: Id
+  characterId: Id
   type: QuestionType
 }
 
@@ -30,13 +30,13 @@ export type CreateUserAnswerDto = CreateUserAnswerDtoQcm | CreateUserAnswerDtoTe
 export abstract class UserAnswer {
   readonly id: Id
   readonly questionId: Id
-  readonly userId: Id
+  readonly characterId: Id
   readonly type: QuestionType
 
-  constructor({ id, questionId, userId, type }: UserAnswerProps) {
+  constructor({ id, questionId, characterId, type }: UserAnswerProps) {
     this.id = id ?? Id.factory()
     this.questionId = questionId
-    this.userId = userId
+    this.characterId = characterId
     this.type = type
   }
 }
@@ -46,10 +46,10 @@ export class UserAnswerQcm extends UserAnswer {
   constructor({
     id,
     questionId,
-    userId,
+    characterId,
     choiceId,
   }: Omit<UserAnswerProps, 'type'> & { choiceId: Id }) {
-    super({ id, questionId, userId, type: questionType.QCM })
+    super({ id, questionId, characterId: characterId, type: questionType.QCM })
     this.choiceId = choiceId
   }
 }
@@ -59,10 +59,10 @@ export class UserAnswerTextHole extends UserAnswer {
   constructor({
     id,
     questionId,
-    userId,
+    characterId,
     values,
   }: Omit<UserAnswerProps, 'type'> & { values: string[] }) {
-    super({ id, questionId, userId, type: questionType.TEXT_HOLE })
+    super({ id, questionId, characterId: characterId, type: questionType.TEXT_HOLE })
     this.values = values
   }
 }

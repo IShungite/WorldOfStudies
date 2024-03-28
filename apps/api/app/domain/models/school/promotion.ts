@@ -30,4 +30,13 @@ export class Promotion {
     this.year = year
     this.subjects = subjects ?? []
   }
+
+  toJson() {
+    return {
+      id: this.id.toString(),
+      name: this.name,
+      year: this.year,
+      subjects: this.subjects.map((s) => s.toJson()),
+    }
+  }
 }

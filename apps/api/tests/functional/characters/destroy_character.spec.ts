@@ -3,17 +3,22 @@ import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { Character } from '#domainModels/character/character'
-import { Id } from '#domainModels/id/id'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { UserBuilderTest } from '#tests/builders/user_builder_test'
 
 test.group('Characters - delete', (group) => {
   let charactersRepository: ICharactersRepository
+  let usersRepository: IUsersRepository
 
   group.setup(async () => {
-    ;[charactersRepository] = await Promise.all([app.container.make(ICharactersRepository)])
+    ;[charactersRepository, usersRepository] = await Promise.all([
+      app.container.make(ICharactersRepository),
+      app.container.make(IUsersRepository),
+    ])
   })
 
   group.each.setup(async () => {
-    await Promise.all([charactersRepository.empty()])
+    await Promise.all([charactersRepository.empty(), usersRepository])
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {
@@ -29,7 +34,11 @@ test.group('Characters - delete', (group) => {
   })
 
   test('It should delete the character', async ({ client, assert }) => {
-    const character = new Character({ name: 'Character 1', userId: new Id('1') })
+    const user = new UserBuilderTest().build()
+
+    await usersRepository.save(user)
+
+    const character = new Character({ name: 'Character 1', userId: user.id })
     await charactersRepository.save(character)
 
     const response = await client.delete(`/characters/${character.id.toString()}`)

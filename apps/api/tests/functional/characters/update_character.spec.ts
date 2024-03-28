@@ -4,16 +4,22 @@ import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { Character } from '#domainModels/character/character'
 import { Id } from '#domainModels/id/id'
+import { IUsersRepository } from '#domainPorts/out/users.repository'
+import { UserBuilderTest } from '#tests/builders/user_builder_test'
 
 test.group('Characters - update', (group) => {
   let charactersRepository: ICharactersRepository
+  let usersRepository: IUsersRepository
 
   group.setup(async () => {
-    charactersRepository = await app.container.make(ICharactersRepository)
+    ;[charactersRepository, usersRepository] = await Promise.all([
+      app.container.make(ICharactersRepository),
+      app.container.make(IUsersRepository),
+    ])
   })
 
   group.each.setup(async () => {
-    await charactersRepository.empty()
+    await Promise.all([charactersRepository.empty(), usersRepository.empty()])
   })
 
   test('It should return a 400 if the character does not exist', async ({ client }) => {
@@ -34,7 +40,10 @@ test.group('Characters - update', (group) => {
   })
 
   test('It should update the name of the character', async ({ client }) => {
-    const character = new Character({ name: 'Character 1', userId: new Id('1') })
+    const user = new UserBuilderTest().build()
+    await usersRepository.save(user)
+
+    const character = new Character({ name: 'Character 1', userId: user.id })
     await charactersRepository.save(character)
 
     const response = await client.patch(`/characters/${character.id}`).json({

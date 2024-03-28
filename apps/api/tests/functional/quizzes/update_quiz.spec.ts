@@ -3,7 +3,6 @@ import { Quiz } from '#domainModels/quiz/quiz'
 import { IQuizzesRepository } from '#domainPorts/out/quizzes.repository'
 import { QuestionFactory } from '#factories/question.factory'
 import { QuizMapper } from '#mappers/quiz.mapper'
-import { InMemoryQuizzesRepository } from '#repositories/in_memory_quizzes.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -11,11 +10,12 @@ import { StatusCodes } from 'http-status-codes'
 test.group('Quizzes - update', (group) => {
   let quizzesRepository: IQuizzesRepository
 
+  group.setup(async () => {
+    quizzesRepository = await app.container.make(IQuizzesRepository)
+  })
+
   group.each.setup(async () => {
-    quizzesRepository = new InMemoryQuizzesRepository()
-    app.container.swap(IQuizzesRepository, () => {
-      return quizzesRepository
-    })
+    await quizzesRepository.empty()
   })
 
   test('It should return a 400 if the quiz does not exist', async ({ client }) => {

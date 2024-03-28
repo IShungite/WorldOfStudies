@@ -27,4 +27,4 @@ RUN pnpm install
 ENV CHOKIDAR_USEPOLLING=true
 
 # Start command
-CMD [ "pnpm", "--filter", "api", "dev" ]
+CMD [ "pnpm", "--filter", "@world-of-studies/api", "dev" ]

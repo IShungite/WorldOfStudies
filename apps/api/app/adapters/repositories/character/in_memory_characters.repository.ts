@@ -15,9 +15,7 @@ export class InMemoryCharactersRepository implements ICharactersRepository {
   }
 
   async getById(characterId: Id): Promise<Character | null> {
-    return (
-      Object.values(this.characters).find((character) => character.id.equals(characterId)) ?? null
-    )
+    return this.characters[characterId.toString()] ?? null
   }
 
   async deleteById(characterId: Id): Promise<void> {

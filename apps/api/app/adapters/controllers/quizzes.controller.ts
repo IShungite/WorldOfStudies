@@ -35,6 +35,7 @@ export default class QuizzesController {
     const payload = await vine.validate({ schema: createQuizValidator, data: request.all() })
 
     const quiz = await this.createQuizService.create(payload)
+
     return response.created(quiz)
   }
 
@@ -44,8 +45,7 @@ export default class QuizzesController {
   async show({ params }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    const quiz = await this.getQuizService.get(id)
-    return quiz
+    return this.getQuizService.get(id)
   }
 
   /**

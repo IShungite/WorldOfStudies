@@ -44,7 +44,7 @@ test.group('Quizzes', () => {
       id: new Id('1'),
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     const userAnswers2 = UserAnswerFactory.create({
@@ -52,7 +52,7 @@ test.group('Quizzes', () => {
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: ['hello'],
-      userId: new Id('1'),
+      characterId: new Id('1'),
     })
 
     assert.equal(quiz.getTotalUserPoints([userAnswer1, userAnswers2]), 3)

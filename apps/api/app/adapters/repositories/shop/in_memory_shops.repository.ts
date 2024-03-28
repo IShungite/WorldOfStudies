@@ -3,7 +3,7 @@ import { Shop } from '#domainModels/shop/shop'
 import { Id } from '#domainModels/id/id'
 
 export class InMemoryShopsRepository implements IShopsRepository {
-  private readonly shops: Record<string, Shop> = {}
+  private shops: Record<string, Shop> = {}
 
   async save(shop: Shop): Promise<Shop> {
     this.shops[shop.id.toString()] = shop
@@ -14,5 +14,9 @@ export class InMemoryShopsRepository implements IShopsRepository {
     return (
       Object.values(this.shops).find((shopToFind) => shopToFind.schoolId.equals(schoolId)) ?? null
     )
+  }
+
+  async empty(): Promise<void> {
+    this.shops = {}
   }
 }
