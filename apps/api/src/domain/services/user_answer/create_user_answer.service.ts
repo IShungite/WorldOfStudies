@@ -1,5 +1,5 @@
 import { CreateUserAnswerDto, UserAnswer } from '#domain/models/quiz/user_answer'
-import { IUserAnswersRepository } from '#domain/ports/out/user_answers.repository'
+import { IUserAnswersRepository } from '#domain/contracts/repositories/user_answers.repository'
 import { UserAnswerFactory } from '#domain/factories/user_answer.factory'
 import { inject } from '@adonisjs/core'
 

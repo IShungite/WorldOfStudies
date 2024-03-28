@@ -1,5 +1,5 @@
 import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from '#domain/models/quiz/user_answer'
-import UserAnswerEntity from '#infrastructure/models/user_answer'
+import UserAnswerEntity from '#infrastructure/entities/user_answer'
 import { questionType } from '#domain/models/quiz/question'
 import { Id } from '#domain/models/id/id'
 import { InvalidQuestionTypeException } from '#domain/models/quiz/invalid_question_type.exception'

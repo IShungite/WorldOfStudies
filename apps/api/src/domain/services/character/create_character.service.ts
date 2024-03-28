@@ -1,5 +1,5 @@
 import { Character, CreateCharacterDto } from '#domain/models/character/character'
-import { ICharactersRepository } from '#domain/ports/out/characters.repository'
+import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()

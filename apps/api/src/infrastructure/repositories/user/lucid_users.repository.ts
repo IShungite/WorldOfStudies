@@ -1,9 +1,9 @@
 import { AccessToken } from '#domain/models/user/access_token'
 import { User } from '#domain/models/user/user'
 import { UserNotFoundException } from '#domain/models/user/user_not_found.exception'
-import { IUsersRepository } from '#domain/ports/out/users.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { UserMapper } from '#infrastructure/mappers/user.mapper'
-import UserEntity from '#infrastructure/models/user'
+import UserEntity from '#infrastructure/entities/user'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { InvalidCredentialsException } from '#domain/models/user/invalid_credentials.exception'
 

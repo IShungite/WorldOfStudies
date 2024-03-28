@@ -1,5 +1,5 @@
 import { Shop } from '#domain/models/shop/shop'
-import ShopEntity from '#infrastructure/models/shop/shop'
+import ShopEntity from '#infrastructure/entities/shop/shop'
 import { Id } from '#domain/models/id/id'
 import { ShopCategory } from '#domain/models/shop/shop_category'
 import { ShopProduct } from '#domain/models/shop/shop_product'

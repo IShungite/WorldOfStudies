@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import Shop from '#infrastructure/models/shop/shop'
-import ShopProduct from '#infrastructure/models/shop/shop_product'
+import Shop from '#infrastructure/entities/shop/shop'
+import ShopProduct from '#infrastructure/entities/shop/shop_product'
 
 export default class ShopCategory extends BaseModel {
   @column({ isPrimary: true })

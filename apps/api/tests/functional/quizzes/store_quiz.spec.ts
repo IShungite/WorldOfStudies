@@ -1,4 +1,4 @@
-import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
+import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'

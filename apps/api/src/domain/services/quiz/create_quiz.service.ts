@@ -1,5 +1,5 @@
 import { CreateQuizDto, Quiz } from '#domain/models/quiz/quiz'
-import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
+import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
 import { QuizFactory } from '#domain/factories/quiz.factory'
 import { inject } from '@adonisjs/core'
 

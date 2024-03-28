@@ -1,6 +1,6 @@
 import { Quiz } from '#domain/models/quiz/quiz'
 import { QuestionMapper } from '#infrastructure/mappers/question.mapper'
-import QuizEntity from '#infrastructure/models/quiz'
+import QuizEntity from '#infrastructure/entities/quiz'
 import { Id } from '#domain/models/id/id'
 
 export class QuizMapper {

@@ -1,13 +1,13 @@
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IUserAnswersRepository } from '#domain/ports/out/user_answers.repository'
+import { IUserAnswersRepository } from '#domain/contracts/repositories/user_answers.repository'
 import { QuestionQcm, questionType } from '#domain/models/quiz/question'
 import { QuizFactory } from '#domain/factories/quiz.factory'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
-import { IUsersRepository } from '#domain/ports/out/users.repository'
-import { ICharactersRepository } from '#domain/ports/out/characters.repository'
+import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
+import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
 import { Character } from '#domain/models/character/character'
 
 test.group('User-answers - store', (group) => {

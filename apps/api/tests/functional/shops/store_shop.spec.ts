@@ -1,9 +1,9 @@
 import { School } from '#domain/models/school/school'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IShopsRepository } from '#domain/ports/out/shops.repository'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository

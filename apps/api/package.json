@@ -18,7 +18,6 @@
   "imports": {
     "#infrastructure/*": "./src/infrastructure/*.js",
     "#domain/*": "./src/domain/*.js",
-
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",

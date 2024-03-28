@@ -1,7 +1,7 @@
 import { Character } from '#domain/models/character/character'
 import { Id } from '#domain/models/id/id'
-import { ICharactersRepository } from '#domain/ports/out/characters.repository'
-import CharacterEntity from '#infrastructure/models/character'
+import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
+import CharacterEntity from '#infrastructure/entities/character'
 import { CharacterMapper } from '#infrastructure/mappers/character.mapper'
 import testUtils from '@adonisjs/core/services/test_utils'
 

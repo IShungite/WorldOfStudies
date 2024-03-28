@@ -1,6 +1,6 @@
 import { Id } from '#domain/models/id/id'
 import { User } from '#domain/models/user/user'
-import UserEntity from '#infrastructure/models/user'
+import UserEntity from '#infrastructure/entities/user'
 
 export class UserMapper {
   static fromLucid(user: UserEntity): User {

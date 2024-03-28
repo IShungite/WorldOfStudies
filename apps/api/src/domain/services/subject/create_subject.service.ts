@@ -3,7 +3,7 @@ import { PromotionNotFoundException } from '#domain/models/school/promotion_not_
 import { School } from '#domain/models/school/school'
 import { SchoolNotFoundException } from '#domain/models/school/school_not_found.exception'
 import { CreateSubjectDto, Subject } from '#domain/models/school/subject'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()

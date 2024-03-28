@@ -1,7 +1,7 @@
 import { Id } from '#domain/models/id/id'
 import { Promotion } from '#domain/models/school/promotion'
 import { School } from '#domain/models/school/school'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'

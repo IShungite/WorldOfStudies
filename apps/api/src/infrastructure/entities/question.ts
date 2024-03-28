@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import QuizEntity from '#infrastructure/models/quiz'
+import QuizEntity from '#infrastructure/entities/quiz'
 import type { QuestionType } from '#domain/models/quiz/question'
 
 export default class Question extends BaseModel {

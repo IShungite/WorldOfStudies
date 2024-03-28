@@ -1,5 +1,5 @@
 import { Character } from '#domain/models/character/character'
-import CharacterEntity from '#infrastructure/models/character'
+import CharacterEntity from '#infrastructure/entities/character'
 import { Id } from '#domain/models/id/id'
 
 export class CharacterMapper {

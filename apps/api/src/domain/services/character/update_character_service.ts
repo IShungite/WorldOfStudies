@@ -1,4 +1,4 @@
-import { ICharactersRepository } from '#domain/ports/out/characters.repository'
+import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
 import { Id } from '#domain/models/id/id'
 import { Character, UpdateCharacterDto } from '#domain/models/character/character'
 import { CharacterNotFoundException } from '#domain/models/character/character_not_found.exception'

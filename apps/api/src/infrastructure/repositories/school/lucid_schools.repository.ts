@@ -1,11 +1,11 @@
 import { Id } from '#domain/models/id/id'
 import { School } from '#domain/models/school/school'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
-import SchoolEntity from '#infrastructure/models/school'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
+import SchoolEntity from '#infrastructure/entities/school'
 import { SchoolMapper } from '#infrastructure/mappers/school.mapper'
 import testUtils from '@adonisjs/core/services/test_utils'
-import PromotionEntity from '#infrastructure/models/promotion'
-import SubjectEntity from '#infrastructure/models/subject'
+import PromotionEntity from '#infrastructure/entities/promotion'
+import SubjectEntity from '#infrastructure/entities/subject'
 import { Promotion } from '#domain/models/school/promotion'
 
 export class LucidSchoolsRepository implements ISchoolsRepository {

@@ -1,11 +1,11 @@
 import { Quiz } from '#domain/models/quiz/quiz'
 import { Id } from '#domain/models/id/id'
-import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
+import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
-import QuizEntity from '#infrastructure/models/quiz'
+import QuizEntity from '#infrastructure/entities/quiz'
 import { QuestionQcm, QuestionTextHole } from '#domain/models/quiz/question'
-import QuestionEntity from '#infrastructure/models/question'
+import QuestionEntity from '#infrastructure/entities/question'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {

@@ -1,7 +1,7 @@
 import { AccessToken } from '#domain/models/user/access_token'
 import { InvalidCredentialsException } from '#domain/models/user/invalid_credentials.exception'
 import { User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/ports/out/users.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { CreateTestJwtService } from '#utils/test_jwt/create_test_jwt.service'
 
 export class InMemoryUsersRepository implements IUsersRepository {

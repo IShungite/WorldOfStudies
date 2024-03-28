@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import Promotion from '#infrastructure/models/promotion'
+import Promotion from '#infrastructure/entities/promotion'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
 export default class Subject extends BaseModel {

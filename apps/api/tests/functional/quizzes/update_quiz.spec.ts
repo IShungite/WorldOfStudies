@@ -1,6 +1,6 @@
 import { questionType } from '#domain/models/quiz/question'
 import { Quiz } from '#domain/models/quiz/quiz'
-import { IQuizzesRepository } from '#domain/ports/out/quizzes.repository'
+import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
 import { QuestionFactory } from '#domain/factories/question.factory'
 import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
 import app from '@adonisjs/core/services/app'

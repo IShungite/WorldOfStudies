@@ -1,6 +1,6 @@
 import { role } from '#domain/models/user/role'
 import { User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/ports/out/users.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { LoginUserValidator } from '#infrastructure/validators/login_user.validator'
 import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'

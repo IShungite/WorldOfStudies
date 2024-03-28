@@ -1,6 +1,6 @@
 import { Id } from '#domain/models/id/id'
 import { School } from '#domain/models/school/school'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 
 export class InMemorySchoolsRepository implements ISchoolsRepository {
   private schools: Record<string, School> = {}

@@ -1,9 +1,9 @@
-import { IShopsRepository } from '#domain/ports/out/shops.repository'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import { Shop } from '#domain/models/shop/shop'
 import { Id } from '#domain/models/id/id'
-import ShopEntity from '#infrastructure/models/shop/shop'
-import ShopCategoryEntity from '#infrastructure/models/shop/shop_category'
-import ShopProductEntity from '#infrastructure/models/shop/shop_product'
+import ShopEntity from '#infrastructure/entities/shop/shop'
+import ShopCategoryEntity from '#infrastructure/entities/shop/shop_category'
+import ShopProductEntity from '#infrastructure/entities/shop/shop_product'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { ShopMapper } from '#infrastructure/mappers/shop.mapper'
 

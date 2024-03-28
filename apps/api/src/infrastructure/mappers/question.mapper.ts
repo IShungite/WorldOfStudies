@@ -1,5 +1,5 @@
 import { Question, QuestionQcm, QuestionTextHole, questionType } from '#domain/models/quiz/question'
-import QuestionEntity from '#infrastructure/models/question'
+import QuestionEntity from '#infrastructure/entities/question'
 import { Id } from '#domain/models/id/id'
 import { InvalidQuestionTypeException } from '#domain/models/quiz/invalid_question_type.exception'
 

@@ -1,7 +1,7 @@
 import { CreatePromotionDto, Promotion } from '#domain/models/school/promotion'
 import { School } from '#domain/models/school/school'
 import { SchoolNotFoundException } from '#domain/models/school/school_not_found.exception'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()

@@ -1,5 +1,5 @@
 import { User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/ports/out/users.repository'
+import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { inject } from '@adonisjs/core'
 
 @inject()

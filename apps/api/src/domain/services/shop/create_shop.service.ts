@@ -1,8 +1,8 @@
 import { CreateShopDto, Shop } from '#domain/models/shop/shop'
 import { inject } from '@adonisjs/core'
-import { ISchoolsRepository } from '#domain/ports/out/schools.repository'
+import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { SchoolNotFoundException } from '#domain/models/school/school_not_found.exception'
-import { IShopsRepository } from '#domain/ports/out/shops.repository'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import { ShopCategory } from '#domain/models/shop/shop_category'
 import { ShopProduct } from '#domain/models/shop/shop_product'
 

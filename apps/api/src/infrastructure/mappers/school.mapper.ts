@@ -1,6 +1,6 @@
 import { Id } from '#domain/models/id/id'
 import { School } from '#domain/models/school/school'
-import SchoolEntity from '#infrastructure/models/school'
+import SchoolEntity from '#infrastructure/entities/school'
 import { Promotion } from '#domain/models/school/promotion'
 import { Subject } from '#domain/models/school/subject'
 

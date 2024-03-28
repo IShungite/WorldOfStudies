@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import School from '#infrastructure/models/school'
-import Subject from '#infrastructure/models/subject'
+import School from '#infrastructure/entities/school'
+import Subject from '#infrastructure/entities/subject'
 
 export default class Promotion extends BaseModel {
   @column({ isPrimary: true })

@@ -1,4 +1,4 @@
-import { IShopsRepository } from '#domain/ports/out/shops.repository'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import { Id } from '#domain/models/id/id'
 import { ShopNotFoundException } from '#domain/models/shop/shop_not_found_exception'
 import { inject } from '@adonisjs/core'

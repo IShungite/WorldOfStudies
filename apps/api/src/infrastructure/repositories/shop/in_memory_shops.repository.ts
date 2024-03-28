@@ -1,4 +1,4 @@
-import { IShopsRepository } from '#domain/ports/out/shops.repository'
+import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import { Shop } from '#domain/models/shop/shop'
 import { Id } from '#domain/models/id/id'
 
