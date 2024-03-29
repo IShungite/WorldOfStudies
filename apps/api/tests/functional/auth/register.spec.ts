@@ -1,19 +1,20 @@
 import { role } from '#domain/models/user/role'
 import { CreateUserDto, User } from '#domain/models/user/user'
 import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Auth - register', (group) => {
   let usersRepository: IUsersRepository
 
   group.setup(async () => {
-    usersRepository = await app.container.make(IUsersRepository)
+    ;[usersRepository] = await createRepositories([IUsersRepository])
   })
 
   group.each.setup(async () => {
-    await usersRepository.empty()
+    await emptyRepositories([usersRepository])
   })
 
   test('It should register a user', async ({ client }) => {

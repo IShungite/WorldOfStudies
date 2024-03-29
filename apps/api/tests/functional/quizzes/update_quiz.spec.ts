@@ -3,19 +3,20 @@ import { Quiz } from '#domain/models/quiz/quiz'
 import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
 import { QuestionFactory } from '#domain/factories/question.factory'
 import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Quizzes - update', (group) => {
   let quizzesRepository: IQuizzesRepository
 
   group.setup(async () => {
-    quizzesRepository = await app.container.make(IQuizzesRepository)
+    ;[quizzesRepository] = await createRepositories([IQuizzesRepository])
   })
 
   group.each.setup(async () => {
-    await quizzesRepository.empty()
+    await emptyRepositories([quizzesRepository])
   })
 
   test('It should return a 400 if the quiz does not exist', async ({ client }) => {

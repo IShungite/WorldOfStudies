@@ -1,24 +1,25 @@
 import { School } from '#domain/models/school/school'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import { Shop } from '#domain/models/shop/shop'
 import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Shops - get by school id', (group) => {
   let schoolsRepository: ISchoolsRepository
   let shopsRepository: IShopsRepository
 
   group.setup(async () => {
-    ;[schoolsRepository, shopsRepository] = await Promise.all([
-      app.container.make(ISchoolsRepository),
-      app.container.make(IShopsRepository),
+    ;[schoolsRepository, shopsRepository] = await createRepositories([
+      ISchoolsRepository,
+      IShopsRepository,
     ])
   })
 
   group.each.setup(async () => {
-    await Promise.all([schoolsRepository.empty(), shopsRepository.empty()])
+    await emptyRepositories([schoolsRepository, shopsRepository])
   })
 
   test('It should return a 400 if the shop not found', async ({ client }) => {

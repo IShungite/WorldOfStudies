@@ -1,24 +1,25 @@
 import { Character } from '#domain/models/character/character'
 import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository
   let usersRepository: IUsersRepository
 
   group.setup(async () => {
-    ;[charactersRepository, usersRepository] = await Promise.all([
-      app.container.make(ICharactersRepository),
-      app.container.make(IUsersRepository),
+    ;[charactersRepository, usersRepository] = await createRepositories([
+      ICharactersRepository,
+      IUsersRepository,
     ])
   })
 
   group.each.setup(async () => {
-    await Promise.all([charactersRepository.empty(), usersRepository.empty()])
+    await emptyRepositories([charactersRepository, usersRepository])
   })
 
   test('It should return an empty array if the user has no characters', async ({ client }) => {

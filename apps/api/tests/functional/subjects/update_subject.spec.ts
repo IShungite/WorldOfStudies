@@ -6,19 +6,20 @@ import { SchoolNotFoundException } from '#domain/models/school/school_not_found.
 import { Subject } from '#domain/models/school/subject'
 import { SubjectNotFoundException } from '#domain/models/school/subject_not_found.exception'
 import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Subjects - update', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    ;[schoolsRepository] = await Promise.all([app.container.make(ISchoolsRepository)])
+    ;[schoolsRepository] = await createRepositories([ISchoolsRepository])
   })
 
   group.each.setup(async () => {
-    await Promise.all([schoolsRepository.empty()])
+    await emptyRepositories([schoolsRepository])
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {

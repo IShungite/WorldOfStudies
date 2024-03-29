@@ -1,4 +1,3 @@
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { IUserAnswersRepository } from '#domain/contracts/repositories/user_answers.repository'
@@ -9,6 +8,8 @@ import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repos
 import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
 import { Character } from '#domain/models/character/character'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -18,20 +19,20 @@ test.group('User-answers - store', (group) => {
 
   group.setup(async () => {
     ;[userAnswersRepository, quizzesRepository, usersRepository, charactersRepository] =
-      await Promise.all([
-        app.container.make(IUserAnswersRepository),
-        app.container.make(IQuizzesRepository),
-        app.container.make(IUsersRepository),
-        app.container.make(ICharactersRepository),
+      await createRepositories([
+        IUserAnswersRepository,
+        IQuizzesRepository,
+        IUsersRepository,
+        ICharactersRepository,
       ])
   })
 
   group.each.setup(async () => {
-    await Promise.all([
-      userAnswersRepository.empty(),
-      quizzesRepository.empty(),
-      usersRepository.empty(),
-      charactersRepository.empty(),
+    await await emptyRepositories([
+      userAnswersRepository,
+      quizzesRepository,
+      usersRepository,
+      charactersRepository,
     ])
   })
 
