@@ -18,6 +18,8 @@ const SchoolsController = () => import('#infrastructure/controllers/schools.cont
 const UserAnswersController = () => import('#infrastructure/controllers/user_answers.controller')
 const AuthController = () => import('#infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#infrastructure/controllers/quizzes.controller')
+const StoreShopCategoryController = () =>
+  import('#infrastructure/controllers/shop/store_shop_category.controller')
 const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
@@ -84,8 +86,7 @@ router
       .delete('schools/:id/shop', [SchoolsController, 'destroyShop'])
       .where('id', onlyNumbersRegex)
     router
-      .resource('schools/:schoolId/shop/categories', ShopsController)
-      .only(['store'])
+      .post('schools/:schoolId/shop/categories', [StoreShopCategoryController])
       .where('schoolId', onlyNumbersRegex)
     router
       .resource('schools/:schoolId/shop/categories/:categoryId', ShopsController)
