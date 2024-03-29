@@ -12,6 +12,12 @@ export class QuizMapper {
     }
   }
 
+  static toResponseList(quizzes: Quiz[]) {
+    return quizzes.map((quiz) => {
+      return QuizMapper.toResponse(quiz)
+    })
+  }
+
   static fromLucid(quizEntity: QuizEntity): Quiz {
     return new Quiz({
       id: new Id(quizEntity.id.toString()),

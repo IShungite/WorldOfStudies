@@ -10,6 +10,8 @@ import { updateQuizValidator } from '#infrastructure/validators/update_quiz.vali
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { paginationValidator } from '#infrastructure/validators/pagination.validator'
+import { PaginationRequest } from '#domain/models/pagination/pagination_request'
 
 @inject()
 export default class QuizzesController {
@@ -24,8 +26,11 @@ export default class QuizzesController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    return this.getQuizzesService.execute()
+  async index({ params, response }: HttpContext) {
+    const pagination = await vine.validate({ schema: paginationValidator, data: params })
+    const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
+
+    return response.ok(QuizMapper.toResponseList(data.results))
   }
 
   /**
