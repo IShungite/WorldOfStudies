@@ -6,6 +6,7 @@ import { pluginAdonisJS } from '@japa/plugin-adonisjs'
 import testUtils from '@adonisjs/core/services/test_utils'
 import env from '#infrastructure/adonis/env'
 import { authApiClient } from '@adonisjs/auth/plugins/api_client'
+import '#tests/utils/extend_api_request'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file

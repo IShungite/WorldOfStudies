@@ -15,6 +15,7 @@ import { StatusCodes } from 'http-status-codes'
 import { CharacterNotFoundException } from '#domain/models/character/character_not_found.exception'
 import { InvalidPriceException } from '#domain/models/shop/invalid_price.exception'
 import { ShopNotFoundException } from '#domain/models/shop/shop_not_found_exception'
+import { UnauthorizedException } from '#domain/models/exceptions/unauthorized.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -44,6 +45,11 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     }
 
     if (error instanceof InvalidCredentialsException) {
+      ctx.response.status(StatusCodes.UNAUTHORIZED).send(error.message)
+      return
+    }
+
+    if (error instanceof UnauthorizedException) {
       ctx.response.status(StatusCodes.UNAUTHORIZED).send(error.message)
       return
     }

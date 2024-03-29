@@ -9,6 +9,7 @@ import vine from '@vinejs/vine'
 import { UpdateCharacterService } from '#domain/services/character/update_character_service'
 import { CharacterMapper } from '#infrastructure/mappers/character.mapper'
 import { DeleteCharacterService } from '#domain/services/character/delete_character.service'
+import { UserMapper } from '#infrastructure/mappers/user.mapper'
 
 @inject()
 export default class CharactersController {
@@ -38,11 +39,14 @@ export default class CharactersController {
     return response.ok(CharacterMapper.toResponseList(characters))
   }
 
-  async update({ request, response }: HttpContext) {
+  async update({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
 
-    const character = await this.updateCharacterService.execute(id, payload)
+    const character = await this.updateCharacterService.execute(id, payload, user)
 
     return response.ok(CharacterMapper.toResponse(character))
   }
