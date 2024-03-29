@@ -1,19 +1,20 @@
 import { Id } from '#domain/models/id/id'
 import { School } from '#domain/models/school/school'
 import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Promotions - store', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    schoolsRepository = await app.container.make(ISchoolsRepository)
+    ;[schoolsRepository] = await createRepositories([ISchoolsRepository])
   })
 
   group.each.setup(async () => {
-    await schoolsRepository.empty()
+    await emptyRepositories([schoolsRepository])
   })
 
   test('It should create a promotion', async ({ client }) => {

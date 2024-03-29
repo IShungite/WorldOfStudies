@@ -1,18 +1,19 @@
 import { Quiz } from '#domain/models/quiz/quiz'
 import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
 
   group.setup(async () => {
-    quizzesRepository = await app.container.make(IQuizzesRepository)
+    ;[quizzesRepository] = await createRepositories([IQuizzesRepository])
   })
 
   group.each.setup(async () => {
-    await quizzesRepository.empty()
+    await emptyRepositories([quizzesRepository])
   })
 
   test('It should return a quiz', async ({ client }) => {

@@ -1,18 +1,19 @@
 import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { School } from '#domain/models/school/school'
+import emptyRepositories from '#tests/utils/empty_repositories'
+import createRepositories from '#tests/utils/create_repositories'
 
 test.group('Schools - update', (group) => {
   let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    schoolsRepository = await app.container.make(ISchoolsRepository)
+    ;[schoolsRepository] = await createRepositories([ISchoolsRepository])
   })
 
   group.each.setup(async () => {
-    await schoolsRepository.empty()
+    await emptyRepositories([schoolsRepository])
   })
 
   test('It should return a 400 if the school does not exist', async ({ client }) => {

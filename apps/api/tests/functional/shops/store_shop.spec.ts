@@ -1,23 +1,24 @@
 import { School } from '#domain/models/school/school'
 import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
-import app from '@adonisjs/core/services/app'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
+import emptyRepositories from '#tests/utils/empty_repositories'
+import createRepositories from '#tests/utils/create_repositories'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository
   let shopsRepository: IShopsRepository
 
   group.setup(async () => {
-    ;[schoolsRepository, shopsRepository] = await Promise.all([
-      app.container.make(ISchoolsRepository),
-      app.container.make(IShopsRepository),
+    ;[schoolsRepository, shopsRepository] = await createRepositories([
+      ISchoolsRepository,
+      IShopsRepository,
     ])
   })
 
   group.each.setup(async () => {
-    await Promise.all([schoolsRepository.empty(), shopsRepository.empty()])
+    await emptyRepositories([schoolsRepository, shopsRepository])
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
