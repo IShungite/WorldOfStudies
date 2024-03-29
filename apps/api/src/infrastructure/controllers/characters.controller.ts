@@ -33,10 +33,13 @@ export default class CharactersController {
     return response.created(CharacterMapper.toResponse(character))
   }
 
-  async charactersByUserId({ request, response }: HttpContext) {
+  async charactersByUserId({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    const characters = await this.getCharactersByUserId.execute(id)
+    const characters = await this.getCharactersByUserId.execute(id, user)
     return response.ok(CharacterMapper.toResponseList(characters))
   }
 
