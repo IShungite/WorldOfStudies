@@ -21,7 +21,8 @@ export default class CharactersController {
   ) {}
 
   async store({ request, response, auth }: HttpContext) {
-    const user = await auth.authenticate()
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
 
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
     const character = await this.createCharacterService.execute({
@@ -50,10 +51,13 @@ export default class CharactersController {
 
     return response.ok(CharacterMapper.toResponse(character))
   }
-  async destroy({ request, response }: HttpContext) {
+  async destroy({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    await this.deleteCharacterService.execute(id)
+    await this.deleteCharacterService.execute(id, user)
 
     return response.noContent()
   }
