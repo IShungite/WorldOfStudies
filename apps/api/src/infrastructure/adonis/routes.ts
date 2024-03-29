@@ -83,6 +83,15 @@ router
     router
       .delete('schools/:id/shop', [SchoolsController, 'destroyShop'])
       .where('id', onlyNumbersRegex)
+    router
+      .resource('schools/:schoolId/shop/categories', ShopsController)
+      .only(['store'])
+      .where('schoolId', onlyNumbersRegex)
+    router
+      .resource('schools/:schoolId/shop/categories/:categoryId', ShopsController)
+      .only(['update', 'destroy'])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
 
     router
       .resource('characters', CharactersController)
