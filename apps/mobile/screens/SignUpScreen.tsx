@@ -1,16 +1,20 @@
+import { useNavigation } from '@react-navigation/native'
+import { Input, Button } from '@rneui/themed'
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { View, StyleSheet, Alert } from 'react-native'
 import { useMutation } from 'react-query'
 
 import axiosInstance from '../api/axiosInstance'
 
 const SignUpScreen = () => {
+  const { t } = useTranslation()
+  const navigation = useNavigation<any>()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // Setup mutation using React Query
   const { mutate, isLoading } = useMutation(
     async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
       return await axiosInstance.post('/auth/register', newUser)
@@ -18,6 +22,7 @@ const SignUpScreen = () => {
     {
       onSuccess: () => {
         Alert.alert('Success', 'Registration successful, please log in.')
+        navigation.navigate('LogIn')
       },
       onError: (error: any) => {
         Alert.alert('Error', `Registration failed, please try again. ${error.message}`)
@@ -29,33 +34,33 @@ const SignUpScreen = () => {
     mutate({ firstName, lastName, email, password })
   }
 
-  if (isLoading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    )
-  }
-
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="First Name" value={firstName} onChangeText={setFirstName} />
-      <TextInput style={styles.input} placeholder="Last Name" value={lastName} onChangeText={setLastName} />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
+      <Input placeholder={t('first_name')} value={firstName} onChangeText={setFirstName} disabled={isLoading} />
+      <Input placeholder={t('last_name')} value={lastName} onChangeText={setLastName} disabled={isLoading} />
+      <Input
+        placeholder={t('email')}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        autoCapitalize="none"
+        disabled={isLoading}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
+      <Input
+        placeholder={t('password')}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        autoCapitalize="none"
+        disabled={isLoading}
       />
-      <Button title="Register" onPress={handleSubmit} />
+      <Button title={t('register')} onPress={handleSubmit} loading={isLoading} />
+      <Button
+        title={t('already_have_account')}
+        type="clear"
+        onPress={() => navigation.navigate('LogIn')}
+        disabled={isLoading}
+      />
     </View>
   )
 }
@@ -65,17 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-  },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    height: 40,
-    marginBottom: 12,
-    borderWidth: 1,
-    padding: 10,
   },
 })
 

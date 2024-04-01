@@ -1,0 +1,12 @@
+{
+    "register": "Register",
+    "already_have_account": "Already have an account? Click here",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "registration_successful": "Registration successful, please log in.",
+    "registration_failed": "Registration failed, please try again.",
+    "login": "Login"
+}
+  
