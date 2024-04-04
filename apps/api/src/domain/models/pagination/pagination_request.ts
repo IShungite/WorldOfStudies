@@ -1,8 +1,8 @@
 export class PaginationRequest {
   readonly page: number
-  readonly limit: number
-  constructor({ page, limit }: { page?: number; limit?: number }) {
+  readonly perPage: number
+  constructor({ page, perPage }: { page?: number; perPage?: number }) {
     this.page = page ?? 1
-    this.limit = limit ?? 20
+    this.perPage = perPage ?? 20
   }
 }

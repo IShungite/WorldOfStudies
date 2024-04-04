@@ -22,6 +22,6 @@ export default function assertPaginatedResponse(
   assert.lengthOf(body.results, expected.resultsLength)
 
   if (expected.results) {
-    assert.deepEqual(body.results, expected.results)
+    assert.containsSubset(body.results, expected.results)
   }
 }

@@ -26,8 +26,8 @@ export default class QuizzesController {
   /**
    * Display a list of resource
    */
-  async index({ params, response }: HttpContext) {
-    const pagination = await vine.validate({ schema: paginationValidator, data: params })
+  async index({ request, response }: HttpContext) {
+    const pagination = await vine.validate({ schema: paginationValidator, data: request.qs() })
     const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
 
     return response.ok(QuizMapper.toPaginatedResponse(data))

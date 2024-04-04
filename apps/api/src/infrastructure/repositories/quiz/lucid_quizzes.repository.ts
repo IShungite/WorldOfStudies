@@ -6,8 +6,8 @@ import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
 import QuizEntity from '#infrastructure/entities/quiz'
 import { QuestionQcm, QuestionTextHole } from '#domain/models/quiz/question'
 import QuestionEntity from '#infrastructure/entities/question'
-import { Pagination } from '#domain/types/pagination'
 import { PaginatedData } from '#domain/models/pagination/paginated_data'
+import { PaginationRequest } from '#domain/models/pagination/pagination_request'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {
@@ -65,10 +65,11 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     return quiz ? QuizMapper.fromLucid(quiz) : null
   }
 
-  async getAll(pagination: Pagination): Promise<PaginatedData<Quiz>> {
+  async getAll(pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
     const quizzes = await QuizEntity.query()
       .preload('questions')
-      .paginate(pagination.page, pagination.limit)
+      .orderBy('id', 'asc')
+      .paginate(pagination.page, pagination.perPage)
 
     const { data, meta } = quizzes.toJSON()
 
