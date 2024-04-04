@@ -1,6 +1,8 @@
+import { useNavigation } from '@react-navigation/native'
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
+import * as SecureStore from 'expo-secure-store'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
@@ -12,14 +14,17 @@ import HttpException from '../exceptions/http.exception'
 
 const LogInScreen = () => {
   const { t } = useTranslation()
+  const navigation = useNavigation<any>()
 
   const { mutate, isLoading } = useMutation(
     async (loginData: { email: string; password: string }) => {
-      return kyInstance.post('auth/login', { json: loginData }).json()
+      return (await kyInstance.post('auth/login', { json: loginData }).json()) as { token: string }
     },
     {
-      onSuccess: (data) => {
-        console.log(data) // TODO: Save token to AsyncStorage and navigate to the home screen
+      onSuccess: async (data) => {
+        await SecureStore.setItemAsync('token', data.token)
+
+        navigation.navigate('Home')
       },
       onError: (error: HttpException) => {
         Alert.alert('Login failed', error.message)
@@ -79,6 +84,12 @@ const LogInScreen = () => {
       />
 
       <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
+      <Button
+        title={t('no_account_yet')}
+        type="clear"
+        onPress={() => navigation.navigate('Register')}
+        disabled={isLoading}
+      />
     </View>
   )
 }

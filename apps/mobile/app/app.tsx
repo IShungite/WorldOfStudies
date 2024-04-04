@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 import '../i18n/i18n'
 
+import HomeScreen from '../screens/HomeScreen'
 import LogInScreen from '../screens/LogInScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 
@@ -21,6 +22,7 @@ const App = () => {
             <Stack.Navigator initialRouteName="Register">
               <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Register' }} />
               <Stack.Screen name="LogIn" component={LogInScreen} options={{ title: 'Log In' }} />
+              <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>
