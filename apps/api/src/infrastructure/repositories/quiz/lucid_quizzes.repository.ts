@@ -74,9 +74,10 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
 
     return new PaginatedData({
       results: (data as QuizEntity[]).map(QuizMapper.fromLucid),
-      totalResults: meta.totalResults,
+      totalResults: meta.total,
+      perPage: meta.perPage,
       currentPage: meta.currentPage,
-      totalPages: meta.totalPages,
+      firstPage: meta.firstPage,
       lastPage: meta.lastPage,
     })
   }

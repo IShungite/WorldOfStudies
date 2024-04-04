@@ -2,6 +2,8 @@ import { Quiz } from '#domain/models/quiz/quiz'
 import { QuestionMapper } from '#infrastructure/mappers/question.mapper'
 import QuizEntity from '#infrastructure/entities/quiz'
 import { Id } from '#domain/models/id/id'
+import { PaginatedData } from '#domain/models/pagination/paginated_data'
+import { PaginatedResponse } from '#infrastructure/types/paginated_response'
 
 export class QuizMapper {
   static toResponse(quiz: Quiz) {
@@ -12,10 +14,17 @@ export class QuizMapper {
     }
   }
 
-  static toResponseList(quizzes: Quiz[]) {
-    return quizzes.map((quiz) => {
-      return QuizMapper.toResponse(quiz)
-    })
+  static toPaginatedResponse(
+    paginatedQuizzes: PaginatedData<Quiz>
+  ): PaginatedResponse<ReturnType<typeof QuizMapper.toResponse>> {
+    return {
+      results: paginatedQuizzes.results.map((quiz) => QuizMapper.toResponse(quiz)),
+      totalResults: paginatedQuizzes.totalResults,
+      perPage: paginatedQuizzes.perPage,
+      currentPage: paginatedQuizzes.currentPage,
+      firstPage: paginatedQuizzes.firstPage,
+      lastPage: paginatedQuizzes.lastPage,
+    }
   }
 
   static fromLucid(quizEntity: QuizEntity): Quiz {

@@ -30,7 +30,7 @@ export default class QuizzesController {
     const pagination = await vine.validate({ schema: paginationValidator, data: params })
     const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
 
-    return response.ok(QuizMapper.toResponseList(data.results))
+    return response.ok(QuizMapper.toPaginatedResponse(data))
   }
 
   /**
