@@ -1,0 +1,18 @@
+meta {
+  name: Store
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/schools/1/shop/categories/1/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Product 1",
+    "price": "50.00"
+  }
+}
