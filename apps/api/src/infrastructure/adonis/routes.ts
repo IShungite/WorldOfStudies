@@ -10,9 +10,9 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
 const UpdateShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/update_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/update_shop_category.controller')
 const DestroyShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/destroy_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/destroy_shop_category.controller')
 
 const ShopsController = () => import('#infrastructure/controllers/shops.controller')
 const SubjectsController = () => import('#infrastructure/controllers/subjects.controller')
@@ -23,7 +23,7 @@ const UserAnswersController = () => import('#infrastructure/controllers/user_ans
 const AuthController = () => import('#infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#infrastructure/controllers/quizzes.controller')
 const StoreShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/store_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/store_shop_category.controller')
 const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
