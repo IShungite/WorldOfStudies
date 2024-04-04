@@ -6,6 +6,8 @@ import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
 import QuizEntity from '#infrastructure/entities/quiz'
 import { QuestionQcm, QuestionTextHole } from '#domain/models/quiz/question'
 import QuestionEntity from '#infrastructure/entities/question'
+import { PaginatedData } from '#domain/models/pagination/paginated_data'
+import { PaginationRequest } from '#domain/models/pagination/pagination_request'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {
@@ -63,10 +65,22 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     return quiz ? QuizMapper.fromLucid(quiz) : null
   }
 
-  async getAll(): Promise<Quiz[]> {
-    const quizzes = await QuizEntity.query().preload('questions')
+  async getAll(pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
+    const quizzes = await QuizEntity.query()
+      .preload('questions')
+      .orderBy('id', 'asc')
+      .paginate(pagination.page, pagination.perPage)
 
-    return quizzes.map((quiz) => QuizMapper.fromLucid(quiz))
+    const { data, meta } = quizzes.toJSON()
+
+    return new PaginatedData({
+      results: (data as QuizEntity[]).map(QuizMapper.fromLucid),
+      totalResults: meta.total,
+      perPage: meta.perPage,
+      currentPage: meta.currentPage,
+      firstPage: meta.firstPage,
+      lastPage: meta.lastPage,
+    })
   }
 
   async deleteById(quizId: Id): Promise<void> {
