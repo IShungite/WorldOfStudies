@@ -17,7 +17,7 @@ test.group('Quizzes - index', (group) => {
     await emptyRepositories([quizzesRepository])
   })
 
-  test('It should return the list of quizzes paginated', async ({ client, assert }) => {
+  test('It should return the list of paginated quizzes', async ({ client, assert }) => {
     await Promise.all([
       quizzesRepository.save(new Quiz({ name: 'Quiz 1', questions: [] })),
       quizzesRepository.save(new Quiz({ name: 'Quiz 2', questions: [] })),
