@@ -11,8 +11,8 @@ const kyInstance = ky.create({
     afterResponse: [
       async (_request, _option, response) => {
         if (!response.ok) {
-          const data = (await response.json()) as { errors: string[] }
-          throw new HttpException(data.errors.map((error) => error).join('\n'))
+          const data = (await response.json()) as { errors: string[] } | { message: string }
+          throw new HttpException('message' in data ? data.message : data.errors.map((error) => error).join('\n'))
         }
       },
     ],
