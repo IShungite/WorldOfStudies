@@ -1,4 +1,5 @@
 import { Assert } from '@japa/assert'
+import { currentPageDefault, perPageDefault } from '#domain/models/pagination/pagination_request'
 
 export default function assertPaginatedResponse(
   assert: Assert,
@@ -13,9 +14,9 @@ export default function assertPaginatedResponse(
     resultsLength: number
   }
 ) {
-  assert.equal(body.totalResults, expected.totalResults ?? 2)
-  assert.equal(body.perPage, expected.perPage ?? 20)
-  assert.equal(body.currentPage, expected.currentPage ?? 1)
+  assert.equal(body.totalResults, expected.totalResults)
+  assert.equal(body.perPage, expected.perPage ?? perPageDefault)
+  assert.equal(body.currentPage, expected.currentPage ?? currentPageDefault)
   assert.equal(body.firstPage, expected.firstPage ?? 1)
   assert.equal(body.lastPage, expected.lastPage ?? 1)
 
