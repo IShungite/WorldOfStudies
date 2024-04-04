@@ -9,6 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const UpdateShopProductController = () =>
+  import('#infrastructure/controllers/shop/product/update_shop_product.controller')
 const DestroyShopProductController = () =>
   import('#infrastructure/controllers/shop/product/destroy_shop_product.controller')
 const StoreShopProductController = () =>
@@ -111,6 +113,13 @@ router
     router
       .delete('schools/:schoolId/shop/categories/:categoryId/products/:productId', [
         DestroyShopProductController,
+      ])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
+      .where('productId', onlyNumbersRegex)
+    router
+      .patch('schools/:schoolId/shop/categories/:categoryId/products/:productId', [
+        UpdateShopProductController,
       ])
       .where('schoolId', onlyNumbersRegex)
       .where('categoryId', onlyNumbersRegex)

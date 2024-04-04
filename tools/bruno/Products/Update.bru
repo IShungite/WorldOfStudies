@@ -1,0 +1,18 @@
+meta {
+  name: Update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{host}}/schools/1/shop/categories/1/products/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Product 55",
+    "price": "555.00"
+  }
+}

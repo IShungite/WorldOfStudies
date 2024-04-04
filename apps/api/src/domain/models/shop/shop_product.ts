@@ -6,6 +6,11 @@ export type CreateShopProductDto = {
   price: Price
 }
 
+export type UpdateShopProductDto = {
+  name?: string
+  price?: Price
+}
+
 type ShopProductProps = {
   id?: Id
   name: string
