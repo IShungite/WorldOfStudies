@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
-import { Input, Button } from '@rneui/themed'
+import { Button, Input } from '@rneui/themed'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Alert } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { useMutation } from 'react-query'
 
-import axiosInstance from '../api/axiosInstance'
+import kyInstance from '../api/kyInstance'
 
 const SignUpScreen = () => {
   const { t } = useTranslation()
@@ -17,7 +17,7 @@ const SignUpScreen = () => {
 
   const { mutate, isLoading } = useMutation(
     async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
-      return await axiosInstance.post('/auth/register', newUser)
+      return kyInstance.post('auth/register', { json: newUser }).json()
     },
     {
       onSuccess: () => {

@@ -1,10 +1,10 @@
-import { Input, Button } from '@rneui/themed'
+import { Button, Input } from '@rneui/themed'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, StyleSheet, Alert } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { useMutation } from 'react-query'
 
-import axiosInstance from '../api/axiosInstance'
+import kyInstance from '../api/kyInstance'
 
 const LogInScreen = () => {
   const { t } = useTranslation()
@@ -14,7 +14,7 @@ const LogInScreen = () => {
 
   const loginMutation = useMutation(
     async (loginData: { email: string; password: string }) => {
-      return axiosInstance.post('/auth/login', loginData)
+      return kyInstance.post('auth/login', { json: loginData }).json()
     },
     {
       onSuccess: (data) => {
