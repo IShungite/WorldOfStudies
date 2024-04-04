@@ -11,8 +11,10 @@ export class ShopMapper {
       id: shop.id.toString(),
       schoolId: shop.schoolId.toString(),
       categories: shop.categories.map((category) => ({
+        id: category.id.toString(),
         name: category.name,
         products: category.products.map((product) => ({
+          id: product.id.toString(),
           name: product.name,
           price: product.price.toNumber(),
         })),

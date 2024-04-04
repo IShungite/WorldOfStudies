@@ -6,6 +6,10 @@ export type CreateShopCategoryDto = {
   products: CreateShopProductDto[]
 }
 
+export type UpdateShopCategoryDto = {
+  name: string
+}
+
 type ShopCategoryProps = {
   readonly id?: Id
   readonly name: string

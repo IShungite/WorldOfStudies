@@ -9,6 +9,10 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const UpdateShopCategoryController = () =>
+  import('#infrastructure/controllers/shop/update_shop_category.controller')
+const DestroyShopCategoryController = () =>
+  import('#infrastructure/controllers/shop/destroy_shop_category.controller')
 
 const ShopsController = () => import('#infrastructure/controllers/shops.controller')
 const SubjectsController = () => import('#infrastructure/controllers/subjects.controller')
@@ -18,6 +22,8 @@ const SchoolsController = () => import('#infrastructure/controllers/schools.cont
 const UserAnswersController = () => import('#infrastructure/controllers/user_answers.controller')
 const AuthController = () => import('#infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#infrastructure/controllers/quizzes.controller')
+const StoreShopCategoryController = () =>
+  import('#infrastructure/controllers/shop/store_shop_category.controller')
 const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
@@ -83,6 +89,17 @@ router
     router
       .delete('schools/:id/shop', [SchoolsController, 'destroyShop'])
       .where('id', onlyNumbersRegex)
+    router
+      .post('schools/:schoolId/shop/categories', [StoreShopCategoryController])
+      .where('schoolId', onlyNumbersRegex)
+    router
+      .delete('schools/:schoolId/shop/categories/:categoryId', [DestroyShopCategoryController])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
+    router
+      .patch('schools/:schoolId/shop/categories/:categoryId', [UpdateShopCategoryController])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
 
     router
       .resource('characters', CharactersController)
