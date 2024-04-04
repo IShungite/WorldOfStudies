@@ -22,17 +22,28 @@ test.group('Characters - characters by user', (group) => {
     await emptyRepositories([charactersRepository, usersRepository])
   })
 
-  test('It should return an empty array if the user has no characters', async ({ client }) => {
-    const userId = '1'
+  test('It should return 401 when user is not authenticated', async ({ client }) => {
+    const user = await usersRepository.save(new UserBuilderTest().build())
 
-    const response = await client.get(`/users/${userId}/characters`)
+    const response = await client.get(`/users/${user.id.toString()}/characters`)
+
+    response.assertStatus(StatusCodes.UNAUTHORIZED)
+    response.assertTextIncludes('Unauthorized access')
+  })
+
+  test('It should return an empty array if the user has no characters', async ({ client }) => {
+    const user = await usersRepository.save(new UserBuilderTest().build())
+
+    const response = await client.get(`/users/${user.id.toString()}/characters`).loginWith(user)
     response.assertStatus(StatusCodes.OK)
     response.assertBody([])
   })
 
   test('It should return the list of characters by user id', async ({ client, assert }) => {
-    const user = new UserBuilderTest().build()
-    const user2 = new UserBuilderTest().withEmail('helo@mail.com').build()
+    const [user, user2] = await Promise.all([
+      new UserBuilderTest().build(),
+      new UserBuilderTest().build(),
+    ])
 
     await Promise.all([usersRepository.save(user), usersRepository.save(user2)])
 
@@ -42,7 +53,7 @@ test.group('Characters - characters by user', (group) => {
       charactersRepository.save(new Character({ name: 'Bou', userId: user2.id })),
     ])
 
-    const response = await client.get(`/users/${user.id.toString()}/characters`)
+    const response = await client.get(`/users/${user.id.toString()}/characters`).loginWith(user)
 
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body(), 2)

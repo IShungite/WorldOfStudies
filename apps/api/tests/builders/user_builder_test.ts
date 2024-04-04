@@ -6,7 +6,7 @@ export class UserBuilderTest {
   private _id = Math.floor(Math.random() * 100000).toString()
   private _firstName = 'bou'
   private _lastName = 'bin'
-  private _email = 'bou@example.com'
+  private _email = `${Math.random().toString(36).substring(2)}@example.com`
   private _password = '123456'
   private _role: Role = role.STUDENT
 

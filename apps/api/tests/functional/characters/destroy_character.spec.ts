@@ -6,6 +6,7 @@ import { IUsersRepository } from '#domain/contracts/repositories/users.repositor
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { UnauthorizedException } from '#domain/models/exceptions/unauthorized.exception'
 
 test.group('Characters - delete', (group) => {
   let charactersRepository: ICharactersRepository
@@ -29,23 +30,38 @@ test.group('Characters - delete', (group) => {
   })
 
   test('It should return a 400 if the character does not exist', async ({ client }) => {
-    const response = await client.delete('/characters/1')
+    const user = await usersRepository.save(new UserBuilderTest().build())
+
+    const response = await client.delete('/characters/1').loginWith(user)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
   test('It should delete the character', async ({ client, assert }) => {
-    const user = new UserBuilderTest().build()
-
-    await usersRepository.save(user)
+    const user = await usersRepository.save(new UserBuilderTest().build())
 
     const character = new Character({ name: 'Character 1', userId: user.id })
     await charactersRepository.save(character)
 
-    const response = await client.delete(`/characters/${character.id.toString()}`)
+    const response = await client.delete(`/characters/${character.id.toString()}`).loginWith(user)
     const deletedCharacter = await charactersRepository.getById(character.id)
 
     response.assertStatus(StatusCodes.NO_CONTENT)
     assert.isNull(deletedCharacter)
+  })
+
+  test('It should return a 401 if the user does not own the character', async ({ client }) => {
+    const [user, user2] = await Promise.all([
+      usersRepository.save(new UserBuilderTest().build()),
+      usersRepository.save(new UserBuilderTest().build()),
+    ])
+
+    const character = new Character({ name: 'Character 1', userId: user.id })
+    await charactersRepository.save(character)
+
+    const response = await client.delete(`/characters/${character.id.toString()}`).loginWith(user2)
+
+    response.assertStatus(StatusCodes.UNAUTHORIZED)
+    response.assertTextIncludes(new UnauthorizedException().message)
   })
 })

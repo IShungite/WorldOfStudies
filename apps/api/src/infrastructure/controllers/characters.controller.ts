@@ -9,6 +9,7 @@ import vine from '@vinejs/vine'
 import { UpdateCharacterService } from '#domain/services/character/update_character_service'
 import { CharacterMapper } from '#infrastructure/mappers/character.mapper'
 import { DeleteCharacterService } from '#domain/services/character/delete_character.service'
+import { UserMapper } from '#infrastructure/mappers/user.mapper'
 
 @inject()
 export default class CharactersController {
@@ -20,7 +21,8 @@ export default class CharactersController {
   ) {}
 
   async store({ request, response, auth }: HttpContext) {
-    const user = await auth.authenticate()
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
 
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
     const character = await this.createCharacterService.execute({
@@ -31,25 +33,34 @@ export default class CharactersController {
     return response.created(CharacterMapper.toResponse(character))
   }
 
-  async charactersByUserId({ request, response }: HttpContext) {
+  async charactersByUserId({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    const characters = await this.getCharactersByUserId.execute(id)
+    const characters = await this.getCharactersByUserId.execute(id, user)
     return response.ok(CharacterMapper.toResponseList(characters))
   }
 
-  async update({ request, response }: HttpContext) {
+  async update({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
 
-    const character = await this.updateCharacterService.execute(id, payload)
+    const character = await this.updateCharacterService.execute(id, payload, user)
 
     return response.ok(CharacterMapper.toResponse(character))
   }
-  async destroy({ request, response }: HttpContext) {
+  async destroy({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
-    await this.deleteCharacterService.execute(id)
+    await this.deleteCharacterService.execute(id, user)
 
     return response.noContent()
   }

@@ -23,16 +23,13 @@ test.group('Characters - store', (group) => {
 
   test('It should create a character', async ({ client }) => {
     const user = await usersRepository.save(new UserBuilderTest().build())
-    const token = await usersRepository.createToken(user)
 
     const response = await client
       .post('/characters')
       .json({
         name: 'Shun',
       })
-      .headers({
-        Authorization: `Bearer ${token.token}`,
-      })
+      .loginWith(user)
 
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
@@ -46,14 +43,8 @@ test.group('Characters - store', (group) => {
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const user = await usersRepository.save(new UserBuilderTest().build())
-    const token = await usersRepository.createToken(user)
 
-    const response = await client
-      .post('/characters')
-      .json({})
-      .headers({
-        Authorization: `Bearer ${token.token}`,
-      })
+    const response = await client.post('/characters').json({}).loginWith(user)
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
