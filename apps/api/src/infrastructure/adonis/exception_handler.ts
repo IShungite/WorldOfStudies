@@ -34,7 +34,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    */
   async handle(error: unknown, ctx: HttpContext) {
     if (error instanceof errors.E_VALIDATION_ERROR) {
-      ctx.response.status(StatusCodes.UNPROCESSABLE_ENTITY).send(error.message)
+      ctx.response
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .send(this.formatError(error.messages.map((e: { message: string }) => e.message)))
       return
     }
 
