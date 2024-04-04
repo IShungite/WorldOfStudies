@@ -34,6 +34,7 @@ export class ShopMapper {
             products: categoryEntity.products.map(
               (productEntity) =>
                 new ShopProduct({
+                  id: new Id(productEntity.id.toString()),
                   name: productEntity.name,
                   price: new Price(productEntity.price),
                 })

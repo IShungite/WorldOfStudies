@@ -6,9 +6,57 @@ import ShopCategoryEntity from '#infrastructure/entities/shop/shop_category'
 import ShopProductEntity from '#infrastructure/entities/shop/shop_product'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { ShopMapper } from '#infrastructure/mappers/shop.mapper'
+import { ShopCategory } from '#domain/models/shop/shop_category'
 
 export class LucidShopsRepository implements IShopsRepository {
+  private async deleteExistingNestedEntity(shop: Shop) {
+    const existingShopEntity = await this.getById(shop.id)
+
+    if (!existingShopEntity) return
+
+    const categoriesGrouped = existingShopEntity.categories.reduce(
+      (groupedCategories, category) => {
+        if (shop.categories.find((newCategory) => newCategory.id.equals(category.id))) {
+          groupedCategories.toKeep.push(category)
+        } else {
+          groupedCategories.toRemove.push(category)
+        }
+
+        return groupedCategories
+      },
+      { toRemove: [] as ShopCategory[], toKeep: [] as ShopCategory[] }
+    )
+
+    const productsToRemove = categoriesGrouped.toKeep.flatMap((existingCategory) =>
+      existingCategory.products.filter(
+        (existingProduct) =>
+          !shop.categories.find((newCategory) =>
+            newCategory.products.find((newProduct) => newProduct.id.equals(existingProduct.id))
+          )
+      )
+    )
+
+    if (categoriesGrouped.toRemove.length > 0) {
+      await ShopCategoryEntity.query()
+        .whereIn(
+          'id',
+          categoriesGrouped.toRemove.map((category) => category.id.toString())
+        )
+        .delete()
+    }
+
+    if (productsToRemove.length > 0) {
+      await ShopProductEntity.query()
+        .whereIn(
+          'id',
+          productsToRemove.map((product) => product.id.toString())
+        )
+        .delete()
+    }
+  }
+
   async save(shop: Shop): Promise<Shop> {
+    await this.deleteExistingNestedEntity(shop)
     await ShopEntity.updateOrCreate(
       {
         id: Number.parseInt(shop.id.toString(), 10),
@@ -58,6 +106,15 @@ export class LucidShopsRepository implements IShopsRepository {
       .first()
 
     return shop ? ShopMapper.fromLucid(shop) : null
+  }
+
+  async getById(shopId: Id): Promise<Shop | null> {
+    const school = await ShopEntity.query()
+      .where('id', shopId.toString())
+      .preload('categories', (query) => query.preload('products'))
+      .first()
+
+    return school ? ShopMapper.fromLucid(school) : null
   }
 
   async deleteById(shopId: Id): Promise<void> {
