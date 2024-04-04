@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native'
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import * as SecureStore from 'expo-secure-store'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
@@ -10,24 +9,22 @@ import { useMutation } from 'react-query'
 import { z } from 'zod'
 
 import kyInstance from '../api/kyInstance'
-import HttpException from '../exceptions/http.exception'
 
-const LogInScreen = () => {
+const RegisterScreen = () => {
   const { t } = useTranslation()
   const navigation = useNavigation<any>()
 
   const { mutate, isLoading } = useMutation(
-    async (loginData: { email: string; password: string }) => {
-      return (await kyInstance.post('auth/login', { json: loginData }).json()) as { token: string }
+    async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
+      return kyInstance.post('auth/register', { json: newUser }).json()
     },
     {
-      onSuccess: async (data) => {
-        await SecureStore.setItemAsync('token', data.token)
-
-        navigation.navigate('Home')
+      onSuccess: () => {
+        Alert.alert('Success', 'Registration successful, please log in.')
+        navigation.navigate('LogIn')
       },
-      onError: (error: HttpException) => {
-        Alert.alert('Login failed', error.message)
+      onError: (error: any) => {
+        Alert.alert('Registration failed', error.message)
       },
     }
   )
@@ -36,6 +33,8 @@ const LogInScreen = () => {
     defaultValues: {
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
     },
     onSubmit: async (data) => {
       mutate(data.value)
@@ -45,6 +44,40 @@ const LogInScreen = () => {
 
   return (
     <View style={styles.container}>
+      <form.Field
+        name="firstName"
+        validators={{
+          onChange: z.string().min(1).trim(),
+        }}
+        children={(field) => (
+          <>
+            <Input
+              placeholder={t('first_name')}
+              value={field.state.value}
+              onChangeText={(e) => field.handleChange(e)}
+              disabled={isLoading}
+              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+            />
+          </>
+        )}
+      />
+      <form.Field
+        name="lastName"
+        validators={{
+          onChange: z.string().min(1).trim(),
+        }}
+        children={(field) => (
+          <>
+            <Input
+              placeholder={t('last_name')}
+              value={field.state.value}
+              onChangeText={(e) => field.handleChange(e)}
+              disabled={isLoading}
+              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+            />
+          </>
+        )}
+      />
       <form.Field
         name="email"
         validators={{
@@ -83,11 +116,11 @@ const LogInScreen = () => {
         )}
       />
 
-      <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
+      <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
       <Button
-        title={t('no_account_yet')}
+        title={t('already_have_account')}
         type="clear"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate('LogIn')}
         disabled={isLoading}
       />
     </View>
@@ -102,4 +135,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default LogInScreen
+export default RegisterScreen

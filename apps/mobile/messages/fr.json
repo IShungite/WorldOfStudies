@@ -1,6 +1,7 @@
 {
     "register": "S'inscrire",
     "already_have_account": "Vous avez déjà un compte ? Cliquez ici",
+    "no_account_yet": "Vous n'avez pas encore de compte? Cliquez ici",
     "first_name": "Prénom",
     "last_name": "Nom",
     "email": "E-mail",
@@ -9,4 +10,3 @@
     "registration_failed": "L'inscription a échoué, veuillez réessayer.",
     "login": "Se connecter"
 }
-  

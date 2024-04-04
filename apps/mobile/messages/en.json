@@ -1,6 +1,7 @@
 {
     "register": "Register",
     "already_have_account": "Already have an account? Click here",
+    "no_account_yet": "You don't have an account yet? Click here",
     "first_name": "First Name",
     "last_name": "Last Name",
     "email": "Email",
@@ -9,4 +10,3 @@
     "registration_failed": "Registration failed, please try again.",
     "login": "Login"
 }
-  

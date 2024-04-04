@@ -6,8 +6,9 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 import '../i18n/i18n'
 
+import HomeScreen from '../screens/HomeScreen'
 import LogInScreen from '../screens/LogInScreen'
-import SignUpScreen from '../screens/SignUpScreen'
+import RegisterScreen from '../screens/RegisterScreen'
 
 const queryClient = new QueryClient()
 const Stack = createNativeStackNavigator()
@@ -18,9 +19,10 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <SafeAreaView style={styles.container}>
-            <Stack.Navigator initialRouteName="SignUp">
-              <Stack.Screen name="SignUp" component={SignUpScreen} options={{ title: 'Sign Up' }} />
+            <Stack.Navigator initialRouteName="Register">
+              <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Register' }} />
               <Stack.Screen name="LogIn" component={LogInScreen} options={{ title: 'Log In' }} />
+              <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>
