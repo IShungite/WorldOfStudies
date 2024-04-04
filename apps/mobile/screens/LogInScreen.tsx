@@ -1,18 +1,19 @@
 import { Button, Input } from '@rneui/themed'
-import React, { useState } from 'react'
+import { useForm } from '@tanstack/react-form'
+import { zodValidator } from '@tanstack/zod-form-adapter'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useMutation } from 'react-query'
+import { z } from 'zod'
 
 import kyInstance from '../api/kyInstance'
+import HttpException from '../exceptions/http.exception'
 
 const LogInScreen = () => {
   const { t } = useTranslation()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
-  const loginMutation = useMutation(
+  const { mutate, isLoading } = useMutation(
     async (loginData: { email: string; password: string }) => {
       return kyInstance.post('auth/login', { json: loginData }).json()
     },
@@ -20,40 +21,64 @@ const LogInScreen = () => {
       onSuccess: (data) => {
         console.log(data) // TODO: Save token to AsyncStorage and navigate to the home screen
       },
-      onError: (error) => {
-        Alert.alert('Login failed', 'Please check your credentials and try again.')
-        console.error(error)
-      },
-      onSettled: () => {
-        setIsLoading(false)
+      onError: (error: HttpException) => {
+        Alert.alert('Login failed', error.message)
       },
     }
   )
 
-  const handleSubmit = () => {
-    setIsLoading(true)
-    loginMutation.mutate({ email, password })
-  }
+  const form = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: async (data) => {
+      mutate(data.value)
+    },
+    validatorAdapter: zodValidator,
+  })
 
   return (
     <View style={styles.container}>
-      <Input
-        placeholder={t('email')}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        disabled={isLoading}
+      <form.Field
+        name="email"
+        validators={{
+          onChange: z.string().trim().email(),
+        }}
+        children={(field) => (
+          <>
+            <Input
+              placeholder={t('email')}
+              value={field.state.value}
+              onChangeText={(e) => field.handleChange(e)}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              disabled={isLoading}
+              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+            />
+          </>
+        )}
       />
-      <Input
-        placeholder={t('password')}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        autoCapitalize="none"
-        disabled={isLoading}
+
+      <form.Field
+        name="password"
+        validators={{
+          onChange: z.string().trim(),
+        }}
+        children={(field) => (
+          <Input
+            placeholder={t('password')}
+            value={field.state.value}
+            onChangeText={(e) => field.handleChange(e)}
+            secureTextEntry
+            autoCapitalize="none"
+            disabled={isLoading}
+            errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+          />
+        )}
       />
-      <Button title={t('login')} onPress={handleSubmit} loading={isLoading} />
+
+      <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
     </View>
   )
 }

@@ -24,33 +24,37 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    */
   protected debug = !app.inProduction
 
+  private formatError(error: string | string[]) {
+    return { errors: Array.isArray(error) ? error : [error] }
+  }
+
   /**
    * The method is used for handling errors and returning
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
     if (error instanceof errors.E_VALIDATION_ERROR) {
-      ctx.response.status(StatusCodes.UNPROCESSABLE_ENTITY).send(error.messages)
+      ctx.response.status(StatusCodes.UNPROCESSABLE_ENTITY).send(error.message)
       return
     }
 
     if (error instanceof UserAlreadyExistsException) {
-      ctx.response.status(StatusCodes.CONFLICT).send(error.message)
+      ctx.response.status(StatusCodes.CONFLICT).send(this.formatError(error.message))
       return
     }
 
     if (error instanceof UserNotFoundException) {
-      ctx.response.status(StatusCodes.NOT_FOUND).send(error.message)
+      ctx.response.status(StatusCodes.NOT_FOUND).send(this.formatError(error.message))
       return
     }
 
     if (error instanceof InvalidCredentialsException) {
-      ctx.response.status(StatusCodes.UNAUTHORIZED).send(error.message)
+      ctx.response.status(StatusCodes.UNAUTHORIZED).send(this.formatError(error.message))
       return
     }
 
     if (error instanceof UnauthorizedException) {
-      ctx.response.status(StatusCodes.UNAUTHORIZED).send(error.message)
+      ctx.response.status(StatusCodes.UNAUTHORIZED).send(this.formatError(error.message))
       return
     }
 
@@ -67,7 +71,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof InvalidPriceException ||
       error instanceof ShopNotFoundException
     ) {
-      ctx.response.status(StatusCodes.BAD_REQUEST).send(error.message)
+      ctx.response.status(StatusCodes.BAD_REQUEST).send(this.formatError(error.message))
       return
     }
 
