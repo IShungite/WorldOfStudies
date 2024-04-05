@@ -14,7 +14,7 @@ export default class StoreShopProductController {
    * Handle form submission for the create action
    */
   async handle({ params, request, response }: HttpContext) {
-    const [schoolId, categoryId] = await Promise.all([
+    const [schoolId, categoryId, payload] = await Promise.all([
       vine.validate({
         schema: domainIdValidator,
         data: params.schoolId,
@@ -23,12 +23,11 @@ export default class StoreShopProductController {
         schema: domainIdValidator,
         data: params.categoryId,
       }),
+      vine.validate({
+        schema: createShopProductValidator,
+        data: request.all(),
+      }),
     ])
-
-    const payload = await vine.validate({
-      schema: createShopProductValidator,
-      data: request.all(),
-    })
 
     await this.createShopProductService.execute(schoolId, categoryId, payload)
 

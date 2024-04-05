@@ -14,7 +14,7 @@ export default class UpdateShopProductController {
    * Handle form submission for the create action
    */
   async handle({ params, request, response }: HttpContext) {
-    const [schoolId, categoryId, productId] = await Promise.all([
+    const [schoolId, categoryId, productId, payload] = await Promise.all([
       vine.validate({
         schema: domainIdValidator,
         data: params.schoolId,
@@ -27,12 +27,11 @@ export default class UpdateShopProductController {
         schema: domainIdValidator,
         data: params.productId,
       }),
+      vine.validate({
+        schema: updateShopProductValidator,
+        data: request.all(),
+      }),
     ])
-
-    const payload = await vine.validate({
-      schema: updateShopProductValidator,
-      data: request.all(),
-    })
 
     await this.updateShopProductService.execute(schoolId, categoryId, productId, payload)
 
