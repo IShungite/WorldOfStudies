@@ -15,6 +15,7 @@ import { ShopCategoryNotFoundException } from '#domain/models/shop/shop_category
 test.group('Products - store', (group) => {
   let shopsRepository: IShopsRepository
   let schoolsRepository: ISchoolsRepository
+  const payload = { name: 'Product 1', price: 10 }
 
   group.setup(async () => {
     ;[shopsRepository, schoolsRepository] = await createRepositories([
@@ -28,10 +29,7 @@ test.group('Products - store', (group) => {
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {
-    const response = await client.post('/schools/1/shop/categories/bob/products').json({
-      name: 'Product 1',
-      price: '10.00',
-    })
+    const response = await client.post('/schools/1/shop/categories/bob/products').json(payload)
 
     response.assertStatus(StatusCodes.NOT_FOUND)
   })
@@ -40,10 +38,7 @@ test.group('Products - store', (group) => {
     const id = new Id('1')
     const response = await client
       .post(`/schools/${id.toString()}/shop/categories/1/products`)
-      .json({
-        name: 'Product 1',
-        price: '10.00',
-      })
+      .json(payload)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
     response.assertTextIncludes(new SchoolNotFoundException(id).message)
@@ -61,10 +56,7 @@ test.group('Products - store', (group) => {
 
     const response = await client
       .post(`/schools/${school.id}/shop/categories/${categoryId}/products`)
-      .json({
-        name: 'Product 1',
-        price: '10.00',
-      })
+      .json(payload)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
     response.assertTextIncludes(new ShopCategoryNotFoundException(categoryId).message)
@@ -101,16 +93,13 @@ test.group('Products - store', (group) => {
 
     const response = await client
       .post(`/schools/${school.id}/shop/categories/${category.id}/products`)
-      .json({
-        name: 'Product 1',
-        price: '10.00',
-      })
+      .json(payload)
 
     const updatedShop = await shopsRepository.getBySchoolId(school.id)
     const updatedCategory = updatedShop?.categories.find((c) => c.id.equals(category.id))
-    const newProduct = updatedCategory?.products.find((p) => p.name === 'Product 1')
+    const newProduct = updatedCategory?.products.find((p) => p.name === payload.name)
 
-    assert.equal(newProduct?.name, 'Product 1')
+    assert.equal(newProduct?.name, payload.name)
     response.assertStatus(StatusCodes.NO_CONTENT)
     response.assertHeader('location', getUrl(`schools/${school.id}/shop`))
   })

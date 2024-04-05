@@ -14,6 +14,7 @@ import { Price } from '#domain/models/shop/price'
 test.group('Products - update', (group) => {
   let shopsRepository: IShopsRepository
   let schoolsRepository: ISchoolsRepository
+  const payload = { name: 'Product 55', price: 55 }
 
   group.setup(async () => {
     ;[shopsRepository, schoolsRepository] = await createRepositories([
@@ -27,10 +28,7 @@ test.group('Products - update', (group) => {
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {
-    const response = await client.patch('/schools/1/shop/categories/1/products/bob').json({
-      name: 'Product 1',
-      price: '100',
-    })
+    const response = await client.patch('/schools/1/shop/categories/1/products/bob').json(payload)
 
     response.assertStatus(StatusCodes.NOT_FOUND)
   })
@@ -62,17 +60,14 @@ test.group('Products - update', (group) => {
 
     const response = await client
       .patch(`/schools/${school.id}/shop/categories/${category.id}/products/${product.id}`)
-      .json({
-        name: 'Product 55',
-        price: '55',
-      })
+      .json(payload)
 
     const updatedShop = await shopsRepository.getBySchoolId(school.id)
     const updatedCategory = updatedShop?.categories.find((c) => c.id.equals(category.id))
     const updatedProduct = updatedCategory?.products.find((p) => p.id.equals(product.id))
     const expectedPrice = new Price(55)
 
-    assert.equal(updatedProduct?.name, 'Product 55')
+    assert.equal(updatedProduct?.name, payload.name)
     assert.deepEqual(updatedProduct?.price, expectedPrice)
 
     response.assertStatus(StatusCodes.NO_CONTENT)
