@@ -1,4 +1,5 @@
-import React from 'react'
+import { router, useSegments } from 'expo-router'
+import React, { useEffect } from 'react'
 
 import { useStorageState } from '@/hooks/useStorageState'
 
@@ -26,8 +27,19 @@ export function useSession() {
   return value
 }
 
-export function SessionProvider(props: React.PropsWithChildren) {
+export function SessionProvider({ children }: React.PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session')
+  const rootSegment = useSegments()[0]
+
+  useEffect(() => {
+    if (isLoading) return
+
+    if (!session && rootSegment !== '(auth)') {
+      router.replace('(auth)/login')
+    } else if (session && rootSegment === '(auth)') {
+      router.replace('/')
+    }
+  }, [isLoading, session, router])
 
   return (
     <AuthContext.Provider
@@ -42,7 +54,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
         isLoading,
       }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
   )
 }
