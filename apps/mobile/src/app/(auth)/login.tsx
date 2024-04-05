@@ -1,7 +1,7 @@
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import { Redirect, router } from 'expo-router'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, Text, View } from 'react-native'
@@ -15,6 +15,7 @@ import { useSession } from '@/providers/session.provider'
 export default function Login() {
   const { t } = useTranslation()
   const { signIn } = useSession()
+  const router = useRouter()
 
   const { mutate, isLoading } = useMutation(
     async (loginData: { email: string; password: string }) => {
