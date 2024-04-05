@@ -14,7 +14,7 @@ import { useSession } from '@/providers/session.provider'
 
 export default function Login() {
   const { t } = useTranslation()
-  const { session, isLoading: isLoadingSession, signIn } = useSession()
+  const { signIn } = useSession()
 
   const { mutate, isLoading } = useMutation(
     async (loginData: { email: string; password: string }) => {
@@ -40,14 +40,6 @@ export default function Login() {
     },
     validatorAdapter: zodValidator,
   })
-
-  if (isLoadingSession) {
-    return <Text>Loading..</Text>
-  }
-
-  if (session) {
-    return <Redirect href="/" />
-  }
 
   return (
     <View style={styles.container}>
