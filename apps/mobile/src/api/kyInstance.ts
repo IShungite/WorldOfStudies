@@ -1,6 +1,6 @@
 import ky from 'ky'
 
-import HttpException from '../exceptions/http.exception'
+import HttpException from '@/exceptions/http.exception'
 
 const kyInstance = ky.create({
   prefixUrl: `${process.env.EXPO_PUBLIC_API_URL}`,
