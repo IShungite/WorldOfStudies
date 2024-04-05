@@ -9,10 +9,16 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const UpdateShopProductController = () =>
+  import('#infrastructure/controllers/shop/product/update_shop_product.controller')
+const DestroyShopProductController = () =>
+  import('#infrastructure/controllers/shop/product/destroy_shop_product.controller')
+const StoreShopProductController = () =>
+  import('#infrastructure/controllers/shop/product/store_shop_product.controller')
 const UpdateShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/update_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/update_shop_category.controller')
 const DestroyShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/destroy_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/destroy_shop_category.controller')
 
 const ShopsController = () => import('#infrastructure/controllers/shops.controller')
 const SubjectsController = () => import('#infrastructure/controllers/subjects.controller')
@@ -23,7 +29,7 @@ const UserAnswersController = () => import('#infrastructure/controllers/user_ans
 const AuthController = () => import('#infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#infrastructure/controllers/quizzes.controller')
 const StoreShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/store_shop_category.controller')
+  import('#infrastructure/controllers/shop/category/store_shop_category.controller')
 const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {
@@ -100,6 +106,24 @@ router
       .patch('schools/:schoolId/shop/categories/:categoryId', [UpdateShopCategoryController])
       .where('schoolId', onlyNumbersRegex)
       .where('categoryId', onlyNumbersRegex)
+    router
+      .post('schools/:schoolId/shop/categories/:categoryId/products', [StoreShopProductController])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
+    router
+      .delete('schools/:schoolId/shop/categories/:categoryId/products/:productId', [
+        DestroyShopProductController,
+      ])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
+      .where('productId', onlyNumbersRegex)
+    router
+      .patch('schools/:schoolId/shop/categories/:categoryId/products/:productId', [
+        UpdateShopProductController,
+      ])
+      .where('schoolId', onlyNumbersRegex)
+      .where('categoryId', onlyNumbersRegex)
+      .where('productId', onlyNumbersRegex)
 
     router
       .resource('characters', CharactersController)

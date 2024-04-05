@@ -16,6 +16,8 @@ import { CharacterNotFoundException } from '#domain/models/character/character_n
 import { InvalidPriceException } from '#domain/models/shop/invalid_price.exception'
 import { ShopNotFoundException } from '#domain/models/shop/shop_not_found_exception'
 import { UnauthorizedException } from '#domain/models/exceptions/unauthorized.exception'
+import { ShopCategoryNotFoundException } from '#domain/models/shop/shop_category_not_found_exception'
+import { ShopProductNotFoundException } from '#domain/models/shop/shop_product_not_found_exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -71,7 +73,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof QuizNotFoundException ||
       error instanceof CharacterNotFoundException ||
       error instanceof InvalidPriceException ||
-      error instanceof ShopNotFoundException
+      error instanceof ShopNotFoundException ||
+      error instanceof ShopCategoryNotFoundException ||
+      error instanceof ShopProductNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(this.formatError(error.message))
       return

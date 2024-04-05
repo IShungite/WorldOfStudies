@@ -49,7 +49,7 @@ test.group('Categories - destroy', (group) => {
     response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
-  test('It should create a category', async ({ client }) => {
+  test('It should delete a category', async ({ client }) => {
     const school = new School({ name: 'School 1' })
     const category = new ShopCategory({ name: 'Category 1', products: [] })
     const shop = new Shop({
