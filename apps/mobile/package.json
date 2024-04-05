@@ -1,7 +1,7 @@
 {
   "name": "@world-of-studies/mobile",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "cross-env EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
     "android": "expo start --android",

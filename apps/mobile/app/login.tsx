@@ -1,20 +1,20 @@
-import { useNavigation } from '@react-navigation/native'
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import * as SecureStore from 'expo-secure-store'
+import { Redirect, router } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import { useMutation } from 'react-query'
 import { z } from 'zod'
 
-import kyInstance from '../api/kyInstance'
-import HttpException from '../exceptions/http.exception'
+import kyInstance from '@/api/kyInstance'
+import HttpException from '@/exceptions/http.exception'
+import { useSession } from '@/providers/session.provider'
 
-const LogInScreen = () => {
+export default function Login() {
   const { t } = useTranslation()
-  const navigation = useNavigation<any>()
+  const { session, isLoading: isLoadingSession, signIn } = useSession()
 
   const { mutate, isLoading } = useMutation(
     async (loginData: { email: string; password: string }) => {
@@ -22,9 +22,7 @@ const LogInScreen = () => {
     },
     {
       onSuccess: async (data) => {
-        await SecureStore.setItemAsync('token', data.token)
-
-        navigation.navigate('Home')
+        signIn(data.token)
       },
       onError: (error: HttpException) => {
         Alert.alert('Login failed', error.message)
@@ -43,8 +41,17 @@ const LogInScreen = () => {
     validatorAdapter: zodValidator,
   })
 
+  if (isLoadingSession) {
+    return <Text>Loading..</Text>
+  }
+
+  if (session) {
+    return <Redirect href="/" />
+  }
+
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{t('login')}</Text>
       <form.Field
         name="email"
         validators={{
@@ -87,7 +94,7 @@ const LogInScreen = () => {
       <Button
         title={t('no_account_yet')}
         type="clear"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => router.replace('/register')}
         disabled={isLoading}
       />
     </View>
@@ -100,6 +107,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 20,
+  },
 })
-
-export default LogInScreen

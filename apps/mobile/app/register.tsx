@@ -1,18 +1,17 @@
-import { useNavigation } from '@react-navigation/native'
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
+import { router } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import { useMutation } from 'react-query'
 import { z } from 'zod'
 
-import kyInstance from '../api/kyInstance'
+import kyInstance from '@/api/kyInstance'
 
-const RegisterScreen = () => {
+export default function RegisterScreen() {
   const { t } = useTranslation()
-  const navigation = useNavigation<any>()
 
   const { mutate, isLoading } = useMutation(
     async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
@@ -21,7 +20,8 @@ const RegisterScreen = () => {
     {
       onSuccess: () => {
         Alert.alert('Success', 'Registration successful, please log in.')
-        navigation.navigate('LogIn')
+
+        router.replace('/login')
       },
       onError: (error: any) => {
         Alert.alert('Registration failed', error.message)
@@ -44,6 +44,7 @@ const RegisterScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{t('register')}</Text>
       <form.Field
         name="firstName"
         validators={{
@@ -120,7 +121,7 @@ const RegisterScreen = () => {
       <Button
         title={t('already_have_account')}
         type="clear"
-        onPress={() => navigation.navigate('LogIn')}
+        onPress={() => router.replace('/login')}
         disabled={isLoading}
       />
     </View>
@@ -133,6 +134,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 20,
+  },
 })
-
-export default RegisterScreen
