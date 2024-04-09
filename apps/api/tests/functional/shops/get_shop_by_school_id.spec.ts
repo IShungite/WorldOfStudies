@@ -1,9 +1,9 @@
-import { School } from '#domain/models/school/school'
+import { School } from '../../../src/school/domain/models/school.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
-import { Shop } from '#domain/models/shop/shop'
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
+import { IShopsRepository } from '../../../src/shop/domain/contracts/repositories/shops.repository.js'
+import { Shop } from '../../../src/shop/domain/models/shop.js'
+import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 

@@ -1,5 +1,5 @@
-import { User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
+import { User } from '../../src/user/domain/models/user.js'
+import { IUsersRepository } from '../../src/user/domain/contracts/repositories/users.repository.js'
 import { ApiRequest } from '@japa/api-client'
 import app from '@adonisjs/core/services/app'
 

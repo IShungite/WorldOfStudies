@@ -1,4 +1,4 @@
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
+import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import emptyRepositories from '#tests/utils/empty_repositories'

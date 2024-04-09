@@ -1,12 +1,12 @@
-import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
+import { ICharactersRepository } from '../../../src/character/domain/contracts/repositories/characters.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { Character } from '#domain/models/character/character'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
+import { Character } from '../../../src/character/domain/models/character.js'
+import { IUsersRepository } from '../../../src/user/domain/contracts/repositories/users.repository.js'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { UnauthorizedException } from '#domain/models/exceptions/unauthorized.exception'
+import { UnauthorizedException } from '../../../src/shared/exceptions/unauthorized.exception'
 
 test.group('Characters - delete', (group) => {
   let charactersRepository: ICharactersRepository

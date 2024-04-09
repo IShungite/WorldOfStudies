@@ -1,5 +1,8 @@
 import { Assert } from '@japa/assert'
-import { currentPageDefault, perPageDefault } from '#domain/models/pagination/pagination_request'
+import {
+  currentPageDefault,
+  perPageDefault,
+} from '../../src/shared/pagination/domain/models/pagination_request.js'
 
 export default function assertPaginatedResponse(
   assert: Assert,

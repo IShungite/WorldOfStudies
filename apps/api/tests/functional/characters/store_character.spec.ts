@@ -1,5 +1,5 @@
-import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
+import { ICharactersRepository } from '../../../src/character/domain/contracts/repositories/characters.repository.js'
+import { IUsersRepository } from '../../../src/user/domain/contracts/repositories/users.repository.js'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'

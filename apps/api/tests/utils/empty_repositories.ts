@@ -1,4 +1,4 @@
-import { ClearableRepository } from '#infrastructure/repositories/clearable_repository'
+import { ClearableRepository } from '../../src/shared/clearable_repository.js'
 
 export default async function emptyRepositories(
   repositories: ClearableRepository[]

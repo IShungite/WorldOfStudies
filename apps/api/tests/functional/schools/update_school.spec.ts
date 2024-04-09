@@ -1,7 +1,7 @@
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
+import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { School } from '#domain/models/school/school'
+import { School } from '../../../src/school/domain/models/school.js'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import createRepositories from '#tests/utils/create_repositories'
 
