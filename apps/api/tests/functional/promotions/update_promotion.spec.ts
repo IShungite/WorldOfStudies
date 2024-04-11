@@ -1,4 +1,4 @@
-import { getUrl } from '#shared/utils/get_url'
+import { getUrl } from '#shared/infra/api/utils/get_url'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'

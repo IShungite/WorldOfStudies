@@ -1,4 +1,4 @@
-import { ClearableRepository } from '#shared/storage/clearable_repository'
+import { ClearableRepository } from '#shared/infra/storage/clearable_repository'
 import { Id } from '#shared/id/domain/models/id'
 import { Character } from '#character/domain/models/character'
 

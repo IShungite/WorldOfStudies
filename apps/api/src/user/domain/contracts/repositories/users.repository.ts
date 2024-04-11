@@ -1,4 +1,4 @@
-import { ClearableRepository } from '#shared/storage/clearable_repository'
+import { ClearableRepository } from '#shared/infra/storage/clearable_repository'
 import { AccessToken } from '#user/domain/models/access_token'
 import { User } from '#user/domain/models/user'
 
