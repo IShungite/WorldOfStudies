@@ -5,8 +5,8 @@ import ShopEntity from '../entities/shop.js'
 import ShopCategoryEntity from '../entities/shop_category.js'
 import ShopProductEntity from '../entities/shop_product.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import { ShopMapper } from '../mappers/shop.mapper.js'
 import { ShopCategory } from '../../domain/models/shop_category.js'
+import { ShopStorageMapper } from '../mappers/shop_storage.mapper.js'
 
 export class LucidShopsRepository implements IShopsRepository {
   private async deleteExistingNestedEntity(shop: Shop) {
@@ -105,7 +105,7 @@ export class LucidShopsRepository implements IShopsRepository {
       .where('schoolId', Number.parseInt(schoolId.toString(), 10))
       .first()
 
-    return shop ? ShopMapper.fromLucid(shop) : null
+    return shop ? ShopStorageMapper.fromLucid(shop) : null
   }
 
   async getById(shopId: Id): Promise<Shop | null> {
@@ -114,7 +114,7 @@ export class LucidShopsRepository implements IShopsRepository {
       .preload('categories', (query) => query.preload('products'))
       .first()
 
-    return school ? ShopMapper.fromLucid(school) : null
+    return school ? ShopStorageMapper.fromLucid(school) : null
   }
 
   async deleteById(shopId: Id): Promise<void> {

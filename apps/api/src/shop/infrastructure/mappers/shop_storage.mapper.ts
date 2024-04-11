@@ -5,23 +5,7 @@ import { ShopCategory } from '../../domain/models/shop_category.js'
 import { ShopProduct } from '../../domain/models/shop_product.js'
 import { Price } from '../../domain/models/price.js'
 
-export class ShopMapper {
-  static toResponse(shop: Shop) {
-    return {
-      id: shop.id.toString(),
-      schoolId: shop.schoolId.toString(),
-      categories: shop.categories.map((category) => ({
-        id: category.id.toString(),
-        name: category.name,
-        products: category.products.map((product) => ({
-          id: product.id.toString(),
-          name: product.name,
-          price: product.price.toNumber(),
-        })),
-      })),
-    }
-  }
-
+export class ShopStorageMapper {
   static fromLucid(shopEntity: ShopEntity): Shop {
     return new Shop({
       id: new Id(shopEntity.id.toString()),

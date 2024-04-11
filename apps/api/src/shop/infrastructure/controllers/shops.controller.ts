@@ -3,7 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { CreateShopService } from '../../domain/services/create_shop.service.js'
 import { createShopValidator } from '../validators/create_shop.validator.js'
-import { ShopMapper } from '../mappers/shop.mapper.js'
+import { ShopApiMapper } from '../mappers/shop_api.mapper.js'
 
 @inject()
 export default class ShopsController {
@@ -17,6 +17,6 @@ export default class ShopsController {
 
     const shop = await this.createShopService.execute(payload)
 
-    return response.created(ShopMapper.toResponse(shop))
+    return response.created(ShopApiMapper.toResponse(shop))
   }
 }
