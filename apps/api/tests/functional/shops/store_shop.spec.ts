@@ -1,10 +1,10 @@
-import { School } from '#domain/models/school/school'
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import createRepositories from '#tests/utils/create_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { School } from '#school/domain/models/school'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository

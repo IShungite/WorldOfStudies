@@ -1,10 +1,10 @@
-import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 
 test.group('Characters - store', (group) => {
   let charactersRepository: ICharactersRepository

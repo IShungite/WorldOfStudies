@@ -9,27 +9,31 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
-const UpdateShopProductController = () =>
-  import('#infrastructure/controllers/shop/product/update_shop_product.controller')
-const DestroyShopProductController = () =>
-  import('#infrastructure/controllers/shop/product/destroy_shop_product.controller')
-const StoreShopProductController = () =>
-  import('#infrastructure/controllers/shop/product/store_shop_product.controller')
-const UpdateShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/category/update_shop_category.controller')
-const DestroyShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/category/destroy_shop_category.controller')
 
-const ShopsController = () => import('#infrastructure/controllers/shops.controller')
-const SubjectsController = () => import('#infrastructure/controllers/subjects.controller')
-const PromotionsController = () => import('#infrastructure/controllers/promotions.controller')
-const CharactersController = () => import('#infrastructure/controllers/characters.controller')
-const SchoolsController = () => import('#infrastructure/controllers/schools.controller')
-const UserAnswersController = () => import('#infrastructure/controllers/user_answers.controller')
-const AuthController = () => import('#infrastructure/controllers/auth.controller')
-const QuizzesController = () => import('#infrastructure/controllers/quizzes.controller')
+const AuthController = () => import('#user/infrastructure/controllers/auth.controller')
+const QuizzesController = () => import('#quiz/infrastructure/controllers/quizzes.controller')
+const UserAnswersController = () =>
+  import('#quiz/infrastructure/controllers/user_answers.controller')
+const SchoolsController = () => import('#school/infrastructure/controllers/schools.controller')
 const StoreShopCategoryController = () =>
-  import('#infrastructure/controllers/shop/category/store_shop_category.controller')
+  import('#shop/infrastructure/controllers/category/store_shop_category.controller')
+const DestroyShopCategoryController = () =>
+  import('#shop/infrastructure/controllers/category/destroy_shop_category.controller')
+const UpdateShopCategoryController = () =>
+  import('#shop/infrastructure/controllers/category/update_shop_category.controller')
+const StoreShopProductController = () =>
+  import('#shop/infrastructure/controllers/product/store_shop_product.controller')
+const DestroyShopProductController = () =>
+  import('#shop/infrastructure/controllers/product/destroy_shop_product.controller')
+const UpdateShopProductController = () =>
+  import('#shop/infrastructure/controllers/product/update_shop_product.controller')
+const CharactersController = () =>
+  import('#character/infrastructure/controllers/characters.controller')
+const PromotionsController = () =>
+  import('#school/infrastructure/controllers/promotions.controller')
+const SubjectsController = () => import('#school/infrastructure/controllers/subjects.controller')
+const ShopsController = () => import('#shop/infrastructure/controllers/shops.controller')
+
 const onlyNumbersRegex: RegExp = /^\d+$/
 
 router.get('/', async () => {

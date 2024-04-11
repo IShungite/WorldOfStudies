@@ -1,15 +1,15 @@
-import { Id } from '#domain/models/id/id'
-import { Promotion } from '#domain/models/school/promotion'
-import { PromotionNotFoundException } from '#domain/models/school/promotion_not_found.exception'
-import { School } from '#domain/models/school/school'
-import { SchoolNotFoundException } from '#domain/models/school/school_not_found.exception'
-import { Subject } from '#domain/models/school/subject'
-import { SubjectNotFoundException } from '#domain/models/school/subject_not_found.exception'
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
+import { SubjectNotFoundException } from '#school/domain/models/subject_not_found.exception'
+import { School } from '#school/domain/models/school'
+import { Promotion } from '#school/domain/models/promotion'
+import { Subject } from '#school/domain/models/subject'
 
 test.group('Subjects - destroy', (group) => {
   let schoolsRepository: ISchoolsRepository

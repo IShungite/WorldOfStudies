@@ -1,12 +1,12 @@
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { School } from '#domain/models/school/school'
-import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
-import { Shop } from '#domain/models/shop/shop'
-import { Id } from '#domain/models/id/id'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { School } from '#school/domain/models/school'
+import { Shop } from '#shop/domain/models/shop'
 
 test.group('Shops - destroy', (group) => {
   let schoolsRepository: ISchoolsRepository

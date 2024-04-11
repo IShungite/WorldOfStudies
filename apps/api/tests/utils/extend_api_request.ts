@@ -1,7 +1,7 @@
-import { User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { ApiRequest } from '@japa/api-client'
 import app from '@adonisjs/core/services/app'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { User } from '#user/domain/models/user'
 
 declare module '@japa/api-client' {
   // Interface must match the class name

@@ -1,5 +1,5 @@
-import { questionType } from '#domain/models/quiz/question'
 import { BaseSchema } from '@adonisjs/lucid/schema'
+import { questionType } from '#quiz/domain/models/quiz/question'
 
 export default class extends BaseSchema {
   protected tableName = 'questions'

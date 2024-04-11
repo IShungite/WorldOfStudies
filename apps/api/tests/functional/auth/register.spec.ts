@@ -1,10 +1,10 @@
-import { role } from '#domain/models/user/role'
-import { CreateUserDto, User } from '#domain/models/user/user'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { CreateUserDto, User } from '#user/domain/models/user'
+import { role } from '#user/domain/models/role'
 
 test.group('Auth - register', (group) => {
   let usersRepository: IUsersRepository

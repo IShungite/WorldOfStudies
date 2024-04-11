@@ -1,11 +1,11 @@
-import { Character } from '#domain/models/character/character'
-import { ICharactersRepository } from '#domain/contracts/repositories/characters.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { IUsersRepository } from '#domain/contracts/repositories/users.repository'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { Character } from '#character/domain/models/character'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository

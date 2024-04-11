@@ -1,0 +1,36 @@
+import { Id } from '#shared/id/domain/models/id'
+import { questionType } from '#quiz/domain/models/quiz/question'
+import {
+  UserAnswer,
+  UserAnswerQcm,
+  UserAnswerTextHole,
+} from '#quiz/domain/models/user_answer/user_answer'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
+
+export class UserAnswerStorageMapper {
+  static fromLucid(userAnswerEntity: UserAnswerEntity): UserAnswer {
+    const extra = JSON.parse(userAnswerEntity.extra)
+    const id = new Id(userAnswerEntity.id.toString())
+    const characterId = new Id(userAnswerEntity.characterId.toString())
+    const questionId = new Id(userAnswerEntity.questionId.toString())
+
+    if (userAnswerEntity.type === questionType.QCM) {
+      return new UserAnswerQcm({
+        id: id,
+        choiceId: new Id(extra.choiceId),
+        characterId: characterId,
+        questionId: questionId,
+      })
+    } else if (userAnswerEntity.type === questionType.TEXT_HOLE) {
+      return new UserAnswerTextHole({
+        id: id,
+        values: extra.values,
+        characterId: characterId,
+        questionId: questionId,
+      })
+    }
+
+    throw new InvalidQuestionTypeException()
+  }
+}

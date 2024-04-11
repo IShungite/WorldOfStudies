@@ -16,11 +16,18 @@
     "test:mutation": "stryker run"
   },
   "imports": {
-    "#infrastructure/*": "./src/infrastructure/*.js",
-    "#domain/*": "./src/domain/*.js",
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
+
+    "#character/*": "./src/character/*.js",
+    "#infrastructure/*": "./src/infrastructure/*.js",
+    "#quiz/*": "./src/quiz/*.js",
+    "#school/*": "./src/school/*.js",
+    "#shop/*": "./src/shop/*.js",
+    "#user/*": "./src/user/*.js",
+
+    "#shared/*": "./src/shared/*.js",
     "#utils/*": "./src/utils/*.js"
   },
   "devDependencies": {

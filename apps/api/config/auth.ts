@@ -9,12 +9,12 @@ const authConfig = defineConfig({
     api: tokensGuard({
       provider: tokensUserProvider({
         tokens: 'accessTokens',
-        model: (): Promise<typeof import('#infrastructure/entities/user')> => {
+        model: (): Promise<typeof import('#user/infrastructure/entities/user')> => {
           if (env.get('DB_CONNECTION') === 'in_memory') {
-            return import('#utils/user_entity_for_auth_when_in_memory') as any
+            return import('#shared/utils/user_entity_for_auth_when_in_memory') as any
           }
 
-          return import('#infrastructure/entities/user')
+          return import('#user/infrastructure/entities/user')
         },
       }),
     }),

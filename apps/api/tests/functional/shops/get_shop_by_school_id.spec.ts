@@ -1,11 +1,11 @@
-import { School } from '#domain/models/school/school'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IShopsRepository } from '#domain/contracts/repositories/shops.repository'
-import { Shop } from '#domain/models/shop/shop'
-import { ISchoolsRepository } from '#domain/contracts/repositories/schools.repository'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { School } from '#school/domain/models/school'
+import { Shop } from '#shop/domain/models/shop'
 
 test.group('Shops - get by school id', (group) => {
   let schoolsRepository: ISchoolsRepository

@@ -1,12 +1,12 @@
-import { questionType } from '#domain/models/quiz/question'
-import { Quiz } from '#domain/models/quiz/quiz'
-import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
-import { QuestionFactory } from '#domain/factories/question.factory'
-import { QuizMapper } from '#infrastructure/mappers/quiz.mapper'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { QuestionFactory } from '#quiz/domain/factories/question.factory'
+import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 
 test.group('Quizzes - update', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -88,6 +88,6 @@ test.group('Quizzes - update', (group) => {
     })
 
     response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains(QuizMapper.toResponse(expectedQuiz))
+    response.assertBodyContains(QuizApiMapper.toResponse(expectedQuiz))
   })
 })

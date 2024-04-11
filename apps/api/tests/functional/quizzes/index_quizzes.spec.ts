@@ -1,11 +1,11 @@
-import { Quiz } from '#domain/models/quiz/quiz'
-import { IQuizzesRepository } from '#domain/contracts/repositories/quizzes.repository'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import assertPaginatedResponse from '#tests/utils/assert_paginated_response'
-import { Id } from '#domain/models/id/id'
+import { Id } from '#shared/id/domain/models/id'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
