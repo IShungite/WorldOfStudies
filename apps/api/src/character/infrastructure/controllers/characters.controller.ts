@@ -9,7 +9,7 @@ import vine from '@vinejs/vine'
 import { UpdateCharacterService } from '../../domain/services/update_character_service.js'
 import { CharacterMapper } from '../mappers/character.mapper.js'
 import { DeleteCharacterService } from '../../domain/services/delete_character.service.js'
-import { UserMapper } from '../../../user/infrastructure/mappers/user.mapper.js'
+import { UserStorageMapper } from '../../../user/infrastructure/mappers/user_storage.mapper.js'
 
 @inject()
 export default class CharactersController {
@@ -22,7 +22,7 @@ export default class CharactersController {
 
   async store({ request, response, auth }: HttpContext) {
     const userEntity = await auth.authenticate()
-    const user = UserMapper.fromLucid(userEntity)
+    const user = UserStorageMapper.fromLucid(userEntity)
 
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
     const character = await this.createCharacterService.execute({
@@ -35,7 +35,7 @@ export default class CharactersController {
 
   async charactersByUserId({ request, response, auth }: HttpContext) {
     const userEntity = await auth.authenticate()
-    const user = UserMapper.fromLucid(userEntity)
+    const user = UserStorageMapper.fromLucid(userEntity)
 
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
@@ -45,7 +45,7 @@ export default class CharactersController {
 
   async update({ request, response, auth }: HttpContext) {
     const userEntity = await auth.authenticate()
-    const user = UserMapper.fromLucid(userEntity)
+    const user = UserStorageMapper.fromLucid(userEntity)
 
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
     const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
@@ -54,9 +54,10 @@ export default class CharactersController {
 
     return response.ok(CharacterMapper.toResponse(character))
   }
+
   async destroy({ request, response, auth }: HttpContext) {
     const userEntity = await auth.authenticate()
-    const user = UserMapper.fromLucid(userEntity)
+    const user = UserStorageMapper.fromLucid(userEntity)
 
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 

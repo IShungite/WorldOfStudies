@@ -2,7 +2,7 @@ import { AccessToken } from '../../domain/models/access_token.js'
 import { User } from '../../domain/models/user.js'
 import { UserNotFoundException } from '../../domain/models/user_not_found.exception.js'
 import { IUsersRepository } from '../../domain/contracts/repositories/users.repository.js'
-import { UserMapper } from '../mappers/user.mapper.js'
+import { UserStorageMapper } from '../mappers/user_storage.mapper.js'
 import UserEntity from '../entities/user.js'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { InvalidCredentialsException } from '../../domain/models/invalid_credentials.exception.js'
@@ -13,7 +13,7 @@ export class LucidUsersRepository implements IUsersRepository {
 
     if (!user) return null
 
-    return UserMapper.fromLucid(user)
+    return UserStorageMapper.fromLucid(user)
   }
 
   async createToken(user: User): Promise<AccessToken> {
@@ -44,14 +44,14 @@ export class LucidUsersRepository implements IUsersRepository {
       }
     )
 
-    return UserMapper.fromLucid(newUser)
+    return UserStorageMapper.fromLucid(newUser)
   }
 
   async verifyCredentials(email: string, password: string): Promise<User> {
     try {
       const user = await UserEntity.verifyCredentials(email, password)
 
-      return UserMapper.fromLucid(user)
+      return UserStorageMapper.fromLucid(user)
     } catch (e) {
       throw new InvalidCredentialsException()
     }

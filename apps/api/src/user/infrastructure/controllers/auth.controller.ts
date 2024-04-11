@@ -1,7 +1,7 @@
 import { CreateTokenService } from '../../domain/services/create_token.service.js'
 import { CreateUserService } from '../../domain/services/create_user.service.js'
 import { VerifyCredentialsService } from '../../domain/services/verify_credentials.service.js'
-import { UserMapper } from '../mappers/user.mapper.js'
+import { UserApiMapper } from '../mappers/user_api.mapper.js'
 import { loginUserValidator } from '../validators/login_user.validator.js'
 import { registerUserValidator } from '../validators/register_user.validator.js'
 import { inject } from '@adonisjs/core'
@@ -19,7 +19,7 @@ export default class AuthController {
     const payload = await vine.validate({ schema: registerUserValidator, data: request.all() })
 
     const user = await this.createUserService.execute(payload)
-    return response.created(UserMapper.toResponse(user))
+    return response.created(UserApiMapper.toResponse(user))
   }
 
   async login({ request }: HttpContext) {
@@ -29,8 +29,6 @@ export default class AuthController {
     })
 
     const user = await this.verifyCredentialsService.execute(email, password)
-    const token = await this.createTokenService.execute(user)
-
-    return token
+    return this.createTokenService.execute(user)
   }
 }
