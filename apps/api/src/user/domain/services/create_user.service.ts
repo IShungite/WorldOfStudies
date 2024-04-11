@@ -1,8 +1,8 @@
-import { role } from '../models/role.js'
-import { CreateUserDto, User } from '../models/user.js'
-import { UserAlreadyExistsException } from '../models/user_already_exists.exception.js'
-import { IUsersRepository } from '../contracts/repositories/users.repository.js'
 import { inject } from '@adonisjs/core'
+import { UserAlreadyExistsException } from '#user/domain/models/user_already_exists.exception'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { CreateUserDto, User } from '#user/domain/models/user'
+import { role } from '#user/domain/models/role'
 
 @inject()
 export class CreateUserService {

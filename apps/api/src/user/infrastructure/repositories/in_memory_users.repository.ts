@@ -1,8 +1,8 @@
-import { AccessToken } from '../../domain/models/access_token.js'
-import { InvalidCredentialsException } from '../../domain/models/invalid_credentials.exception.js'
-import { User } from '../../domain/models/user.js'
-import { IUsersRepository } from '../../domain/contracts/repositories/users.repository.js'
-import { CreateTestJwtService } from '#utils/create_test_jwt'
+import { CreateTestJwtService } from '#shared/utils/create_test_jwt'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { AccessToken } from '#user/domain/models/access_token'
+import { InvalidCredentialsException } from '#user/domain/models/invalid_credentials.exception'
+import { User } from '#user/domain/models/user'
 
 export class InMemoryUsersRepository implements IUsersRepository {
   private users: Record<string, User> = {}
@@ -14,13 +14,11 @@ export class InMemoryUsersRepository implements IUsersRepository {
   async createToken(user: User): Promise<AccessToken> {
     const jwtToken = CreateTestJwtService.create(user.email)
 
-    const token = new AccessToken({
+    return new AccessToken({
       type: 'auth_token',
       token: jwtToken,
       role: user.role,
     })
-
-    return token
   }
 
   async save(user: User): Promise<User> {

@@ -1,6 +1,6 @@
-import { Character } from '../../domain/models/character.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ICharactersRepository } from '../../domain/contracts/repositories/characters.repository.js'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { Character } from '#character/domain/models/character'
 
 export class InMemoryCharactersRepository implements ICharactersRepository {
   private characters: Record<string, Character> = {}

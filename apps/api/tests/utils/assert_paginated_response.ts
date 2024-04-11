@@ -2,7 +2,7 @@ import { Assert } from '@japa/assert'
 import {
   currentPageDefault,
   perPageDefault,
-} from '../../src/shared/pagination/domain/models/pagination_request.js'
+} from '#shared/pagination/domain/models/pagination_request'
 
 export default function assertPaginatedResponse(
   assert: Assert,

@@ -1,6 +1,6 @@
-import { Character } from '../../models/character.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { ClearableRepository } from '../../../../shared/clearable_repository.js'
+import { ClearableRepository } from '#shared/storage/clearable_repository'
+import { Id } from '#shared/id/domain/models/id'
+import { Character } from '#character/domain/models/character'
 
 export abstract class ICharactersRepository implements ClearableRepository {
   abstract save(character: Character): Promise<Character>

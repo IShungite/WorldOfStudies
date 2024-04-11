@@ -1,8 +1,8 @@
-import { CreatePromotionService } from '../../domain/services/promotion/create_promotion.service.js'
-import { createPromotionValidator } from '../validators/school/create_promotion.validator'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { CreatePromotionService } from '#school/domain/services/promotion/create_promotion.service'
+import { createPromotionValidator } from '#school/infrastructure/validators/school/create_promotion.validator'
 
 @inject()
 export default class PromotionsController {

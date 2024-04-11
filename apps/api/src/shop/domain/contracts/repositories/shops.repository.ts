@@ -1,5 +1,5 @@
-import { Shop } from '../../models/shop.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Shop } from '#shop/domain/models/shop'
 
 export abstract class IShopsRepository {
   abstract save(shop: Shop): Promise<Shop>

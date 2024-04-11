@@ -1,8 +1,8 @@
-import { CreateSubjectService } from '../../domain/services/subject/create_subject.service.js'
-import { createSubjectValidator } from '../validators/school/create_subject.validator'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { CreateSubjectService } from '#school/domain/services/subject/create_subject.service'
+import { createSubjectValidator } from '#school/infrastructure/validators/school/create_subject.validator'
 
 @inject()
 export default class SubjectsController {

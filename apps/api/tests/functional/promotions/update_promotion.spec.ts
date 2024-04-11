@@ -1,14 +1,14 @@
-import { Id } from '../../../src/shared/id/domain/models/id.js'
-import { Promotion } from '../../../src/school/domain/models/promotion.js'
-import { PromotionNotFoundException } from '../../../src/school/domain/models/promotion_not_found.exception.js'
-import { School } from '../../../src/school/domain/models/school.js'
-import { SchoolNotFoundException } from '../../../src/school/domain/models/school_not_found.exception.js'
-import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
-import { getUrl } from '#utils/get_url'
+import { getUrl } from '#shared/utils/get_url'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
+import { School } from '#school/domain/models/school'
+import { Promotion } from '#school/domain/models/promotion'
 
 test.group('Promotions - update', (group) => {
   let schoolsRepository: ISchoolsRepository

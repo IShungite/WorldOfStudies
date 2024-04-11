@@ -1,8 +1,8 @@
-import { CreatePromotionDto, Promotion } from '../../models/promotion.js'
-import { School } from '../../models/school.js'
-import { SchoolNotFoundException } from '../../models/school_not_found.exception.js'
-import { ISchoolsRepository } from '../../contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { CreatePromotionDto, Promotion } from '#school/domain/models/promotion'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { School } from '#school/domain/models/school'
 
 @inject()
 export class CreatePromotionService {

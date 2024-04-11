@@ -1,12 +1,12 @@
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { SchoolNotFoundException } from '../../../../school/domain/models/school_not_found.exception.js'
-import { ISchoolsRepository } from '../../../../school/domain/contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
-import { ShopCategory, UpdateShopCategoryDto } from '../../models/shop_category.js'
-import { IShopsRepository } from '../../contracts/repositories/shops.repository.js'
-import { ShopNotFoundException } from '../../models/shop_not_found_exception.js'
-import { ShopCategoryNotFoundException } from '../../models/shop_category_not_found_exception.js'
-import { Shop } from '../../models/shop.js'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { ShopCategory, UpdateShopCategoryDto } from '#shop/domain/models/shop_category'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
+import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
+import { Shop } from '#shop/domain/models/shop'
 
 @inject()
 export class UpdateShopCategoryService {

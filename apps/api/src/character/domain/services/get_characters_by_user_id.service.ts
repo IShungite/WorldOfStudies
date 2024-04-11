@@ -1,9 +1,9 @@
-import { Character } from '../models/character.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ICharactersRepository } from '../contracts/repositories/characters.repository.js'
 import { inject } from '@adonisjs/core'
-import { User } from '../../../user/domain/models/user.js'
-import { UnauthorizedException } from '../../../shared/exceptions/unauthorized.exception'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
+import { User } from '#user/domain/models/user'
+import { Character } from '#character/domain/models/character'
 
 @inject()
 export class GetCharactersByUserIdService {

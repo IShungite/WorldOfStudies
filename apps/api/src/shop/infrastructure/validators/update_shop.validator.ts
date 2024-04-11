@@ -1,5 +1,5 @@
-import { Price } from '../../domain/models/price.js'
 import vine from '@vinejs/vine'
+import { Price } from '#shop/domain/models/price'
 
 export const updateShopProductValidator = vine.object({
   name: vine.string().trim().optional(),

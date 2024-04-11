@@ -1,11 +1,11 @@
-import { Id } from '../../../src/shared/id/domain/models/id.js'
-import { Promotion } from '../../../src/school/domain/models/promotion.js'
-import { School } from '../../../src/school/domain/models/school.js'
-import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { School } from '#school/domain/models/school'
+import { Promotion } from '#school/domain/models/promotion'
 
 test.group('Subjects - store', (group) => {
   let schoolsRepository: ISchoolsRepository

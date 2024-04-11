@@ -1,5 +1,5 @@
-import { Price } from './price.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { Price } from '#shop/domain/models/price'
+import { Id } from '#shared/id/domain/models/id'
 
 export type CreateShopProductDto = {
   name: string

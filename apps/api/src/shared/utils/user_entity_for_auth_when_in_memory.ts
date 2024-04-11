@@ -1,10 +1,10 @@
-import { User } from '../user/domain/models/user.js'
-import { IUsersRepository } from '../user/domain/contracts/repositories/users.repository.js'
-import { CreateTestJwtService } from '#utils/create_test_jwt'
-import UserEntity from '../user/infrastructure/entities/user.js'
+import { CreateTestJwtService } from '#shared/utils/create_test_jwt'
 import { AccessToken, DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { Secret } from '@adonisjs/core/helpers'
 import app from '@adonisjs/core/services/app'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { User } from '#user/domain/models/user'
+import UserEntity from '#user/infrastructure/entities/user'
 
 export class AccessTokenTest extends AccessToken {
   value: Secret<string>

@@ -1,4 +1,4 @@
-import { Subject } from '../../domain/models/subject.js'
+import { Subject } from '#school/domain/models/subject'
 
 export class SubjectMapper {
   static toResponse(subject: Subject): { id: string; name: string } {

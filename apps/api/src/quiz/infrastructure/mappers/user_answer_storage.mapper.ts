@@ -1,12 +1,13 @@
+import { Id } from '#shared/id/domain/models/id'
+import { questionType } from '#quiz/domain/models/quiz/question'
 import {
   UserAnswer,
   UserAnswerQcm,
   UserAnswerTextHole,
-} from '../../domain/models/user_answer/user_answer.js'
-import UserAnswerEntity from '../entities/user_answer.js'
-import { questionType } from '../../domain/models/quiz/question.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { InvalidQuestionTypeException } from '../../domain/models/quiz/invalid_question_type.exception.js'
+} from '#quiz/domain/models/user_answer/user_answer'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
+
 export class UserAnswerStorageMapper {
   static fromLucid(userAnswerEntity: UserAnswerEntity): UserAnswer {
     const extra = JSON.parse(userAnswerEntity.extra)

@@ -1,5 +1,5 @@
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { School } from '../../models/school.js'
+import { Id } from '#shared/id/domain/models/id'
+import { School } from '#school/domain/models/school'
 
 export abstract class ISchoolsRepository {
   abstract save(school: School): Promise<School>

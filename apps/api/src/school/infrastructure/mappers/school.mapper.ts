@@ -1,8 +1,8 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { School } from '../../domain/models/school.js'
-import SchoolEntity from '../entities/school.js'
-import { Promotion } from '../../domain/models/promotion.js'
-import { Subject } from '../../domain/models/subject.js'
+import { Id } from '#shared/id/domain/models/id'
+import { School } from '#school/domain/models/school'
+import SchoolEntity from '#school/infrastructure/entities/school'
+import { Promotion } from '#school/domain/models/promotion'
+import { Subject } from '#school/domain/models/subject'
 
 export class SchoolMapper {
   static toResponse(school: School): { id: string; name: string } {

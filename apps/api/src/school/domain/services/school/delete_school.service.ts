@@ -1,7 +1,7 @@
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { SchoolNotFoundException } from '../../models/school_not_found.exception.js'
-import { ISchoolsRepository } from '../../contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
 
 @inject()
 export class DeleteSchoolService {

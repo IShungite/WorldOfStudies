@@ -1,4 +1,4 @@
-import { UserAnswer } from '../../domain/models/user_answer/user_answer.js'
+import { UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
 
 export class UserAnswerApiMapper {
   static toResponse(userAnswer: UserAnswer) {

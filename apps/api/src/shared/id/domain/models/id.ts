@@ -1,4 +1,4 @@
-import { EmptyIdException } from './empty_id.exception.js'
+import { EmptyIdException } from '#shared/id/domain/models/empty_id.exception'
 
 export class Id {
   constructor(private readonly _value: string) {

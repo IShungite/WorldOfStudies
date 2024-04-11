@@ -1,9 +1,9 @@
-import { Shop } from '../../domain/models/shop.js'
-import ShopEntity from '../entities/shop.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ShopCategory } from '../../domain/models/shop_category.js'
-import { ShopProduct } from '../../domain/models/shop_product.js'
-import { Price } from '../../domain/models/price.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Price } from '#shop/domain/models/price'
+import { Shop } from '#shop/domain/models/shop'
+import ShopEntity from '#shop/infrastructure/entities/shop'
+import { ShopCategory } from '#shop/domain/models/shop_category'
+import { ShopProduct } from '#shop/domain/models/shop_product'
 
 export class ShopStorageMapper {
   static fromLucid(shopEntity: ShopEntity): Shop {

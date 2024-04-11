@@ -1,11 +1,11 @@
+import testUtils from '@adonisjs/core/services/test_utils'
+import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
 import {
   UserAnswer,
   UserAnswerQcm,
   UserAnswerTextHole,
-} from '../../../domain/models/user_answer/user_answer.js'
-import { IUserAnswersRepository } from '../../../domain/contracts/user_answers.repository.js'
-import testUtils from '@adonisjs/core/services/test_utils'
-import UserAnswerEntity from '../../entities/user_answer.js'
+} from '#quiz/domain/models/user_answer/user_answer'
+import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
 
 export class LucidUserAnswersRepository implements IUserAnswersRepository {
   async save(userAnswer: UserAnswer): Promise<UserAnswer> {

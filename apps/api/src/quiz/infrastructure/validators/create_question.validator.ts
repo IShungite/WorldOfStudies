@@ -1,5 +1,5 @@
-import { questionType } from '../../domain/models/quiz/question.js'
 import vine from '@vinejs/vine'
+import { questionType } from '#quiz/domain/models/quiz/question'
 
 export const createQcmChoiceValidator = vine.object({
   label: vine.string(),

@@ -1,4 +1,4 @@
-import { User } from '../../domain/models/user.js'
+import { User } from '#user/domain/models/user'
 
 export class UserApiMapper {
   static toResponse(user: User) {

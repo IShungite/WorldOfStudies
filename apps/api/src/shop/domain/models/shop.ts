@@ -1,5 +1,5 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { CreateShopCategoryDto, ShopCategory } from './shop_category.js'
+import { Id } from '#shared/id/domain/models/id'
+import { CreateShopCategoryDto, ShopCategory } from '#shop/domain/models/shop_category'
 
 export type CreateShopDto = {
   schoolId: Id

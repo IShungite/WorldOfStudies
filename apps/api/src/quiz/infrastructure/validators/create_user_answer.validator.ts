@@ -1,6 +1,6 @@
-import { questionType } from '../../domain/models/quiz/question.js'
-import { domainIdValidator } from '../../../shared/id/infrastructure/validators/domain_id.validator.js'
 import vine from '@vinejs/vine'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
+import { questionType } from '#quiz/domain/models/quiz/question'
 
 const differentTypeOfUserAnswer = vine.group([
   vine.group.if((value) => value.type === questionType.QCM, {

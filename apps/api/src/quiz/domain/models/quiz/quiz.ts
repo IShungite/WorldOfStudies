@@ -1,6 +1,6 @@
-import { CreateQuestionDto, Question } from './question.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { UserAnswer } from '../user_answer/user_answer.js'
+import { CreateQuestionDto, Question } from '#quiz/domain/models/quiz/question'
+import { Id } from '#shared/id/domain/models/id'
+import { UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
 
 export type CreateQuizDto = {
   name: string

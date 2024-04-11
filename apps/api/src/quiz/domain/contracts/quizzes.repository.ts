@@ -1,8 +1,8 @@
-import { Quiz } from '../models/quiz/quiz.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ClearableRepository } from '../../../shared/clearable_repository.js'
-import { PaginatedData } from '../../../shared/pagination/domain/models/paginated_data.js'
-import { PaginationRequest } from '../../../shared/pagination/domain/models/pagination_request.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
+import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
+import { ClearableRepository } from '#shared/storage/clearable_repository'
 
 export abstract class IQuizzesRepository implements ClearableRepository {
   abstract save(quiz: Quiz): Promise<Quiz>

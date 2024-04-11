@@ -1,15 +1,13 @@
-import { CreateQuizDto, Quiz } from '../models/quiz/quiz.js'
-import { QuestionFactory } from './question.factory.js'
+import { CreateQuizDto, Quiz } from '#quiz/domain/models/quiz/quiz'
+import { QuestionFactory } from '#quiz/domain/factories/question.factory'
 
 export class QuizFactory {
   static create(createQuiz: CreateQuizDto): Quiz {
     const questions = createQuiz.questions.map((question) => QuestionFactory.create(question))
 
-    const quiz = new Quiz({
+    return new Quiz({
       ...createQuiz,
       questions,
     })
-
-    return quiz
   }
 }

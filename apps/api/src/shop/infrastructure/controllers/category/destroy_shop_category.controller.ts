@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { domainIdValidator } from '../../../../shared/id/infrastructure/validators/domain_id.validator.js'
-import { DeleteShopCategoryService } from '../../../domain/services/category/delete_shop_category.service.js'
+import { DeleteShopCategoryService } from '#shop/domain/services/category/delete_shop_category.service'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 
 @inject()
 export default class DestroyShopCategoryController {

@@ -1,7 +1,7 @@
-import { AccessToken } from '../models/access_token.js'
-import { User } from '../models/user.js'
-import { IUsersRepository } from '../contracts/repositories/users.repository.js'
 import { inject } from '@adonisjs/core'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { User } from '#user/domain/models/user'
+import { AccessToken } from '#user/domain/models/access_token'
 
 @inject()
 export class CreateTokenService {

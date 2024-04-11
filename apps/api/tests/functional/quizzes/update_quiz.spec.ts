@@ -1,12 +1,12 @@
-import { questionType } from '../../../src/quiz/domain/models/quiz/question.js'
-import { Quiz } from '../../../src/quiz/domain/models/quiz/quiz.js'
-import { IQuizzesRepository } from '../../../src/quiz/domain/contracts/quizzes.repository.js'
-import { QuestionFactory } from '../../../src/quiz/domain/factories/question.factory'
-import { QuizApiMapper } from '../../../src/quiz/infrastructure/mappers/quiz_api.mapper.js'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { QuestionFactory } from '#quiz/domain/factories/question.factory'
+import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 
 test.group('Quizzes - update', (group) => {
   let quizzesRepository: IQuizzesRepository

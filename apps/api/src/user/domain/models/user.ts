@@ -1,5 +1,5 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { Role } from './role.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Role } from '#user/domain/models/role'
 
 export type CreateUserDto = {
   firstName: string

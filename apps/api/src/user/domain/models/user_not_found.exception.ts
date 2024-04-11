@@ -1,4 +1,4 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { Id } from '#shared/id/domain/models/id'
 
 export class UserNotFoundException extends Error {
   constructor(id: Id) {

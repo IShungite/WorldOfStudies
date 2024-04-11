@@ -1,4 +1,4 @@
-import { Role } from './role.js'
+import { Role } from '#user/domain/models/role'
 
 type AccessTokenProps = {
   type: string

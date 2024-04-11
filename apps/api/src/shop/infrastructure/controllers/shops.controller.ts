@@ -1,9 +1,9 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { CreateShopService } from '../../domain/services/create_shop.service.js'
-import { createShopValidator } from '../validators/create_shop.validator.js'
-import { ShopApiMapper } from '../mappers/shop_api.mapper.js'
+import { CreateShopService } from '#shop/domain/services/create_shop.service'
+import { createShopValidator } from '#shop/infrastructure/validators/create_shop.validator'
+import { ShopApiMapper } from '#shop/infrastructure/mappers/shop_api.mapper'
 
 @inject()
 export default class ShopsController {

@@ -1,6 +1,6 @@
-import { Character, CreateCharacterDto } from '../models/character.js'
-import { ICharactersRepository } from '../contracts/repositories/characters.repository.js'
 import { inject } from '@adonisjs/core'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { Character, CreateCharacterDto } from '#character/domain/models/character'
 
 @inject()
 export class CreateCharacterService {

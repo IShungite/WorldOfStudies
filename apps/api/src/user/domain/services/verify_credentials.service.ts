@@ -1,6 +1,6 @@
-import { User } from '../models/user.js'
-import { IUsersRepository } from '../contracts/repositories/users.repository.js'
 import { inject } from '@adonisjs/core'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { User } from '#user/domain/models/user'
 
 @inject()
 export class VerifyCredentialsService {

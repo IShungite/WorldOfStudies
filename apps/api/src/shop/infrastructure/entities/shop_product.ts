@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import ShopCategory from './shop_category.js'
+import ShopCategoryEntity from '#shop/infrastructure/entities/shop_category'
 
 export default class ShopProduct extends BaseModel {
   @column({ isPrimary: true })
@@ -16,8 +16,8 @@ export default class ShopProduct extends BaseModel {
   @column()
   declare categoryId: number
 
-  @belongsTo(() => ShopCategory)
-  declare category: BelongsTo<typeof ShopCategory>
+  @belongsTo(() => ShopCategoryEntity)
+  declare category: BelongsTo<typeof ShopCategoryEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

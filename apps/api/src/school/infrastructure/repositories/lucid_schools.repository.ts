@@ -1,12 +1,12 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { School } from '../../domain/models/school.js'
-import { ISchoolsRepository } from '../../domain/contracts/repositories/schools.repository.js'
-import SchoolEntity from '../entities/school.js'
-import { SchoolMapper } from '../mappers/school.mapper.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import PromotionEntity from '../entities/promotion.js'
-import SubjectEntity from '../entities/subject.js'
-import { Promotion } from '../../domain/models/promotion.js'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { SchoolMapper } from '#school/infrastructure/mappers/school.mapper'
+import { School } from '#school/domain/models/school'
+import { Promotion } from '#school/domain/models/promotion'
+import PromotionEntity from '#school/infrastructure/entities/promotion'
+import SchoolEntity from '#school/infrastructure/entities/school'
+import SubjectEntity from '#school/infrastructure/entities/subject'
 
 export class LucidSchoolsRepository implements ISchoolsRepository {
   private async deleteExistingNestedEntity(school: School) {

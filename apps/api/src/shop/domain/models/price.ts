@@ -1,4 +1,4 @@
-import { InvalidPriceException } from './invalid_price.exception.js'
+import { InvalidPriceException } from '#shop/domain/models/invalid_price.exception'
 
 export class Price {
   constructor(private readonly value: number) {

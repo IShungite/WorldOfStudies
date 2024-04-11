@@ -1,5 +1,5 @@
-import { Id } from '../../domain/models/id.js'
 import vine from '@vinejs/vine'
+import { Id } from '#shared/id/domain/models/id'
 
 export const domainIdValidator = vine
   .string()

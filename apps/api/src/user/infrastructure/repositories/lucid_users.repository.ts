@@ -1,11 +1,11 @@
-import { AccessToken } from '../../domain/models/access_token.js'
-import { User } from '../../domain/models/user.js'
-import { UserNotFoundException } from '../../domain/models/user_not_found.exception.js'
-import { IUsersRepository } from '../../domain/contracts/repositories/users.repository.js'
-import { UserStorageMapper } from '../mappers/user_storage.mapper.js'
-import UserEntity from '../entities/user.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import { InvalidCredentialsException } from '../../domain/models/invalid_credentials.exception.js'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
+import { UserNotFoundException } from '#user/domain/models/user_not_found.exception'
+import { AccessToken } from '#user/domain/models/access_token'
+import { InvalidCredentialsException } from '#user/domain/models/invalid_credentials.exception'
+import { User } from '#user/domain/models/user'
+import UserEntity from '#user/infrastructure/entities/user'
 
 export class LucidUsersRepository implements IUsersRepository {
   async getByEmail(email: string): Promise<User | null> {

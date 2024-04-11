@@ -4,9 +4,9 @@ import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-import type { Role } from '../../domain/models/role.js'
-import Character from '../../../character/infrastructure/entities/character.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
+import type { Role } from '#user/domain/models/role'
+import CharacterEntity from '#character/infrastructure/entities/character'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -32,8 +32,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare role: Role
 
-  @hasMany(() => Character)
-  declare characters: HasMany<typeof Character>
+  @hasMany(() => CharacterEntity)
+  declare characters: HasMany<typeof CharacterEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

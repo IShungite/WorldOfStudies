@@ -1,7 +1,7 @@
-import { IShopsRepository } from '../contracts/repositories/shops.repository.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ShopNotFoundException } from '../models/shop_not_found_exception.js'
 import { inject } from '@adonisjs/core'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
 
 @inject()
 export class GetShopBySchoolService {

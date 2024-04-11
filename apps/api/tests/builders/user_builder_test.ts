@@ -1,6 +1,6 @@
-import { Id } from '../../src/shared/id/domain/models/id.js'
-import { Role, role } from '../../src/user/domain/models/role.js'
-import { User } from '../../src/user/domain/models/user.js'
+import { User } from '#user/domain/models/user'
+import { Id } from '#shared/id/domain/models/id'
+import { role, Role } from '#user/domain/models/role'
 
 export class UserBuilderTest {
   private _id = Math.floor(Math.random() * 100000).toString()

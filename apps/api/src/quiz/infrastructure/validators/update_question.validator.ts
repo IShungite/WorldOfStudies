@@ -1,12 +1,12 @@
-import { questionType } from '../../domain/models/quiz/question.js'
-import {
-  createQuestionValidator,
-  createQcmContentValidator,
-  createQcmChoiceValidator,
-  createTextHoleContentValidator,
-} from './create_question.validator.js'
-import { domainIdValidator } from '../../../shared/id/infrastructure/validators/domain_id.validator.js'
 import vine from '@vinejs/vine'
+import {
+  createQcmChoiceValidator,
+  createQcmContentValidator,
+  createQuestionValidator,
+  createTextHoleContentValidator,
+} from '#quiz/infrastructure/validators/create_question.validator'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
+import { questionType } from '#quiz/domain/models/quiz/question'
 
 const updateQcmContentValidator = vine.object({
   ...createQcmContentValidator.getProperties(),

@@ -1,13 +1,13 @@
-import { Quiz } from '../../../domain/models/quiz/quiz.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { IQuizzesRepository } from '../../../domain/contracts/quizzes.repository.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import QuizEntity from '../../entities/quiz.js'
-import { QuestionQcm, QuestionTextHole } from '../../../domain/models/quiz/question.js'
-import QuestionEntity from '../../entities/question.js'
-import { PaginatedData } from '../../../../shared/pagination/domain/models/paginated_data.js'
-import { PaginationRequest } from '../../../../shared/pagination/domain/models/pagination_request.js'
-import { QuizStorageMapper } from '../../mappers/quiz_storage.mapper.js'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
+import { Id } from '#shared/id/domain/models/id'
+import { QuizStorageMapper } from '#quiz/infrastructure/mappers/quiz_storage.mapper'
+import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
+import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import QuizEntity from '#quiz/infrastructure/entities/quiz'
+import QuestionEntity from '#quiz/infrastructure/entities/question'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {

@@ -1,9 +1,9 @@
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { PromotionNotFoundException } from '../../models/promotion_not_found.exception.js'
-import { School } from '../../models/school.js'
-import { SchoolNotFoundException } from '../../models/school_not_found.exception.js'
-import { ISchoolsRepository } from '../../contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
+import { School } from '#school/domain/models/school'
 
 @inject()
 export class DeletePromotionService {

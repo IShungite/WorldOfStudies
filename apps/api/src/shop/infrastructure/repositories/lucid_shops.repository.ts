@@ -1,12 +1,12 @@
-import { IShopsRepository } from '../../domain/contracts/repositories/shops.repository.js'
-import { Shop } from '../../domain/models/shop.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import ShopEntity from '../entities/shop.js'
-import ShopCategoryEntity from '../entities/shop_category.js'
-import ShopProductEntity from '../entities/shop_product.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import { ShopCategory } from '../../domain/models/shop_category.js'
-import { ShopStorageMapper } from '../mappers/shop_storage.mapper.js'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { ShopStorageMapper } from '#shop/infrastructure/mappers/shop_storage.mapper'
+import { Shop } from '#shop/domain/models/shop'
+import { ShopCategory } from '#shop/domain/models/shop_category'
+import ShopCategoryEntity from '#shop/infrastructure/entities/shop_category'
+import ShopProductEntity from '#shop/infrastructure/entities/shop_product'
+import ShopEntity from '#shop/infrastructure/entities/shop'
 
 export class LucidShopsRepository implements IShopsRepository {
   private async deleteExistingNestedEntity(shop: Shop) {

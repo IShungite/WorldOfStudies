@@ -1,10 +1,10 @@
-import { CreateShopDto, Shop } from '../models/shop.js'
 import { inject } from '@adonisjs/core'
-import { ISchoolsRepository } from '../../../school/domain/contracts/repositories/schools.repository.js'
-import { SchoolNotFoundException } from '../../../school/domain/models/school_not_found.exception.js'
-import { IShopsRepository } from '../contracts/repositories/shops.repository.js'
-import { ShopCategory } from '../models/shop_category.js'
-import { ShopProduct } from '../models/shop_product.js'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { CreateShopDto, Shop } from '#shop/domain/models/shop'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { ShopCategory } from '#shop/domain/models/shop_category'
+import { ShopProduct } from '#shop/domain/models/shop_product'
 
 @inject()
 export class CreateShopService {

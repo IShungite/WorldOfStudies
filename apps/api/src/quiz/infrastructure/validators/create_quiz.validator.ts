@@ -1,5 +1,5 @@
-import { createQuestionValidator } from './create_question.validator.js'
 import vine from '@vinejs/vine'
+import { createQuestionValidator } from '#quiz/infrastructure/validators/create_question.validator'
 
 export const createQuizValidator = vine.object({
   name: vine.string().trim(),

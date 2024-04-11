@@ -1,9 +1,9 @@
-import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { School } from '../../../src/school/domain/models/school.js'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import createRepositories from '#tests/utils/create_repositories'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { School } from '#school/domain/models/school'
 
 test.group('Schools - update', (group) => {
   let schoolsRepository: ISchoolsRepository

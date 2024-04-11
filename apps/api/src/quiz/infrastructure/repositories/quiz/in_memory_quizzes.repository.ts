@@ -1,6 +1,7 @@
-import { Quiz } from '../../../domain/models/quiz/quiz.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { IQuizzesRepository } from '../../../domain/contracts/quizzes.repository.js'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
+import { Id } from '#shared/id/domain/models/id'
 
 export class InMemoryQuizzesRepository implements IQuizzesRepository {
   private quizzes: Record<string, Quiz> = {}
@@ -14,8 +15,15 @@ export class InMemoryQuizzesRepository implements IQuizzesRepository {
     return this.quizzes[quizId.toString()] ?? null
   }
 
-  async getAll(): Promise<Quiz[]> {
-    return Object.values(this.quizzes)
+  async getAll(): Promise<PaginatedData<Quiz>> {
+    return new PaginatedData({
+      results: Object.values(this.quizzes),
+      currentPage: 1,
+      perPage: 10,
+      totalResults: Object.values(this.quizzes).length,
+      firstPage: 1,
+      lastPage: 1,
+    })
   }
 
   async deleteById(quizId: Id): Promise<void> {

@@ -1,7 +1,7 @@
-import { CreateQuizDto, Quiz } from '../../models/quiz/quiz.js'
-import { IQuizzesRepository } from '../../contracts/quizzes.repository.js'
-import { QuizFactory } from '../../factories/quiz.factory.js'
 import { inject } from '@adonisjs/core'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { CreateQuizDto, Quiz } from '#quiz/domain/models/quiz/quiz'
+import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 
 @inject()
 export class CreateQuizService {

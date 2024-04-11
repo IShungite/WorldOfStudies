@@ -1,12 +1,12 @@
-import { CreateTokenService } from '../../domain/services/create_token.service.js'
-import { CreateUserService } from '../../domain/services/create_user.service.js'
-import { VerifyCredentialsService } from '../../domain/services/verify_credentials.service.js'
-import { UserApiMapper } from '../mappers/user_api.mapper.js'
-import { loginUserValidator } from '../validators/login_user.validator.js'
-import { registerUserValidator } from '../validators/register_user.validator.js'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { CreateUserService } from '#user/domain/services/create_user.service'
+import { CreateTokenService } from '#user/domain/services/create_token.service'
+import { VerifyCredentialsService } from '#user/domain/services/verify_credentials.service'
+import { registerUserValidator } from '#user/infrastructure/validators/register_user.validator'
+import { UserApiMapper } from '#user/infrastructure/mappers/user_api.mapper'
+import { loginUserValidator } from '#user/infrastructure/validators/login_user.validator'
 
 @inject()
 export default class AuthController {

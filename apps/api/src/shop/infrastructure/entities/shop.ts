@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
-import School from '../../../school/infrastructure/entities/school.js'
-import ShopCategory from './shop_category.js'
+import SchoolEntity from '#school/infrastructure/entities/school'
+import ShopCategoryEntity from '#shop/infrastructure/entities/shop_category'
 
 export default class Shop extends BaseModel {
   @column({ isPrimary: true })
@@ -11,11 +11,11 @@ export default class Shop extends BaseModel {
   @column()
   declare schoolId: number
 
-  @belongsTo(() => School)
-  declare school: BelongsTo<typeof School>
+  @belongsTo(() => SchoolEntity)
+  declare school: BelongsTo<typeof SchoolEntity>
 
-  @hasMany(() => ShopCategory)
-  declare categories: HasMany<typeof ShopCategory>
+  @hasMany(() => ShopCategoryEntity)
+  declare categories: HasMany<typeof ShopCategoryEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

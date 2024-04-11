@@ -1,7 +1,7 @@
-import { CreateUserAnswerDto, UserAnswer } from '../../models/user_answer/user_answer.js'
-import { IUserAnswersRepository } from '../../contracts/user_answers.repository.js'
-import { UserAnswerFactory } from '../../factories/user_answer.factory.js'
 import { inject } from '@adonisjs/core'
+import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
+import { CreateUserAnswerDto, UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
+import { UserAnswerFactory } from '#quiz/domain/factories/user_answer.factory'
 
 @inject()
 export class CreateUserAnswerService {

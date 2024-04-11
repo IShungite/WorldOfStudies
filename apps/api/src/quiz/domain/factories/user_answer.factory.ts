@@ -1,5 +1,3 @@
-import { InvalidQuestionTypeException } from '../models/quiz/invalid_question_type.exception.js'
-import { questionType } from '../models/quiz/question.js'
 import {
   CreateUserAnswerDto,
   CreateUserAnswerDtoQcm,
@@ -7,7 +5,9 @@ import {
   UserAnswer,
   UserAnswerQcm,
   UserAnswerTextHole,
-} from '../models/user_answer/user_answer.js'
+} from '#quiz/domain/models/user_answer/user_answer'
+import { questionType } from '#quiz/domain/models/quiz/question'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
 
 export class UserAnswerFactory {
   static create(createUserAnswer: CreateUserAnswerDtoQcm): UserAnswerQcm

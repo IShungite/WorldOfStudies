@@ -1,10 +1,10 @@
-import { Promotion } from '../../models/promotion.js'
-import { PromotionNotFoundException } from '../../models/promotion_not_found.exception.js'
-import { School } from '../../models/school.js'
-import { SchoolNotFoundException } from '../../models/school_not_found.exception.js'
-import { CreateSubjectDto, Subject } from '../../models/subject.js'
-import { ISchoolsRepository } from '../../contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { CreateSubjectDto, Subject } from '#school/domain/models/subject'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
+import { Promotion } from '#school/domain/models/promotion'
+import { School } from '#school/domain/models/school'
 
 @inject()
 export class CreateSubjectService {

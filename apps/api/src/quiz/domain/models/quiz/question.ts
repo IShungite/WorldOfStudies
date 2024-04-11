@@ -1,6 +1,10 @@
-import { UserAnswer, UserAnswerQcm, UserAnswerTextHole } from '../user_answer/user_answer.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { ChoiceNotFoundException } from './choice_not_found.exception.js'
+import { Id } from '#shared/id/domain/models/id'
+import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/choice_not_found.exception'
+import {
+  UserAnswer,
+  UserAnswerQcm,
+  UserAnswerTextHole,
+} from '#quiz/domain/models/user_answer/user_answer'
 
 export const questionType = {
   QCM: 'qcm',
@@ -34,7 +38,7 @@ export abstract class Question {
   readonly type: QuestionType
   readonly points: number
 
-  constructor({ id, type, points }: QuestionProps) {
+  protected constructor({ id, type, points }: QuestionProps) {
     this.id = id ?? Id.factory()
     this.type = type
     this.points = points

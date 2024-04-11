@@ -1,7 +1,7 @@
-import { Quiz } from '../../domain/models/quiz/quiz.js'
-import { QuestionApiMapper } from './question_api.mapper.js'
-import { PaginatedData } from '../../../shared/pagination/domain/models/paginated_data.js'
-import { PaginatedResponse } from '../../../shared/pagination/infrastructure/types/paginated_response.js'
+import { QuestionApiMapper } from '#quiz/infrastructure/mappers/question_api.mapper'
+import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
+import { PaginatedResponse } from '#shared/pagination/infrastructure/types/paginated_response'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
 
 export class QuizApiMapper {
   static toResponse(quiz: Quiz) {

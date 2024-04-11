@@ -1,10 +1,10 @@
-import { UpdateShopCategoryService } from '../../../domain/services/category/update_shop_category.service.js'
-import { domainIdValidator } from '../../../../shared/id/infrastructure/validators/domain_id.validator.js'
-import { updateShopCategoryValidator } from '../../validators/update_shop.validator.js'
-import { getUrl } from '#utils/get_url'
+import { getUrl } from '#shared/utils/get_url'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
+import { updateShopCategoryValidator } from '#shop/infrastructure/validators/update_shop.validator'
+import { UpdateShopCategoryService } from '#shop/domain/services/category/update_shop_category.service'
 
 @inject()
 export default class UpdateShopCategoryController {

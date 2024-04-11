@@ -1,15 +1,15 @@
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { IUserAnswersRepository } from '../../../src/quiz/domain/contracts/user_answers.repository.js'
-import { QuestionQcm, questionType } from '../../../src/quiz/domain/models/quiz/question.js'
-import { QuizFactory } from '../../../src/quiz/domain/factories/quiz.factory'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { IQuizzesRepository } from '../../../src/quiz/domain/contracts/quizzes.repository.js'
-import { IUsersRepository } from '../../../src/user/domain/contracts/repositories/users.repository.js'
-import { ICharactersRepository } from '../../../src/character/domain/contracts/repositories/characters.repository.js'
-import { Character } from '../../../src/character/domain/models/character.js'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
+import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
+import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
+import { Character } from '#character/domain/models/character'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository

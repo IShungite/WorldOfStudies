@@ -1,4 +1,4 @@
-import { IQuizzesRepository } from '../../../src/quiz/domain/contracts/quizzes.repository.js'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'

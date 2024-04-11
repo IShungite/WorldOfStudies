@@ -1,5 +1,5 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { Promotion } from './promotion.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Promotion } from '#school/domain/models/promotion'
 
 export type CreateSchoolDto = {
   name: string

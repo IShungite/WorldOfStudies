@@ -1,4 +1,4 @@
-import { domainIdValidator } from '../../../../shared/id/infrastructure/validators/domain_id.validator.js'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import vine from '@vinejs/vine'
 
 export const createPromotionValidator = vine.object({

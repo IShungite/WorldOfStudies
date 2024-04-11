@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import QuizEntity from './quiz.js'
-import type { QuestionType } from '../../domain/models/quiz/question.js'
+import QuizEntity from '#quiz/infrastructure/entities/quiz'
+import type { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export default class Question extends BaseModel {
   @column({ isPrimary: true })

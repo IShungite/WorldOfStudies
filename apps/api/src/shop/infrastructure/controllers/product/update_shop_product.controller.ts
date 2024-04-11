@@ -1,10 +1,10 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { getUrl } from '#utils/get_url'
-import { domainIdValidator } from '../../../../shared/id/infrastructure/validators/domain_id.validator.js'
-import { updateShopProductValidator } from '../../validators/update_shop.validator.js'
-import { UpdateShopProductService } from '../../../domain/services/product/update_shop_product.service.js'
+import { getUrl } from '#shared/utils/get_url'
+import { UpdateShopProductService } from '#shop/domain/services/product/update_shop_product.service'
+import { updateShopProductValidator } from '#shop/infrastructure/validators/update_shop.validator'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 
 @inject()
 export default class UpdateShopProductController {

@@ -1,4 +1,4 @@
-import { Shop } from '../../domain/models/shop.js'
+import { Shop } from '#shop/domain/models/shop'
 
 export class ShopApiMapper {
   static toResponse(shop: Shop) {

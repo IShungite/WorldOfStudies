@@ -1,8 +1,8 @@
-import { questionType } from '../../../src/quiz/domain/models/quiz/question.js'
+import { QuestionFactory } from '#quiz/domain/factories/question.factory'
+import { questionType } from '#quiz/domain/models/quiz/question'
+import { Id } from '#shared/id/domain/models/id'
 import { test } from '@japa/runner'
-import { Id } from '../../../src/shared/id/domain/models/id.js'
-import { UserAnswerFactory } from '../../../src/quiz/domain/factories/user_answer.factory'
-import { QuestionFactory } from '../../../src/quiz/domain/factories/question.factory'
+import { UserAnswerFactory } from '#quiz/domain/factories/user_answer.factory'
 
 test.group('QCM Question', () => {
   const questionQCM = QuestionFactory.create({

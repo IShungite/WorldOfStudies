@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import Promotion from './promotion.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
-import Shop from '../../../shop/infrastructure/entities/shop.js'
+import PromotionEntity from '#school/infrastructure/entities/promotion'
+import ShopEntity from '#shop/infrastructure/entities/shop'
 
 export default class School extends BaseModel {
   @column({ isPrimary: true })
@@ -11,11 +11,11 @@ export default class School extends BaseModel {
   @column()
   declare name: string
 
-  @hasMany(() => Promotion)
-  declare promotions: HasMany<typeof Promotion>
+  @hasMany(() => PromotionEntity)
+  declare promotions: HasMany<typeof PromotionEntity>
 
-  @hasMany(() => Shop)
-  declare shop: HasMany<typeof Shop>
+  @hasMany(() => ShopEntity)
+  declare shop: HasMany<typeof ShopEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

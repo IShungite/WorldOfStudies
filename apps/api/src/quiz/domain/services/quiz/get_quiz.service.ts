@@ -1,8 +1,8 @@
-import { Quiz } from '../../models/quiz/quiz.js'
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { IQuizzesRepository } from '../../contracts/quizzes.repository.js'
 import { inject } from '@adonisjs/core'
-import { QuizNotFoundException } from '../../models/quiz/quiz_not_found.exception.js'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { QuizNotFoundException } from '#quiz/domain/models/quiz/quiz_not_found.exception'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
 
 @inject()
 export class GetQuizService {

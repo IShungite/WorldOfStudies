@@ -2,11 +2,11 @@ import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { IShopsRepository } from '../../../src/shop/domain/contracts/repositories/shops.repository.js'
-import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
-import { School } from '../../../src/school/domain/models/school.js'
-import { Shop } from '../../../src/shop/domain/models/shop.js'
-import { ShopCategory } from '../../../src/shop/domain/models/shop_category.js'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { School } from '#school/domain/models/school'
+import { Shop } from '#shop/domain/models/shop'
+import { ShopCategory } from '#shop/domain/models/shop_category'
 
 test.group('Categories - destroy', (group) => {
   let shopsRepository: IShopsRepository

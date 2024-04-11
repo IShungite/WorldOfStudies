@@ -1,6 +1,6 @@
-import { User } from '../../domain/models/user.js'
-import UserEntity from '../entities/user.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { Id } from '#shared/id/domain/models/id'
+import { User } from '#user/domain/models/user'
+import UserEntity from '#user/infrastructure/entities/user'
 
 export class UserStorageMapper {
   static fromLucid(user: UserEntity): User {

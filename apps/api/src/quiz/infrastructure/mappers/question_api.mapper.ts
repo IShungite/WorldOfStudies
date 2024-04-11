@@ -1,4 +1,4 @@
-import { Question, QuestionQcm, QuestionTextHole } from '../../domain/models/quiz/question.js'
+import { QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
 
 export class QuestionApiMapper {
   static toResponse(question: Question) {

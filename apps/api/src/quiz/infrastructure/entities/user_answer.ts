@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import Question from './question.js'
-import Character from '../../../character/infrastructure/entities/character.js'
-import type { QuestionType } from '../../domain/models/quiz/question.js'
+import type { QuestionType } from '#quiz/domain/models/quiz/question'
+import Question from '#quiz/infrastructure/entities/question'
+import CharacterEntity from '#character/infrastructure/entities/character'
 
 export default class UserAnswer extends BaseModel {
   @column({ isPrimary: true })
@@ -21,8 +21,8 @@ export default class UserAnswer extends BaseModel {
   @column()
   declare characterId: number
 
-  @belongsTo(() => Character)
-  declare character: BelongsTo<typeof Character>
+  @belongsTo(() => CharacterEntity)
+  declare character: BelongsTo<typeof CharacterEntity>
 
   @column()
   declare extra: string

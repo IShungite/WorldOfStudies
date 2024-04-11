@@ -1,6 +1,6 @@
-import { createQuestionValidator } from './create_question.validator.js'
-import { updateQuestionValidator } from './update_question.validator.js'
 import vine from '@vinejs/vine'
+import { updateQuestionValidator } from '#quiz/infrastructure/validators/update_question.validator'
+import { createQuestionValidator } from '#quiz/infrastructure/validators/create_question.validator'
 
 const questionValidator = vine.union([
   vine.union.if((value) => 'id' in value, updateQuestionValidator),

@@ -1,6 +1,6 @@
-import { IShopsRepository } from '../../domain/contracts/repositories/shops.repository.js'
-import { Shop } from '../../domain/models/shop.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { Shop } from '#shop/domain/models/shop'
 
 export class InMemoryShopsRepository implements IShopsRepository {
   private shops: Record<string, Shop> = {}

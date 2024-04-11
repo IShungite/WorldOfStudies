@@ -1,11 +1,11 @@
-import { role } from '../../../src/user/domain/models/role.js'
-import { User } from '../../../src/user/domain/models/user.js'
-import { IUsersRepository } from '../../../src/user/domain/contracts/repositories/users.repository.js'
-import { LoginUserValidator } from '../../../src/user/infrastructure/validators/login_user.validator.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import createRepositories from '#tests/utils/create_repositories'
+import { LoginUserValidator } from '#user/infrastructure/validators/login_user.validator'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { role } from '#user/domain/models/role'
+import { User } from '#user/domain/models/user'
 
 test.group('Auth - login', (group) => {
   let usersRepository: IUsersRepository

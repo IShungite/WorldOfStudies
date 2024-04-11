@@ -1,12 +1,12 @@
+import { Id } from '#shared/id/domain/models/id'
 import {
   Question,
   QuestionQcm,
   QuestionTextHole,
   questionType,
-} from '../../domain/models/quiz/question.js'
-import QuestionEntity from '../entities/question.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { InvalidQuestionTypeException } from '../../domain/models/quiz/invalid_question_type.exception.js'
+} from '#quiz/domain/models/quiz/question'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import QuestionEntity from '#quiz/infrastructure/entities/question'
 
 export class QuestionStorageMapper {
   static fromLucid(question: QuestionEntity): Question {

@@ -1,7 +1,7 @@
-import { Quiz } from '../../domain/models/quiz/quiz.js'
-import QuizEntity from '../entities/quiz.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { QuestionStorageMapper } from './question_storage.mapper.js'
+import { Id } from '#shared/id/domain/models/id'
+import { QuestionStorageMapper } from '#quiz/infrastructure/mappers/question_storage.mapper'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import QuizEntity from '#quiz/infrastructure/entities/quiz'
 
 export class QuizStorageMapper {
   static fromLucid(quizEntity: QuizEntity): Quiz {

@@ -1,8 +1,8 @@
-import { Quiz } from '../../models/quiz/quiz.js'
-import { IQuizzesRepository } from '../../contracts/quizzes.repository.js'
 import { inject } from '@adonisjs/core'
-import { PaginatedData } from '../../../../shared/pagination/domain/models/paginated_data.js'
-import { PaginationRequest } from '../../../../shared/pagination/domain/models/pagination_request.js'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
+import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
 
 @inject()
 export class GetQuizzesService {

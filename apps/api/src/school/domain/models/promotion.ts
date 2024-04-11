@@ -1,5 +1,5 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { Subject } from './subject.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Subject } from '#school/domain/models/subject'
 
 export type CreatePromotionDto = {
   name: string

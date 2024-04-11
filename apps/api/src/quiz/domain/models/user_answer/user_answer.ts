@@ -1,5 +1,5 @@
-import { Id } from '../../../../shared/id/domain/models/id.js'
-import { QuestionType, questionType } from '../quiz/question.js'
+import { Id } from '#shared/id/domain/models/id'
+import { questionType, QuestionType } from '#quiz/domain/models/quiz/question'
 
 type UserAnswerProps = {
   id?: Id
@@ -33,7 +33,7 @@ export abstract class UserAnswer {
   readonly characterId: Id
   readonly type: QuestionType
 
-  constructor({ id, questionId, characterId, type }: UserAnswerProps) {
+  protected constructor({ id, questionId, characterId, type }: UserAnswerProps) {
     this.id = id ?? Id.factory()
     this.questionId = questionId
     this.characterId = characterId

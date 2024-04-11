@@ -1,9 +1,9 @@
-import { CreateUserAnswerService } from '../../domain/services/user_answer/create_user_answer.service.js'
-import { createUserAnswerValidator } from '../validators/create_user_answer.validator.js'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { UserAnswerApiMapper } from '../mappers/user_answer.mapper.js'
+import { CreateUserAnswerService } from '#quiz/domain/services/user_answer/create_user_answer.service'
+import { createUserAnswerValidator } from '#quiz/infrastructure/validators/create_user_answer.validator'
+import { UserAnswerApiMapper } from '#quiz/infrastructure/mappers/user_answer.mapper'
 
 @inject()
 export default class UserAnswersController {

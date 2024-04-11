@@ -1,9 +1,9 @@
-import { Character } from '../../domain/models/character.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ICharactersRepository } from '../../domain/contracts/repositories/characters.repository.js'
-import CharacterEntity from '../entities/character.js'
-import { CharacterMapper } from '../mappers/character.mapper.js'
 import testUtils from '@adonisjs/core/services/test_utils'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { CharacterMapper } from '#character/infrastructure/mappers/character.mapper'
+import { Id } from '#shared/id/domain/models/id'
+import { Character } from '#character/domain/models/character'
+import CharacterEntity from '#character/infrastructure/entities/character'
 
 export class LucidCharactersRepository implements ICharactersRepository {
   async save(character: Character): Promise<Character> {

@@ -1,6 +1,6 @@
-import { CreateSchoolDto, School } from '../../models/school.js'
-import { ISchoolsRepository } from '../../contracts/repositories/schools.repository.js'
 import { inject } from '@adonisjs/core'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { CreateSchoolDto, School } from '#school/domain/models/school'
 
 @inject()
 export class CreateSchoolService {

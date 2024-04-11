@@ -1,13 +1,13 @@
-import { ICharactersRepository } from '../../../src/character/domain/contracts/repositories/characters.repository.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
-import { Character } from '../../../src/character/domain/models/character.js'
-import { Id } from '../../../src/shared/id/domain/models/id.js'
-import { IUsersRepository } from '../../../src/user/domain/contracts/repositories/users.repository.js'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { UnauthorizedException } from '../../../src/shared/exceptions/unauthorized.exception'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
+import { Character } from '#character/domain/models/character'
+import { Id } from '#shared/id/domain/models/id'
 
 test.group('Characters - update', (group) => {
   let charactersRepository: ICharactersRepository

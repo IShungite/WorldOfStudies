@@ -1,9 +1,9 @@
-import { CharacterNotFoundException } from '../models/character_not_found.exception.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
-import { ICharactersRepository } from '../contracts/repositories/characters.repository.js'
 import { inject } from '@adonisjs/core'
-import { User } from '../../../user/domain/models/user.js'
-import { UnauthorizedException } from '../../../shared/exceptions/unauthorized.exception'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { Id } from '#shared/id/domain/models/id'
+import { CharacterNotFoundException } from '#character/domain/models/character_not_found.exception'
+import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
+import { User } from '#user/domain/models/user'
 
 @inject()
 export class DeleteCharacterService {

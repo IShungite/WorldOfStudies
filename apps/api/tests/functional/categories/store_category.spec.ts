@@ -2,11 +2,11 @@ import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { IShopsRepository } from '../../../src/shop/domain/contracts/repositories/shops.repository.js'
-import { ISchoolsRepository } from '../../../src/school/domain/contracts/repositories/schools.repository.js'
-import { School } from '../../../src/school/domain/models/school.js'
-import { getUrl } from '#utils/get_url'
-import { Shop } from '../../../src/shop/domain/models/shop.js'
+import { getUrl } from '#shared/utils/get_url'
+import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { School } from '#school/domain/models/school'
+import { Shop } from '#shop/domain/models/shop'
 
 test.group('Categories - store', (group) => {
   let shopsRepository: IShopsRepository

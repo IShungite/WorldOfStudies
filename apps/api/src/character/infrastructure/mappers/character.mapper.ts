@@ -1,6 +1,6 @@
-import { Character } from '../../domain/models/character.js'
-import CharacterEntity from '../entities/character.js'
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { Id } from '#shared/id/domain/models/id'
+import { Character } from '#character/domain/models/character'
+import CharacterEntity from '#character/infrastructure/entities/character'
 
 export class CharacterMapper {
   static toResponse(character: Character) {

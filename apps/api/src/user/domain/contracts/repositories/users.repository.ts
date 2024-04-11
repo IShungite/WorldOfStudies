@@ -1,6 +1,6 @@
-import { AccessToken } from '../../models/access_token.js'
-import { User } from '../../models/user.js'
-import { ClearableRepository } from '../../../../shared/clearable_repository.js'
+import { ClearableRepository } from '#shared/storage/clearable_repository'
+import { AccessToken } from '#user/domain/models/access_token'
+import { User } from '#user/domain/models/user'
 
 export abstract class IUsersRepository implements ClearableRepository {
   abstract save(user: User): Promise<User>

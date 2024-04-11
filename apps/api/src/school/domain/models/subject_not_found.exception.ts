@@ -1,4 +1,4 @@
-import { Id } from '../../../shared/id/domain/models/id.js'
+import { Id } from '#shared/id/domain/models/id'
 
 export class SubjectNotFoundException extends Error {
   constructor(id?: Id) {
