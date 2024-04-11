@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { getUrl } from '#shared/utils/get_url'
+import { getUrl } from '#shared/infra/api/utils/get_url'
 import { CreateSchoolService } from '#school/domain/services/school/create_school.service'
 import { GetSchoolService } from '#school/domain/services/school/get_school.service'
 import { DeleteSchoolService } from '#school/domain/services/school/delete_school.service'

@@ -1,4 +1,4 @@
-import { getUrl } from '#shared/utils/get_url'
+import { getUrl } from '#shared/infra/api/utils/get_url'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
