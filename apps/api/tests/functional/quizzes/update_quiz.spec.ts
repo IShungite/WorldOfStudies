@@ -2,7 +2,7 @@ import { questionType } from '../../../src/quiz/domain/models/quiz/question.js'
 import { Quiz } from '../../../src/quiz/domain/models/quiz/quiz.js'
 import { IQuizzesRepository } from '../../../src/quiz/domain/contracts/quizzes.repository.js'
 import { QuestionFactory } from '../../../src/quiz/domain/factories/question.factory'
-import { QuizMapper } from '../../../src/quiz/infrastructure/mappers/quiz.mapper.js'
+import { QuizApiMapper } from '../../../src/quiz/infrastructure/mappers/quiz_api.mapper.js'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
@@ -88,6 +88,6 @@ test.group('Quizzes - update', (group) => {
     })
 
     response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains(QuizMapper.toResponse(expectedQuiz))
+    response.assertBodyContains(QuizApiMapper.toResponse(expectedQuiz))
   })
 })

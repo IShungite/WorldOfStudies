@@ -3,7 +3,7 @@ import { DeleteQuizService } from '../../domain/services/quiz/delete_quiz.servic
 import { GetQuizService } from '../../domain/services/quiz/get_quiz.service.js'
 import { GetQuizzesService } from '../../domain/services/quiz/get_quizzes.service.js'
 import { UpdateQuizService } from '../../domain/services/quiz/update_quiz.service.js'
-import { QuizMapper } from '../mappers/quiz.mapper.js'
+import { QuizApiMapper } from '../mappers/quiz_api.mapper.js'
 import { createQuizValidator } from '../validators/create_quiz.validator.js'
 import { domainIdValidator } from '../../../shared/id/infrastructure/validators/domain_id.validator.js'
 import { updateQuizValidator } from '../validators/update_quiz.validator.js'
@@ -30,7 +30,7 @@ export default class QuizzesController {
     const pagination = await vine.validate({ schema: paginationValidator, data: request.qs() })
     const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
 
-    return response.ok(QuizMapper.toPaginatedResponse(data))
+    return response.ok(QuizApiMapper.toPaginatedResponse(data))
   }
 
   /**
@@ -62,7 +62,7 @@ export default class QuizzesController {
 
     const quiz = await this.updateQuizService.execute(id, payload)
 
-    return response.ok(QuizMapper.toResponse(quiz))
+    return response.ok(QuizApiMapper.toResponse(quiz))
   }
 
   /**

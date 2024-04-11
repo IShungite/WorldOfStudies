@@ -2,12 +2,12 @@ import { Quiz } from '../../../domain/models/quiz/quiz.js'
 import { Id } from '../../../../shared/id/domain/models/id.js'
 import { IQuizzesRepository } from '../../../domain/contracts/quizzes.repository.js'
 import testUtils from '@adonisjs/core/services/test_utils'
-import { QuizMapper } from '../../mappers/quiz.mapper.js'
 import QuizEntity from '../../entities/quiz.js'
 import { QuestionQcm, QuestionTextHole } from '../../../domain/models/quiz/question.js'
 import QuestionEntity from '../../entities/question.js'
 import { PaginatedData } from '../../../../shared/pagination/domain/models/paginated_data.js'
 import { PaginationRequest } from '../../../../shared/pagination/domain/models/pagination_request.js'
+import { QuizStorageMapper } from '../../mappers/quiz_storage.mapper.js'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {
@@ -62,7 +62,7 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
       .where('id', quizId.toString())
       .first()
 
-    return quiz ? QuizMapper.fromLucid(quiz) : null
+    return quiz ? QuizStorageMapper.fromLucid(quiz) : null
   }
 
   async getAll(pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
@@ -74,7 +74,7 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     const { data, meta } = quizzes.toJSON()
 
     return new PaginatedData({
-      results: (data as QuizEntity[]).map(QuizMapper.fromLucid),
+      results: (data as QuizEntity[]).map(QuizStorageMapper.fromLucid),
       totalResults: meta.total,
       perPage: meta.perPage,
       currentPage: meta.currentPage,
