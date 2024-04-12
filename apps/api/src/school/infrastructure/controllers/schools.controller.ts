@@ -53,11 +53,14 @@ export default class SchoolsController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, auth }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
     const payload = await vine.validate({ schema: updateSchoolValidator, data: request.all() })
 
-    const school = await this.updateSchoolService.execute(id, payload)
+    const userEntity = await auth.authenticate()
+    const user = UserStorageMapper.fromLucid(userEntity)
+
+    const school = await this.updateSchoolService.execute(id, user, payload)
     return SchoolMapper.toResponse(school)
   }
 
