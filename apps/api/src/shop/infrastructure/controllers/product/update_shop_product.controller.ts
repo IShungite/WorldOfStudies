@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { UpdateShopProductService } from '#shop/domain/services/product/update_shop_product.service'
 import { updateShopProductValidator } from '#shop/infrastructure/validators/update_shop.validator'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
@@ -35,6 +35,6 @@ export default class UpdateShopProductController {
 
     await this.updateShopProductService.execute(schoolId, categoryId, productId, payload)
 
-    return response.location(getUrl(`/api/schools/${schoolId}/shop`)).noContent()
+    return response.location(getFullUrl(`/api/schools/${schoolId}/shop`)).noContent()
   }
 }

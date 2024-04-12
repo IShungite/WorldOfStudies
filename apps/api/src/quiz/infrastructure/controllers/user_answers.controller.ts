@@ -3,7 +3,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { CreateUserAnswerService } from '#quiz/domain/services/user_answer/create_user_answer.service'
 import { createUserAnswerValidator } from '#quiz/infrastructure/validators/create_user_answer.validator'
-import { UserAnswerApiMapper } from '#quiz/infrastructure/mappers/user_answer.mapper'
+import { UserAnswerApiMapper } from '#quiz/infrastructure/mappers/user_answer_api.mapper'
 
 @inject()
 export default class UserAnswersController {

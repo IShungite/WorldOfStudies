@@ -6,7 +6,7 @@ import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import assertPaginatedResponse from '#tests/utils/assert_paginated_response'
 import { Id } from '#shared/id/domain/models/id'
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -32,7 +32,7 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 1' }, { name: 'Quiz 2' }],
+      results: [{ result: { name: 'Quiz 1' } }, { result: { name: 'Quiz 2' } }],
       totalResults: 2,
       resultsLength: 2,
     })
@@ -55,7 +55,7 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 1' }],
+      results: [{ result: { name: 'Quiz 1' } }],
       totalResults: 2,
       resultsLength: 1,
       lastPage: 2,
@@ -78,7 +78,7 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 2' }],
+      results: [{ result: { name: 'Quiz 2' } }],
       totalResults: 2,
       resultsLength: 1,
       currentPage: page,
@@ -101,9 +101,9 @@ test.group('Quizzes - index', (group) => {
 
     response.assertBodyContains({
       _links: {
-        first: getUrl(`/api/quizzes?page=1&perPage=${perPage}`),
-        next: getUrl(`/api/quizzes?page=2&perPage=${perPage}`),
-        last: getUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+        first: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        next: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+        last: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
       },
     })
   })
@@ -122,9 +122,9 @@ test.group('Quizzes - index', (group) => {
 
     response.assertBodyContains({
       _links: {
-        first: getUrl(`/api/quizzes?page=1&perPage=${perPage}`),
-        prev: getUrl(`/api/quizzes?page=1&perPage=${perPage}`),
-        last: getUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+        first: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        prev: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        last: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
       },
     })
   })

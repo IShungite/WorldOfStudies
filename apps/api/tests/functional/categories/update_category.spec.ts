@@ -2,7 +2,7 @@ import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { School } from '#school/domain/models/school'
@@ -65,6 +65,6 @@ test.group('Categories - update', (group) => {
     assert.equal(updatedShop?.categories.find((c) => c.id.equals(category.id))?.name, 'Category 2')
 
     response.assertStatus(StatusCodes.NO_CONTENT)
-    response.assertHeader('location', getUrl(`/api/schools/${school.id}/shop`))
+    response.assertHeader('location', getFullUrl(`/api/schools/${school.id}/shop`))
   })
 })

@@ -13,7 +13,6 @@ import { createQuizValidator } from '#quiz/infrastructure/validators/create_quiz
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { updateQuizValidator } from '#quiz/infrastructure/validators/update_quiz.validator'
 import { PaginationApiMapper } from '#shared/pagination/infrastructure/mappers/pagination_api.mapper'
-import getPaginationLinks from '#shared/pagination/infrastructure/utils/get_pagination_links'
 
 @inject()
 export default class QuizzesController {
@@ -32,10 +31,9 @@ export default class QuizzesController {
     const pagination = await vine.validate({ schema: paginationValidator, data: request.qs() })
     const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
 
-    return response.ok({
-      ...PaginationApiMapper.toResponse(data, QuizApiMapper.toResponse),
-      _links: getPaginationLinks(request.url(), data),
-    })
+    return response.ok(
+      PaginationApiMapper.toResponse(data, (quiz) => QuizApiMapper.toResponse(quiz), request.url())
+    )
   }
 
   /**
@@ -46,7 +44,7 @@ export default class QuizzesController {
 
     const quiz = await this.createQuizService.execute(payload)
 
-    return response.created(quiz)
+    return response.created(QuizApiMapper.toResponse(quiz))
   }
 
   /**

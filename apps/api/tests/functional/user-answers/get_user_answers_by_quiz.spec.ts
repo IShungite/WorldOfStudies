@@ -100,7 +100,6 @@ test.group('User-answers - store', (group) => {
     ])
 
     const response = await client.get(`/quizzes/${quiz.id.toString()}/user-answers`)
-
     response.assertStatus(StatusCodes.OK)
     const body = response.body()
     assert.lengthOf(body, 2)

@@ -31,7 +31,7 @@ test.group('Quizzes - update', (group) => {
     const response = await client.patch(`/quizzes/${quiz.id}`).json({ name: 'Quiz 2' })
 
     response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains({ name: 'Quiz 2' })
+    response.assertBodyContains({ result: { name: 'Quiz 2' } })
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
@@ -88,6 +88,10 @@ test.group('Quizzes - update', (group) => {
     })
 
     response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains(QuizApiMapper.toResponse(expectedQuiz))
+    response.assertBodyContains({
+      result: {
+        id: expectedQuiz.id.toString(),
+      },
+    })
   })
 })

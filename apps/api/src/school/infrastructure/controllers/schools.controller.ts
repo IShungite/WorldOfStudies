@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { CreateSchoolService } from '#school/domain/services/school/create_school.service'
 import { GetSchoolService } from '#school/domain/services/school/get_school.service'
 import { DeleteSchoolService } from '#school/domain/services/school/delete_school.service'
@@ -173,7 +173,7 @@ export default class SchoolsController {
     await this.updatePromotionService.execute(idSchool, idPromotion, payload)
 
     return response
-      .append('location', getUrl(`/api/schools/${idSchool}/promotions/${idPromotion}`))
+      .append('location', getFullUrl(`/api/schools/${idSchool}/promotions/${idPromotion}`))
       .noContent()
   }
 }

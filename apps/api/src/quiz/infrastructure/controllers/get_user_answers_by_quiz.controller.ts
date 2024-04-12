@@ -3,7 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import vine from '@vinejs/vine'
 import { GetUserAnswersByQuizService } from '#quiz/domain/services/user_answer/get_user_answers_by_quiz.service'
-import { UserAnswerApiMapper } from '#quiz/infrastructure/mappers/user_answer.mapper'
+import { UserAnswerApiMapper } from '#quiz/infrastructure/mappers/user_answer_api.mapper'
 
 @inject()
 export default class GetUserAnswersByQuizController {
