@@ -9,6 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const GetUserAnswersByQuizController = () =>
+  import('#quiz/infrastructure/controllers/get_user_answers_by_quiz.controller')
 
 const AuthController = () => import('#user/infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#quiz/infrastructure/controllers/quizzes.controller')
@@ -63,6 +65,7 @@ router
       .use(middleware.auth({ guards: ['api'] }))
 
     router.resource('quizzes', QuizzesController).apiOnly()
+    router.get('quizzes/:quizId/user-answers', [GetUserAnswersByQuizController])
 
     router.resource('user-answers', UserAnswersController).only(['store'])
 

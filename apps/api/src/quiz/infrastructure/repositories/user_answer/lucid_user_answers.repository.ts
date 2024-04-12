@@ -6,6 +6,8 @@ import {
   UserAnswerTextHole,
 } from '#quiz/domain/models/user_answer/user_answer'
 import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
+import { Id } from '#shared/id/domain/models/id'
+import { UserAnswerStorageMapper } from '#quiz/infrastructure/mappers/user_answer_storage.mapper'
 
 export class LucidUserAnswersRepository implements IUserAnswersRepository {
   async save(userAnswer: UserAnswer): Promise<UserAnswer> {
@@ -35,6 +37,17 @@ export class LucidUserAnswersRepository implements IUserAnswersRepository {
     )
 
     return userAnswer
+  }
+
+  async getAllByQuizId(quizId: Id): Promise<UserAnswer[]> {
+    const userAnswers = await UserAnswerEntity.query()
+      .select('user_answers.*')
+      .innerJoin('questions', 'questions.id', 'user_answers.question_id')
+      .where('questions.quiz_id', quizId.toString())
+
+    return userAnswers.map((userAnswer) => {
+      return UserAnswerStorageMapper.fromLucid(userAnswer)
+    })
   }
 
   async empty(): Promise<void> {
