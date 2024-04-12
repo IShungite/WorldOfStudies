@@ -35,6 +35,6 @@ export default class UpdateShopProductController {
 
     await this.updateShopProductService.execute(schoolId, categoryId, productId, payload)
 
-    return response.location(getUrl(`schools/${schoolId}/shop`)).noContent()
+    return response.location(getUrl(`/api/schools/${schoolId}/shop`)).noContent()
   }
 }

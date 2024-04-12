@@ -94,7 +94,7 @@ test.group('Promotions - update', (group) => {
     response.assertStatus(StatusCodes.NO_CONTENT)
     response.assertHeader(
       'location',
-      getUrl(`schools/${school.id.toString()}/promotions/${promotion.id.toString()}`)
+      getUrl(`/api/schools/${school.id.toString()}/promotions/${promotion.id.toString()}`)
     )
     assert.isTrue(updatedPromotion?.name === 'Promotion 99')
   })

@@ -54,6 +54,6 @@ test.group('Categories - store', (group) => {
     })
 
     response.assertStatus(StatusCodes.NO_CONTENT)
-    response.assertHeader('location', getUrl(`schools/${school.id}/shop`))
+    response.assertHeader('location', getUrl(`/api/schools/${school.id}/shop`))
   })
 })

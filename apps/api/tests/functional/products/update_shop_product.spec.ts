@@ -71,6 +71,6 @@ test.group('Products - update', (group) => {
     assert.deepEqual(updatedProduct?.price, expectedPrice)
 
     response.assertStatus(StatusCodes.NO_CONTENT)
-    response.assertHeader('location', getUrl(`schools/${school.id}/shop`))
+    response.assertHeader('location', getUrl(`/api/schools/${school.id}/shop`))
   })
 })

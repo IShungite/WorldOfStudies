@@ -28,6 +28,6 @@ export default class UpdateShopCategoryController {
 
     await this.updateShopCategoryService.execute(schoolId, categoryId, payload)
 
-    return response.location(getUrl(`schools/${schoolId}/shop`)).noContent()
+    return response.location(getUrl(`/api/schools/${schoolId}/shop`)).noContent()
   }
 }

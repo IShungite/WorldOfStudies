@@ -173,7 +173,7 @@ export default class SchoolsController {
     await this.updatePromotionService.execute(idSchool, idPromotion, payload)
 
     return response
-      .append('location', getUrl(`schools/${idSchool}/promotions/${idPromotion}`))
+      .append('location', getUrl(`/api/schools/${idSchool}/promotions/${idPromotion}`))
       .noContent()
   }
 }

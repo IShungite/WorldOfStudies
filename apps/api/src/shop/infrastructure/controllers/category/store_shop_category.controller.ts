@@ -26,6 +26,6 @@ export default class StoreShopCategoryController {
 
     await this.createShopCategoryService.execute(schoolId, payload)
 
-    return response.location(getUrl(`schools/${schoolId}/shop`)).noContent()
+    return response.location(getUrl(`/api/schools/${schoolId}/shop`)).noContent()
   }
 }

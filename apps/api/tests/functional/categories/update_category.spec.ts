@@ -65,6 +65,6 @@ test.group('Categories - update', (group) => {
     assert.equal(updatedShop?.categories.find((c) => c.id.equals(category.id))?.name, 'Category 2')
 
     response.assertStatus(StatusCodes.NO_CONTENT)
-    response.assertHeader('location', getUrl(`schools/${school.id}/shop`))
+    response.assertHeader('location', getUrl(`/api/schools/${school.id}/shop`))
   })
 })
