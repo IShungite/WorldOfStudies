@@ -1,4 +1,4 @@
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
@@ -94,7 +94,7 @@ test.group('Promotions - update', (group) => {
     response.assertStatus(StatusCodes.NO_CONTENT)
     response.assertHeader(
       'location',
-      getUrl(`schools/${school.id.toString()}/promotions/${promotion.id.toString()}`)
+      getFullUrl(`/api/schools/${school.id.toString()}/promotions/${promotion.id.toString()}`)
     )
     assert.isTrue(updatedPromotion?.name === 'Promotion 99')
   })

@@ -21,7 +21,7 @@ test.group('Quizzes - store', (group) => {
       questions: [],
     })
     response.assertStatus(StatusCodes.CREATED)
-    response.assertBodyContains({ name: 'Quiz 1' })
+    response.assertBodyContains({ result: { name: 'Quiz 1' } })
   })
 
   test('It should return a 422 if the payload is invalid')

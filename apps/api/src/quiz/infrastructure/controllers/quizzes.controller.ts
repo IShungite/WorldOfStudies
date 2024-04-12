@@ -8,10 +8,11 @@ import { UpdateQuizService } from '#quiz/domain/services/quiz/update_quiz.servic
 import { DeleteQuizService } from '#quiz/domain/services/quiz/delete_quiz.service'
 import { paginationValidator } from '#shared/pagination/infrastructure/validators/pagination.validator'
 import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
-import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 import { createQuizValidator } from '#quiz/infrastructure/validators/create_quiz.validator'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { updateQuizValidator } from '#quiz/infrastructure/validators/update_quiz.validator'
+import { PaginationApiMapper } from '#shared/pagination/infrastructure/mappers/pagination_api.mapper'
+import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 
 @inject()
 export default class QuizzesController {
@@ -30,7 +31,9 @@ export default class QuizzesController {
     const pagination = await vine.validate({ schema: paginationValidator, data: request.qs() })
     const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
 
-    return response.ok(QuizApiMapper.toPaginatedResponse(data))
+    return response.ok(
+      PaginationApiMapper.toResponse(data, (quiz) => QuizApiMapper.toResponse(quiz), request.url())
+    )
   }
 
   /**
@@ -41,16 +44,18 @@ export default class QuizzesController {
 
     const quiz = await this.createQuizService.execute(payload)
 
-    return response.created(quiz)
+    return response.created(QuizApiMapper.toResponse(quiz))
   }
 
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
+  async show({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    return this.getQuizService.execute(id)
+    const quiz = await this.getQuizService.execute(id)
+
+    return response.ok(QuizApiMapper.toResponse(quiz))
   }
 
   /**

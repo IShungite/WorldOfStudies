@@ -1,4 +1,4 @@
-import { getUrl } from '#shared/infra/api/utils/get_url'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
@@ -28,6 +28,6 @@ export default class UpdateShopCategoryController {
 
     await this.updateShopCategoryService.execute(schoolId, categoryId, payload)
 
-    return response.location(getUrl(`schools/${schoolId}/shop`)).noContent()
+    return response.location(getFullUrl(`/api/schools/${schoolId}/shop`)).noContent()
   }
 }

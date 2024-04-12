@@ -15,7 +15,6 @@ const differentTypeOfUserAnswer = vine.group([
 
 export const createUserAnswerValidator = vine
   .object({
-    questionId: domainIdValidator,
     characterId: domainIdValidator,
     type: vine.enum(questionType),
   })

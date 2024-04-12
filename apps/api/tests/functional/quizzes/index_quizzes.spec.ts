@@ -6,6 +6,7 @@ import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import assertPaginatedResponse from '#tests/utils/assert_paginated_response'
 import { Id } from '#shared/id/domain/models/id'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -31,7 +32,7 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 1' }, { name: 'Quiz 2' }],
+      results: [{ result: { name: 'Quiz 1' } }, { result: { name: 'Quiz 2' } }],
       totalResults: 2,
       resultsLength: 2,
     })
@@ -54,7 +55,7 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 1' }],
+      results: [{ result: { name: 'Quiz 1' } }],
       totalResults: 2,
       resultsLength: 1,
       lastPage: 2,
@@ -77,12 +78,54 @@ test.group('Quizzes - index', (group) => {
     const body = await response.body()
 
     assertPaginatedResponse(assert, body, {
-      results: [{ name: 'Quiz 2' }],
+      results: [{ result: { name: 'Quiz 2' } }],
       totalResults: 2,
       resultsLength: 1,
       currentPage: page,
       lastPage: 2,
       perPage,
+    })
+  })
+
+  test('It should return the good links if we are on the first page', async ({ client }) => {
+    await Promise.all([
+      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
+      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+    ])
+    const perPage = 1
+    const page = 1
+
+    const response = await client.get(`/quizzes?perPage=${perPage}&page=${page}`)
+
+    response.assertStatus(StatusCodes.OK)
+
+    response.assertBodyContains({
+      _links: {
+        first: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        next: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+        last: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+      },
+    })
+  })
+
+  test('It should return the good links if we are on the last page', async ({ client }) => {
+    await Promise.all([
+      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
+      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+    ])
+    const perPage = 1
+    const page = 2
+
+    const response = await client.get(`/quizzes?perPage=${perPage}&page=${page}`)
+
+    response.assertStatus(StatusCodes.OK)
+
+    response.assertBodyContains({
+      _links: {
+        first: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        prev: getFullUrl(`/api/quizzes?page=1&perPage=${perPage}`),
+        last: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
+      },
     })
   })
 })
