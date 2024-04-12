@@ -27,3 +27,7 @@ yarn-error.log
 .DS_Store
 
 reports
+
+.stryker-tmp
+
+coverage/tmp

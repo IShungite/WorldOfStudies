@@ -9,6 +9,7 @@
     "build": "node ace build",
     "dev": "node ace serve --watch",
     "test": "node ace test",
+    "test:coverage": "c8 node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
@@ -19,14 +20,12 @@
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-
     "#character/*": "./src/character/*.js",
     "#infrastructure/*": "./src/infrastructure/*.js",
     "#quiz/*": "./src/quiz/*.js",
     "#school/*": "./src/school/*.js",
     "#shop/*": "./src/shop/*.js",
     "#user/*": "./src/user/*.js",
-
     "#shared/*": "./src/shared/*.js",
     "#utils/*": "./src/utils/*.js"
   },
@@ -43,6 +42,7 @@
     "@swc/core": "^1.4.11",
     "@types/luxon": "^3.4.2",
     "@types/node": "^20.11.30",
+    "c8": "^9.1.0",
     "eslint": "^8.57.0",
     "pino-pretty": "^11.0.0",
     "prettier": "^3.2.5",

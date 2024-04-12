@@ -4,19 +4,19 @@
     "rootDir": "./",
     "outDir": "./build",
     "paths": {
-      "#database/*": ["./database/*.js"],
-      "#tests/*": ["./tests/*.js"],
-      "#config/*": ["./config/*.js"],
+      "#database/*": ["./database/*"],
+      "#tests/*": ["./tests/*"],
+      "#config/*": ["./config/*"],
 
-      "#character/*": ["./src/character/*.js"],
-      "#infrastructure/*": ["./src/infrastructure/*.js"],
-      "#quiz/*": ["./src/quiz/*.js"],
-      "#school/*": ["./src/school/*.js"],
-      "#shop/*": ["./src/shop/*.js"],
-      "#user/*": ["./src/user/*.js"],
+      "#character/*": ["./src/character/*"],
+      "#infrastructure/*": ["./src/infrastructure/*"],
+      "#quiz/*": ["./src/quiz/*"],
+      "#school/*": ["./src/school/*"],
+      "#shop/*": ["./src/shop/*"],
+      "#user/*": ["./src/user/*"],
 
-      "#shared/*": ["./src/shared/*.js"],
-      "#utils/*": ["./src/utils/*.js"]
+      "#shared/*": ["./src/shared/*"],
+      "#utils/*": ["./src/utils/*"]
     },
   },
 }
