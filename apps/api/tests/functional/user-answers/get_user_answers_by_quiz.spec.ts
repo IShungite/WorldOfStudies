@@ -11,6 +11,7 @@ import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
 import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
 import { Character } from '#character/domain/models/character'
 import { UserAnswerQcm } from '#quiz/domain/models/user_answer/user_answer'
+import { getFullUrl } from '#shared/infra/api/utils/get_url'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -74,16 +75,19 @@ test.group('User-answers - store', (group) => {
       characterId: character.id,
       choiceId: question.choices[0].id,
       questionId: question.id,
+      quizId: quiz.id,
     })
     const userAnswer2 = new UserAnswerQcm({
       characterId: character2.id,
       choiceId: question.choices[1].id,
       questionId: question.id,
+      quizId: quiz.id,
     })
     const userAnswer3 = new UserAnswerQcm({
       characterId: character2.id,
       choiceId: question2.choices[0].id,
       questionId: question2.id,
+      quizId: quiz2.id,
     })
 
     await Promise.all([
@@ -105,10 +109,20 @@ test.group('User-answers - store', (group) => {
     assert.lengthOf(body, 2)
     response.assertBodyContains([
       {
-        questionId: question.id.toString(),
+        result: {
+          id: userAnswer.id.toString(),
+        },
+        _links: {
+          quiz: getFullUrl(`/api/quizzes/${quiz.id.toString()}`),
+        },
       },
       {
-        questionId: question.id.toString(),
+        result: {
+          id: userAnswer2.id.toString(),
+        },
+        _links: {
+          quiz: getFullUrl(`/api/quizzes/${quiz.id.toString()}`),
+        },
       },
     ])
   })

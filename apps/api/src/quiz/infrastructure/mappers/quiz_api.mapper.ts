@@ -16,7 +16,7 @@ export class QuizApiMapper {
 
   private static getLinks(quiz: Quiz) {
     const links: Record<string, string> = {
-      user_answers: getFullUrl(`/api/quizzes/${quiz.id.toString()}/user-answers`),
+      userAnswers: getFullUrl(`/api/quizzes/${quiz.id.toString()}/user-answers`),
     }
     return links
   }

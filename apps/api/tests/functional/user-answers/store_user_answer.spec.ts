@@ -77,9 +77,11 @@ test.group('User-answers - store', (group) => {
 
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({
-      type: questionType.QCM,
-      questionId: payload.questionId,
-      characterId: payload.characterId,
+      result: {
+        type: questionType.QCM,
+        questionId: payload.questionId,
+        characterId: payload.characterId,
+      },
     })
   })
 })

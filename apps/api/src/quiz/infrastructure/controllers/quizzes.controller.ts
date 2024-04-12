@@ -8,11 +8,11 @@ import { UpdateQuizService } from '#quiz/domain/services/quiz/update_quiz.servic
 import { DeleteQuizService } from '#quiz/domain/services/quiz/delete_quiz.service'
 import { paginationValidator } from '#shared/pagination/infrastructure/validators/pagination.validator'
 import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
-import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 import { createQuizValidator } from '#quiz/infrastructure/validators/create_quiz.validator'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { updateQuizValidator } from '#quiz/infrastructure/validators/update_quiz.validator'
 import { PaginationApiMapper } from '#shared/pagination/infrastructure/mappers/pagination_api.mapper'
+import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
 
 @inject()
 export default class QuizzesController {
@@ -50,10 +50,12 @@ export default class QuizzesController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
+  async show({ params, response }: HttpContext) {
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    return this.getQuizService.execute(id)
+    const quiz = await this.getQuizService.execute(id)
+
+    return response.ok(QuizApiMapper.toResponse(quiz))
   }
 
   /**
