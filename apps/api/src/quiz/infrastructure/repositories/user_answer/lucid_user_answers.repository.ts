@@ -46,7 +46,7 @@ export class LucidUserAnswersRepository implements IUserAnswersRepository {
       .where('questions.quiz_id', quizId.toString())
 
     return userAnswers.map((userAnswer) => {
-      return UserAnswerStorageMapper.fromLucid(userAnswer)
+      return UserAnswerStorageMapper.fromLucid(userAnswer, quizId)
     })
   }
 

@@ -37,7 +37,7 @@ test.group('User-answers - store', (group) => {
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
-    const response = await client.post('/user-answers').json({})
+    const response = await client.post('quizzes/1/questions/1/user-answers').json({})
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
@@ -71,7 +71,9 @@ test.group('User-answers - store', (group) => {
       characterId: character.id.toString(),
     }
 
-    const response = await client.post('/user-answers').json(payload)
+    const response = await client
+      .post(`quizzes/${quiz.id.toString()}/questions/${question.id.toString()}/user-answers`)
+      .json(payload)
 
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({

@@ -9,13 +9,13 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+
+const StoreUserAnswerController = () =>
+  import('#quiz/infrastructure/controllers/store_user_answer.controller')
 const GetUserAnswersByQuizController = () =>
   import('#quiz/infrastructure/controllers/get_user_answers_by_quiz.controller')
-
 const AuthController = () => import('#user/infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#quiz/infrastructure/controllers/quizzes.controller')
-const UserAnswersController = () =>
-  import('#quiz/infrastructure/controllers/user_answers.controller')
 const SchoolsController = () => import('#school/infrastructure/controllers/schools.controller')
 const StoreShopCategoryController = () =>
   import('#shop/infrastructure/controllers/category/store_shop_category.controller')
@@ -65,9 +65,9 @@ router
       .use(middleware.auth({ guards: ['api'] }))
 
     router.resource('quizzes', QuizzesController).apiOnly()
-    router.get('quizzes/:quizId/user-answers', [GetUserAnswersByQuizController])
 
-    router.resource('user-answers', UserAnswersController).only(['store'])
+    router.get('quizzes/:quizId/user-answers', [GetUserAnswersByQuizController])
+    router.post('quizzes/:quizId/questions/:questionId/user-answers', [StoreUserAnswerController])
 
     router
       .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
