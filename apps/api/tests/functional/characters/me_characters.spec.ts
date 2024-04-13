@@ -23,23 +23,26 @@ test.group('Characters - characters by user', (group) => {
   })
 
   test('It should return 401 when user is not authenticated', async ({ client }) => {
-    const user = await usersRepository.save(new UserBuilderTest().build())
-
-    const response = await client.get(`/users/${user.id.toString()}/characters`)
+    const response = await client.get(`/me/characters`)
 
     response.assertStatus(StatusCodes.UNAUTHORIZED)
     response.assertTextIncludes('Unauthorized access')
   })
 
-  test('It should return an empty array if the user has no characters', async ({ client }) => {
+  test('It should return an empty array if the authenticated user has no characters', async ({
+    client,
+  }) => {
     const user = await usersRepository.save(new UserBuilderTest().build())
 
-    const response = await client.get(`/users/${user.id.toString()}/characters`).loginWith(user)
+    const response = await client.get(`/me/characters`).loginWith(user)
     response.assertStatus(StatusCodes.OK)
     response.assertBody({ results: [] })
   })
 
-  test('It should return the list of characters by user id', async ({ client, assert }) => {
+  test('It should return the characters list of the authenticated user', async ({
+    client,
+    assert,
+  }) => {
     const [user, user2] = await Promise.all([
       new UserBuilderTest().build(),
       new UserBuilderTest().build(),
@@ -53,7 +56,7 @@ test.group('Characters - characters by user', (group) => {
       charactersRepository.save(new Character({ name: 'Bou', userId: user2.id })),
     ])
 
-    const response = await client.get(`/users/${user.id.toString()}/characters`).loginWith(user)
+    const response = await client.get(`/me/characters`).loginWith(user)
 
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(response.body().results, 2)

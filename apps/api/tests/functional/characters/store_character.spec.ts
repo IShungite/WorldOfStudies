@@ -32,7 +32,7 @@ test.group('Characters - store', (group) => {
       .loginWith(user)
 
     response.assertStatus(StatusCodes.CREATED)
-    response.assertBodyContains({ name: 'Shun', userId: user.id.toString() })
+    response.assertBodyContains({ result: { name: 'Shun', userId: user.id.toString() } })
   })
 
   test('It should return a 401 if the user is not authenticated', async ({ client }) => {
