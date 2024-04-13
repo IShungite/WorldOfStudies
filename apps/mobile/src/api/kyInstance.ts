@@ -1,6 +1,7 @@
 import ky from 'ky'
 
 import HttpException from '@/exceptions/http.exception'
+import { tokenAtom, tokenStore } from '@/providers/token.atom'
 
 const kyInstance = ky.create({
   prefixUrl: `${process.env.EXPO_PUBLIC_API_URL}`,
@@ -8,6 +9,12 @@ const kyInstance = ky.create({
     'Content-Type': 'application/json',
   },
   hooks: {
+    beforeRequest: [
+      (request) => {
+        const token = tokenStore.get(tokenAtom)
+        request.headers.append('Authorization', `Bearer ${token}`)
+      },
+    ],
     afterResponse: [
       async (_request, _option, response) => {
         if (!response.ok) {

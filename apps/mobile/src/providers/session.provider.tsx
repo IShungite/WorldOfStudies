@@ -1,7 +1,9 @@
 import { useRouter, useSegments } from 'expo-router'
+import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 
 import { useStorageState } from '@/hooks/useStorageState'
+import { tokenAtom, tokenStore } from '@/providers/token.atom'
 
 const AuthContext = React.createContext<{
   signIn: (token: string) => void
@@ -34,6 +36,8 @@ export function SessionProvider({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     if (isLoading) return
+
+    tokenStore.set(tokenAtom, session ?? '')
 
     if (!session && rootSegment !== '(auth)') {
       router.replace('/(auth)/login')
