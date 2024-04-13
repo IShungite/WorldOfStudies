@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint .",
+    "lint": "nx lint",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -45,5 +45,8 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.3"
   },
-  "private": true
+  "private": true,
+  "nx": {
+    "includedScripts": []
+  }
 }
