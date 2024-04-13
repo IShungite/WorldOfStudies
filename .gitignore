@@ -12,3 +12,6 @@ node_modules/
 
 # JetBrains IDEs configs
 .idea/
+
+# NX
+.nx/cache
