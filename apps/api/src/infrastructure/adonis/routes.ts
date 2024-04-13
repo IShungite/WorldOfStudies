@@ -35,6 +35,8 @@ const PromotionsController = () =>
   import('#school/infrastructure/controllers/promotions.controller')
 const SubjectsController = () => import('#school/infrastructure/controllers/subjects.controller')
 const ShopsController = () => import('#shop/infrastructure/controllers/shops.controller')
+const MeCharactersController = () =>
+  import('#character/infrastructure/controllers/me_characters.controller')
 
 const onlyNumbersRegex: RegExp = /^\d+$/
 
@@ -143,6 +145,8 @@ router
     router.resource('subjects', SubjectsController).only(['store'])
 
     router.resource('shops', ShopsController).only(['store'])
+
+    router.get('me/characters', [MeCharactersController])
 
     // api routes end
   })
