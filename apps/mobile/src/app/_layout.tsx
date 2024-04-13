@@ -5,6 +5,7 @@ import { Slot } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { Suspense, useEffect } from 'react'
 import { ActivityIndicator, useColorScheme } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import '@/i18n/i18n'
@@ -20,7 +21,7 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   })
 

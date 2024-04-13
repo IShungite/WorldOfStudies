@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "cross-env EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
+    "dev": "pnpm run start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -26,6 +27,7 @@
     "expo-status-bar": "~1.11.1",
     "formik": "^2.4.5",
     "i18next": "^23.10.1",
+    "jotai": "^2.8.0",
     "ky": "^1.2.3",
     "react": "18.2.0",
     "react-i18next": "^14.1.0",

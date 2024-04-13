@@ -1,8 +1,11 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Tabs } from 'expo-router'
+import { Redirect, Tabs } from 'expo-router'
+import { useAtom } from 'jotai'
 import React from 'react'
-import { Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
+import Header from '@/components/header'
+import { selectedCharacterAtom } from '@/providers/selected-character'
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
@@ -10,13 +13,19 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['nam
 }
 
 export default function TabLayout() {
+  const [selectedCharacter] = useAtom(selectedCharacterAtom)
+
+  if (!selectedCharacter) {
+    return <Redirect href="/login" />
+  }
+
   return (
     <Tabs
       screenOptions={{
         headerShown: true,
         header: ({ options }) => (
-          <SafeAreaView style={{ backgroundColor: '#7AAD84' }}>
-            <Text>{options.title}</Text>
+          <SafeAreaView>
+            <Header character={selectedCharacter} />
           </SafeAreaView>
         ),
       }}

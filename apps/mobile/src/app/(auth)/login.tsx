@@ -1,7 +1,7 @@
 import { Button, Input } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import { router } from 'expo-router'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, StyleSheet, Text, View } from 'react-native'
@@ -9,22 +9,24 @@ import { useMutation } from 'react-query'
 import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
+import HttpException from '@/exceptions/http.exception'
+import { useSession } from '@/providers/session.provider'
 
-export default function RegisterScreen() {
+export default function Login() {
   const { t } = useTranslation()
+  const { signIn } = useSession()
+  const router = useRouter()
 
   const { mutate, isLoading } = useMutation(
-    async (newUser: { firstName: string; lastName: string; email: string; password: string }) => {
-      return kyInstance.post('auth/register', { json: newUser }).json()
+    async (loginData: { email: string; password: string }) => {
+      return (await kyInstance.post('auth/login', { json: loginData }).json()) as { token: string }
     },
     {
-      onSuccess: () => {
-        Alert.alert('Success', 'Registration successful, please log in.')
-
-        router.replace('/login')
+      onSuccess: async (data) => {
+        signIn(data.token)
       },
-      onError: (error: any) => {
-        Alert.alert('Registration failed', error.message)
+      onError: (error: HttpException) => {
+        Alert.alert('Login failed', error.message)
       },
     }
   )
@@ -33,8 +35,6 @@ export default function RegisterScreen() {
     defaultValues: {
       email: '',
       password: '',
-      firstName: '',
-      lastName: '',
     },
     onSubmit: async (data) => {
       mutate(data.value)
@@ -44,41 +44,7 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('register')}</Text>
-      <form.Field
-        name="firstName"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('first_name')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
-      <form.Field
-        name="lastName"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('last_name')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
+      <Text style={styles.title}>{t('login')}</Text>
       <form.Field
         name="email"
         validators={{
@@ -117,11 +83,11 @@ export default function RegisterScreen() {
         )}
       />
 
-      <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
+      <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
       <Button
-        title={t('already_have_account')}
+        title={t('no_account_yet')}
         type="clear"
-        onPress={() => router.replace('/login')}
+        onPress={() => router.replace('/register')}
         disabled={isLoading}
       />
     </View>
