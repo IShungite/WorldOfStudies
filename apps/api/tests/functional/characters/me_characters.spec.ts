@@ -36,7 +36,7 @@ test.group('Characters - characters by user', (group) => {
 
     const response = await client.get(`/me/characters`).loginWith(user)
     response.assertStatus(StatusCodes.OK)
-    response.assertBody([])
+    response.assertBody({ results: [] })
   })
 
   test('It should return the characters list of the authenticated user', async ({
@@ -59,6 +59,6 @@ test.group('Characters - characters by user', (group) => {
     const response = await client.get(`/me/characters`).loginWith(user)
 
     response.assertStatus(StatusCodes.OK)
-    assert.lengthOf(response.body(), 2)
+    assert.lengthOf(response.body().results, 2)
   })
 })

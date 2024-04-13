@@ -94,6 +94,6 @@ test.group('Characters - update', (group) => {
       .loginWith(user)
 
     response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains({ name: 'Character 2' })
+    response.assertBodyContains({ result: { name: 'Character 2' } })
   })
 })
