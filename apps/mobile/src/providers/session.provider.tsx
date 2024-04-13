@@ -1,5 +1,4 @@
 import { useRouter, useSegments } from 'expo-router'
-import { useAtom } from 'jotai'
 import React, { useEffect } from 'react'
 
 import { useStorageState } from '@/hooks/useStorageState'
