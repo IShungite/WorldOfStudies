@@ -8,8 +8,9 @@ import { DeleteCharacterService } from '#character/domain/services/delete_charac
 import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
 import { createCharacterValidator } from '#character/infrastructure/validators/create_character.validator'
 import { Id } from '#shared/id/domain/models/id'
-import { CharacterMapper } from '#character/infrastructure/mappers/character.mapper'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
+import { updateCharacterValidator } from '#character/infrastructure/validators/update_character.validator'
+import { CharacterApiMapper } from '#character/infrastructure/mappers/character_api.mapper'
 
 @inject()
 export default class CharactersController {
@@ -30,7 +31,7 @@ export default class CharactersController {
       userId: new Id(user.id.toString()),
     })
 
-    return response.created(CharacterMapper.toResponse(character))
+    return response.created(CharacterApiMapper.toResponse(character))
   }
 
   async charactersByUserId({ request, response, auth }: HttpContext) {
@@ -40,7 +41,7 @@ export default class CharactersController {
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
 
     const characters = await this.getCharactersByUserId.execute(id, user)
-    return response.ok(CharacterMapper.toResponseList(characters))
+    return response.ok(CharacterApiMapper.toResponseList(characters))
   }
 
   async update({ request, response, auth }: HttpContext) {
@@ -48,11 +49,11 @@ export default class CharactersController {
     const user = UserStorageMapper.fromLucid(userEntity)
 
     const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
-    const payload = await vine.validate({ schema: createCharacterValidator, data: request.all() })
+    const payload = await vine.validate({ schema: updateCharacterValidator, data: request.all() })
 
     const character = await this.updateCharacterService.execute(id, payload, user)
 
-    return response.ok(CharacterMapper.toResponse(character))
+    return response.ok(CharacterApiMapper.toResponse(character))
   }
 
   async destroy({ request, response, auth }: HttpContext) {

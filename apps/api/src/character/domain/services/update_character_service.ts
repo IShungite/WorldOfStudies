@@ -32,9 +32,8 @@ export class UpdateCharacterService {
     const character = await this.validate(characterId, user)
 
     const newCharacter = new Character({
-      id: character.id,
+      ...character,
       name: updateCharacterDto.name ?? character.name,
-      userId: character.userId,
     })
 
     return this.charactersRepository.save(newCharacter)

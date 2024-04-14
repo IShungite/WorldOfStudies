@@ -4,11 +4,13 @@ type CharacterProps = {
   id?: Id
   name: string
   userId: Id
+  promotionId: Id
 }
 
 export type CreateCharacterDto = {
   name: string
   userId: Id
+  promotionId: Id
 }
 
 export type UpdateCharacterDto = {
@@ -19,9 +21,12 @@ export class Character {
   readonly id: Id
   readonly name: string
   readonly userId: Id
-  constructor({ id, name, userId }: CharacterProps) {
+  readonly promotionId: Id
+
+  constructor({ id, name, userId, promotionId }: CharacterProps) {
     this.id = id ?? Id.factory()
     this.name = name
     this.userId = userId
+    this.promotionId = promotionId
   }
 }

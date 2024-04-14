@@ -12,21 +12,30 @@ import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repo
 import { Character } from '#character/domain/models/character'
 import { UserAnswerQcm } from '#quiz/domain/models/user_answer/user_answer'
 import { getFullUrl } from '#shared/infra/api/utils/get_url'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
   let quizzesRepository: IQuizzesRepository
   let usersRepository: IUsersRepository
   let charactersRepository: ICharactersRepository
+  let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    ;[userAnswersRepository, quizzesRepository, usersRepository, charactersRepository] =
-      await createRepositories([
-        IUserAnswersRepository,
-        IQuizzesRepository,
-        IUsersRepository,
-        ICharactersRepository,
-      ])
+    ;[
+      userAnswersRepository,
+      quizzesRepository,
+      usersRepository,
+      charactersRepository,
+      schoolsRepository,
+    ] = await createRepositories([
+      IUserAnswersRepository,
+      IQuizzesRepository,
+      IUsersRepository,
+      ICharactersRepository,
+      ISchoolsRepository,
+    ])
   })
 
   group.each.setup(async () => {
@@ -35,14 +44,24 @@ test.group('User-answers - store', (group) => {
       quizzesRepository,
       usersRepository,
       charactersRepository,
+      schoolsRepository,
     ])
   })
 
   test('It should return the user answers of a quiz', async ({ client, assert }) => {
     const user = new UserBuilderTest().build()
-    const character = new Character({ name: 'test', userId: user.id })
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const character = new Character({
+      name: 'test',
+      userId: user.id,
+      promotionId: school.promotions[0].id,
+    })
     const user2 = new UserBuilderTest().build()
-    const character2 = new Character({ name: 'test2', userId: user2.id })
+    const character2 = new Character({
+      name: 'test2',
+      userId: user2.id,
+      promotionId: school.promotions[0].id,
+    })
     const quiz = QuizFactory.create({
       name: 'Quiz 1',
       questions: [
@@ -95,6 +114,7 @@ test.group('User-answers - store', (group) => {
       usersRepository.save(user2),
       quizzesRepository.save(quiz),
       quizzesRepository.save(quiz2),
+      schoolsRepository.save(school),
     ])
     await Promise.all([charactersRepository.save(character), charactersRepository.save(character2)])
     await Promise.all([
