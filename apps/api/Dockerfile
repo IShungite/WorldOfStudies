@@ -16,9 +16,13 @@ COPY .npmrc .
 
 # Variable sent from docker-compose
 ARG APP_PATH=./my-folder
+ARG PACKAGES_PATH=./my-folder
 
 # Copy app
 COPY ${APP_PATH} ./${APP_PATH}
+
+# Copy packages
+COPY ${PACKAGES_PATH} ./${PACKAGES_PATH}
 
 # Install all the dependencies
 RUN pnpm install

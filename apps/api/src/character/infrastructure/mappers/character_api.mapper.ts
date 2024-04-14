@@ -1,7 +1,8 @@
 import { Character } from '#character/domain/models/character'
+import { CharacterListResponse, CharacterResponse } from '@world-of-studies/api-types'
 
 export class CharacterApiMapper {
-  static toResponse(character: Character) {
+  static toResponse(character: Character): CharacterResponse {
     return {
       result: {
         id: character.id.toString(),
@@ -11,7 +12,7 @@ export class CharacterApiMapper {
     }
   }
 
-  static toResponseList(characters: Character[]) {
+  static toResponseList(characters: Character[]): CharacterListResponse {
     return {
       results: characters.map((character) => {
         return this.toResponse(character)

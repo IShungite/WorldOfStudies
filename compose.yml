@@ -4,12 +4,14 @@ services:
     build:
       args:
         APP_PATH: ${API_PATH}
+        PACKAGES_PATH: ${PACKAGES_PATH}
       context: .
       dockerfile: ${API_PATH}/Dockerfile
     ports:
       - ${API_PORT}:${API_PORT}
     volumes:
       - ./${API_PATH}:/app/${API_PATH}
+      - ./${PACKAGES_PATH}:/app/${PACKAGES_PATH}
 
   db:
     container_name: world-of-studies-db
