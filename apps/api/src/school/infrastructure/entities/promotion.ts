@@ -3,6 +3,7 @@ import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import SchoolEntity from '#school/infrastructure/entities/school'
 import SubjectEntity from '#school/infrastructure/entities/subject'
+import CharacterEntity from '#character/infrastructure/entities/character'
 
 export default class Promotion extends BaseModel {
   @column({ isPrimary: true })
@@ -25,6 +26,9 @@ export default class Promotion extends BaseModel {
 
   @hasMany(() => SubjectEntity)
   declare subjects: HasMany<typeof SubjectEntity>
+
+  @hasMany(() => CharacterEntity)
+  declare characters: HasMany<typeof CharacterEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

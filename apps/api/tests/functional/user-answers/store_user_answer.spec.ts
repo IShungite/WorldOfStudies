@@ -10,21 +10,30 @@ import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
 import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
 import { Character } from '#character/domain/models/character'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
   let quizzesRepository: IQuizzesRepository
   let usersRepository: IUsersRepository
   let charactersRepository: ICharactersRepository
+  let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    ;[userAnswersRepository, quizzesRepository, usersRepository, charactersRepository] =
-      await createRepositories([
-        IUserAnswersRepository,
-        IQuizzesRepository,
-        IUsersRepository,
-        ICharactersRepository,
-      ])
+    ;[
+      userAnswersRepository,
+      quizzesRepository,
+      usersRepository,
+      charactersRepository,
+      schoolsRepository,
+    ] = await createRepositories([
+      IUserAnswersRepository,
+      IQuizzesRepository,
+      IUsersRepository,
+      ICharactersRepository,
+      ISchoolsRepository,
+    ])
   })
 
   group.each.setup(async () => {
@@ -33,6 +42,7 @@ test.group('User-answers - store', (group) => {
       quizzesRepository,
       usersRepository,
       charactersRepository,
+      schoolsRepository,
     ])
   })
 
@@ -44,7 +54,12 @@ test.group('User-answers - store', (group) => {
 
   test('It should create a user-answer of type QCM', async ({ client }) => {
     const user = new UserBuilderTest().build()
-    const character = new Character({ name: 'test', userId: user.id })
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const character = new Character({
+      name: 'test',
+      userId: user.id,
+      promotionId: school.promotions[0].id,
+    })
     const quiz = QuizFactory.create({
       name: 'Quiz 1',
       questions: [
@@ -59,7 +74,11 @@ test.group('User-answers - store', (group) => {
       ],
     })
 
-    await Promise.all([usersRepository.save(user), quizzesRepository.save(quiz)])
+    await Promise.all([
+      usersRepository.save(user),
+      quizzesRepository.save(quiz),
+      schoolsRepository.save(school),
+    ])
     await charactersRepository.save(character)
 
     const question = quiz.questions[0] as QuestionQcm

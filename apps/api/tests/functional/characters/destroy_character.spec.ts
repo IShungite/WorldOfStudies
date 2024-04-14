@@ -7,20 +7,24 @@ import { ICharactersRepository } from '#character/domain/contracts/repositories/
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
 import { Character } from '#character/domain/models/character'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 
 test.group('Characters - delete', (group) => {
   let charactersRepository: ICharactersRepository
   let usersRepository: IUsersRepository
+  let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    ;[charactersRepository, usersRepository] = await createRepositories([
+    ;[charactersRepository, usersRepository, schoolsRepository] = await createRepositories([
       ICharactersRepository,
       IUsersRepository,
+      ISchoolsRepository,
     ])
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([charactersRepository, usersRepository])
+    await emptyRepositories([charactersRepository, usersRepository, schoolsRepository])
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {
@@ -38,9 +42,16 @@ test.group('Characters - delete', (group) => {
   })
 
   test('It should delete the character', async ({ client, assert }) => {
-    const user = await usersRepository.save(new UserBuilderTest().build())
-
-    const character = new Character({ name: 'Character 1', userId: user.id })
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const [user] = await Promise.all([
+      usersRepository.save(new UserBuilderTest().build()),
+      schoolsRepository.save(school),
+    ])
+    const character = new Character({
+      name: 'Character 1',
+      userId: user.id,
+      promotionId: school.promotions[0].id,
+    })
     await charactersRepository.save(character)
 
     const response = await client.delete(`/characters/${character.id.toString()}`).loginWith(user)
@@ -51,12 +62,19 @@ test.group('Characters - delete', (group) => {
   })
 
   test('It should return a 401 if the user does not own the character', async ({ client }) => {
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+
     const [user, user2] = await Promise.all([
       usersRepository.save(new UserBuilderTest().build()),
       usersRepository.save(new UserBuilderTest().build()),
+      schoolsRepository.save(school),
     ])
 
-    const character = new Character({ name: 'Character 1', userId: user.id })
+    const character = new Character({
+      name: 'Character 1',
+      userId: user.id,
+      promotionId: school.promotions[0].id,
+    })
     await charactersRepository.save(character)
 
     const response = await client.delete(`/characters/${character.id.toString()}`).loginWith(user2)

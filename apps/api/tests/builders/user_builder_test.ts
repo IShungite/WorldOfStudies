@@ -3,7 +3,7 @@ import { Id } from '#shared/id/domain/models/id'
 import { role, Role } from '#user/domain/models/role'
 
 export class UserBuilderTest {
-  private _id = Math.floor(Math.random() * 100000).toString()
+  private _id = Id.factory()
   private _firstName = 'bou'
   private _lastName = 'bin'
   private _email = `${Math.random().toString(36).substring(2)}@example.com`
@@ -12,7 +12,7 @@ export class UserBuilderTest {
 
   build(): User {
     return new User({
-      id: new Id(this._id),
+      id: this._id,
       firstName: this._firstName,
       lastName: this._lastName,
       email: this._email,
@@ -22,7 +22,7 @@ export class UserBuilderTest {
   }
 
   withId(id: string): this {
-    this._id = id
+    this._id = new Id(id)
     return this
   }
 

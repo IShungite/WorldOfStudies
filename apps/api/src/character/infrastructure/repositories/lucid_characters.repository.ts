@@ -1,6 +1,6 @@
 import testUtils from '@adonisjs/core/services/test_utils'
 import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
-import { CharacterMapper } from '#character/infrastructure/mappers/character.mapper'
+import { CharacterStorageMapper } from '#character/infrastructure/mappers/character_storage.mapper'
 import { Id } from '#shared/id/domain/models/id'
 import { Character } from '#character/domain/models/character'
 import CharacterEntity from '#character/infrastructure/entities/character'
@@ -12,21 +12,22 @@ export class LucidCharactersRepository implements ICharactersRepository {
       {
         name: character.name,
         userId: Number.parseInt(character.userId.toString(), 10),
+        promotionId: Number.parseInt(character.promotionId.toString(), 10),
       }
     )
 
-    return CharacterMapper.fromLucid(newCharacter)
+    return CharacterStorageMapper.fromLucid(newCharacter)
   }
 
   async getAllByUserId(userId: Id): Promise<Character[]> {
     const characters = await CharacterEntity.query().where('userId', userId.toString())
 
-    return characters.map((character) => CharacterMapper.fromLucid(character))
+    return characters.map((character) => CharacterStorageMapper.fromLucid(character))
   }
 
   async getById(characterId: Id): Promise<Character | null> {
     const character = await CharacterEntity.find(characterId.toString())
-    return character ? CharacterMapper.fromLucid(character) : null
+    return character ? CharacterStorageMapper.fromLucid(character) : null
   }
 
   async deleteById(characterId: Id): Promise<void> {
