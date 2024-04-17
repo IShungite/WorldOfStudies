@@ -10,7 +10,7 @@ import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.ex
 export class UpdateSchoolService {
   constructor(private readonly schoolsRepository: ISchoolsRepository) {}
 
-  async execute(schoolId: Id, user: User, updateSchoolDto: UpdateSchoolDto): Promise<School> {
+  private async validate(schoolId: Id, user: User) {
     const school = await this.schoolsRepository.getById(schoolId)
 
     if (!school) {
@@ -22,6 +22,12 @@ export class UpdateSchoolService {
     if (!admins.find((admin) => admin.id.equals(user.id))) {
       throw new UnauthorizedException()
     }
+
+    return school
+  }
+
+  async execute(schoolId: Id, user: User, updateSchoolDto: UpdateSchoolDto): Promise<School> {
+    const school = await this.validate(schoolId, user)
 
     const newSchool = new School({
       id: school.id,

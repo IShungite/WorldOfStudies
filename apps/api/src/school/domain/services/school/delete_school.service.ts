@@ -9,7 +9,7 @@ import { User } from '#user/domain/models/user'
 export class DeleteSchoolService {
   constructor(private readonly schoolsRepository: ISchoolsRepository) {}
 
-  async execute(schoolId: Id, user: User): Promise<void> {
+  private async validate(schoolId: Id, user: User) {
     const school = await this.schoolsRepository.getById(schoolId)
 
     if (!school) {
@@ -21,6 +21,10 @@ export class DeleteSchoolService {
     if (!admins.find((admin) => admin.id.equals(user.id))) {
       throw new UnauthorizedException()
     }
+  }
+
+  async execute(schoolId: Id, user: User): Promise<void> {
+    await this.validate(schoolId, user)
 
     await this.schoolsRepository.deleteById(schoolId)
   }

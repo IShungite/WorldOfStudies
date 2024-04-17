@@ -92,7 +92,7 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
       })
     )
 
-    schoolEntity.related('admins').sync(school.admins.map((admin) => admin.id.toString()))
+    await schoolEntity.related('admins').sync(school.admins.map((admin) => admin.id.toString()))
 
     return school
   }

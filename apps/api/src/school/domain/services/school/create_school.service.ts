@@ -26,11 +26,9 @@ export class CreateSchoolService {
       email: `${templateAdmin.id}@worldofstudies.com`,
     })
 
-    const dtoWithAdmin = { ...createSchoolDto, admins: [admin] }
-
     await this.usersRepository.save(admin)
 
-    const school = new School(dtoWithAdmin)
+    const school = new School({ ...createSchoolDto, admins: [admin] })
 
     return this.schoolsRepository.save(school)
   }
