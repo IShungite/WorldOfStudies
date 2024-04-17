@@ -16,7 +16,6 @@ COPY .npmrc .
 
 # Variable sent from docker-compose
 ARG APP_PATH=./my-folder
-ARG PACKAGES_PATH=./my-folder
 
 # Copy app
 COPY ${APP_PATH} ./${APP_PATH}

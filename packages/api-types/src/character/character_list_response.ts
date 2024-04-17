@@ -1,6 +1,5 @@
-import {CharacterResponse} from "./character_response";
+import { CharacterResponse } from "./character_response";
 
 export type CharacterListResponse = {
-    results: CharacterResponse[]
-}
-
+  results: CharacterResponse[];
+};
