@@ -43,9 +43,12 @@ test.group('Schools - update', (group) => {
 
     await schoolsRepository.save(school)
 
-    const response = await client.patch(`/schools/${school.id}`).json({
-      name: {},
-    })
+    const response = await client
+      .patch(`/schools/${school.id}`)
+      .json({
+        name: 1423,
+      })
+      .loginWith(user)
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
