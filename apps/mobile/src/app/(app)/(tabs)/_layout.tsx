@@ -7,11 +7,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '@/components/header'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
-}
-
 export default function TabLayout() {
   const [selectedCharacter] = useAtom(selectedCharacterAtom)
 
@@ -22,6 +17,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarActiveTintColor: 'blue',
         headerShown: true,
         header: ({ options }) => (
           <SafeAreaView>
@@ -30,18 +26,37 @@ export default function TabLayout() {
         ),
       }}
     >
+      {/* Shop Tab */}
+      <Tabs.Screen
+        name="shop"
+        options={{
+          title: 'Shop',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="shopping-cart" color={color} />,
+        }}
+      />
+      {/* Home Tab */}
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />
+      {/* Exercises Tab */}
+      <Tabs.Screen
+        name="exercises"
+        options={{
+          title: 'Exercises',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="pencil" color={color} />,
+        }}
+      />
+
+      {/* Statistics Tab */}
       <Tabs.Screen
         name="statistics"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          // hidden tab
+          href: null,
         }}
       />
     </Tabs>
