@@ -20,6 +20,7 @@ import { updateSubjectValidator } from '#school/infrastructure/validators/update
 import { SubjectMapper } from '#school/infrastructure/mappers/subject.mapper'
 import { ShopApiMapper } from '#shop/infrastructure/mappers/shop_api.mapper'
 import { updatePromotionValidator } from '#school/infrastructure/validators/update_promotion.validator'
+import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
 
 @inject()
 export default class SchoolsController {
@@ -52,21 +53,29 @@ export default class SchoolsController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {
-    const id = await vine.validate({ schema: domainIdValidator, data: params.id })
-    const payload = await vine.validate({ schema: updateSchoolValidator, data: request.all() })
+  async update({ params, request, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserStorageMapper.fromLucid(userEntity)
 
-    const school = await this.updateSchoolService.execute(id, payload)
+    const [id, payload] = await Promise.all([
+      vine.validate({ schema: domainIdValidator, data: params.id }),
+      vine.validate({ schema: updateSchoolValidator, data: request.all() }),
+    ])
+
+    const school = await this.updateSchoolService.execute(id, user, payload)
     return SchoolMapper.toResponse(school)
   }
 
   /**
    * Delete record
    */
-  async destroy({ params, response }: HttpContext) {
+  async destroy({ params, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserStorageMapper.fromLucid(userEntity)
+
     const id = await vine.validate({ schema: domainIdValidator, data: params.id })
 
-    await this.deleteSchoolService.execute(id)
+    await this.deleteSchoolService.execute(id, user)
 
     return response.noContent()
   }

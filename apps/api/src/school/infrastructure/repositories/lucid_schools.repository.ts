@@ -7,6 +7,9 @@ import { Promotion } from '#school/domain/models/promotion'
 import PromotionEntity from '#school/infrastructure/entities/promotion'
 import SchoolEntity from '#school/infrastructure/entities/school'
 import SubjectEntity from '#school/infrastructure/entities/subject'
+import { User } from '#user/domain/models/user'
+import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
+import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
 
 export class LucidSchoolsRepository implements ISchoolsRepository {
   private async deleteExistingNestedEntity(school: School) {
@@ -58,7 +61,7 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
   async save(school: School): Promise<School> {
     await this.deleteExistingNestedEntity(school)
 
-    await SchoolEntity.updateOrCreate(
+    const schoolEntity = await SchoolEntity.updateOrCreate(
       {
         id: Number.parseInt(school.id.toString(), 10),
       },
@@ -89,6 +92,8 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
       })
     )
 
+    await schoolEntity.related('admins').sync(school.admins.map((admin) => admin.id.toString()))
+
     return school
   }
 
@@ -96,9 +101,23 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
     const school = await SchoolEntity.query()
       .where('id', schoolId.toString())
       .preload('promotions', (query) => query.preload('subjects'))
+      .preload('admins')
       .first()
 
     return school ? SchoolMapper.fromLucid(school) : null
+  }
+
+  async getAdmins(schoolId: Id): Promise<User[]> {
+    const school = await SchoolEntity.query()
+      .where('id', schoolId.toString())
+      .preload('admins')
+      .first()
+
+    if (!school) {
+      throw new SchoolNotFoundException(schoolId)
+    }
+
+    return school.admins.map((user) => UserStorageMapper.fromLucid(user))
   }
 
   async getByPromotionId(promotionId: Id): Promise<School | null> {
