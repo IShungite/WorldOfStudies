@@ -1,7 +1,7 @@
 {
   "name": "@world-of-studies/mobile",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "src/index.ts",
   "scripts": {
     "start": "cross-env EXPO_USE_METRO_WORKSPACE_ROOT=1 expo start",
     "dev": "pnpm run start",
