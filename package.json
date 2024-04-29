@@ -11,7 +11,15 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@expo/cli": "~0.16.5",
+    "@nx/eslint": "18.2.4",
+    "@nx/eslint-plugin": "18.2.4",
+    "@nx/expo": "18.2.4",
+    "@nx/js": "18.2.4",
+    "@nx/next": "18.2.4",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
-  }
+    "lint-staged": "^15.2.2",
+    "nx": "18.2.4"
+  },
+  "dependencies": {}
 }

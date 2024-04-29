@@ -1,7 +1,7 @@
 FROM node:20-alpine AS base
 
 # Install pnpm
-RUN npm i -g pnpm
+RUN npm i -g pnpm nx
 
 FROM base
 
@@ -13,6 +13,9 @@ COPY package.json .
 COPY pnpm-lock.yaml .
 COPY pnpm-workspace.yaml .
 COPY .npmrc .
+
+# Copy configuration file for nx
+COPY nx.json .
 
 # Variable sent from docker-compose
 ARG APP_PATH=./my-folder
@@ -27,4 +30,4 @@ RUN pnpm install
 ENV CHOKIDAR_USEPOLLING=true
 
 # Start command
-CMD [ "pnpm", "--filter", "@world-of-studies/api", "dev" ]
+CMD [ "nx", "run", "api:dev" ]

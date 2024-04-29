@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/expo/plugin",
+      "options": {
+        "startTargetName": "start",
+        "serveTargetName": "serve",
+        "runIosTargetName": "run-ios",
+        "runAndroidTargetName": "run-android",
+        "exportTargetName": "export",
+        "prebuildTargetName": "prebuild",
+        "installTargetName": "install",
+        "buildTargetName": "build",
+        "submitTargetName": "submit"
+      }
+    },
+    {
+      "plugin": "@nx/next/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "startTargetName": "start",
+        "serveStaticTargetName": "serve-static"
+      }
+    }
+  ],
+  "generators": {
+    "@nx/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  }
+}

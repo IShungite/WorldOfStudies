@@ -1,0 +1,23 @@
+{
+  "sourceRoot": ".",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "dev"
+      }
+    },
+    "test": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "test"
+      }
+    },
+    "migration:run": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "migration:run"
+      }
+    }
+  }
+}
