@@ -1,0 +1,11 @@
+{
+  "name": "@world-of-studies/prettier-config",
+  "version": "1.0.0",
+  "description": "The prettier config",
+  "main": "index.js",
+  "scripts": {},
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
