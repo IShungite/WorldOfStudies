@@ -7,6 +7,8 @@ import { ICharactersRepository } from '#character/domain/contracts/repositories/
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
+import { Id } from '#shared/id/domain/models/id'
 
 test.group('Characters - store', (group) => {
   let charactersRepository: ICharactersRepository
@@ -57,5 +59,21 @@ test.group('Characters - store', (group) => {
     const response = await client.post('/characters').json({}).loginWith(user)
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
+  })
+
+  test('It should return a 400 if the promotion does not exist', async ({ client }) => {
+    const user = await usersRepository.save(new UserBuilderTest().build())
+    const promotionId = new Id('1')
+
+    const response = await client
+      .post('/characters')
+      .json({
+        name: 'Shun',
+        promotionId: promotionId.toString(),
+      })
+      .loginWith(user)
+
+    response.assertStatus(StatusCodes.BAD_REQUEST)
+    response.assertTextIncludes(new PromotionNotFoundException(promotionId).message)
   })
 })
