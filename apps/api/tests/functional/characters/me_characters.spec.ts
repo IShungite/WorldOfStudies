@@ -23,7 +23,7 @@ test.group('Characters - characters by user', (group) => {
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([charactersRepository, usersRepository])
+    await emptyRepositories([charactersRepository, usersRepository, schoolsRepository])
   })
 
   test('It should return 401 when user is not authenticated', async ({ client }) => {
