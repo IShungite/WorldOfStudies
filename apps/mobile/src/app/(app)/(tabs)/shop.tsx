@@ -1,18 +1,17 @@
 import { Button, Card } from '@rneui/themed'
+import { useAtom } from 'jotai'
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
+import { selectedProductAtom } from '@/providers/selected-product'
 import { Category, Product, ShopResponse } from '@/utils/types'
 
 const ProductItem = ({ product }: { product: Product }) => {
+  const [, setSelectedProduct] = useAtom(selectedProductAtom)
   return (
-    <TouchableOpacity
-      onPress={() => {
-        /* TODO: add details on click */
-      }}
-    >
+    <TouchableOpacity onPress={() => setSelectedProduct(product)}>
       <Card containerStyle={styles.productCard}>
         <Card.Title>{product.name}</Card.Title>
         <Card.Divider />
@@ -28,7 +27,6 @@ const ShopScreen = () => {
     isLoading,
     error,
   } = useQuery<Category[]>('shopCategories', async () => {
-    // using hardcoded school id for now, will be dynamic later
     const response = (await kyInstance.get('schools/7455/shop').json()) as ShopResponse
     return response.categories
   })
