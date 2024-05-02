@@ -2,22 +2,14 @@ import { router, Stack } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { Text, View } from 'react-native'
-import { useQuery } from 'react-query'
 
-import kyInstance from '@/api/kyInstance'
+import { useMyCharacters } from '@/hooks/useMyCharacters'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 export default function AppLayout() {
-  const { isLoading, data } = useQuery({
-    queryKey: 'user-characters',
-    queryFn: async () => {
-      const response = await kyInstance.get('me/characters')
-      const { results } = (await response.json()) as { results: { result: { name: string } }[] }
-      return results.map(({ result }) => result)
-    },
-  })
-
   const [, setSelectedCharacter] = useAtom(selectedCharacterAtom)
+
+  const { data, isLoading } = useMyCharacters()
 
   useEffect(() => {
     if (data !== undefined && data.length === 0) {
