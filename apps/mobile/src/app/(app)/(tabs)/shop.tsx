@@ -28,6 +28,7 @@ const ShopScreen = () => {
     isLoading,
     error,
   } = useQuery<Category[]>('shopCategories', async () => {
+    // using hardcoded school id for now, will be dynamic later
     const response = (await kyInstance.get('schools/7455/shop').json()) as ShopResponse
     return response.categories
   })
