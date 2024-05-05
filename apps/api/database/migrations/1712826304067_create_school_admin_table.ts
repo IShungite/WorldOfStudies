@@ -15,9 +15,6 @@ export default class extends BaseSchema {
         .onDelete('cascade')
       table.integer('user_id').unsigned().references('users.id').notNullable().onDelete('cascade')
       table.unique(['school_id', 'user_id'])
-
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
     })
   }
 
