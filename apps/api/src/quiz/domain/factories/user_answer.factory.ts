@@ -7,7 +7,7 @@ import {
   UserAnswerTextHole,
 } from '#quiz/domain/models/user_answer/user_answer'
 import { questionType } from '#quiz/domain/models/quiz/question'
-import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exceptions/invalid_question_type.exception'
 
 export class UserAnswerFactory {
   static create(createUserAnswer: CreateUserAnswerDtoQcm): UserAnswerQcm

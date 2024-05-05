@@ -6,18 +6,19 @@ import { UserAlreadyExistsException } from '#user/domain/models/user_already_exi
 import { UserNotFoundException } from '#user/domain/models/user_not_found.exception'
 import { InvalidCredentialsException } from '#user/domain/models/invalid_credentials.exception'
 import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
-import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exceptions/invalid_question_type.exception'
 import { EmptyIdException } from '#shared/id/domain/models/empty_id.exception'
-import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/choice_not_found.exception'
+import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/exceptions/choice_not_found.exception'
 import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
 import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
-import { QuizNotFoundException } from '#quiz/domain/models/quiz/quiz_not_found.exception'
+import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
 import { SubjectNotFoundException } from '#school/domain/models/subject_not_found.exception'
 import { CharacterNotFoundException } from '#character/domain/models/character_not_found.exception'
 import { InvalidPriceException } from '#shop/domain/models/invalid_price.exception'
 import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
 import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
 import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found_exception'
+import { QuizGameAlreadyStartedException } from '#quiz/domain/models/quiz/exceptions/quiz_game_already_started.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -75,7 +76,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof InvalidPriceException ||
       error instanceof ShopNotFoundException ||
       error instanceof ShopCategoryNotFoundException ||
-      error instanceof ShopProductNotFoundException
+      error instanceof ShopProductNotFoundException ||
+      error instanceof QuizGameAlreadyStartedException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(this.formatError(error.message))
       return
