@@ -4,14 +4,19 @@
   "description": "",
   "private": true,
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build": "vite build",
+    "build:watch": "vite build --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@world-of-studies/eslint-config": "workspace:^",
-    "@world-of-studies/prettier-config": "workspace:^"
+    "@world-of-studies/prettier-config": "workspace:^",
+    "vite": "^5.2.11",
+    "vite-plugin-dts": "^3.9.0"
   }
 }
