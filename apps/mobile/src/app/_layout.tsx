@@ -5,6 +5,7 @@ import { Slot } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { Suspense, useEffect } from 'react'
 import { ActivityIndicator, useColorScheme } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -53,7 +54,9 @@ function RootLayoutNav() {
       <Suspense fallback={<ActivityIndicator size="large" />}>
         <QueryClientProvider client={queryClient}>
           <SessionProvider>
-            <Slot />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Slot />
+            </GestureHandlerRootView>
           </SessionProvider>
         </QueryClientProvider>
       </Suspense>

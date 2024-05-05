@@ -1,15 +1,16 @@
 import { Feather } from '@expo/vector-icons'
 import { Avatar, Button } from '@rneui/themed'
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type Props = {
   character: {
     name: string
   }
+  onClick: () => void
 }
 
-export default function Header({ character }: Props) {
+export default function Header({ character, onClick }: Props) {
   return (
     <View
       style={{
@@ -21,7 +22,7 @@ export default function Header({ character }: Props) {
       }}
     >
       <TouchableOpacity
-        onPress={() => alert('hello')}
+        onPress={onClick}
         style={{
           display: 'flex',
           flexDirection: 'row',
