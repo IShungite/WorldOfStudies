@@ -1,7 +1,7 @@
 import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { Id } from '#shared/id/domain/models/id'
 
-export class QuizGame {
+export class QuizInstance {
   readonly id: Id
   readonly quiz: Quiz
   readonly characterId: Id

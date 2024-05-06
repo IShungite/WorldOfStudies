@@ -4,7 +4,7 @@ import vine from '@vinejs/vine'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { StartQuizService } from '#quiz/domain/services/quiz/start_quiz.service'
 import { startQuizValidator } from '#quiz/infrastructure/validators/start_quiz.validator'
-import { QuizGameApiMapper } from '#quiz/infrastructure/mappers/quiz_game_api.mapper'
+import { QuizInstanceApiMapper } from '#quiz/infrastructure/mappers/quiz_instance_api.mapper'
 
 @inject()
 export default class StartQuizController {
@@ -24,7 +24,7 @@ export default class StartQuizController {
       }),
     ])
 
-    const quizGame = await this.startQuizService.execute(quizId, characterId)
-    return response.ok(QuizGameApiMapper.toResponse(quizGame))
+    const quizInstance = await this.startQuizService.execute(quizId, characterId)
+    return response.ok(QuizInstanceApiMapper.toResponse(quizInstance))
   }
 }

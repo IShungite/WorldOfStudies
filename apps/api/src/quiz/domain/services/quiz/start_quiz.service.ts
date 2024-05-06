@@ -1,28 +1,28 @@
 import { inject } from '@adonisjs/core'
 import { Id } from '#shared/id/domain/models/id'
 import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
-import { QuizGame } from '#quiz/domain/models/quiz/quiz_game'
+import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
-import { IQuizzesGameRepository } from '#quiz/domain/contracts/quizzes_game.repository'
-import { QuizGameAlreadyStartedException } from '#quiz/domain/models/quiz/exceptions/quiz_game_already_started.exception'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
 
 @inject()
 export class StartQuizService {
   constructor(
     private readonly quizzesRepository: IQuizzesRepository,
-    private readonly quizzesGameRepository: IQuizzesGameRepository
+    private readonly quizzesInstanceRepository: IQuizzesInstanceRepository
   ) {}
 
-  async execute(quizId: Id, characterId: Id): Promise<QuizGame> {
+  async execute(quizId: Id, characterId: Id): Promise<QuizInstance> {
     const quiz = await this.validate(quizId, characterId)
 
-    const quizGame = new QuizGame({
+    const quizInstance = new QuizInstance({
       quiz,
       characterId,
     })
-    await this.quizzesGameRepository.save(quizGame)
+    await this.quizzesInstanceRepository.save(quizInstance)
 
-    return quizGame
+    return quizInstance
   }
 
   private async validate(quizId: Id, characterId: Id) {
@@ -32,13 +32,13 @@ export class StartQuizService {
       throw new QuizNotFoundException(quizId)
     }
 
-    const gameQuiz = await this.quizzesGameRepository.getByQuizIdAndCharacterId(
+    const gameQuiz = await this.quizzesInstanceRepository.getByQuizIdAndCharacterId(
       quiz.id,
       characterId
     )
 
     if (gameQuiz) {
-      throw new QuizGameAlreadyStartedException(quiz.id)
+      throw new QuizInstanceAlreadyExists(quiz.id)
     }
 
     return quiz

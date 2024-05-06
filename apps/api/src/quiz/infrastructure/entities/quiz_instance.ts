@@ -4,7 +4,7 @@ import QuizEntity from '#quiz/infrastructure/entities/quiz'
 import CharacterEntity from '#character/infrastructure/entities/character'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 
-export default class QuizGame extends BaseModel {
+export default class QuizInstance extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 

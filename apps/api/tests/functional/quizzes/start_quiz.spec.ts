@@ -4,19 +4,19 @@ import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { IQuizzesGameRepository } from '#quiz/domain/contracts/quizzes_game.repository'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
-import { QuizGame } from '#quiz/domain/models/quiz/quiz_game'
-import { QuizGameAlreadyStartedException } from '#quiz/domain/models/quiz/exceptions/quiz_game_already_started.exception'
+import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
+import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
-  let quizzesGameRepository: IQuizzesGameRepository
+  let quizzesInstanceRepository: IQuizzesInstanceRepository
   let usersRepository: IUsersRepository
   let schoolsRepository: ISchoolsRepository
   let charactersRepository: ICharactersRepository
@@ -24,13 +24,13 @@ test.group('Quizzes - show', (group) => {
   group.setup(async () => {
     ;[
       quizzesRepository,
-      quizzesGameRepository,
+      quizzesInstanceRepository,
       usersRepository,
       schoolsRepository,
       charactersRepository,
     ] = await createRepositories([
       IQuizzesRepository,
-      IQuizzesGameRepository,
+      IQuizzesInstanceRepository,
       IUsersRepository,
       ISchoolsRepository,
       ICharactersRepository,
@@ -40,7 +40,7 @@ test.group('Quizzes - show', (group) => {
   group.each.setup(async () => {
     await emptyRepositories([
       quizzesRepository,
-      quizzesGameRepository,
+      quizzesInstanceRepository,
       usersRepository,
       schoolsRepository,
       charactersRepository,
@@ -79,7 +79,7 @@ test.group('Quizzes - show', (group) => {
       .withPromotionId(school.promotions[0])
       .build()
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
-    const quizGame = new QuizGame({
+    const quizInstance = new QuizInstance({
       quiz,
       characterId: character.id,
     })
@@ -89,7 +89,10 @@ test.group('Quizzes - show', (group) => {
       usersRepository.save(user),
       schoolsRepository.save(school),
     ])
-    await Promise.all([charactersRepository.save(character), quizzesGameRepository.save(quizGame)])
+    await Promise.all([
+      charactersRepository.save(character),
+      quizzesInstanceRepository.save(quizInstance),
+    ])
 
     const response = await client
       .post(`/quizzes/${quiz.id.toString()}/start`)
@@ -99,7 +102,7 @@ test.group('Quizzes - show', (group) => {
       .loginWith(user)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
-    response.assertTextIncludes(new QuizGameAlreadyStartedException(quiz.id).message)
+    response.assertTextIncludes(new QuizInstanceAlreadyExists(quiz.id).message)
   })
 
   test('It should start a quiz', async ({ client, assert }) => {
@@ -130,7 +133,10 @@ test.group('Quizzes - show', (group) => {
       quizId: quiz.id.toString(),
       characterId: character.id.toString(),
     })
-    const quizGame = await quizzesGameRepository.getByQuizIdAndCharacterId(quiz.id, character.id)
-    assert.isNotNull(quizGame)
+    const quizInstance = await quizzesInstanceRepository.getByQuizIdAndCharacterId(
+      quiz.id,
+      character.id
+    )
+    assert.isNotNull(quizInstance)
   })
 })
