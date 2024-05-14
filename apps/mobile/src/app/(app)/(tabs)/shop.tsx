@@ -1,17 +1,18 @@
 import { Button, Card } from '@rneui/themed'
-import { useAtom } from 'jotai'
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
-import { selectedProductAtom } from '@/providers/selected-product'
 import { Category, Product, ShopResponse } from '@/utils/types'
 
 const ProductItem = ({ product }: { product: Product }) => {
-  const [, setSelectedProduct] = useAtom(selectedProductAtom)
   return (
-    <TouchableOpacity onPress={() => setSelectedProduct(product)}>
+    <TouchableOpacity
+      onPress={() => {
+        /* TODO: add details on click */
+      }}
+    >
       <Card containerStyle={styles.productCard}>
         <Card.Title>{product.name}</Card.Title>
         <Card.Divider />
