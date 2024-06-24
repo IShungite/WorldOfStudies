@@ -1,5 +1,5 @@
 import { Id } from '#shared/id/domain/models/id'
-import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/choice_not_found.exception'
+import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/exceptions/choice_not_found.exception'
 import {
   UserAnswer,
   UserAnswerQcm,

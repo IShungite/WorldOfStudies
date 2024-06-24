@@ -11,6 +11,8 @@ import { LucidQuizzesRepository } from '#quiz/infrastructure/repositories/quiz/l
 import { LucidUsersRepository } from '#user/infrastructure/repositories/lucid_users.repository'
 import { LucidSchoolsRepository } from '#school/infrastructure/repositories/lucid_schools.repository'
 import { LucidShopsRepository } from '#shop/infrastructure/repositories/lucid_shops.repository'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { LucidQuizzesInstanceRepository } from '#quiz/infrastructure/repositories/quiz/lucid_quizzes_instance.repository'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -34,6 +36,7 @@ export default class AppProvider {
     this.registerRepository(ISchoolsRepository, LucidSchoolsRepository)
     this.registerRepository(ICharactersRepository, LucidCharactersRepository)
     this.registerRepository(IShopsRepository, LucidShopsRepository)
+    this.registerRepository(IQuizzesInstanceRepository, LucidQuizzesInstanceRepository)
   }
 
   /**

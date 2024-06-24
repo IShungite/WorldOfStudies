@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node bin/server.js",
     "build": "node ace build",
-    "dev": "node ace serve --watch",
+    "dev": "node ace --inspect serve --watch",
     "test": "node ace test",
     "test:coverage": "c8 node ace test",
     "test:mutation": "stryker run",

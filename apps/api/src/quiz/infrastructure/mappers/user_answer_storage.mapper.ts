@@ -5,7 +5,7 @@ import {
   UserAnswerQcm,
   UserAnswerTextHole,
 } from '#quiz/domain/models/user_answer/user_answer'
-import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exceptions/invalid_question_type.exception'
 import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
 
 export class UserAnswerStorageMapper {

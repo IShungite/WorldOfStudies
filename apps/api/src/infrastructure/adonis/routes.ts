@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
 
+const StartQuizController = () => import('#quiz/infrastructure/controllers/start_quiz.controller')
 const StoreUserAnswerController = () =>
   import('#quiz/infrastructure/controllers/store_user_answer.controller')
 const GetUserAnswersByQuizController = () =>
@@ -70,6 +71,7 @@ router
 
     router.get('quizzes/:quizId/user-answers', [GetUserAnswersByQuizController])
     router.post('quizzes/:quizId/questions/:questionId/user-answers', [StoreUserAnswerController])
+    router.post('quizzes/:quizId/start', [StartQuizController])
 
     router
       .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [

@@ -5,7 +5,7 @@ import {
   QuestionTextHole,
   questionType,
 } from '#quiz/domain/models/quiz/question'
-import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/invalid_question_type.exception'
+import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exceptions/invalid_question_type.exception'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
 
 export class QuestionStorageMapper {
