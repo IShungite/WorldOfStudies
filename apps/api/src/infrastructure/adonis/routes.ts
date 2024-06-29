@@ -13,8 +13,8 @@ import { middleware } from '#infrastructure/adonis/kernel'
 const StartQuizController = () => import('#quiz/infrastructure/controllers/start_quiz.controller')
 const StoreUserAnswerController = () =>
   import('#quiz/infrastructure/controllers/store_user_answer.controller')
-const GetUserAnswersByQuizController = () =>
-  import('#quiz/infrastructure/controllers/get_user_answers_by_quiz.controller')
+const GetUserAnswersByQuizInstanceController = () =>
+  import('#quiz/infrastructure/controllers/get_user_answers_by_quiz_instance.controller')
 const AuthController = () => import('#user/infrastructure/controllers/auth.controller')
 const QuizzesController = () => import('#quiz/infrastructure/controllers/quizzes.controller')
 const SchoolsController = () => import('#school/infrastructure/controllers/schools.controller')
@@ -69,9 +69,14 @@ router
 
     router.resource('quizzes', QuizzesController).apiOnly()
 
-    router.get('quizzes/:quizId/user-answers', [GetUserAnswersByQuizController])
-    router.post('quizzes/:quizId/questions/:questionId/user-answers', [StoreUserAnswerController])
     router.post('quizzes/:quizId/start', [StartQuizController])
+
+    router.post('quiz-instances/:quizInstanceId/questions/:questionId/user-answers', [
+      StoreUserAnswerController,
+    ])
+    router.get('quiz-instances/:quizInstanceId/user-answers', [
+      GetUserAnswersByQuizInstanceController,
+    ])
 
     router
       .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
