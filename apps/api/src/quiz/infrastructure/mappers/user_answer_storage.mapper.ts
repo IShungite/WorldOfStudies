@@ -9,7 +9,7 @@ import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exception
 import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
 
 export class UserAnswerStorageMapper {
-  static fromLucid(userAnswerEntity: UserAnswerEntity, quizId: Id): UserAnswer {
+  static fromLucid(userAnswerEntity: UserAnswerEntity, quizInstanceId: Id): UserAnswer {
     const extra = JSON.parse(userAnswerEntity.extra)
     const id = new Id(userAnswerEntity.id.toString())
     const characterId = new Id(userAnswerEntity.characterId.toString())
@@ -21,7 +21,7 @@ export class UserAnswerStorageMapper {
         choiceId: new Id(extra.choiceId),
         characterId,
         questionId,
-        quizId,
+        quizInstanceId,
       })
     } else if (userAnswerEntity.type === questionType.TEXT_HOLE) {
       return new UserAnswerTextHole({
@@ -29,7 +29,7 @@ export class UserAnswerStorageMapper {
         values: extra.values,
         characterId,
         questionId,
-        quizId,
+        quizInstanceId,
       })
     }
 

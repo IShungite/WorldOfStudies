@@ -32,6 +32,7 @@ export class LucidUserAnswersRepository implements IUserAnswersRepository {
         type: userAnswer.type,
         characterId: Number.parseInt(userAnswer.characterId.toString(), 10),
         questionId: Number.parseInt(userAnswer.questionId.toString(), 10),
+        quizInstanceId: Number.parseInt(userAnswer.quizInstanceId.toString(), 10),
         extra: JSON.stringify(extra),
       }
     )
@@ -39,14 +40,14 @@ export class LucidUserAnswersRepository implements IUserAnswersRepository {
     return userAnswer
   }
 
-  async getAllByQuizId(quizId: Id): Promise<UserAnswer[]> {
+  async getAllByQuizInstanceId(quizInstanceId: Id): Promise<UserAnswer[]> {
     const userAnswers = await UserAnswerEntity.query()
       .select('user_answers.*')
       .innerJoin('questions', 'questions.id', 'user_answers.question_id')
-      .where('questions.quiz_id', quizId.toString())
+      .where('user_answers.quiz_instance_id', quizInstanceId.toString())
 
     return userAnswers.map((userAnswer) => {
-      return UserAnswerStorageMapper.fromLucid(userAnswer, quizId)
+      return UserAnswerStorageMapper.fromLucid(userAnswer, quizInstanceId)
     })
   }
 

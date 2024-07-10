@@ -4,6 +4,7 @@ import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import type { QuestionType } from '#quiz/domain/models/quiz/question'
 import Question from '#quiz/infrastructure/entities/question'
 import CharacterEntity from '#character/infrastructure/entities/character'
+import QuizInstance from '#quiz/infrastructure/entities/quiz_instance'
 
 export default class UserAnswer extends BaseModel {
   @column({ isPrimary: true })
@@ -11,6 +12,12 @@ export default class UserAnswer extends BaseModel {
 
   @column()
   declare type: QuestionType
+
+  @column()
+  declare quizInstanceId: number
+
+  @belongsTo(() => QuizInstance)
+  declare quizInstance: BelongsTo<typeof QuizInstance>
 
   @column()
   declare questionId: number

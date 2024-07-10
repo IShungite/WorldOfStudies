@@ -11,10 +11,10 @@ export default class StoreUserAnswerController {
   constructor(private readonly createUserAnswer: CreateUserAnswerService) {}
 
   async handle({ request, response }: HttpContext) {
-    const [quizId, questionId, payload] = await Promise.all([
+    const [quizInstanceId, questionId, payload] = await Promise.all([
       vine.validate({
         schema: domainIdValidator,
-        data: request.param('quizId'),
+        data: request.param('quizInstanceId'),
       }),
       vine.validate({
         schema: domainIdValidator,
@@ -28,7 +28,7 @@ export default class StoreUserAnswerController {
 
     const userAnswer = await this.createUserAnswer.execute({
       ...payload,
-      quizId: quizId,
+      quizInstanceId: quizInstanceId,
       questionId: questionId,
     })
     return response.created(UserAnswerApiMapper.toResponse(userAnswer))

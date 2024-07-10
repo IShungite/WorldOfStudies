@@ -7,7 +7,7 @@ import testUtils from '@adonisjs/core/services/test_utils'
 
 export class LucidQuizzesInstanceRepository implements IQuizzesInstanceRepository {
   async save(quizInstance: QuizInstance): Promise<QuizInstance> {
-    const quizInstanceId = Number.parseInt(quizInstance.quiz.id.toString(), 10)
+    const quizInstanceId = Number.parseInt(quizInstance.id.toString(), 10)
     await QuizInstanceEntity.updateOrCreate(
       {
         id: quizInstanceId,

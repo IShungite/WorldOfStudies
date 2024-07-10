@@ -12,6 +12,8 @@ import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repo
 import { Character } from '#character/domain/models/character'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -19,6 +21,7 @@ test.group('User-answers - store', (group) => {
   let usersRepository: IUsersRepository
   let charactersRepository: ICharactersRepository
   let schoolsRepository: ISchoolsRepository
+  let quizzesInstanceRepository: IQuizzesInstanceRepository
 
   group.setup(async () => {
     ;[
@@ -27,12 +30,14 @@ test.group('User-answers - store', (group) => {
       usersRepository,
       charactersRepository,
       schoolsRepository,
+      quizzesInstanceRepository,
     ] = await createRepositories([
       IUserAnswersRepository,
       IQuizzesRepository,
       IUsersRepository,
       ICharactersRepository,
       ISchoolsRepository,
+      IQuizzesInstanceRepository,
     ])
   })
 
@@ -47,7 +52,7 @@ test.group('User-answers - store', (group) => {
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
-    const response = await client.post('quizzes/1/questions/1/user-answers').json({})
+    const response = await client.post('quiz-instances/1/questions/1/user-answers').json({})
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
@@ -81,6 +86,13 @@ test.group('User-answers - store', (group) => {
     ])
     await charactersRepository.save(character)
 
+    const quizInstance = await quizzesInstanceRepository.save(
+      new QuizInstance({
+        quiz,
+        characterId: character.id,
+      })
+    )
+
     const question = quiz.questions[0] as QuestionQcm
 
     const payload = {
@@ -91,7 +103,9 @@ test.group('User-answers - store', (group) => {
     }
 
     const response = await client
-      .post(`quizzes/${quiz.id.toString()}/questions/${question.id.toString()}/user-answers`)
+      .post(
+        `quiz-instances/${quizInstance.id.toString()}/questions/${question.id.toString()}/user-answers`
+      )
       .json(payload)
 
     response.assertStatus(StatusCodes.CREATED)
