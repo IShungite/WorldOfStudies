@@ -12,3 +12,5 @@ node_modules/
 
 # JetBrains IDEs configs
 .idea/
+
+.pnpm-store

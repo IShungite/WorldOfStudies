@@ -1,9 +1,4 @@
-FROM node:20-alpine AS base
-
-# Install pnpm
-RUN npm i -g pnpm
-
-FROM base
+FROM worldofstudies-node-interpreter
 
 # Set up the work directory
 WORKDIR /app

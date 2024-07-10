@@ -13,6 +13,8 @@ services:
     volumes:
       - ./${API_PATH}:/app/${API_PATH}
       - ./${API_TYPES_PATH}/dist:/app/${API_TYPES_PATH}/dist
+    depends_on:
+      - node-interpreter
 
   db:
     container_name: world-of-studies-db
@@ -34,6 +36,13 @@ services:
     environment:
       - ADMINER_DEFAULT_SERVER=db
       - ADMINER_DESIGN=pepa-linha
+
+  node-interpreter:
+    build:
+      context: .
+      dockerfile: tools/node-interpreter/Dockerfile
+    volumes:
+      - ./:/app
 
 
 volumes:
