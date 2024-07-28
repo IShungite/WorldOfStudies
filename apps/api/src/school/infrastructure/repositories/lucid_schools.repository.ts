@@ -130,6 +130,21 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
     return school ? SchoolMapper.fromLucid(school) : null
   }
 
+  async getByCharacterIds(characterIds: Id[]): Promise<School[]> {
+    const schools = await SchoolEntity.query().preload('promotions', (query) =>
+      query
+        .preload('characters', (query2) =>
+          query2.whereIn(
+            'id',
+            characterIds.map((id) => id.toString())
+          )
+        )
+        .preload('subjects')
+    )
+
+    return schools.map((school) => SchoolMapper.fromLucid(school))
+  }
+
   async deleteById(schoolId: Id): Promise<void> {
     await SchoolEntity.query().where('id', schoolId.toString()).delete()
   }
