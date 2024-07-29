@@ -1,2 +1,2 @@
-export * from "./character";
-export * from "./quizzes";
+export type { CharacterResponse, CharacterListResponse } from "./character";
+export type { QuizzesResponse, Quiz, Question } from "./quizzes";
