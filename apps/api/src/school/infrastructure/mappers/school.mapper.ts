@@ -12,7 +12,7 @@ export class SchoolMapper {
     }
   }
 
-  static async fromLucid(schoolEntity: SchoolEntity): Promise<School> {
+  static fromLucid(schoolEntity: SchoolEntity): School {
     return new School({
       id: new Id(schoolEntity.id.toString()),
       name: schoolEntity.name,

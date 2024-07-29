@@ -1,5 +1,5 @@
 import { Character } from '#character/domain/models/character'
-import { CharacterListResponse, CharacterResponse } from '@world-of-studies/api-types'
+import type { CharacterListResponse, CharacterResponse } from '@world-of-studies/api-types'
 
 export class CharacterApiMapper {
   static toResponse(character: Character): CharacterResponse {
