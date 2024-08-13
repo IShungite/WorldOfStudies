@@ -1,6 +1,6 @@
 import { Price } from '#shop/domain/models/price'
 import { Id } from '#shared/id/domain/models/id'
-import { Item } from '../../../item/domain/models/item.js'
+import { Item } from '#item/domain/models/item'
 
 export type CreateShopProductDto = {
   itemId: Id
