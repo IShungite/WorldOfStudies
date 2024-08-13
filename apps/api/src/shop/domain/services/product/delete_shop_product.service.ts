@@ -3,9 +3,9 @@ import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repo
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { Id } from '#shared/id/domain/models/id'
 import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
-import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
-import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
-import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found_exception'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found.exception'
+import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found.exception'
+import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found.exception'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { Shop } from '#shop/domain/models/shop'
 

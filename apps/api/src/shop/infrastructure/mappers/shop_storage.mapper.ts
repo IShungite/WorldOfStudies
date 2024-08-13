@@ -4,6 +4,7 @@ import { Shop } from '#shop/domain/models/shop'
 import ShopEntity from '#shop/infrastructure/entities/shop'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { ShopProduct } from '#shop/domain/models/shop_product'
+import { Item } from '#item/domain/models/item'
 
 export class ShopStorageMapper {
   static fromLucid(shopEntity: ShopEntity): Shop {
@@ -19,7 +20,10 @@ export class ShopStorageMapper {
               (productEntity) =>
                 new ShopProduct({
                   id: new Id(productEntity.id.toString()),
-                  name: productEntity.name,
+                  item: new Item({
+                    id: new Id(productEntity.item.id.toString()),
+                    name: productEntity.item.name,
+                  }),
                   price: new Price(productEntity.price),
                 })
             ),

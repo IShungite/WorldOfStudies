@@ -24,6 +24,7 @@
     "#config/*": "./config/*.js",
     "#character/*": "./src/character/*.js",
     "#infrastructure/*": "./src/infrastructure/*.js",
+    "#item/*": "./src/item/*.js",
     "#quiz/*": "./src/quiz/*.js",
     "#school/*": "./src/school/*.js",
     "#shop/*": "./src/shop/*.js",

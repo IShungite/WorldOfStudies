@@ -3,7 +3,7 @@ import { Price } from '#shop/domain/models/price'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 
 export const createShopProductValidator = vine.object({
-  name: vine.string(),
+  itemId: domainIdValidator,
   price: vine.number().transform((value) => new Price(value)),
 })
 

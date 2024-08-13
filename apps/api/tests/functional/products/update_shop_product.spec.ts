@@ -10,16 +10,23 @@ import { School } from '#school/domain/models/school'
 import { ShopProduct } from '#shop/domain/models/shop_product'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { Shop } from '#shop/domain/models/shop'
+import { Item } from '#item/domain/models/item'
+import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
 
 test.group('Products - update', (group) => {
   let shopsRepository: IShopsRepository
   let schoolsRepository: ISchoolsRepository
-  const payload = { name: 'Product 55', price: 55 }
+  let itemsRepository: IItemRepository
+
+  const item = new Item({ name: 'Item 1' })
+  const price = new Price(55)
+  const payload = { itemId: item.id.toString(), price: price.toNumber() }
 
   group.setup(async () => {
-    ;[shopsRepository, schoolsRepository] = await createRepositories([
+    ;[shopsRepository, schoolsRepository, itemsRepository] = await createRepositories([
       IShopsRepository,
       ISchoolsRepository,
+      IItemRepository,
     ])
   })
 
@@ -35,10 +42,10 @@ test.group('Products - update', (group) => {
 
   test('It should return a 422 when the payload is invalid', async ({ client }) => {
     const school = new School({ name: 'School 1' })
-    const product = new ShopProduct({ name: 'Product 1', price: new Price(100) })
+    const product = new ShopProduct({ item, price: new Price(100) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })
     const shop = new Shop({ schoolId: school.id, categories: [category] })
-    await schoolsRepository.save(school)
+    await Promise.all([itemsRepository.save(item), schoolsRepository.save(school)])
     await shopsRepository.save(shop)
 
     const response = await client
@@ -51,11 +58,17 @@ test.group('Products - update', (group) => {
   })
 
   test('It should update a product', async ({ client, assert }) => {
+    const oldItem = new Item({ name: 'Item 2' })
     const school = new School({ name: 'School 1' })
-    const product = new ShopProduct({ name: 'Product 1', price: new Price(100) })
+    const product = new ShopProduct({ item: oldItem, price: new Price(100) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })
     const shop = new Shop({ schoolId: school.id, categories: [category] })
-    await schoolsRepository.save(school)
+
+    await Promise.all([
+      itemsRepository.save(item),
+      itemsRepository.save(oldItem),
+      schoolsRepository.save(school),
+    ])
     await shopsRepository.save(shop)
 
     const response = await client
@@ -65,10 +78,9 @@ test.group('Products - update', (group) => {
     const updatedShop = await shopsRepository.getBySchoolId(school.id)
     const updatedCategory = updatedShop?.categories.find((c) => c.id.equals(category.id))
     const updatedProduct = updatedCategory?.products.find((p) => p.id.equals(product.id))
-    const expectedPrice = new Price(55)
 
-    assert.equal(updatedProduct?.name, payload.name)
-    assert.deepEqual(updatedProduct?.price, expectedPrice)
+    assert.equal(updatedProduct?.item.name, item.name)
+    assert.equal(updatedProduct?.price.toNumber(), price.toNumber())
 
     response.assertStatus(StatusCodes.NO_CONTENT)
     response.assertHeader('location', getFullUrl(`/api/schools/${school.id}/shop`))

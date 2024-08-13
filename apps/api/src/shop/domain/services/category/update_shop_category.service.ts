@@ -4,8 +4,8 @@ import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repo
 import { Id } from '#shared/id/domain/models/id'
 import { ShopCategory, UpdateShopCategoryDto } from '#shop/domain/models/shop_category'
 import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
-import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
-import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found.exception'
+import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found.exception'
 import { Shop } from '#shop/domain/models/shop'
 
 @inject()

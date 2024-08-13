@@ -42,7 +42,7 @@ db-migrate: ## Run database migrations
 
 
 ## === ⭐  OTHERS ================================================
-first-install: pnpm-install docker-up-build-d db-migrate
+install: pnpm-install docker-up-build-d db-migrate
 
 start: ## Start the project
 	$(MAKE) docker-up-build
