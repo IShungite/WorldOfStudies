@@ -1,4 +1,4 @@
-FROM worldofstudies-node-interpreter
+FROM worldofstudies-apps-node-interpreter
 
 # Set up the work directory
 WORKDIR /app

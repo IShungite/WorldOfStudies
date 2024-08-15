@@ -5,15 +5,19 @@ import createRepositories from '#tests/utils/create_repositories'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
 import { School } from '#school/domain/models/school'
+import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
+import { Item } from '#item/domain/models/item'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository
   let shopsRepository: IShopsRepository
+  let itemsRepository: IItemRepository
 
   group.setup(async () => {
-    ;[schoolsRepository, shopsRepository] = await createRepositories([
+    ;[schoolsRepository, shopsRepository, itemsRepository] = await createRepositories([
       ISchoolsRepository,
       IShopsRepository,
+      IItemRepository,
     ])
   })
 
@@ -35,7 +39,7 @@ test.group('Shops - store', (group) => {
           name: 'Category 1',
           products: [
             {
-              name: 'Product 1',
+              itemId: '1',
               price: -10,
             },
           ],
@@ -58,11 +62,12 @@ test.group('Shops - store', (group) => {
   })
 
   test('It should create a shop', async ({ client, assert }) => {
+    const item = new Item({ name: 'Item 1' })
     const school = new School({
       name: 'School 1',
       promotions: [],
     })
-    await schoolsRepository.save(school)
+    await Promise.all([itemsRepository.save(item), schoolsRepository.save(school)])
 
     const response = await client.post('/shops').json({
       schoolId: school.id.toString(),
@@ -71,7 +76,7 @@ test.group('Shops - store', (group) => {
           name: 'Category 1',
           products: [
             {
-              name: 'Product 1',
+              itemId: item.id.toString(),
               price: 100,
             },
           ],

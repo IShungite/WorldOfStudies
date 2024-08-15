@@ -8,5 +8,3 @@ RUN corepack enable
 
 COPY . /app
 WORKDIR /app
-
-CMD ["sleep", "infinity"]

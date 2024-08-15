@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
 import { Id } from '#shared/id/domain/models/id'
-import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found.exception'
 
 @inject()
 export class DeleteShopService {

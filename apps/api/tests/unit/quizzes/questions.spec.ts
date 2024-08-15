@@ -32,11 +32,12 @@ test.group('QCM Question', () => {
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
       characterId: new Id('1'),
-      quizId: new Id('1'),
+      quizInstanceId: new Id('1'),
     })
 
     assert.equal(questionQCM.getUserAnswerPoints(userAnswer), questionQCM.points)
   })
+
   test('It should return the good amount of point if the user answer is not correct', async ({
     assert,
   }) => {
@@ -46,7 +47,7 @@ test.group('QCM Question', () => {
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[1].id,
       characterId: new Id('1'),
-      quizId: new Id('1'),
+      quizInstanceId: new Id('1'),
     })
 
     assert.equal(questionQCM.getUserAnswerPoints(userAnswer), 0)
@@ -71,7 +72,7 @@ test.group('Text Hole Question', () => {
       questionId: questionTextHole.id,
       values: [...questionTextHole.answers],
       characterId: new Id('1'),
-      quizId: new Id('1'),
+      quizInstanceId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points)
@@ -86,7 +87,7 @@ test.group('Text Hole Question', () => {
       questionId: questionTextHole.id,
       values: ['hello'],
       characterId: new Id('1'),
-      quizId: new Id('1'),
+      quizInstanceId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), questionTextHole.points / 2)
@@ -101,7 +102,7 @@ test.group('Text Hole Question', () => {
       questionId: questionTextHole.id,
       values: ['aaa'],
       characterId: new Id('1'),
-      quizId: new Id('1'),
+      quizInstanceId: new Id('1'),
     })
 
     assert.equal(questionTextHole.getUserAnswerPoints(userAnswer), 0)

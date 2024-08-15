@@ -10,7 +10,7 @@ export class ShopApiMapper {
         name: category.name,
         products: category.products.map((product) => ({
           id: product.id.toString(),
-          name: product.name,
+          name: product.item.name,
           price: product.price.toNumber(),
         })),
       })),

@@ -6,22 +6,26 @@ import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repo
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { Id } from '#shared/id/domain/models/id'
 import { SchoolNotFoundException } from '#school/domain/models/school_not_found.exception'
-import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
-import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found_exception'
+import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found.exception'
+import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found.exception'
 import { School } from '#school/domain/models/school'
 import { Shop } from '#shop/domain/models/shop'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { ShopProduct } from '#shop/domain/models/shop_product'
 import { Price } from '#shop/domain/models/price'
+import { Item } from '#item/domain/models/item'
+import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
 
 test.group('Products - destroy', (group) => {
+  let itemsRepository: IItemRepository
   let shopsRepository: IShopsRepository
   let schoolsRepository: ISchoolsRepository
 
   group.setup(async () => {
-    ;[shopsRepository, schoolsRepository] = await createRepositories([
+    ;[shopsRepository, schoolsRepository, itemsRepository] = await createRepositories([
       IShopsRepository,
       ISchoolsRepository,
+      IItemRepository,
     ])
   })
 
@@ -81,14 +85,16 @@ test.group('Products - destroy', (group) => {
   })
 
   test('It should delete a product', async ({ client, assert }) => {
+    const item = new Item({ name: 'Item 1' })
     const school = new School({ name: 'School 1' })
-    const product = new ShopProduct({ name: 'Product 1', price: new Price(10.0) })
+    const product = new ShopProduct({ item, price: new Price(10.0) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })
     const shop = new Shop({
       schoolId: school.id,
       categories: [category],
     })
-    await schoolsRepository.save(school)
+
+    await Promise.all([itemsRepository.save(item), schoolsRepository.save(school)])
     await shopsRepository.save(shop)
 
     const response = await client.delete(

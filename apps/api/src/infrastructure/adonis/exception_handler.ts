@@ -15,9 +15,9 @@ import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_
 import { SubjectNotFoundException } from '#school/domain/models/subject_not_found.exception'
 import { CharacterNotFoundException } from '#character/domain/models/character_not_found.exception'
 import { InvalidPriceException } from '#shop/domain/models/invalid_price.exception'
-import { ShopNotFoundException } from '#shop/domain/models/shop_not_found_exception'
-import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found_exception'
-import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found_exception'
+import { ShopNotFoundException } from '#shop/domain/models/shop_not_found.exception'
+import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found.exception'
+import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found.exception'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {

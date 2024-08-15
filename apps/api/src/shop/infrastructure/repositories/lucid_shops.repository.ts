@@ -84,7 +84,7 @@ export class LucidShopsRepository implements IShopsRepository {
                 id: Number.parseInt(product.id.toString(), 10),
               },
               {
-                name: product.name,
+                itemId: Number.parseInt(product.item.id.toString(), 10),
                 price: product.price.toNumber(),
                 categoryId: Number.parseInt(category.id.toString(), 10),
               }
@@ -99,8 +99,8 @@ export class LucidShopsRepository implements IShopsRepository {
 
   async getBySchoolId(schoolId: Id): Promise<Shop | null> {
     const shop = await ShopEntity.query()
-      .preload('categories', (query) => {
-        query.preload('products')
+      .preload('categories', (queryCategory) => {
+        queryCategory.preload('products', (queryProduct) => queryProduct.preload('item'))
       })
       .where('schoolId', Number.parseInt(schoolId.toString(), 10))
       .first()
@@ -111,7 +111,9 @@ export class LucidShopsRepository implements IShopsRepository {
   async getById(shopId: Id): Promise<Shop | null> {
     const school = await ShopEntity.query()
       .where('id', shopId.toString())
-      .preload('categories', (query) => query.preload('products'))
+      .preload('categories', (categoryQuery) =>
+        categoryQuery.preload('products', (productQuery) => productQuery.preload('item'))
+      )
       .first()
 
     return school ? ShopStorageMapper.fromLucid(school) : null
