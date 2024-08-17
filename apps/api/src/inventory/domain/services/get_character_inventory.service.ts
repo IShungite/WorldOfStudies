@@ -2,7 +2,7 @@ import { inject } from '@adonisjs/core'
 import { Id } from '#shared/id/domain/models/id'
 import { IInventoryRepository } from '#inventory/domain/contracts/repositories/inventory.repository'
 import { Inventory } from '#inventory/domain/models/inventory'
-import { InventoryNotFoundException } from '#inventory/domain/exceptions/inventory_not_found.exception'
+import { InventoryNotFoundForCharacterException } from '#inventory/domain/exceptions/inventory_not_found_for_character.exception'
 
 @inject()
 export class GetCharacterInventoryService {
@@ -12,7 +12,7 @@ export class GetCharacterInventoryService {
     const inventory = await this.inventoryRepository.getByCharacterId(characterId)
 
     if (!inventory) {
-      throw new InventoryNotFoundException(characterId)
+      throw new InventoryNotFoundForCharacterException(characterId)
     }
 
     return inventory
