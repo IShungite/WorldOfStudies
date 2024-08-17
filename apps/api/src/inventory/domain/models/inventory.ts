@@ -1,14 +1,14 @@
 import { Id } from '#shared/id/domain/models/id'
-import { Item } from '#item/domain/models/item'
+import { InventoryItem } from '#inventory/domain/models/inventory_item'
 
 type InventoryProps = {
   id?: Id
-  items: Item[]
+  items: InventoryItem[]
 }
 
 export class Inventory {
   readonly id: Id
-  readonly items: Item[]
+  readonly items: InventoryItem[]
 
   constructor({ id, items }: InventoryProps) {
     this.id = id ?? Id.factory()
