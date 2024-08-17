@@ -9,6 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const PurchaseShopProductController = () =>
+  import('#shop/infrastructure/controllers/purchase_shop_product.controller')
 
 const StartQuizController = () => import('#quiz/infrastructure/controllers/start_quiz.controller')
 const StoreUserAnswerController = () =>
@@ -152,6 +154,7 @@ router
     router.resource('subjects', SubjectsController).only(['store'])
 
     router.resource('shops', ShopsController).only(['store'])
+    router.post('shops/:shopId/products/:productId/purchase', [PurchaseShopProductController])
 
     router.get('me/characters', [MeCharactersController])
 
