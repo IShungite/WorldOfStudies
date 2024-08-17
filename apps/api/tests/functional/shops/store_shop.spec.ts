@@ -22,7 +22,7 @@ test.group('Shops - store', (group) => {
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([schoolsRepository, shopsRepository])
+    await emptyRepositories([schoolsRepository, shopsRepository, itemsRepository])
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {

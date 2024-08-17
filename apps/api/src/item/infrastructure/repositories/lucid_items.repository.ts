@@ -3,6 +3,7 @@ import { Id } from '#shared/id/domain/models/id'
 import { Item } from '#item/domain/models/item'
 import ItemEntity from '#item/infrastructure/entities/item'
 import { ItemStorageMapper } from '#item/infrastructure/mappers/item_storage.mapper'
+import testUtils from '@adonisjs/core/services/test_utils'
 
 export class LucidItemsRepository implements IItemRepository {
   async save(item: Item): Promise<Item> {
@@ -28,6 +29,9 @@ export class LucidItemsRepository implements IItemRepository {
   }
 
   async empty(): Promise<void> {
-    throw new Error('Method not implemented.')
+    await testUtils
+      .db()
+      .truncate()
+      .then((trunc) => trunc())
   }
 }
