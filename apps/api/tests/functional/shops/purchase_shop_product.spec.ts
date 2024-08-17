@@ -89,7 +89,7 @@ test.group('Shops - purchase product', (group) => {
     const user2 = await usersRepository.save(new UserBuilderTest().build())
 
     const character = await charactersRepository.save(
-      new CharacterBuilderTest().withUser(user2).withPromotionId(promotion).build()
+      new CharacterBuilderTest().withUser(user2).withPromotion(promotion).build()
     )
     const payload = {
       characterId: character.id.toString(),
@@ -98,11 +98,12 @@ test.group('Shops - purchase product', (group) => {
     const response = await client.post('/shops/1/products/1/purchase').json(payload).loginWith(user)
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
+    // TODO response message
   })
 
   test('It should return a 400 if the product is not found', async ({ client }) => {
     const character = await charactersRepository.save(
-      new CharacterBuilderTest().withUser(user).withPromotionId(promotion).build()
+      new CharacterBuilderTest().withUser(user).withPromotion(promotion).build()
     )
     const payload = {
       characterId: character.id.toString(),
@@ -135,7 +136,7 @@ test.group('Shops - purchase product', (group) => {
     await shopsRepository.save(shop)
 
     const character = await charactersRepository.save(
-      new CharacterBuilderTest().withUser(user).withPromotionId(promotion).build()
+      new CharacterBuilderTest().withUser(user).withPromotion(promotion).build()
     )
     const payload = {
       characterId: character.id.toString(),

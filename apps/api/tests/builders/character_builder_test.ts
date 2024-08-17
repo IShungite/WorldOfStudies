@@ -33,7 +33,7 @@ export class CharacterBuilderTest {
     return this
   }
 
-  withPromotionId(promotion: Promotion): this {
+  withPromotion(promotion: Promotion): this {
     this._promotionId = promotion.id
     return this
   }

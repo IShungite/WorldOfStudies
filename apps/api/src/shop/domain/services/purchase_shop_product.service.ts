@@ -14,6 +14,8 @@ export class PurchaseShopProductService {
   ) {}
   async execute({ characterId, productId, user }: { characterId: Id; productId: Id; user: User }) {
     await this.validate(characterId, productId, user)
+
+    // TODO add item to invenotory
   }
 
   private async validate(characterId: Id, productId: Id, user: User) {
