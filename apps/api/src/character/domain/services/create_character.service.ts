@@ -16,7 +16,10 @@ export class CreateCharacterService {
   async execute(createCharacterDto: CreateCharacterDto): Promise<Character> {
     await this.validate(createCharacterDto)
 
-    const character = new Character(createCharacterDto)
+    const character = new Character({
+      ...createCharacterDto,
+      berries: 0,
+    })
 
     await this.charactersRepository.save(character)
 

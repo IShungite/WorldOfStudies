@@ -104,4 +104,25 @@ test.group('Characters - store', (group) => {
     assert.isNotNull(inventory)
     assert.isEmpty(inventory!.items)
   })
+
+  test('It should set the berries to 0', async ({ client, assert }) => {
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+
+    const [user] = await Promise.all([
+      usersRepository.save(new UserBuilderTest().build()),
+      schoolsRepository.save(school),
+    ])
+
+    const res = await client
+      .post('/characters')
+      .json({
+        name: 'Shun',
+        promotionId: school.promotions[0].id.toString(),
+      })
+      .loginWith(user)
+
+    const character = res.body().result
+
+    assert.equal(character.berries, 0)
+  })
 })

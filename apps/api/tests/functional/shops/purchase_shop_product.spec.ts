@@ -114,13 +114,13 @@ test.group('Shops - purchase product', (group) => {
     response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
-  test('It should return a 200 if everything goes well', async ({ client }) => {
+  test('It should return a 400 if character does not have enough berries', async ({ client }) => {
     const item = new Item({
       name: 'Item 1',
     })
     const shopProduct = new ShopProduct({
       item: item,
-      price: new Price(1),
+      price: new Price(5),
     })
     const shop = new Shop({
       schoolId: school.id,
@@ -137,6 +137,42 @@ test.group('Shops - purchase product', (group) => {
 
     const character = await charactersRepository.save(
       new CharacterBuilderTest().withUser(user).withPromotion(promotion).build()
+    )
+    const payload = {
+      characterId: character.id.toString(),
+    }
+
+    const response = await client
+      .post(`/shops/${shop.id.toString()}/products/${shopProduct.id.toString()}/purchase`)
+      .json(payload)
+      .loginWith(user)
+
+    response.assertStatus(StatusCodes.OK)
+  })
+
+  test('It should return a 200 if everything goes well', async ({ client }) => {
+    const item = new Item({
+      name: 'Item 1',
+    })
+    const shopProduct = new ShopProduct({
+      item: item,
+      price: new Price(5),
+    })
+    const shop = new Shop({
+      schoolId: school.id,
+      categories: [
+        new ShopCategory({
+          name: 'Category 1',
+          products: [shopProduct],
+        }),
+      ],
+    })
+
+    await Promise.all([itemsRepository.save(item), schoolsRepository.save(school)])
+    await shopsRepository.save(shop)
+
+    const character = await charactersRepository.save(
+      new CharacterBuilderTest().withUser(user).withPromotion(promotion).withBerries(10).build()
     )
     const payload = {
       characterId: character.id.toString(),

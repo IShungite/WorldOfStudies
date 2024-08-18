@@ -23,6 +23,9 @@ export default class Character extends BaseModel {
   @belongsTo(() => PromotionEntity)
   declare promotion: BelongsTo<typeof PromotionEntity>
 
+  @column()
+  declare berries: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

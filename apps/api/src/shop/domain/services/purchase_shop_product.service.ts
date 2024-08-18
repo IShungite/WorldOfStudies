@@ -5,17 +5,20 @@ import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_n
 import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { User } from '#user/domain/models/user'
 import { CharacterNotFoundException } from '#character/domain/models/character_not_found.exception'
+// import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
+import { NotEnoughBerriesException } from '#shop/domain/exceptions/not_enough_berries.exception'
 
 @inject()
 export class PurchaseShopProductService {
   constructor(
     private readonly charactersRepository: ICharactersRepository,
     private readonly shopRepository: IShopsRepository
+    // private readonly inventoryRepository: IInventoriesRepository
   ) {}
   async execute({ characterId, productId, user }: { characterId: Id; productId: Id; user: User }) {
     await this.validate(characterId, productId, user)
 
-    // TODO add item to invenotory
+    // this.inventoryRepository.addItemToInventory(characterId, productId)
   }
 
   private async validate(characterId: Id, productId: Id, user: User) {
@@ -29,6 +32,10 @@ export class PurchaseShopProductService {
     const product = await this.shopRepository.getProductById(productId)
     if (!product) {
       throw new ShopProductNotFoundException(productId)
+    }
+
+    if (product.price.toNumber() > character.berries) {
+      throw new NotEnoughBerriesException(character.berries, product.price.toNumber())
     }
   }
 }
