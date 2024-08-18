@@ -9,18 +9,22 @@ import { ISchoolsRepository } from '#school/domain/contracts/repositories/school
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { PromotionNotFoundException } from '#school/domain/models/promotion_not_found.exception'
 import { Id } from '#shared/id/domain/models/id'
+import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
 
 test.group('Characters - store', (group) => {
   let charactersRepository: ICharactersRepository
   let usersRepository: IUsersRepository
   let schoolsRepository: ISchoolsRepository
+  let inventorysRepository: IInventoriesRepository
 
   group.setup(async () => {
-    ;[charactersRepository, usersRepository, schoolsRepository] = await createRepositories([
-      ICharactersRepository,
-      IUsersRepository,
-      ISchoolsRepository,
-    ])
+    ;[charactersRepository, usersRepository, schoolsRepository, inventorysRepository] =
+      await createRepositories([
+        ICharactersRepository,
+        IUsersRepository,
+        ISchoolsRepository,
+        IInventoriesRepository,
+      ])
   })
 
   group.each.setup(async () => {
@@ -75,5 +79,29 @@ test.group('Characters - store', (group) => {
 
     response.assertStatus(StatusCodes.BAD_REQUEST)
     response.assertTextIncludes(new PromotionNotFoundException(promotionId).message)
+  })
+
+  test('It should create an empty inventory for the character', async ({ client, assert }) => {
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+
+    const [user] = await Promise.all([
+      usersRepository.save(new UserBuilderTest().build()),
+      schoolsRepository.save(school),
+    ])
+
+    const res = await client
+      .post('/characters')
+      .json({
+        name: 'Shun',
+        promotionId: school.promotions[0].id.toString(),
+      })
+      .loginWith(user)
+
+    const character = res.body().result
+
+    const inventory = await inventorysRepository.getByCharacterId(new Id(character.id))
+
+    assert.isNotNull(inventory)
+    assert.isEmpty(inventory!.items)
   })
 })
