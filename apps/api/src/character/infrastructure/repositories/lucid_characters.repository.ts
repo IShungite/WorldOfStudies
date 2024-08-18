@@ -13,6 +13,7 @@ export class LucidCharactersRepository implements ICharactersRepository {
         name: character.name,
         userId: Number.parseInt(character.userId.toString(), 10),
         promotionId: Number.parseInt(character.promotionId.toString(), 10),
+        berries: character.berries,
       }
     )
 

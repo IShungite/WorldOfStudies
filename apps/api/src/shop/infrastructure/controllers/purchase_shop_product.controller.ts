@@ -31,6 +31,8 @@ export default class PurchaseShopProductController {
       user,
     })
 
-    return response.ok({})
+    return response.ok({
+      message: 'Product purchased',
+    })
   }
 }

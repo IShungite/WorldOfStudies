@@ -16,6 +16,8 @@ import { ShopCategory } from '#shop/domain/models/shop_category'
 import { ShopProduct } from '#shop/domain/models/shop_product'
 import { Price } from '#shop/domain/models/price'
 import { Promotion } from '#school/domain/models/promotion'
+import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
+import { Inventory } from '#inventory/domain/models/inventory'
 
 test.group('Shops - purchase product', (group) => {
   let usersRepository: IUsersRepository
@@ -23,6 +25,7 @@ test.group('Shops - purchase product', (group) => {
   let shopsRepository: IShopsRepository
   let itemsRepository: IItemRepository
   let charactersRepository: ICharactersRepository
+  let inventoriesRepository: IInventoriesRepository
 
   const promotion = new Promotion({
     name: 'Promotion 1',
@@ -35,14 +38,21 @@ test.group('Shops - purchase product', (group) => {
   const user = new UserBuilderTest().build()
 
   group.setup(async () => {
-    ;[usersRepository, schoolsRepository, shopsRepository, itemsRepository, charactersRepository] =
-      await createRepositories([
-        IUsersRepository,
-        ISchoolsRepository,
-        IShopsRepository,
-        IItemRepository,
-        ICharactersRepository,
-      ])
+    ;[
+      usersRepository,
+      schoolsRepository,
+      shopsRepository,
+      itemsRepository,
+      charactersRepository,
+      inventoriesRepository,
+    ] = await createRepositories([
+      IUsersRepository,
+      ISchoolsRepository,
+      IShopsRepository,
+      IItemRepository,
+      ICharactersRepository,
+      IInventoriesRepository,
+    ])
   })
 
   group.each.setup(async () => {
@@ -52,6 +62,7 @@ test.group('Shops - purchase product', (group) => {
       shopsRepository,
       itemsRepository,
       charactersRepository,
+      inventoriesRepository,
     ])
 
     await Promise.all([usersRepository.save(user), schoolsRepository.save(school)])
@@ -147,10 +158,13 @@ test.group('Shops - purchase product', (group) => {
       .json(payload)
       .loginWith(user)
 
-    response.assertStatus(StatusCodes.OK)
+    response.assertStatus(StatusCodes.BAD_REQUEST)
   })
 
-  test('It should return a 200 if everything goes well', async ({ client }) => {
+  test('It should return a 200 and add the item in the character inventory', async ({
+    client,
+    assert,
+  }) => {
     const item = new Item({
       name: 'Item 1',
     })
@@ -174,6 +188,8 @@ test.group('Shops - purchase product', (group) => {
     const character = await charactersRepository.save(
       new CharacterBuilderTest().withUser(user).withPromotion(promotion).withBerries(10).build()
     )
+    await inventoriesRepository.saveForCharacter(character.id, new Inventory({ items: [] }))
+
     const payload = {
       characterId: character.id.toString(),
     }
@@ -183,6 +199,10 @@ test.group('Shops - purchase product', (group) => {
       .json(payload)
       .loginWith(user)
 
+    const characterInventory = await inventoriesRepository.getByCharacterId(character.id)
+    const characterItems = characterInventory!.items
     response.assertStatus(StatusCodes.OK)
+    assert.lengthOf(characterItems, 1)
+    assert.equal(characterItems[0].item.id.toString(), item.id.toString())
   })
 })
