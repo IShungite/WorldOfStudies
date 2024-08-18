@@ -5,6 +5,7 @@ type CharacterProps = {
   name: string
   userId: Id
   promotionId: Id
+  berries: number
 }
 
 export type CreateCharacterDto = {
@@ -22,11 +23,13 @@ export class Character {
   readonly name: string
   readonly userId: Id
   readonly promotionId: Id
+  readonly berries: number
 
-  constructor({ id, name, userId, promotionId }: CharacterProps) {
+  constructor({ id, name, userId, promotionId, berries }: CharacterProps) {
     this.id = id ?? Id.factory()
     this.name = name
     this.userId = userId
     this.promotionId = promotionId
+    this.berries = berries
   }
 }

@@ -52,7 +52,7 @@ test.group('Quizzes - show', (group) => {
     const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
     const character = new CharacterBuilderTest()
       .withUser(user)
-      .withPromotionId(school.promotions[0])
+      .withPromotion(school.promotions[0])
       .build()
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
 
@@ -76,7 +76,7 @@ test.group('Quizzes - show', (group) => {
     const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
     const character = new CharacterBuilderTest()
       .withUser(user)
-      .withPromotionId(school.promotions[0])
+      .withPromotion(school.promotions[0])
       .build()
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
     const quizInstance = new QuizInstance({
@@ -110,7 +110,7 @@ test.group('Quizzes - show', (group) => {
     const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
     const character = new CharacterBuilderTest()
       .withUser(user)
-      .withPromotionId(school.promotions[0])
+      .withPromotion(school.promotions[0])
       .build()
     const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
 

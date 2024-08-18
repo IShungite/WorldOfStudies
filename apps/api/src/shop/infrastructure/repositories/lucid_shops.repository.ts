@@ -7,6 +7,8 @@ import { ShopCategory } from '#shop/domain/models/shop_category'
 import ShopCategoryEntity from '#shop/infrastructure/entities/shop_category'
 import ShopProductEntity from '#shop/infrastructure/entities/shop_product'
 import ShopEntity from '#shop/infrastructure/entities/shop'
+import { ShopProduct } from '#shop/domain/models/shop_product'
+import { ShopProductStorageMapper } from '#shop/infrastructure/mappers/shop_product_storage.mapper'
 
 export class LucidShopsRepository implements IShopsRepository {
   private async deleteExistingNestedEntity(shop: Shop) {
@@ -117,6 +119,15 @@ export class LucidShopsRepository implements IShopsRepository {
       .first()
 
     return school ? ShopStorageMapper.fromLucid(school) : null
+  }
+
+  async getProductById(productId: Id): Promise<ShopProduct | null> {
+    const product = await ShopProductEntity.query()
+      .preload('item')
+      .where('id', productId.toString())
+      .first()
+
+    return product ? ShopProductStorageMapper.fromLucid(product) : null
   }
 
   async deleteById(shopId: Id): Promise<void> {

@@ -12,13 +12,10 @@ export class LucidInventoriesRepository implements IInventoriesRepository {
       .where({
         characterId: characterId.toString(),
       })
+      .preload('items', (queryItem) => queryItem.preload('item'))
       .first()
 
-    if (!inventory) {
-      return null
-    }
-
-    return new Inventory({ id: new Id(inventory.id.toString()), items: [] })
+    return inventory ? InventoryStorageMapper.fromLucid(inventory) : null
   }
 
   async saveForCharacter(characterId: Id, inventory: Inventory): Promise<Inventory> {
@@ -37,8 +34,8 @@ export class LucidInventoriesRepository implements IInventoriesRepository {
 
     // Mettre à jour ou créer les items de l'inventaire
     await Promise.all(
-      inventory.items.map(async (inventoryItem) => {
-        await InventoryItemEntity.updateOrCreate(
+      inventory.items.map((inventoryItem) =>
+        InventoryItemEntity.updateOrCreate(
           {
             id: Number.parseInt(inventoryItem.id.toString()),
           },
@@ -47,7 +44,7 @@ export class LucidInventoriesRepository implements IInventoriesRepository {
             itemId: Number.parseInt(inventoryItem.item.id.toString()),
           }
         )
-      })
+      )
     )
 
     return inventory
@@ -61,7 +58,10 @@ export class LucidInventoriesRepository implements IInventoriesRepository {
   }
 
   private async getById(inventoryId: Id): Promise<Inventory | null> {
-    const inventory = await InventoryEntity.find(inventoryId.toString())
+    const inventory = await InventoryEntity.query()
+      .where('id', inventoryId.toString())
+      .preload('items', (queryItem) => queryItem.preload('item'))
+      .first()
 
     return inventory ? InventoryStorageMapper.fromLucid(inventory) : null
   }

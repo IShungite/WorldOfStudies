@@ -30,7 +30,7 @@ test.group('Products - destroy', (group) => {
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([shopsRepository, schoolsRepository])
+    await emptyRepositories([shopsRepository, schoolsRepository, itemsRepository])
   })
 
   test('It should return a 404 if one or more params are not a number', async ({ client }) => {

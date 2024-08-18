@@ -19,6 +19,7 @@ import { ShopNotFoundException } from '#shop/domain/models/shop_not_found.except
 import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category_not_found.exception'
 import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found.exception'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
+import { NotEnoughBerriesException } from '#shop/domain/exceptions/not_enough_berries.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -77,7 +78,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof ShopNotFoundException ||
       error instanceof ShopCategoryNotFoundException ||
       error instanceof ShopProductNotFoundException ||
-      error instanceof QuizInstanceAlreadyExists
+      error instanceof QuizInstanceAlreadyExists ||
+      error instanceof NotEnoughBerriesException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(this.formatError(error.message))
       return

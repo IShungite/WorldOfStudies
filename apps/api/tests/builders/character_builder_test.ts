@@ -8,6 +8,7 @@ export class CharacterBuilderTest {
   private _name = 'bou'
   private _userId = Id.factory()
   private _promotionId = Id.factory()
+  private _berries = 0
 
   build(): Character {
     return new Character({
@@ -15,6 +16,7 @@ export class CharacterBuilderTest {
       name: this._name,
       userId: this._userId,
       promotionId: this._promotionId,
+      berries: this._berries,
     })
   }
 
@@ -33,8 +35,13 @@ export class CharacterBuilderTest {
     return this
   }
 
-  withPromotionId(promotion: Promotion): this {
+  withPromotion(promotion: Promotion): this {
     this._promotionId = promotion.id
+    return this
+  }
+
+  withBerries(berries: number): this {
+    this._berries = berries
     return this
   }
 }
