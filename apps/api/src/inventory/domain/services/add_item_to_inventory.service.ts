@@ -5,6 +5,7 @@ import { Inventory } from '#inventory/domain/models/inventory'
 import { GetCharacterInventoryService } from '#inventory/domain/services/get_character_inventory.service'
 import { Item } from '#item/domain/models/item'
 import { InventoryItem } from '#inventory/domain/models/inventory_item'
+import { User } from '#user/domain/models/user'
 
 @inject()
 export class AddItemToInventoryService {
@@ -13,8 +14,8 @@ export class AddItemToInventoryService {
     private readonly inventoryRepository: IInventoriesRepository
   ) {}
 
-  async execute(characterId: Id, item: Item): Promise<Inventory> {
-    const inventory = await this.getCharacterInventory.execute(characterId)
+  async execute(characterId: Id, item: Item, user: User): Promise<Inventory> {
+    const inventory = await this.getCharacterInventory.execute(characterId, user)
 
     inventory.addItem(new InventoryItem({ item }))
 
