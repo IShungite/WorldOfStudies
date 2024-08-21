@@ -1,17 +1,15 @@
 import { Button, Card } from '@rneui/themed'
-import { useAtom } from 'jotai'
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
-import { selectedProductAtom } from '@/providers/selected-product'
+import { useMyCharacters } from '@/hooks/useMyCharacters'
 import { Category, Product, ShopResponse } from '@/utils/types'
 
 const ProductItem = ({ product }: { product: Product }) => {
-  const [, setSelectedProduct] = useAtom(selectedProductAtom)
   return (
-    <TouchableOpacity onPress={() => setSelectedProduct(product)}>
+    <TouchableOpacity>
       <Card containerStyle={styles.productCard}>
         <Card.Title>{product.name}</Card.Title>
         <Card.Divider />
@@ -22,16 +20,21 @@ const ProductItem = ({ product }: { product: Product }) => {
 }
 
 const ShopScreen = () => {
+  const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
+
   const {
     data: shop,
-    isLoading,
+    isLoading: isShopLoading,
     error,
-  } = useQuery<Category[]>('shopCategories', async () => {
-    const response = (await kyInstance.get('schools/7455/shop').json()) as ShopResponse
+  } = useQuery<Category[]>(['shopCategories', characters?.[0]?.schoolId], async () => {
+    if (!characters || characters.length === 0 || !characters[0].schoolId) {
+      throw new Error('No school ID found')
+    }
+    const response = (await kyInstance.get(`schools/${characters[0].schoolId}/shop`).json()) as ShopResponse
     return response.categories
   })
 
-  if (isLoading) {
+  if (isCharactersLoading || isShopLoading) {
     return (
       <View style={styles.centered}>
         <Button title="Loading" type="solid" loading />
