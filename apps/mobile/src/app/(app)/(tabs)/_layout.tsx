@@ -55,17 +55,17 @@ export default function TabLayout() {
         />
         {/* Exercises Tab */}
         <Tabs.Screen
-          name="exercises"
+          name="exercices"
           options={{
             title: 'Exercises',
             tabBarIcon: ({ color }) => <FontAwesome size={28} name="pencil" color={color} />,
           }}
         />
-
         {/* Statistics Tab */}
         <Tabs.Screen
           name="statistics"
           options={{
+            title: 'Statistics',
             // hidden tab
             href: null,
           }}
