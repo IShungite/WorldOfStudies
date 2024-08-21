@@ -18,6 +18,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "../../apps/mobile/src/utils/types.ts"
   ],
   "references": [
     {

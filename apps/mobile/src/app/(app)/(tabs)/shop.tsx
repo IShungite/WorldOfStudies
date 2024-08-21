@@ -3,10 +3,12 @@ import React from 'react'
 import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
 
+import { ShopResponse } from './../../../../../../packages/api-types/src/shop/shop_response'
+
 import kyInstance from '@/api/kyInstance'
-import ProductItem from '@/components/product-card' // Adjust the import path as needed
+import ProductItem from '@/components/product-card'
 import { useMyCharacters } from '@/hooks/useMyCharacters'
-import { Category, ShopResponse } from '@/utils/types'
+import { ShopCategory } from '@/utils/types'
 
 const ShopScreen = () => {
   const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
@@ -15,7 +17,7 @@ const ShopScreen = () => {
     data: shop,
     isLoading: isShopLoading,
     error,
-  } = useQuery<Category[]>(['shopCategories', characters?.[0]?.schoolId], async () => {
+  } = useQuery<ShopCategory[]>(['shopCategories', characters?.[0]?.schoolId], async () => {
     if (!characters || characters.length === 0 || !characters[0].schoolId) {
       throw new Error('No school ID found')
     }

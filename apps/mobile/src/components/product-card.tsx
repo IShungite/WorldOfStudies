@@ -1,7 +1,8 @@
 import { Card } from '@rneui/themed'
-import { Product } from '@world-of-studies/api-types' // Assuming you have or will create a definition for Product
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
+
+import { Product } from '@/utils/types'
 
 type Props = {
   product: Product
