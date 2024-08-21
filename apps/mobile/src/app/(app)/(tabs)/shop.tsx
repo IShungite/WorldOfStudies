@@ -1,9 +1,8 @@
 import { Button } from '@rneui/themed'
+import { ShopResponse } from '@world-of-studies/api-types'
 import React from 'react'
 import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
-
-import { ShopResponse } from './../../../../../../packages/api-types/src/shop/shop_response'
 
 import kyInstance from '@/api/kyInstance'
 import ProductItem from '@/components/product-card'
