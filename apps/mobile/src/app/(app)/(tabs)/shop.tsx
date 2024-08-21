@@ -1,23 +1,12 @@
-import { Button, Card } from '@rneui/themed'
+import { Button } from '@rneui/themed'
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
+import ProductItem from '@/components/product-card' // Adjust the import path as needed
 import { useMyCharacters } from '@/hooks/useMyCharacters'
-import { Category, Product, ShopResponse } from '@/utils/types'
-
-const ProductItem = ({ product }: { product: Product }) => {
-  return (
-    <TouchableOpacity>
-      <Card containerStyle={styles.productCard}>
-        <Card.Title>{product.name}</Card.Title>
-        <Card.Divider />
-        <Text>Price: ${product.price}</Text>
-      </Card>
-    </TouchableOpacity>
-  )
-}
+import { Category, ShopResponse } from '@/utils/types'
 
 const ShopScreen = () => {
   const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
