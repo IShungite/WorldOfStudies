@@ -1,8 +1,7 @@
 import { Card } from '@rneui/themed'
+import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
 import React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
-
-import { Product } from '@/utils/types'
 
 type Props = {
   product: Product

@@ -1,20 +1,20 @@
 import { Button } from '@rneui/themed'
 import { ShopResponse } from '@world-of-studies/api-types'
+import { ShopCategory } from '@world-of-studies/api-types/src/shop/shop_category'
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native'
+import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
-import ProductItem from '@/components/product-card'
+import CategoryItem from '@/components/category-item'
 import { useMyCharacters } from '@/hooks/useMyCharacters'
-import { ShopCategory } from '@/utils/types'
 
 const ShopScreen = () => {
   const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
 
   const {
-    data: shop,
-    isLoading: isShopLoading,
+    data: categories,
+    isLoading: isCategoriesLoading,
     error,
   } = useQuery<ShopCategory[]>(['shopCategories', characters?.[0]?.schoolId], async () => {
     if (!characters || characters.length === 0 || !characters[0].schoolId) {
@@ -24,15 +24,15 @@ const ShopScreen = () => {
     return response.categories
   })
 
-  if (isCharactersLoading || isShopLoading) {
+  if (isCharactersLoading || isCategoriesLoading) {
     return (
       <View style={styles.centered}>
-        <Button title="Loading" type="solid" loading />
+        <Button title="Spinner" type="clear" loading />
       </View>
     )
   }
 
-  if (error || !shop) {
+  if (error || !categories) {
     return (
       <View style={styles.centered}>
         <Text>Failed to load data</Text>
@@ -42,18 +42,8 @@ const ShopScreen = () => {
 
   return (
     <ScrollView>
-      {shop.map((category) => (
-        <View key={category.id} style={styles.categoryContainer}>
-          <Text style={styles.categoryTitle}>{category.name}</Text>
-          <FlatList
-            data={category.products}
-            renderItem={({ item }) => <ProductItem product={item} />}
-            keyExtractor={(item) => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.productList}
-          />
-        </View>
+      {categories.map((category) => (
+        <CategoryItem key={category.id} category={category} />
       ))}
     </ScrollView>
   )
@@ -64,24 +54,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  categoryContainer: {
-    marginBottom: 20,
-  },
-  categoryTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    padding: 10,
-    color: '#333',
-    backgroundColor: '#f8f8f8',
-    textAlign: 'center',
-  },
-  productList: {
-    paddingHorizontal: 10,
-  },
-  productCard: {
-    width: 140,
-    marginRight: 10,
   },
 })
 

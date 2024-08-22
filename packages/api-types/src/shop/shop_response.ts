@@ -1,4 +1,4 @@
-import { ShopCategory } from "../../../../apps/mobile/src/utils/types";
+import { ShopCategory } from "./shop_category";
 
 export type ShopResponse = {
   categories: ShopCategory[];
