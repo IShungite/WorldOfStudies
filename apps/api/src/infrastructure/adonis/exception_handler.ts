@@ -20,6 +20,7 @@ import { ShopCategoryNotFoundException } from '#shop/domain/models/shop_category
 import { ShopProductNotFoundException } from '#shop/domain/models/shop_product_not_found.exception'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
 import { NotEnoughBerriesException } from '#shop/domain/exceptions/not_enough_berries.exception'
+import { ErrorResponse } from '@world-of-studies/api-types'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -28,7 +29,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    */
   protected debug = !app.inProduction
 
-  private formatError(error: string | string[]) {
+  private formatError(error: string | string[]): ErrorResponse {
     return { errors: Array.isArray(error) ? error : [error] }
   }
 
