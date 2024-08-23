@@ -1,3 +1,6 @@
-export type { CharacterResponse, CharacterListResponse } from "./character";
-export type { QuizzesResponse, Quiz, Question } from "./quizzes";
-export type { ShopResponse } from "./shop";
+export * from "./shop";
+export * from "./character";
+export * from "./quizzes";
+export * from "./inventory";
+export * from "./error";
+

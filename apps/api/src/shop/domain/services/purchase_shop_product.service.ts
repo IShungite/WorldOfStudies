@@ -19,7 +19,7 @@ export class PurchaseShopProductService {
   async execute({ characterId, productId, user }: { characterId: Id; productId: Id; user: User }) {
     const product = await this.validate(characterId, productId, user)
 
-    await this.addItemToInventory.execute(characterId, product.item)
+    await this.addItemToInventory.execute(characterId, product.item, user)
   }
 
   private async validate(characterId: Id, productId: Id, user: User): Promise<ShopProduct> {
