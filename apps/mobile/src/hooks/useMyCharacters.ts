@@ -1,4 +1,4 @@
-import { CharacterListResponse } from '@world-of-studies/api-types'
+import { CharacterListResponse } from '@world-of-studies/api-types/src/character/character_list_response'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
