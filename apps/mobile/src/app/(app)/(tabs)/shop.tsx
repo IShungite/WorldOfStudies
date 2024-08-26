@@ -15,7 +15,7 @@ import { usePurchaseProduct } from '@/hooks/usePurchaseProduct'
 const ShopScreen = () => {
   const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
   const purchaseMutation = usePurchaseProduct()
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null) // Ensure initial state is null for Product type
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [overlayVisible, setOverlayVisible] = useState(false)
 
   const {
