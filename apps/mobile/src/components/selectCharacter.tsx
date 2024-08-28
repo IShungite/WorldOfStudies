@@ -41,7 +41,7 @@ export default function SelectCharacter({ sheetRef }: Props) {
             <View style={{ marginBottom: 7 }} key={character.id}>
               <Button
                 onPress={() => {
-                  setSelectedCharacter(character)
+                  setSelectedCharacter({ result: character })
                   sheetRef.current?.close()
                 }}
               >
