@@ -6,7 +6,7 @@ import { View, Text, Button, StyleSheet } from 'react-native'
 type Props = {
   isVisible: boolean
   onBackdropPress: () => void
-  product: Product | null
+  product: Product
   onPurchase: () => void
 }
 
