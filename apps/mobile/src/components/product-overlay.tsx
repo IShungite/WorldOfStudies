@@ -11,8 +11,6 @@ type Props = {
 }
 
 const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, product, onPurchase }) => {
-  if (!product) return null
-
   return (
     <Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} overlayStyle={styles.overlay}>
       <View style={styles.content}>
