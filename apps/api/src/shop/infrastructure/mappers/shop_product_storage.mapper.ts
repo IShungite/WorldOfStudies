@@ -11,6 +11,7 @@ export class ShopProductStorageMapper {
       item: new Item({
         id: new Id(shopProductEntity.item.id.toString()),
         name: shopProductEntity.item.name,
+        type: shopProductEntity.item.type,
       }),
       price: new Price(shopProductEntity.price),
     })
