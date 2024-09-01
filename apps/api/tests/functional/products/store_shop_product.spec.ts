@@ -13,6 +13,7 @@ import { Shop } from '#shop/domain/models/shop'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { Item } from '#item/domain/models/item'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
+import { ItemType } from '#shared/enums/item_type'
 
 test.group('Products - store', (group) => {
   let shopsRepository: IShopsRepository
@@ -49,7 +50,7 @@ test.group('Products - store', (group) => {
   })
 
   test('It should return an exception if the category does not exist', async ({ client }) => {
-    const item = new Item({ id: new Id('1'), name: 'Item 1' })
+    const item = new Item({ id: new Id('1'), name: 'Item 1', type: ItemType.Misc })
     const school = new School({ name: 'School 1' })
     const categoryId = new Id('1')
     const shop = new Shop({
@@ -87,7 +88,7 @@ test.group('Products - store', (group) => {
   })
 
   test('It should create a product', async ({ client, assert }) => {
-    const item = new Item({ id: new Id('1'), name: 'Item 1' })
+    const item = new Item({ id: new Id('1'), name: 'Item 1', type: ItemType.Misc })
     const school = new School({ name: 'School 1' })
     const category = new ShopCategory({ name: 'Category 1', products: [] })
     const shop = new Shop({

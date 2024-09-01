@@ -12,13 +12,14 @@ import { ShopCategory } from '#shop/domain/models/shop_category'
 import { Shop } from '#shop/domain/models/shop'
 import { Item } from '#item/domain/models/item'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
+import { ItemType } from '#shared/enums/item_type'
 
 test.group('Products - update', (group) => {
   let shopsRepository: IShopsRepository
   let schoolsRepository: ISchoolsRepository
   let itemsRepository: IItemRepository
 
-  const item = new Item({ name: 'Item 1' })
+  const item = new Item({ name: 'Item 1', type: ItemType.Misc })
   const price = new Price(55)
   const payload = { itemId: item.id.toString(), price: price.toNumber() }
 
@@ -58,7 +59,7 @@ test.group('Products - update', (group) => {
   })
 
   test('It should update a product', async ({ client, assert }) => {
-    const oldItem = new Item({ name: 'Item 2' })
+    const oldItem = new Item({ name: 'Item 2', type: ItemType.Misc })
     const school = new School({ name: 'School 1' })
     const product = new ShopProduct({ item: oldItem, price: new Price(100) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })
