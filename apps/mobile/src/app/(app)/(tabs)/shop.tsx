@@ -13,7 +13,7 @@ import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
   const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse ? selectedCharacterResponse.result : null
+  const selectedCharacter = selectedCharacterResponse || null
 
   const purchaseMutation = usePurchaseProduct()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)

@@ -17,7 +17,7 @@ export default function AppLayout() {
     }
 
     if (data) {
-      setSelectedCharacter({ result: data[0] })
+      setSelectedCharacter(data[0])
     }
   }, [data])
 

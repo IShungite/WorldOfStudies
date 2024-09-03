@@ -11,7 +11,7 @@ import { selectedCharacterAtom } from '@/providers/selected-character'
 
 export default function TabLayout() {
   const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse ? selectedCharacterResponse.result : null
+  const selectedCharacter = selectedCharacterResponse || null
 
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)

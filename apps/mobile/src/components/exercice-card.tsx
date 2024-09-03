@@ -1,5 +1,5 @@
 import { Card } from '@rneui/themed'
-import { Quiz } from '@world-of-studies/api-types'
+import { Quiz } from '@world-of-studies/api-types/src/quizzes'
 import { useRouter } from 'expo-router'
 import { View, Pressable } from 'react-native'
 
