@@ -4,7 +4,6 @@ import { GetCharactersByUserIdService } from '#character/domain/services/get_cha
 import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
 import { CharacterApiMapper } from '#character/infrastructure/mappers/character_api.mapper'
 import { GetSchoolsByCharacterIds } from '#school/domain/services/school/get_schools_by_character_ids'
-import { Id } from '#shared/id/domain/models/id'
 import { CharacterResponse } from '@world-of-studies/api-types'
 
 @inject()
@@ -24,22 +23,7 @@ export default class MeCharactersController {
       characters.map((character) => character.id)
     )
 
-    const schoolsByCharacterIds = characters.reduce(
-      (acc, character) => {
-        const school = schools.find((schoolToFind) =>
-          schoolToFind.promotions.find(({ id }) => id.equals(character.promotionId))
-        )
-        if (!school) {
-          throw new Error('school not found')
-        }
-
-        acc[character.id.toString()] = school.id
-        return acc
-      },
-      {} as Record<string, Id>
-    )
-
-    const listResponse = CharacterApiMapper.toResponseList(characters)
+    const listResponse = CharacterApiMapper.toResponseList(characters, schools)
 
     return response.ok({
       ...listResponse,
@@ -48,7 +32,6 @@ export default class MeCharactersController {
           ...value,
           result: {
             ...value.result,
-            schoolId: schoolsByCharacterIds[value.result.id].toString(),
           },
         }
       }),
