@@ -1,11 +1,11 @@
+import { Character } from '@world-of-studies/api-types/src/character/character'
 import { CharacterListResponse } from '@world-of-studies/api-types/src/character/character_list_response'
-import { CharacterResponse } from '@world-of-studies/api-types/src/character/character_response'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
 
 export function useMyCharacters() {
-  const { isLoading, data } = useQuery<CharacterResponse[]>({
+  const { isLoading, data } = useQuery<Character[]>({
     queryKey: 'user-characters',
     queryFn: async () => {
       const response = await kyInstance.get('me/characters')
