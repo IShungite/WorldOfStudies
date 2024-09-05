@@ -6,7 +6,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import { Suspense, useEffect } from 'react'
 import { ActivityIndicator, useColorScheme } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import '@/i18n/i18n'

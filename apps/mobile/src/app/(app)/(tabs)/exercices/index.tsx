@@ -1,4 +1,4 @@
-import { Quiz } from '@world-of-studies/api-types'
+import { Quiz } from '@world-of-studies/api-types/src/quizzes/'
 import { Text, View } from 'react-native'
 import { useQuery } from 'react-query'
 

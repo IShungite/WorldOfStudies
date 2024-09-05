@@ -1,33 +1,70 @@
 import { Button } from '@rneui/themed'
-import { ShopResponse } from '@world-of-studies/api-types'
-import { ShopCategory } from '@world-of-studies/api-types/src/shop/shop_category'
-import React from 'react'
+import { ShopCategory, Product, ShopResponse } from '@world-of-studies/api-types/src/shop'
+import { useAtom } from 'jotai'
+import React, { useState } from 'react'
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
 import CategoryItem from '@/components/category-item'
-import { useMyCharacters } from '@/hooks/useMyCharacters'
+import ProductOverlay from '@/components/product-overlay'
+import { usePurchaseProduct } from '@/hooks/usePurchaseProduct'
+import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
-  const { data: characters, isLoading: isCharactersLoading } = useMyCharacters()
+  const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
+  const selectedCharacter = selectedCharacterResponse || null
+
+  const purchaseMutation = usePurchaseProduct()
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [overlayVisible, setOverlayVisible] = useState(false)
 
   const {
     data: categories,
     isLoading: isCategoriesLoading,
     error,
-  } = useQuery<ShopCategory[]>(['shopCategories', characters?.[0]?.schoolId], async () => {
-    if (!characters || characters.length === 0 || !characters[0].schoolId) {
-      throw new Error('No school ID found')
+  } = useQuery<ShopCategory[]>(
+    ['shopCategories', selectedCharacter?.schoolId],
+    async (): Promise<ShopCategory[]> => {
+      if (!selectedCharacter?.schoolId) {
+        throw new Error('No school ID found')
+      }
+      const response = await kyInstance.get(`schools/${selectedCharacter.schoolId}/shop`)
+      return ((await response.json()) as ShopResponse).categories
+    },
+    {
+      enabled: !!selectedCharacter?.schoolId,
     }
-    const response = (await kyInstance.get(`schools/${characters[0].schoolId}/shop`).json()) as ShopResponse
-    return response.categories
-  })
+  )
 
-  if (isCharactersLoading || isCategoriesLoading) {
+  const showOverlay = (product: Product) => {
+    setSelectedProduct(product)
+    setOverlayVisible(true)
+  }
+
+  const handlePurchase = () => {
+    if (selectedProduct && selectedCharacter) {
+      purchaseMutation.mutate({
+        shopId: selectedCharacter.schoolId,
+        productId: selectedProduct.id,
+        characterId: selectedCharacter.id,
+      })
+      setOverlayVisible(false)
+    }
+  }
+
+  if (!selectedCharacter) {
     return (
       <View style={styles.centered}>
-        <Button title="Spinner" type="clear" loading />
+        <Text>Character not selected</Text>
+      </View>
+    )
+  }
+
+  if (isCategoriesLoading) {
+    return (
+      <View style={styles.centered}>
+        <Button title="Loading" loading />
       </View>
     )
   }
@@ -43,8 +80,16 @@ const ShopScreen = () => {
   return (
     <ScrollView>
       {categories.map((category) => (
-        <CategoryItem key={category.id} category={category} />
+        <CategoryItem key={category.id} category={category} onProductPress={showOverlay} />
       ))}
+      {selectedProduct && (
+        <ProductOverlay
+          product={selectedProduct}
+          isVisible={overlayVisible}
+          onBackdropPress={() => setOverlayVisible(false)}
+          onPurchase={handlePurchase}
+        />
+      )}
     </ScrollView>
   )
 }

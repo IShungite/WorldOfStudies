@@ -37,18 +37,21 @@ export default function SelectCharacter({ sheetRef }: Props) {
       >
         <BottomSheetView style={styles.contentContainer}>
           <Text>Personnages</Text>
-          {data?.map((character) => (
-            <View style={{ marginBottom: 7 }} key={character.id}>
-              <Button
-                onPress={() => {
-                  setSelectedCharacter(character)
-                  sheetRef.current?.close()
-                }}
-              >
-                {character.name}
-              </Button>
-            </View>
-          ))}
+          {data?.map((character) => {
+            return (
+              <View style={{ marginBottom: 7 }} key={character.id}>
+                <Button
+                  onPress={() => {
+                    setSelectedCharacter(character)
+                    sheetRef.current?.close()
+                  }}
+                >
+                  {character.name}
+                </Button>
+              </View>
+            )
+          })}
+
           <View style={{ marginTop: 20 }}>
             <LogoutButton />
           </View>

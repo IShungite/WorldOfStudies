@@ -1,12 +1,11 @@
 import { Feather } from '@expo/vector-icons'
 import { Avatar, Button } from '@rneui/themed'
+import { Character } from '@world-of-studies/api-types/src/character/character'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 type Props = {
-  character: {
-    name: string
-  }
+  character: Character
   onClick: () => void
 }
 
