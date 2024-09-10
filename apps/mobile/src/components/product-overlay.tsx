@@ -1,7 +1,9 @@
 import { Overlay } from '@rneui/themed'
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
 import React from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+
+import Button from '@/components/shared/Button'
 
 type Props = {
   isVisible: boolean
