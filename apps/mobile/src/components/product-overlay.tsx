@@ -1,9 +1,9 @@
-import { Overlay } from '@rneui/themed'
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 import Button from '@/components/shared/Button'
+import Overlay from '@/components/shared/Overlay'
 
 type Props = {
   isVisible: boolean
@@ -14,9 +14,8 @@ type Props = {
 
 const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, product, onPurchase }) => {
   return (
-    <Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} overlayStyle={styles.overlay}>
+    <Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} title={product.name}>
       <View style={styles.content}>
-        <Text style={styles.title}>{product.name}</Text>
         <Button title={`Buy for $${product.price}`} onPress={onPurchase} />
       </View>
     </Overlay>
@@ -24,17 +23,8 @@ const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, product, 
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    width: '90%',
-    padding: 20,
-  },
   content: {
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
   },
 })
 

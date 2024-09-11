@@ -1,6 +1,8 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { Text, StyleSheet, Pressable, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, Pressable, View, ActivityIndicator } from 'react-native'
+
+import Text from '@/components/shared/Text'
 
 const colors = {
   orange: {
@@ -79,10 +81,10 @@ const Button = ({
           {loading ? (
             <View style={styles.loaderContainer}>
               <ActivityIndicator color={colorsToUse.text} size={13} />
-              <Text style={[styles.text, styles.loaderText, { color: colorsToUse.text }]}>Loading...</Text>
+              <Text style={[styles.loaderText, { color: colorsToUse.text }]}>Loading...</Text>
             </View>
           ) : (
-            <Text style={[styles.text, { color: colorsToUse.text }]}>{title}</Text>
+            <Text style={[{ color: colorsToUse.text }]}>{title}</Text>
           )}
         </LinearGradient>
       </LinearGradient>
@@ -92,16 +94,13 @@ const Button = ({
 
 const styles = StyleSheet.create({
   container1: {
-    borderRadius: 10,
+    borderRadius: 8,
     paddingTop: 3,
     paddingBottom: 6,
   },
   container2: {
-    borderRadius: 11,
+    borderRadius: 9,
     padding: 10,
-  },
-  text: {
-    fontFamily: 'JungleAdventurer',
   },
   loaderContainer: {
     flexDirection: 'row',
