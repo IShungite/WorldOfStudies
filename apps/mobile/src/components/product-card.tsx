@@ -2,6 +2,7 @@ import { Product } from '@world-of-studies/api-types/src/shop/shop_product' // A
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View, Image } from 'react-native'
 
+import BerryIcon from '@/components/shared/BerryIcon'
 import Text from '@/components/shared/Text'
 
 const settings = {
@@ -30,7 +31,7 @@ const ProductItem: React.FC<Props> = ({ product, onPress }) => {
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.productPrice}>{product.price}</Text>
-          <Image source={require('../assets/images/berry_small.webp')} style={styles.image} />
+          <BerryIcon size={24} />
         </View>
       </View>
     </TouchableOpacity>
@@ -64,10 +65,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-  },
-  image: {
-    width: 24,
-    height: 24,
   },
 })
 

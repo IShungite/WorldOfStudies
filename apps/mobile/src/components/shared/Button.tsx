@@ -60,14 +60,33 @@ const Button = ({
   onPress,
   color = 'gray',
   loading = false,
+  children,
 }: {
-  title: string
+  title?: string
   onPress: () => void
   color?: keyof typeof colors
   loading?: boolean
+  children?: React.ReactNode | ((props: { color: string }) => React.ReactNode)
 }) => {
   const [isPressed, setIsPressed] = useState(false)
   const colorsToUse = colors[color][isPressed ? 'pressed' : 'notPressed']
+
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator color={colorsToUse.text} size={13} />
+          <Text style={[styles.loaderText, { color: colorsToUse.text }]}>Loading...</Text>
+        </View>
+      )
+    }
+
+    if (children) {
+      return typeof children === 'function' ? children({ color: colorsToUse.text }) : children
+    }
+
+    return <Text style={[{ color: colorsToUse.text }]}>{title}</Text>
+  }
 
   return (
     <Pressable
@@ -78,14 +97,7 @@ const Button = ({
     >
       <LinearGradient colors={colorsToUse.container1} style={styles.container1}>
         <LinearGradient colors={colorsToUse.container2} style={styles.container2}>
-          {loading ? (
-            <View style={styles.loaderContainer}>
-              <ActivityIndicator color={colorsToUse.text} size={13} />
-              <Text style={[styles.loaderText, { color: colorsToUse.text }]}>Loading...</Text>
-            </View>
-          ) : (
-            <Text style={[{ color: colorsToUse.text }]}>{title}</Text>
-          )}
+          {renderContent()}
         </LinearGradient>
       </LinearGradient>
     </Pressable>
