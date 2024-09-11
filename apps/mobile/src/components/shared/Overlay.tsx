@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
 
   content: {
     marginTop: -settings.border.width,
-    borderWidth: settings.border.width,
 
+    borderWidth: settings.border.width,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     borderColor: settings.border.color,
