@@ -6,7 +6,7 @@ type Props = {
 }
 
 const BerryIcon = ({ size = 20 }: Props) => {
-  return <Image source={require('../../assets/images/berry_small.webp')} style={{ width: size, height: size }} />
+  return <Image source={require('../../assets/images/berry.webp')} style={{ width: size, height: size }} />
 }
 
 export default BerryIcon

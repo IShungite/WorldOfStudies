@@ -1,10 +1,10 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Redirect, Tabs } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useRef } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import TabIcon from '@/components/TabIcon'
 import Header from '@/components/header'
 import SelectCharacter from '@/components/selectCharacter'
 import { selectedCharacterAtom } from '@/providers/selected-character'
@@ -29,7 +29,6 @@ export default function TabLayout() {
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: 'blue',
           headerShown: true,
           header: ({ options }) => (
             <SafeAreaView>
@@ -42,24 +41,36 @@ export default function TabLayout() {
         <Tabs.Screen
           name="shop"
           options={{
-            title: 'Shop',
-            tabBarIcon: ({ color }) => <FontAwesome size={28} name="shopping-cart" color={color} />,
+            tabBarLabel: () => {
+              return null
+            },
+            tabBarIcon: ({ focused }) => (
+              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/shop.webp`)} label="Shop" />
+            ),
           }}
         />
         {/* Home Tab */}
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+            tabBarLabel: () => {
+              return null
+            },
+            tabBarIcon: ({ focused }) => (
+              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/home.webp`)} label="Home" />
+            ),
           }}
         />
         {/* Exercises Tab */}
         <Tabs.Screen
           name="exercices"
           options={{
-            title: 'Exercises',
-            tabBarIcon: ({ color }) => <FontAwesome size={28} name="pencil" color={color} />,
+            tabBarLabel: () => {
+              return null
+            },
+            tabBarIcon: ({ focused }) => (
+              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/exercices.webp`)} label="Exercises" />
+            ),
           }}
         />
         {/* Statistics Tab */}
