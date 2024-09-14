@@ -1,23 +1,10 @@
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product' // Adjust import if necessary
 import React from 'react'
-import { TouchableOpacity, StyleSheet, View, Image } from 'react-native'
+import { TouchableOpacity, StyleSheet, View } from 'react-native'
 
 import BerryIcon from '@/components/shared/BerryIcon'
+import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
-
-const settings = {
-  title: {
-    container1: ['#b1cae8', '#26506d'],
-    container2: ['#5f92cf', '#346b9a'],
-  },
-  content: {
-    backgroundColor: '#2e424f',
-  },
-  border: {
-    color: '#11181c',
-    width: 4,
-  },
-}
 
 type Props = {
   product: Product
@@ -27,13 +14,13 @@ type Props = {
 const ProductItem: React.FC<Props> = ({ product, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
+      <Container>
         <Text style={styles.productName}>{product.name}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.productPrice}>{product.price}</Text>
           <BerryIcon size={24} />
         </View>
-      </View>
+      </Container>
     </TouchableOpacity>
   )
 }
@@ -41,14 +28,6 @@ const ProductItem: React.FC<Props> = ({ product, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     width: 140,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-
-    borderWidth: settings.border.width,
-    borderRadius: 8,
-    borderColor: settings.border.color,
-
-    backgroundColor: settings.content.backgroundColor,
   },
   productName: {
     color: '#fff',

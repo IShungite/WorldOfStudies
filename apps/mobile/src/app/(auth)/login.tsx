@@ -1,4 +1,4 @@
-import { Input, Button as RneButton } from '@rneui/themed'
+import { Button as RneButton } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { useRouter } from 'expo-router'
@@ -10,7 +10,8 @@ import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
 import Button from '@/components/shared/Button'
-import GradientCard from '@/components/shared/GradientCard'
+import Card from '@/components/shared/Card'
+import Input from '@/components/shared/Input'
 import HttpException from '@/exceptions/http.exception'
 import { useSession } from '@/providers/session.provider'
 
@@ -46,45 +47,43 @@ export default function Login() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <GradientCard title={t('login')} containerStyle={{ width: '80%' }}>
+      <Card title={t('login')} containerStyle={{ width: '80%' }}>
         <form.Field
           name="email"
           validators={{
             onChange: z.string().trim().email(),
           }}
-          children={(field) => (
+        >
+          {(field) => (
             <View style={{ width: 'auto' }}>
               <Input
+                field={field}
                 placeholder={t('email')}
-                value={field.state.value}
-                onChangeText={(e) => field.handleChange(e)}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 disabled={isLoading}
-                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
               />
             </View>
           )}
-        />
+        </form.Field>
         <form.Field
           name="password"
           validators={{
             onChange: z.string().min(1).trim(),
           }}
-          children={(field) => (
+        >
+          {(field) => (
             <View style={{ width: 'auto' }}>
               <Input
+                field={field}
                 placeholder={t('password')}
-                value={field.state.value}
-                onChangeText={(e) => field.handleChange(e)}
                 secureTextEntry
                 autoCapitalize="none"
                 disabled={isLoading}
-                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
               />
             </View>
           )}
-        />
+        </form.Field>
         <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
         <RneButton
           title={t('no_account_yet')}
@@ -92,7 +91,7 @@ export default function Login() {
           onPress={() => router.replace('/register')}
           disabled={isLoading}
         />
-      </GradientCard>
+      </Card>
     </View>
   )
 }

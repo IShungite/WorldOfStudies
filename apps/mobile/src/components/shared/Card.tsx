@@ -20,7 +20,7 @@ type Props = {
   containerStyle?: ViewStyle
 }
 
-const GradientCard = ({ title, children, containerStyle }: Props) => {
+const Card = ({ title, children, containerStyle }: Props) => {
   return (
     <View style={[{ alignItems: 'center' }, containerStyle]}>
       <View style={styles.title}>
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default GradientCard
+export default Card
