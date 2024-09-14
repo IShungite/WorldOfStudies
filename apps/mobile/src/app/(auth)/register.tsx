@@ -1,14 +1,31 @@
-import { Button, Input } from '@rneui/themed'
+import { Input, Button as RneButton } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { useMutation } from 'react-query'
 import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
+import Button from '@/components/shared/Button'
+import Text from '@/components/shared/Text'
+
+const settings = {
+  title: {
+    container1: ['#b1cae8', '#26506d'],
+    container2: ['#5f92cf', '#346b9a'],
+  },
+  content: {
+    backgroundColor: '#2e424f',
+  },
+  border: {
+    color: '#11181c',
+    width: 4,
+  },
+}
 
 export default function RegisterScreen() {
   const { t } = useTranslation()
@@ -21,7 +38,6 @@ export default function RegisterScreen() {
     {
       onSuccess: () => {
         Alert.alert('Success', 'Registration successful, please log in.')
-
         router.replace('/login')
       },
       onError: (error: any) => {
@@ -44,101 +60,130 @@ export default function RegisterScreen() {
   })
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('register')}</Text>
-      <form.Field
-        name="firstName"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('first_name')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
-      <form.Field
-        name="lastName"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('last_name')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
-      <form.Field
-        name="email"
-        validators={{
-          onChange: z.string().trim().email(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('email')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
-
-      <form.Field
-        name="password"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <Input
-            placeholder={t('password')}
-            value={field.state.value}
-            onChangeText={(e) => field.handleChange(e)}
-            secureTextEntry
-            autoCapitalize="none"
-            disabled={isLoading}
-            errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ alignItems: 'center', width: '80%' }}>
+        <View style={styles.title}>
+          <LinearGradient colors={settings.title.container1} style={styles.container1}>
+            <LinearGradient colors={settings.title.container2} style={styles.container2}>
+              <Text style={styles.titleText}>{t('register')}</Text>
+            </LinearGradient>
+          </LinearGradient>
+        </View>
+        <View style={styles.content}>
+          <form.Field
+            name="firstName"
+            validators={{
+              onChange: z.string().min(1).trim(),
+            }}
+            children={(field) => (
+              <View style={{ width: 'auto' }}>
+                <Input
+                  placeholder={t('first_name')}
+                  value={field.state.value}
+                  onChangeText={(e) => field.handleChange(e)}
+                  disabled={isLoading}
+                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+                />
+              </View>
+            )}
           />
-        )}
-      />
-
-      <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
-      <Button
-        title={t('already_have_account')}
-        type="clear"
-        onPress={() => router.replace('/login')}
-        disabled={isLoading}
-      />
+          <form.Field
+            name="lastName"
+            validators={{
+              onChange: z.string().min(1).trim(),
+            }}
+            children={(field) => (
+              <View style={{ width: 'auto' }}>
+                <Input
+                  placeholder={t('last_name')}
+                  value={field.state.value}
+                  onChangeText={(e) => field.handleChange(e)}
+                  disabled={isLoading}
+                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+                />
+              </View>
+            )}
+          />
+          <form.Field
+            name="email"
+            validators={{
+              onChange: z.string().trim().email(),
+            }}
+            children={(field) => (
+              <View style={{ width: 'auto' }}>
+                <Input
+                  placeholder={t('email')}
+                  value={field.state.value}
+                  onChangeText={(e) => field.handleChange(e)}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  disabled={isLoading}
+                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+                />
+              </View>
+            )}
+          />
+          <form.Field
+            name="password"
+            validators={{
+              onChange: z.string().min(1).trim(),
+            }}
+            children={(field) => (
+              <View style={{ width: 'auto' }}>
+                <Input
+                  placeholder={t('password')}
+                  value={field.state.value}
+                  onChangeText={(e) => field.handleChange(e)}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  disabled={isLoading}
+                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+                />
+              </View>
+            )}
+          />
+          <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
+          <RneButton
+            title={t('already_have_account')}
+            type="clear"
+            onPress={() => router.replace('/login')}
+            disabled={isLoading}
+          />
+        </View>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    borderColor: settings.border.color,
+    borderWidth: settings.border.width,
+    borderRadius: 8,
+    width: '120%',
+  },
+  titleText: {
     textAlign: 'center',
-    margin: 20,
+    color: '#fff',
+    letterSpacing: 2,
+    fontSize: 25,
+  },
+  container1: {
+    borderRadius: 3,
+    paddingVertical: 3,
+  },
+  container2: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  content: {
+    marginTop: -settings.border.width,
+    borderWidth: settings.border.width,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    borderColor: settings.border.color,
+    backgroundColor: settings.content.backgroundColor,
+    padding: 20,
   },
 })
