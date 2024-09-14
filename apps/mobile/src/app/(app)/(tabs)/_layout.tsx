@@ -9,14 +9,16 @@ import Header from '@/components/header'
 import SelectCharacter from '@/components/selectCharacter'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
+const tabBarLabel = () => {
+  return null
+}
+
 export default function TabLayout() {
   const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
   const selectedCharacter = selectedCharacterResponse || null
 
-  // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
-  // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present()
   }, [])
@@ -30,7 +32,7 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           headerShown: true,
-          header: ({ options }) => (
+          header: () => (
             <SafeAreaView>
               <Header character={selectedCharacter} onClick={handlePresentModalPress} />
             </SafeAreaView>
@@ -41,11 +43,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name="shop"
           options={{
-            tabBarLabel: () => {
-              return null
-            },
+            tabBarLabel,
             tabBarIcon: ({ focused }) => (
-              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/shop.webp`)} label="Shop" />
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/shop.webp`)}
+                label="Shop"
+                withBorderLeft={false}
+              />
             ),
           }}
         />
@@ -53,9 +58,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            tabBarLabel: () => {
-              return null
-            },
+            tabBarLabel,
             tabBarIcon: ({ focused }) => (
               <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/home.webp`)} label="Home" />
             ),
@@ -65,11 +68,14 @@ export default function TabLayout() {
         <Tabs.Screen
           name="exercices"
           options={{
-            tabBarLabel: () => {
-              return null
-            },
+            tabBarLabel,
             tabBarIcon: ({ focused }) => (
-              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/exercices.webp`)} label="Exercises" />
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/exercices.webp`)}
+                label="Exercises"
+                withBorderRight={false}
+              />
             ),
           }}
         />

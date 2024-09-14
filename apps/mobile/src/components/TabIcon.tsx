@@ -6,9 +6,11 @@ type Props = {
   isSelected: boolean
   icon: ImageSourcePropType
   label: string
+  withBorderLeft?: boolean
+  withBorderRight?: boolean
 }
 
-const TabIcon = ({ isSelected, icon, label }: Props) => {
+const TabIcon = ({ isSelected, icon, label, withBorderLeft = true, withBorderRight = true }: Props) => {
   return (
     <View
       style={{
@@ -21,8 +23,8 @@ const TabIcon = ({ isSelected, icon, label }: Props) => {
         width: '100%',
 
         borderColor: '#d1e0fd',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
+        borderLeftWidth: withBorderLeft ? 1 : 0,
+        borderRightWidth: withBorderRight ? 1 : 0,
       }}
     >
       <Image source={icon} style={{ width: 40, height: 40 }} />
