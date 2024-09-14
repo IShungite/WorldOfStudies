@@ -83,8 +83,6 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 50,
     backgroundColor: '#bfd4ff',
-    borderColor: '#373e4d',
-    borderWidth: 1,
   },
   characterContainer: {
     display: 'flex',
