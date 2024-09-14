@@ -44,13 +44,19 @@ export default function SelectCharacter({ sheetRef }: Props) {
             return (
               <View style={{ marginBottom: 7 }} key={character.id}>
                 <Button
-                  title={character.name}
                   onPress={() => {
                     setSelectedCharacter(character)
                     sheetRef.current?.close()
                   }}
                   style={{ width: 250 }}
-                />
+                >
+                  {({ color }) => (
+                    <View style={{ flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+                      <Text style={{ color }}>{character.name}</Text>
+                      {/* <Text style={{ color, fontSize: 12 }}>2021-2022</Text> */}
+                    </View>
+                  )}
+                </Button>
               </View>
             )
           })}
