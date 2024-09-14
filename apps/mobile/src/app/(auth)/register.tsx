@@ -1,7 +1,6 @@
 import { Input, Button as RneButton } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import { LinearGradient } from 'expo-linear-gradient'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +10,7 @@ import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
 import Button from '@/components/shared/Button'
+import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
 const settings = {
@@ -63,11 +63,13 @@ export default function RegisterScreen() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <View style={{ alignItems: 'center', width: '80%' }}>
         <View style={styles.title}>
-          <LinearGradient colors={settings.title.container1} style={styles.container1}>
-            <LinearGradient colors={settings.title.container2} style={styles.container2}>
-              <Text style={styles.titleText}>{t('register')}</Text>
-            </LinearGradient>
-          </LinearGradient>
+          <GradientContainer
+            style={styles.gradientContainer}
+            outerStyle={{ borderRadius: 3, paddingVertical: 3 }}
+            innerStyle={{ borderRadius: 5, paddingVertical: 5 }}
+          >
+            <Text style={styles.titleText}>{t('register')}</Text>
+          </GradientContainer>
         </View>
         <View style={styles.content}>
           <form.Field
@@ -162,20 +164,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: '120%',
   },
+  gradientContainer: {
+    borderRadius: 3,
+  },
   titleText: {
     textAlign: 'center',
     color: '#fff',
     letterSpacing: 2,
     fontSize: 25,
-  },
-  container1: {
-    borderRadius: 3,
-    paddingVertical: 3,
-  },
-  container2: {
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
   },
   content: {
     marginTop: -settings.border.width,

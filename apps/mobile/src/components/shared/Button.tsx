@@ -1,7 +1,7 @@
-import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
 import { StyleSheet, Pressable, View, ActivityIndicator, StyleProp, ViewStyle } from 'react-native'
 
+import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
 const colors = {
@@ -110,11 +110,14 @@ const Button = ({
       disabled={loading}
       style={style}
     >
-      <LinearGradient colors={colorsToUse.container1} style={styles.container1}>
-        <LinearGradient colors={colorsToUse.container2} style={styles.container2}>
-          {renderContent()}
-        </LinearGradient>
-      </LinearGradient>
+      <GradientContainer
+        outerColors={colorsToUse.container1}
+        innerColors={colorsToUse.container2}
+        outerStyle={styles.container1}
+        innerStyle={styles.container2}
+      >
+        {renderContent()}
+      </GradientContainer>
     </Pressable>
   )
 }
