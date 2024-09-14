@@ -1,14 +1,17 @@
-import { Button, Input } from '@rneui/themed'
+import { Button as RneButton } from '@rneui/themed'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { useMutation } from 'react-query'
 import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
+import Button from '@/components/shared/Button'
+import Card from '@/components/shared/Card'
+import Input from '@/components/shared/Input'
 import HttpException from '@/exceptions/http.exception'
 import { useSession } from '@/providers/session.provider'
 
@@ -39,71 +42,56 @@ export default function Login() {
     onSubmit: async (data) => {
       mutate(data.value)
     },
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
   })
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('login')}</Text>
-      <form.Field
-        name="email"
-        validators={{
-          onChange: z.string().trim().email(),
-        }}
-        children={(field) => (
-          <>
-            <Input
-              placeholder={t('email')}
-              value={field.state.value}
-              onChangeText={(e) => field.handleChange(e)}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              disabled={isLoading}
-              errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-            />
-          </>
-        )}
-      />
-
-      <form.Field
-        name="password"
-        validators={{
-          onChange: z.string().min(1).trim(),
-        }}
-        children={(field) => (
-          <Input
-            placeholder={t('password')}
-            value={field.state.value}
-            onChangeText={(e) => field.handleChange(e)}
-            secureTextEntry
-            autoCapitalize="none"
-            disabled={isLoading}
-            errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-          />
-        )}
-      />
-
-      <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
-      <Button
-        title={t('no_account_yet')}
-        type="clear"
-        onPress={() => router.replace('/register')}
-        disabled={isLoading}
-      />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Card title={t('login')} containerStyle={{ width: '80%' }}>
+        <form.Field
+          name="email"
+          validators={{
+            onChange: z.string().trim().email(),
+          }}
+        >
+          {(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                field={field}
+                placeholder={t('email')}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                disabled={isLoading}
+              />
+            </View>
+          )}
+        </form.Field>
+        <form.Field
+          name="password"
+          validators={{
+            onChange: z.string().min(1).trim(),
+          }}
+        >
+          {(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                field={field}
+                placeholder={t('password')}
+                secureTextEntry
+                autoCapitalize="none"
+                disabled={isLoading}
+              />
+            </View>
+          )}
+        </form.Field>
+        <Button title={t('login')} onPress={form.handleSubmit} loading={isLoading} />
+        <RneButton
+          title={t('no_account_yet')}
+          type="clear"
+          onPress={() => router.replace('/register')}
+          disabled={isLoading}
+        />
+      </Card>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    margin: 20,
-  },
-})

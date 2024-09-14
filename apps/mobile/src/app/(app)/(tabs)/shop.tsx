@@ -78,7 +78,7 @@ const ShopScreen = () => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ marginTop: 5 }}>
       {categories.map((category) => (
         <CategoryItem key={category.id} category={category} onProductPress={showOverlay} />
       ))}

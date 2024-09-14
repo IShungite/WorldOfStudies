@@ -1,13 +1,8 @@
-import { Button } from '@rneui/base'
-
+import Button from '@/components/shared/Button'
 import { useSession } from '@/providers/session.provider'
 
 export default function LogoutButton() {
   const { signOut } = useSession()
 
-  return (
-    <Button onPress={signOut} color="error">
-      Logout
-    </Button>
-  )
+  return <Button onPress={signOut} title="Logout" color="red" />
 }
