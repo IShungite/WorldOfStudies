@@ -1,10 +1,11 @@
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet'
-import { Button } from '@rneui/themed'
-import { useAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import React, { useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import LogoutButton from '@/components/logoutButton'
+import Button from '@/components/shared/Button'
+import Text from '@/components/shared/Text'
 import { useMyCharacters } from '@/hooks/useMyCharacters'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
@@ -18,12 +19,14 @@ export default function SelectCharacter({ sheetRef }: Props) {
 
   const { data } = useMyCharacters()
 
-  const [, setSelectedCharacter] = useAtom(selectedCharacterAtom)
+  const setSelectedCharacter = useSetAtom(selectedCharacterAtom)
 
   return (
     <BottomSheetModalProvider>
       <BottomSheetModal
         style={{ flex: 0 }}
+        handleIndicatorStyle={{ backgroundColor: '#fff' }}
+        backgroundStyle={{ backgroundColor: '#2e424e', borderColor: '#11181c', borderWidth: 4 }}
         ref={sheetRef}
         snapPoints={snapPoints}
         backdropComponent={(props) => (
@@ -36,18 +39,18 @@ export default function SelectCharacter({ sheetRef }: Props) {
         )}
       >
         <BottomSheetView style={styles.contentContainer}>
-          <Text>Personnages</Text>
+          <Text style={{ color: '#fff', marginBottom: 20, marginTop: 20 }}>Personnages</Text>
           {data?.map((character) => {
             return (
               <View style={{ marginBottom: 7 }} key={character.id}>
                 <Button
+                  title={character.name}
                   onPress={() => {
                     setSelectedCharacter(character)
                     sheetRef.current?.close()
                   }}
-                >
-                  {character.name}
-                </Button>
+                  style={{ width: 250 }}
+                />
               </View>
             )
           })}
@@ -65,5 +68,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#2e424e',
+    borderColor: '#11181c',
+    borderWidth: 4,
+    borderTopWidth: 0,
   },
 })

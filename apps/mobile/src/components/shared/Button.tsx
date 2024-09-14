@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState } from 'react'
-import { StyleSheet, Pressable, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, Pressable, View, ActivityIndicator, StyleProp, ViewStyle } from 'react-native'
 
 import Text from '@/components/shared/Text'
 
@@ -53,6 +53,18 @@ const colors = {
       text: '#3e1735',
     },
   },
+  red: {
+    notPressed: {
+      container1: ['#f7b3b3', '#a83232'],
+      container2: ['#ec7070', '#d94545'],
+      text: '#5a2b2b',
+    },
+    pressed: {
+      container1: ['#dfa4a4', '#942828'],
+      container2: ['#e06060', '#b83636'],
+      text: '#461f1f',
+    },
+  },
 }
 
 const Button = ({
@@ -60,6 +72,7 @@ const Button = ({
   onPress,
   color = 'gray',
   loading = false,
+  style,
   children,
 }: {
   title?: string
@@ -67,6 +80,7 @@ const Button = ({
   color?: keyof typeof colors
   loading?: boolean
   children?: React.ReactNode | ((props: { color: string }) => React.ReactNode)
+  style?: StyleProp<ViewStyle>
 }) => {
   const [isPressed, setIsPressed] = useState(false)
   const colorsToUse = colors[color][isPressed ? 'pressed' : 'notPressed']
@@ -85,7 +99,7 @@ const Button = ({
       return typeof children === 'function' ? children({ color: colorsToUse.text }) : children
     }
 
-    return <Text style={[{ color: colorsToUse.text }]}>{title}</Text>
+    return <Text style={[{ color: colorsToUse.text, textAlign: 'center' }]}>{title}</Text>
   }
 
   return (
@@ -94,6 +108,7 @@ const Button = ({
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       disabled={loading}
+      style={style}
     >
       <LinearGradient colors={colorsToUse.container1} style={styles.container1}>
         <LinearGradient colors={colorsToUse.container2} style={styles.container2}>
