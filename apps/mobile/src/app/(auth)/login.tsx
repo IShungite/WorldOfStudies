@@ -42,7 +42,7 @@ export default function Login() {
     onSubmit: async (data) => {
       mutate(data.value)
     },
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
   })
 
   return (

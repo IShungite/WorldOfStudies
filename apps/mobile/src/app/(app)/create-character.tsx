@@ -35,7 +35,7 @@ export default function CreateCharacter() {
     onSubmit: (data) => {
       mutate(data.value)
     },
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
   })
 
   return (
