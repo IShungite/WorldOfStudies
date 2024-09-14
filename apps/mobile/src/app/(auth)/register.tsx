@@ -10,6 +10,7 @@ import { z } from 'zod'
 
 import kyInstance from '@/api/kyInstance'
 import Button from '@/components/shared/Button'
+import GradientCard from '@/components/shared/GradientCard'
 import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
@@ -61,98 +62,87 @@ export default function RegisterScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ alignItems: 'center', width: '80%' }}>
-        <View style={styles.title}>
-          <GradientContainer
-            style={styles.gradientContainer}
-            outerStyle={{ borderRadius: 3, paddingVertical: 3 }}
-            innerStyle={{ borderRadius: 5, paddingVertical: 5 }}
-          >
-            <Text style={styles.titleText}>{t('register')}</Text>
-          </GradientContainer>
-        </View>
-        <View style={styles.content}>
-          <form.Field
-            name="firstName"
-            validators={{
-              onChange: z.string().min(1).trim(),
-            }}
-            children={(field) => (
-              <View style={{ width: 'auto' }}>
-                <Input
-                  placeholder={t('first_name')}
-                  value={field.state.value}
-                  onChangeText={(e) => field.handleChange(e)}
-                  disabled={isLoading}
-                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-                />
-              </View>
-            )}
-          />
-          <form.Field
-            name="lastName"
-            validators={{
-              onChange: z.string().min(1).trim(),
-            }}
-            children={(field) => (
-              <View style={{ width: 'auto' }}>
-                <Input
-                  placeholder={t('last_name')}
-                  value={field.state.value}
-                  onChangeText={(e) => field.handleChange(e)}
-                  disabled={isLoading}
-                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-                />
-              </View>
-            )}
-          />
-          <form.Field
-            name="email"
-            validators={{
-              onChange: z.string().trim().email(),
-            }}
-            children={(field) => (
-              <View style={{ width: 'auto' }}>
-                <Input
-                  placeholder={t('email')}
-                  value={field.state.value}
-                  onChangeText={(e) => field.handleChange(e)}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  disabled={isLoading}
-                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-                />
-              </View>
-            )}
-          />
-          <form.Field
-            name="password"
-            validators={{
-              onChange: z.string().min(1).trim(),
-            }}
-            children={(field) => (
-              <View style={{ width: 'auto' }}>
-                <Input
-                  placeholder={t('password')}
-                  value={field.state.value}
-                  onChangeText={(e) => field.handleChange(e)}
-                  secureTextEntry
-                  autoCapitalize="none"
-                  disabled={isLoading}
-                  errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
-                />
-              </View>
-            )}
-          />
-          <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
-          <RneButton
-            title={t('already_have_account')}
-            type="clear"
-            onPress={() => router.replace('/login')}
-            disabled={isLoading}
-          />
-        </View>
-      </View>
+      <GradientCard title={t('login')} containerStyle={{ width: '80%' }}>
+        <form.Field
+          name="firstName"
+          validators={{
+            onChange: z.string().min(1).trim(),
+          }}
+          children={(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                placeholder={t('first_name')}
+                value={field.state.value}
+                onChangeText={(e) => field.handleChange(e)}
+                disabled={isLoading}
+                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+              />
+            </View>
+          )}
+        />
+        <form.Field
+          name="lastName"
+          validators={{
+            onChange: z.string().min(1).trim(),
+          }}
+          children={(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                placeholder={t('last_name')}
+                value={field.state.value}
+                onChangeText={(e) => field.handleChange(e)}
+                disabled={isLoading}
+                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+              />
+            </View>
+          )}
+        />
+        <form.Field
+          name="email"
+          validators={{
+            onChange: z.string().trim().email(),
+          }}
+          children={(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                placeholder={t('email')}
+                value={field.state.value}
+                onChangeText={(e) => field.handleChange(e)}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                disabled={isLoading}
+                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+              />
+            </View>
+          )}
+        />
+        <form.Field
+          name="password"
+          validators={{
+            onChange: z.string().min(1).trim(),
+          }}
+          children={(field) => (
+            <View style={{ width: 'auto' }}>
+              <Input
+                placeholder={t('password')}
+                value={field.state.value}
+                onChangeText={(e) => field.handleChange(e)}
+                secureTextEntry
+                autoCapitalize="none"
+                disabled={isLoading}
+                errorMessage={field.state.meta.errors.map((error) => error).join(', ')}
+              />
+            </View>
+          )}
+        />
+        <Button title={t('register')} onPress={form.handleSubmit} loading={isLoading} />
+        <RneButton
+          title={t('already_have_account')}
+          type="clear"
+          onPress={() => router.replace('/login')}
+          disabled={isLoading}
+        />
+      </GradientCard>
     </View>
   )
 }
