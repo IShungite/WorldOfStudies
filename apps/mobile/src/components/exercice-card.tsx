@@ -7,12 +7,19 @@ type Props = {
   exercice: Quiz
 }
 
-export default function ExerciceCard({ exercice }: Readonly<Props>) {
+export default function ExerciceCard({ exercice }: Props) {
   const router = useRouter()
+
+  // Assuming `quizInstanceId` is retrieved from the exercise data
+  const quizInstanceId = exercice.id // Or from API if required
+
   return (
     <Pressable
       onPress={() =>
-        router.push({ pathname: `/exercices/[id]`, params: { id: exercice.id, exercice: JSON.stringify(exercice) } })
+        router.push({
+          pathname: `/exercices/[id]`,
+          params: { id: exercice.id, exercice: JSON.stringify(exercice), quizInstanceId },
+        })
       }
     >
       <Card>
