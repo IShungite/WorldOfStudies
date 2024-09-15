@@ -1,6 +1,6 @@
 export type StartQuizResponse = {
   result: {
-    id: string; // This is the quizInstanceId we want to capture
+    id: string;
     quizId: string;
     characterId: string;
   };

@@ -1,16 +1,25 @@
-import { Text, Input, Button } from '@rneui/themed'
+import { Input } from '@rneui/base'
 import { QuestionTextHole } from '@world-of-studies/api-types/src/quizzes/text-hole-question'
-import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
+
+import Button from '@/components/shared/Button'
+import GradientContainer from '@/components/shared/GradientContainer'
+import Text from '@/components/shared/Text'
 
 type Props = {
   question: QuestionTextHole
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: string[]) => void // Add handleSubmitAnswer prop
+  handleSubmitAnswer: (questionId: string, answer: string[]) => void
 }
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
   const [userInputs, setUserInputs] = useState<string[]>(Array(question.answers.length).fill(''))
+
+  // Reset inputs when the question changes
+  useEffect(() => {
+    setUserInputs(Array(question.answers.length).fill(''))
+  }, [question.id])
 
   const handleInputChange = (value: string, index: number) => {
     const newInputs = [...userInputs]
@@ -18,49 +27,60 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
     setUserInputs(newInputs)
   }
 
+  const isAnswerComplete = userInputs.every((input) => input.trim() !== '') // Check if all inputs are filled
+
   const handleSubmit = () => {
-    handleSubmitAnswer(question.id, userInputs) // Call handleSubmitAnswer with user inputs
-    onNext()
+    if (isAnswerComplete) {
+      handleSubmitAnswer(question.id, userInputs)
+      onNext()
+    }
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        {question.text.split('@@').map((part, index) => (
-          <React.Fragment key={index}>
-            <Text>{part}</Text>
-            {index < question.answers.length && (
-              <Input
-                placeholder="..."
-                value={userInputs[index]}
-                onChangeText={(value) => handleInputChange(value, index)}
-                containerStyle={styles.input}
-              />
-            )}
-          </React.Fragment>
-        ))}
-      </View>
-      <Button title="Next" onPress={handleSubmit} buttonStyle={styles.nextButton} />
-    </View>
+    <GradientContainer style={styles.textholeContainer}>
+      {question.text.split('@@').map((part, index) => (
+        <React.Fragment key={index}>
+          <Text style={styles.part}>{part}</Text>
+          {index < question.answers.length && (
+            <Input
+              placeholder="..."
+              value={userInputs[index]}
+              onChangeText={(value) => handleInputChange(value, index)}
+              containerStyle={styles.input}
+            />
+          )}
+        </React.Fragment>
+      ))}
+      <Button
+        title="Next"
+        onPress={handleSubmit}
+        color={isAnswerComplete ? 'green' : 'gray'}
+        style={[styles.nextButton, !isAnswerComplete && styles.inactiveButton]}
+      />
+    </GradientContainer>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  textContainer: {
+  textholeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    color: '#fff',
     justifyContent: 'center',
   },
   input: {
-    width: 100,
+    width: 50,
+    color: '#fff',
     marginHorizontal: 5,
   },
   nextButton: {
-    backgroundColor: '#2196f3',
     marginTop: 20,
+  },
+  inactiveButton: {
+    opacity: 0.6,
+  },
+  part: {
+    color: '#fff',
   },
 })
 

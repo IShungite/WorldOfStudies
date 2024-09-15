@@ -1,7 +1,10 @@
-import { Card } from '@rneui/themed'
-import { Quiz } from '@world-of-studies/api-types/src/quizzes'
+import { Quiz } from '@world-of-studies/api-types/src/quizzes/quiz'
 import { useRouter } from 'expo-router'
-import { View, Pressable } from 'react-native'
+import React from 'react'
+import { StyleSheet, Pressable } from 'react-native'
+
+import GradientContainer from '@/components/shared/GradientContainer'
+import Text from '@/components/shared/Text'
 
 type Props = {
   exercice: Quiz
@@ -10,8 +13,7 @@ type Props = {
 export default function ExerciceCard({ exercice }: Props) {
   const router = useRouter()
 
-  // Assuming `quizInstanceId` is retrieved from the exercise data
-  const quizInstanceId = exercice.id // Or from API if required
+  const quizInstanceId = exercice.id
 
   return (
     <Pressable
@@ -21,12 +23,31 @@ export default function ExerciceCard({ exercice }: Props) {
           params: { id: exercice.id, exercice: JSON.stringify(exercice), quizInstanceId },
         })
       }
+      style={styles.pressable}
     >
-      <Card>
-        <Card.Title>{exercice.name}</Card.Title>
-        <Card.Divider />
-        <View />
-      </Card>
+      <GradientContainer>
+        <Text style={styles.exerciseName}>{exercice.name}</Text>
+        <Text style={styles.exerciseText}>Click to start the quiz!</Text>
+      </GradientContainer>
     </Pressable>
   )
 }
+
+const styles = StyleSheet.create({
+  exerciseName: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 10,
+    color: '#fff',
+  },
+  pressable: {
+    marginVertical: 10,
+    borderRadius: 8,
+  },
+  exerciseText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+    color: '#fff',
+  },
+})

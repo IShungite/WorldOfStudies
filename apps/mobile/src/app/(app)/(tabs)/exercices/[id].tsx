@@ -1,15 +1,17 @@
-import { Card, Text, Button } from '@rneui/themed'
 import { Quiz, Question, StartQuizResponse } from '@world-of-studies/api-types/src/quizzes'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import kyInstance from '@/api/kyInstance'
 import ChoiceQuestion from '@/components/choice-question'
+import Button from '@/components/shared/Button'
+import Card from '@/components/shared/Card'
+import GradientContainer from '@/components/shared/GradientContainer'
+import Text from '@/components/shared/Text'
 import TextHoleQuestion from '@/components/texthole-question'
 import { selectedCharacterAtom } from '@/providers/selected-character'
-
 type QuestionComponentProps = {
   question: Question & {
     choices?: { id: string; label: string; isCorrect: boolean }[]
@@ -53,14 +55,11 @@ export default function ExerciceDetail() {
           const data: StartQuizResponse = await response.json()
           setQuizInstanceId(data.result.id)
         } catch (error) {
-          // Check for the specific "Quiz already started" error
           if (error instanceof Error && error.message.includes('The Quiz is already started')) {
-            console.log('Quiz already started, retrieving existing instance')
-            // Fetch existing quiz instance if it’s already started
             try {
               const response = await kyInstance.get(`quizzes/${quiz.id}/instances?characterId=${selectedCharacter.id}`)
               const data: StartQuizResponse = await response.json()
-              setQuizInstanceId(data.result.id) // Set the retrieved quiz instance ID
+              setQuizInstanceId(data.result.id)
             } catch (fetchError) {
               console.error('Failed to retrieve existing quiz instance:', fetchError)
             }
@@ -87,16 +86,12 @@ export default function ExerciceDetail() {
         json: payload,
       })
 
-      // QCM (Multiple Choice) Question Scoring
       if (currentQuestion.type === 'qcm') {
         const correctChoice = currentQuestion.choices?.find((c) => c.isCorrect)?.id
         if (correctChoice?.toString() === answer?.toString()) {
           setPointsEarned((prevPoints) => prevPoints + currentQuestion.points)
         }
-      }
-
-      // Text-Hole Question Scoring
-      else if (currentQuestion.type === 'text-hole') {
+      } else if (currentQuestion.type === 'text-hole') {
         const correctAnswers = currentQuestion.answers || []
         const correctCount = answer.filter(
           (a: string, i: number) => a.toLowerCase() === correctAnswers[i].toLowerCase()
@@ -104,11 +99,7 @@ export default function ExerciceDetail() {
         setPointsEarned((prevPoints) => prevPoints + (correctCount * currentQuestion.points) / correctAnswers.length)
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Failed to submit answer:', error.message)
-      } else {
-        console.error('An unknown error occurred:', error)
-      }
+      console.error('Failed to submit answer:', error)
     }
   }
 
@@ -121,60 +112,46 @@ export default function ExerciceDetail() {
   }
 
   const handleCloseQuiz = () => {
-    router.push('/(app)/(tabs)/exercices') // Redirect to quiz list
+    router.push('/(app)/(tabs)/exercices')
   }
 
   if (quizCompleted) {
     return (
-      <View style={styles.container}>
-        <Text h4 style={styles.title}>
-          Your answers have been registered.
-        </Text>
-        <Text h4 style={styles.pointsText}>
+      <GradientContainer>
+        <Text style={styles.title}>Your answers have been registered.</Text>
+        <Text style={styles.pointsText}>
           You scored {pointsEarned}/{totalPoints} points.
         </Text>
         <Button title="Close Quiz" onPress={handleCloseQuiz} />
-      </View>
+      </GradientContainer>
     )
   }
 
   return (
-    <View style={styles.container}>
-      <Text h4 style={styles.title}>
-        Exercice Detail: {quiz.name}
-      </Text>
+    <Card title={quiz.name}>
       {currentQuestion && (
-        <Card containerStyle={styles.card}>
-          <QuestionComponent
-            question={currentQuestion}
-            onNext={handleNextQuestion}
-            handleSubmitAnswer={handleSubmitAnswer}
-          />
-        </Card>
+        <QuestionComponent
+          question={currentQuestion}
+          onNext={handleNextQuestion}
+          handleSubmitAnswer={handleSubmitAnswer}
+        />
       )}
-    </View>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#f5f5f5',
-  },
   title: {
     textAlign: 'center',
     marginBottom: 20,
-  },
-  card: {
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',
     textAlign: 'center',
     marginBottom: 10,
+    fontSize: 16,
   },
   pointsText: {
     textAlign: 'center',
