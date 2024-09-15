@@ -7,6 +7,7 @@ import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repo
 import { School } from '#school/domain/models/school'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
 import { Item } from '#item/domain/models/item'
+import { ItemType } from '#shared/enums/item_type'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository
@@ -62,7 +63,7 @@ test.group('Shops - store', (group) => {
   })
 
   test('It should create a shop', async ({ client, assert }) => {
-    const item = new Item({ name: 'Item 1' })
+    const item = new Item({ name: 'Item 1', type: ItemType.Misc, image: 'image.png' })
     const school = new School({
       name: 'School 1',
       promotions: [],

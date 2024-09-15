@@ -8,6 +8,7 @@ export class ItemStorageMapper {
       id: new Id(lucidItem.id.toString()),
       name: lucidItem.name,
       type: lucidItem.type,
+      image: lucidItem.image,
     })
   }
 }

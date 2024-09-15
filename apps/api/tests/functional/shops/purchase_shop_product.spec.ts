@@ -19,6 +19,7 @@ import { Promotion } from '#school/domain/models/promotion'
 import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
 import { Inventory } from '#inventory/domain/models/inventory'
 import { PurchaseProductResponse } from '@world-of-studies/api-types'
+import { ItemType } from '#shared/enums/item_type'
 
 test.group('Shops - purchase product', (group) => {
   let usersRepository: IUsersRepository
@@ -129,6 +130,8 @@ test.group('Shops - purchase product', (group) => {
   test('It should return a 400 if character does not have enough berries', async ({ client }) => {
     const item = new Item({
       name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
     })
     const shopProduct = new ShopProduct({
       item: item,
@@ -168,6 +171,8 @@ test.group('Shops - purchase product', (group) => {
   }) => {
     const item = new Item({
       name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
     })
     const shopProduct = new ShopProduct({
       item: item,

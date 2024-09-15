@@ -12,6 +12,9 @@ export default class Item extends BaseModel {
   @column()
   declare type: ItemType
 
+  @column()
+  declare image: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

@@ -12,6 +12,7 @@ export class ShopApiMapper {
           id: product.id.toString(),
           name: product.item.name,
           type: product.item.type,
+          image: product.item.image,
           price: product.price.toNumber(),
         })),
       })),

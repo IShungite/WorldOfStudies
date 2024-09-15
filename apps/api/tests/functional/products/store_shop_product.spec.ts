@@ -50,7 +50,12 @@ test.group('Products - store', (group) => {
   })
 
   test('It should return an exception if the category does not exist', async ({ client }) => {
-    const item = new Item({ id: new Id('1'), name: 'Item 1', type: ItemType.Misc })
+    const item = new Item({
+      id: new Id('1'),
+      name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
+    })
     const school = new School({ name: 'School 1' })
     const categoryId = new Id('1')
     const shop = new Shop({
@@ -88,7 +93,12 @@ test.group('Products - store', (group) => {
   })
 
   test('It should create a product', async ({ client, assert }) => {
-    const item = new Item({ id: new Id('1'), name: 'Item 1', type: ItemType.Misc })
+    const item = new Item({
+      id: new Id('1'),
+      name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
+    })
     const school = new School({ name: 'School 1' })
     const category = new ShopCategory({ name: 'Category 1', products: [] })
     const shop = new Shop({
