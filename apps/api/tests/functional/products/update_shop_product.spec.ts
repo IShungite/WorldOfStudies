@@ -19,7 +19,12 @@ test.group('Products - update', (group) => {
   let schoolsRepository: ISchoolsRepository
   let itemsRepository: IItemRepository
 
-  const item = new Item({ name: 'Item 1', type: ItemType.Misc, image: 'image.png' })
+  const item = new Item({
+    name: 'Item 1',
+    type: ItemType.Misc,
+    image: 'image.png',
+    icon: 'icon.png',
+  })
   const price = new Price(55)
   const payload = { itemId: item.id.toString(), price: price.toNumber() }
 
@@ -59,7 +64,12 @@ test.group('Products - update', (group) => {
   })
 
   test('It should update a product', async ({ client, assert }) => {
-    const oldItem = new Item({ name: 'Item 2', type: ItemType.Misc, image: 'image.png' })
+    const oldItem = new Item({
+      name: 'Item 2',
+      type: ItemType.Misc,
+      image: 'image.png',
+      icon: 'icon.png',
+    })
     const school = new School({ name: 'School 1' })
     const product = new ShopProduct({ item: oldItem, price: new Price(100) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })

@@ -9,6 +9,7 @@ export class ItemStorageMapper {
       name: lucidItem.name,
       type: lucidItem.type,
       image: lucidItem.image,
+      icon: lucidItem.icon,
     })
   }
 }

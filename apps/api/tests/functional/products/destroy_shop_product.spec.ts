@@ -86,7 +86,12 @@ test.group('Products - destroy', (group) => {
   })
 
   test('It should delete a product', async ({ client, assert }) => {
-    const item = new Item({ name: 'Item 1', type: ItemType.Misc, image: 'image.png' })
+    const item = new Item({
+      name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
+      icon: 'icon.png',
+    })
     const school = new School({ name: 'School 1' })
     const product = new ShopProduct({ item, price: new Price(10.0) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })

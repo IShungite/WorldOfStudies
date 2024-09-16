@@ -63,7 +63,12 @@ test.group('Shops - store', (group) => {
   })
 
   test('It should create a shop', async ({ client, assert }) => {
-    const item = new Item({ name: 'Item 1', type: ItemType.Misc, image: 'image.png' })
+    const item = new Item({
+      name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
+      icon: 'icon.png',
+    })
     const school = new School({
       name: 'School 1',
       promotions: [],

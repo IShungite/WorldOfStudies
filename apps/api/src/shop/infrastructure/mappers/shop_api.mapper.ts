@@ -13,6 +13,7 @@ export class ShopApiMapper {
           name: product.item.name,
           type: product.item.type,
           image: product.item.image,
+          icon: product.item.icon,
           price: product.price.toNumber(),
         })),
       })),

@@ -12,6 +12,7 @@ export const items = Array.from({ length: 7 }, (_, i) => {
     name: `Item ${num}`,
     type: ItemType.Misc,
     image: 'https://cdn-icons-png.flaticon.com/512/1065/1065537.png',
+    icon: 'https://cdn-icons-png.flaticon.com/512/286/286627.png',
   })
 })
 

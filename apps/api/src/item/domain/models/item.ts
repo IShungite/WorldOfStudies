@@ -6,6 +6,7 @@ type ItemProps = {
   name: string
   type: ItemType
   image: string
+  icon: string
 }
 
 export class Item {
@@ -13,11 +14,13 @@ export class Item {
   readonly name: string
   readonly type: ItemType
   readonly image: string
+  readonly icon: string
 
-  constructor({ id, name, type, image }: ItemProps) {
+  constructor({ id, name, type, image, icon }: ItemProps) {
     this.id = id ?? Id.factory()
     this.name = name
     this.type = type
     this.image = image
+    this.icon = icon
   }
 }

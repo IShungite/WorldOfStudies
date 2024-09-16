@@ -132,6 +132,7 @@ test.group('Shops - purchase product', (group) => {
       name: 'Item 1',
       type: ItemType.Misc,
       image: 'image.png',
+      icon: 'icon.png',
     })
     const shopProduct = new ShopProduct({
       item: item,
@@ -173,6 +174,7 @@ test.group('Shops - purchase product', (group) => {
       name: 'Item 1',
       type: ItemType.Misc,
       image: 'image.png',
+      icon: 'icon.png',
     })
     const shopProduct = new ShopProduct({
       item: item,

@@ -13,6 +13,7 @@ export class ShopProductStorageMapper {
         name: shopProductEntity.item.name,
         type: shopProductEntity.item.type,
         image: shopProductEntity.item.image,
+        icon: shopProductEntity.item.icon,
       }),
       price: new Price(shopProductEntity.price),
     })

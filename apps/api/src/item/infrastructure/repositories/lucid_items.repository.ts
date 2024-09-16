@@ -18,6 +18,7 @@ export class LucidItemsRepository implements IItemRepository {
         name: item.name,
         type: item.type,
         image: item.image,
+        icon: item.icon,
       }
     )
 

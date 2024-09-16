@@ -55,6 +55,7 @@ test.group('Products - store', (group) => {
       name: 'Item 1',
       type: ItemType.Misc,
       image: 'image.png',
+      icon: 'icon.png',
     })
     const school = new School({ name: 'School 1' })
     const categoryId = new Id('1')
@@ -98,6 +99,7 @@ test.group('Products - store', (group) => {
       name: 'Item 1',
       type: ItemType.Misc,
       image: 'image.png',
+      icon: 'icon.png',
     })
     const school = new School({ name: 'School 1' })
     const category = new ShopCategory({ name: 'Category 1', products: [] })
