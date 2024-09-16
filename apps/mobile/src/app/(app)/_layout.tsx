@@ -24,7 +24,7 @@ export default function AppLayout() {
   if (isLoading)
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading...</Text>
+        <Text>Loading characters...</Text>
       </View>
     )
 

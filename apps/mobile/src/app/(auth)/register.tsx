@@ -47,7 +47,7 @@ export default function RegisterScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Card title={t('login')} containerStyle={{ width: '80%' }}>
+      <Card title={t('register')} containerStyle={{ width: '80%' }}>
         <form.Field
           name="firstName"
           validators={{
