@@ -9,6 +9,7 @@ import { Character } from '#character/domain/models/character'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { CharacterResponse } from '@world-of-studies/api-types'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository
@@ -56,15 +57,17 @@ test.group('Characters - characters by user', (group) => {
       schoolsRepository.save(school),
       schoolsRepository.save(school2),
     ])
-    const promotionId = school.promotions[0].id
-    const promotionId2 = school2.promotions[0].id
 
     const [character1, character2] = await Promise.all([
-      charactersRepository.save(new Character({ name: 'Shun', userId: user.id, promotionId })),
       charactersRepository.save(
-        new Character({ name: 'Shun2', userId: user.id, promotionId: promotionId2 })
+        new CharacterBuilderTest().withUser(user).withPromotion(school.promotions[0]).build()
       ),
-      charactersRepository.save(new Character({ name: 'Bou', userId: user2.id, promotionId })),
+      charactersRepository.save(
+        new CharacterBuilderTest().withUser(user).withPromotion(school2.promotions[0]).build()
+      ),
+      charactersRepository.save(
+        new CharacterBuilderTest().withUser(user2).withPromotion(school.promotions[0]).build()
+      ),
     ])
 
     const response = await client.get(`/me/characters`).loginWith(user)

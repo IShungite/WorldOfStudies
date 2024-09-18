@@ -88,29 +88,4 @@ test.group('Subjects - update', (group) => {
 
     response.assertStatus(StatusCodes.UNPROCESSABLE_ENTITY)
   })
-
-  test('It should update a subject', async ({ client }) => {
-    const subject = new Subject({ name: 'Subject 1' })
-    const promotion = new Promotion({
-      name: 'Promotion 1',
-      year: 2022,
-      subjects: [subject],
-    })
-    const school = new School({
-      name: 'School 1',
-      promotions: [promotion],
-    })
-    await schoolsRepository.save(school)
-
-    const response = await client
-      .patch(
-        `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${subject.id.toString()}`
-      )
-      .json({
-        name: 'Subject 99',
-      })
-
-    response.assertStatus(StatusCodes.OK)
-    response.assertBodyContains({ name: 'Subject 99' })
-  })
 })

@@ -1,11 +1,11 @@
-import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import { subjects } from '#database/seeders/1_subject_seeder'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { Promotion } from '#school/domain/models/promotion'
 import { School } from '#school/domain/models/school'
 import { Id } from '#shared/id/domain/models/id'
-import app from '@adonisjs/core/services/app'
-import { Promotion } from '#school/domain/models/promotion'
-import { Subject } from '#school/domain/models/subject'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
+import app from '@adonisjs/core/services/app'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class extends BaseSeeder {
   async run() {
@@ -24,21 +24,13 @@ export default class extends BaseSeeder {
             id: new Id('1'),
             name: 'Promotion 1-1',
             year: 2022,
-            subjects: [
-              new Subject({ id: new Id('1'), name: 'Subject 1-1-1' }),
-              new Subject({ id: new Id('2'), name: 'Subject 1-1-2' }),
-              new Subject({ id: new Id('3'), name: 'Subject 1-1-3' }),
-            ],
+            subjects: [subjects[0], subjects[1], subjects[2]],
           }),
           new Promotion({
             id: new Id('2'),
             name: 'Promotion 1-2',
             year: 2022,
-            subjects: [
-              new Subject({ id: new Id('4'), name: 'Subject 1-2-1' }),
-              new Subject({ id: new Id('5'), name: 'Subject 1-2-2' }),
-              new Subject({ id: new Id('6'), name: 'Subject 1-2-3' }),
-            ],
+            subjects: [subjects[3], subjects[4], subjects[5]],
           }),
         ],
       }),
@@ -50,21 +42,13 @@ export default class extends BaseSeeder {
             id: new Id('3'),
             name: 'Promotion 2-1',
             year: 2022,
-            subjects: [
-              new Subject({ id: new Id('7'), name: 'Subject 2-1-1' }),
-              new Subject({ id: new Id('8'), name: 'Subject 2-1-2' }),
-              new Subject({ id: new Id('9'), name: 'Subject 2-1-3' }),
-            ],
+            subjects: [subjects[6], subjects[7], subjects[1]],
           }),
           new Promotion({
             id: new Id('4'),
             name: 'Promotion 2-2',
             year: 2022,
-            subjects: [
-              new Subject({ id: new Id('10'), name: 'Subject 2-2-1' }),
-              new Subject({ id: new Id('11'), name: 'Subject 2-2-2' }),
-              new Subject({ id: new Id('12'), name: 'Subject 2-2-3' }),
-            ],
+            subjects: [subjects[2], subjects[3], subjects[4]],
           }),
         ],
       }),

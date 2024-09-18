@@ -54,7 +54,11 @@ test.group('Quizzes - show', (group) => {
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: school.promotions[0].subjects[0].id,
+    })
 
     await Promise.all([
       quizzesRepository.save(quiz),
@@ -78,7 +82,11 @@ test.group('Quizzes - show', (group) => {
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: school.promotions[0].subjects[0].id,
+    })
     const quizInstance = new QuizInstance({
       quiz,
       characterId: character.id,
@@ -112,7 +120,11 @@ test.group('Quizzes - show', (group) => {
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: school.promotions[0].subjects[0].id,
+    })
 
     await Promise.all([
       quizzesRepository.save(quiz),

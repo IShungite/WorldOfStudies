@@ -1,19 +1,21 @@
-import { test } from '@japa/runner'
-import { StatusCodes } from 'http-status-codes'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
+import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
+import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
+import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
-import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
-import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
-import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
-import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
-import { Character } from '#character/domain/models/character'
-import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
-import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
-import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
+import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('User-answers - store', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -22,6 +24,7 @@ test.group('User-answers - store', (group) => {
   let charactersRepository: ICharactersRepository
   let schoolsRepository: ISchoolsRepository
   let quizzesInstanceRepository: IQuizzesInstanceRepository
+  let subjectRepository: ISubjectsRepository
 
   group.setup(async () => {
     ;[
@@ -31,6 +34,7 @@ test.group('User-answers - store', (group) => {
       charactersRepository,
       schoolsRepository,
       quizzesInstanceRepository,
+      subjectRepository,
     ] = await createRepositories([
       IUserAnswersRepository,
       IQuizzesRepository,
@@ -38,6 +42,7 @@ test.group('User-answers - store', (group) => {
       ICharactersRepository,
       ISchoolsRepository,
       IQuizzesInstanceRepository,
+      ISubjectsRepository,
     ])
   })
 
@@ -48,6 +53,7 @@ test.group('User-answers - store', (group) => {
       usersRepository,
       charactersRepository,
       schoolsRepository,
+      subjectRepository,
     ])
   })
 
@@ -58,14 +64,16 @@ test.group('User-answers - store', (group) => {
   })
 
   test('It should create a user-answer of type QCM', async ({ client }) => {
+    const subject = new SubjectBuilderTest().build()
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
-    const character = new Character({
-      name: 'test',
-      userId: user.id,
-      promotionId: school.promotions[0].id,
-    })
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const character = new CharacterBuilderTest()
+      .withUser(user)
+      .withPromotion(school.promotions[0])
+      .build()
+
     const quiz = QuizFactory.create({
+      subjectId: subject.id,
       name: 'Quiz 1',
       questions: [
         {
@@ -78,6 +86,8 @@ test.group('User-answers - store', (group) => {
         },
       ],
     })
+
+    await subjectRepository.save(subject)
 
     await Promise.all([
       usersRepository.save(user),

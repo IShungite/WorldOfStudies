@@ -64,24 +64,4 @@ test.group('Subjects - destroy', (group) => {
     response.assertStatus(StatusCodes.BAD_REQUEST)
     response.assertTextIncludes(new SubjectNotFoundException(id).message)
   })
-
-  test('It should destroy a subject', async ({ client }) => {
-    const subject = new Subject({ name: 'Subject 1' })
-    const promotion = new Promotion({
-      name: 'Promotion 1',
-      year: 2022,
-      subjects: [subject],
-    })
-    const school = new School({
-      name: 'School 1',
-      promotions: [promotion],
-    })
-    await schoolsRepository.save(school)
-
-    const response = await client.delete(
-      `/schools/${school.id.toString()}/promotions/${promotion.id.toString()}/subjects/${subject.id.toString()}`
-    )
-
-    response.assertStatus(StatusCodes.OK)
-  })
 })

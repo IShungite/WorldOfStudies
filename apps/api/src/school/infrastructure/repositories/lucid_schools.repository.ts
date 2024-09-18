@@ -30,29 +30,11 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
       { toRemove: [] as Promotion[], toKeep: [] as Promotion[] }
     )
 
-    const subjectsToRemove = promotionsGrouped.toKeep.flatMap((existingPromotion) =>
-      existingPromotion.subjects.filter(
-        (existingSubject) =>
-          !school.promotions.find((newPromotion) =>
-            newPromotion.subjects.find((newSubject) => newSubject.id.equals(existingSubject.id))
-          )
-      )
-    )
-
     if (promotionsGrouped.toRemove.length > 0) {
       await PromotionEntity.query()
         .whereIn(
           'id',
           promotionsGrouped.toRemove.map((promotion) => promotion.id.toString())
-        )
-        .delete()
-    }
-
-    if (subjectsToRemove.length > 0) {
-      await SubjectEntity.query()
-        .whereIn(
-          'id',
-          subjectsToRemove.map((subject) => subject.id.toString())
         )
         .delete()
     }
@@ -80,15 +62,27 @@ export class LucidSchoolsRepository implements ISchoolsRepository {
             schoolId: Number.parseInt(school.id.toString(), 10),
           }
         )
+      })
+    )
 
-        return Promise.all(
-          promotion.subjects.map((subject) =>
-            SubjectEntity.updateOrCreate(
-              { id: Number.parseInt(subject.id.toString()) },
-              { name: subject.name, promotionId: Number.parseInt(promotion.id.toString(), 10) }
-            )
-          )
-        )
+    const promotionEntities = await PromotionEntity.query().whereIn(
+      'id',
+      school.promotions.map((promotion) => promotion.id.toString())
+    )
+
+    await Promise.all(
+      promotionEntities.map(async (promotionEntity) => {
+        const subjects = school.promotions.find((promotion) =>
+          promotion.id.equals(new Id(promotionEntity.id.toString()))
+        )?.subjects
+
+        if (!subjects) {
+          return
+        }
+
+        await promotionEntity
+          .related('subjects')
+          .sync(subjects.map((subject) => subject.id.toString()))
       })
     )
 

@@ -17,7 +17,7 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 import { SchoolMapper } from '#school/infrastructure/mappers/school.mapper'
 import { updateSchoolValidator } from '#school/infrastructure/validators/school/update_school.validator'
 import { updateSubjectValidator } from '#school/infrastructure/validators/update_subject.validator'
-import { SubjectMapper } from '#school/infrastructure/mappers/subject.mapper'
+import { SubjectApiMapper } from '#school/infrastructure/mappers/subject_api.mapper'
 import { ShopApiMapper } from '#shop/infrastructure/mappers/shop_api.mapper'
 import { updatePromotionValidator } from '#school/infrastructure/validators/update_promotion.validator'
 import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
@@ -128,7 +128,7 @@ export default class SchoolsController {
       payload
     )
 
-    return response.ok(SubjectMapper.toResponse(subject))
+    return response.ok(SubjectApiMapper.toResponse(subject))
   }
 
   async getShop({ params, response }: HttpContext) {
