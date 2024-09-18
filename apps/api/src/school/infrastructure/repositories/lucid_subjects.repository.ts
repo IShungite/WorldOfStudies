@@ -25,6 +25,10 @@ export class LucidSubjectsRepository implements ISubjectsRepository {
     return subject ? SubjectStorageMapper.fromLucid(subject) : null
   }
 
+  async delete(subjectId: Id): Promise<void> {
+    await SubjectEntity.query().where('id', subjectId.toString()).delete()
+  }
+
   async empty(): Promise<void> {
     await testUtils
       .db()
