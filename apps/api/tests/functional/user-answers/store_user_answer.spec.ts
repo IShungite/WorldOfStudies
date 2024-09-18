@@ -47,7 +47,7 @@ test.group('User-answers - store', (group) => {
   })
 
   group.each.setup(async () => {
-    await await emptyRepositories([
+    await emptyRepositories([
       userAnswersRepository,
       quizzesRepository,
       usersRepository,
@@ -64,9 +64,9 @@ test.group('User-answers - store', (group) => {
   })
 
   test('It should create a user-answer of type QCM', async ({ client }) => {
-    const subject = new SubjectBuilderTest().build()
+    const subject = await subjectRepository.save(new SubjectBuilderTest().build())
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
     const character = new CharacterBuilderTest()
       .withUser(user)
       .withPromotion(school.promotions[0])

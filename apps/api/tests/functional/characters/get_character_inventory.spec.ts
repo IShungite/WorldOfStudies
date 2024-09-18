@@ -23,7 +23,7 @@ test.group('Characters - get inventory', (group) => {
   let itemsRepository: IItemRepository
 
   const user = new UserBuilderTest().build()
-  const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+  const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
   const character = new CharacterBuilderTest()
     .withUser(user)
     .withPromotion(school.promotions[0])

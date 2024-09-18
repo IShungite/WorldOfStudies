@@ -15,6 +15,8 @@ import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 
 test.group('User-answers - get by quiz instance', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -23,6 +25,7 @@ test.group('User-answers - get by quiz instance', (group) => {
   let charactersRepository: ICharactersRepository
   let schoolsRepository: ISchoolsRepository
   let quizzesInstanceRepository: IQuizzesInstanceRepository
+  let subjectsRepository: ISubjectsRepository
 
   group.setup(async () => {
     ;[
@@ -32,6 +35,7 @@ test.group('User-answers - get by quiz instance', (group) => {
       charactersRepository,
       schoolsRepository,
       quizzesInstanceRepository,
+      subjectsRepository,
     ] = await createRepositories([
       IUserAnswersRepository,
       IQuizzesRepository,
@@ -39,22 +43,25 @@ test.group('User-answers - get by quiz instance', (group) => {
       ICharactersRepository,
       ISchoolsRepository,
       IQuizzesInstanceRepository,
+      ISubjectsRepository,
     ])
   })
 
   group.each.setup(async () => {
-    await await emptyRepositories([
+    await emptyRepositories([
       userAnswersRepository,
       quizzesRepository,
       usersRepository,
       charactersRepository,
       schoolsRepository,
+      subjectsRepository,
     ])
   })
 
   test('It should return the user answers of a quiz', async ({ client, assert }) => {
+    const subject = await subjectsRepository.save(new SubjectBuilderTest().build())
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
     const character = new CharacterBuilderTest()
       .withUser(user)
       .withPromotion(school.promotions[0])
@@ -67,7 +74,7 @@ test.group('User-answers - get by quiz instance', (group) => {
 
     const quiz = QuizFactory.create({
       name: 'Quiz 1',
-      subjectId: school.promotions[0].subjects[0].id,
+      subjectId: subject.id,
       questions: [
         {
           type: questionType.QCM,
@@ -82,7 +89,7 @@ test.group('User-answers - get by quiz instance', (group) => {
 
     const quiz2 = QuizFactory.create({
       name: 'Quiz 2',
-      subjectId: school.promotions[0].subjects[0].id,
+      subjectId: subject.id,
       questions: [
         {
           type: questionType.QCM,

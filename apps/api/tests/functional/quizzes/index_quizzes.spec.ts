@@ -7,22 +7,36 @@ import emptyRepositories from '#tests/utils/empty_repositories'
 import assertPaginatedResponse from '#tests/utils/assert_paginated_response'
 import { Id } from '#shared/id/domain/models/id'
 import { getFullUrl } from '#shared/infra/api/utils/get_url'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
+  let subjectsRepository: ISubjectsRepository
+
+  let subject: Subject
 
   group.setup(async () => {
-    ;[quizzesRepository] = await createRepositories([IQuizzesRepository])
+    ;[quizzesRepository, subjectsRepository] = await createRepositories([
+      IQuizzesRepository,
+      ISubjectsRepository,
+    ])
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([quizzesRepository])
+    await emptyRepositories([quizzesRepository, subjectsRepository])
+
+    subject = await subjectsRepository.save(new SubjectBuilderTest().build())
   })
 
   test('It should return the list of paginated quizzes', async ({ client, assert }) => {
     await Promise.all([
-      quizzesRepository.save(new Quiz({ name: 'Quiz 1', questions: [] })),
-      quizzesRepository.save(new Quiz({ name: 'Quiz 2', questions: [] })),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
     ])
 
     const response = await client.get('/quizzes')
@@ -43,8 +57,12 @@ test.group('Quizzes - index', (group) => {
     assert,
   }) => {
     await Promise.all([
-      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
-      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
     ])
     const perPage = 1
 
@@ -65,8 +83,12 @@ test.group('Quizzes - index', (group) => {
 
   test('It should return the good page if a page is provided', async ({ client, assert }) => {
     await Promise.all([
-      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
-      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
     ])
     const perPage = 1
     const page = 2
@@ -89,8 +111,12 @@ test.group('Quizzes - index', (group) => {
 
   test('It should return the good links if we are on the first page', async ({ client }) => {
     await Promise.all([
-      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
-      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
     ])
     const perPage = 1
     const page = 1
@@ -110,8 +136,12 @@ test.group('Quizzes - index', (group) => {
 
   test('It should return the good links if we are on the last page', async ({ client }) => {
     await Promise.all([
-      quizzesRepository.save(new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [] })),
-      quizzesRepository.save(new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [] })),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
     ])
     const perPage = 1
     const page = 2

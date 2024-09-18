@@ -5,12 +5,18 @@ import { StatusCodes } from 'http-status-codes'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import { getFullUrl } from '#shared/infra/api/utils/get_url'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
+  let subjectsRepository: ISubjectsRepository
 
   group.setup(async () => {
-    ;[quizzesRepository] = await createRepositories([IQuizzesRepository])
+    ;[quizzesRepository, subjectsRepository] = await createRepositories([
+      IQuizzesRepository,
+      ISubjectsRepository,
+    ])
   })
 
   group.each.setup(async () => {
@@ -18,7 +24,9 @@ test.group('Quizzes - show', (group) => {
   })
 
   test('It should return a quiz', async ({ client }) => {
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const subject = new SubjectBuilderTest().build()
+    const quiz = new Quiz({ name: 'Quiz 1', questions: [], subjectId: subject.id })
+    await subjectsRepository.save(subject)
     await quizzesRepository.save(quiz)
 
     const response = await client.get(`/quizzes/${quiz.id}`)
@@ -30,7 +38,9 @@ test.group('Quizzes - show', (group) => {
   })
 
   test('It should return the link of the user answers', async ({ client }) => {
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const subject = new SubjectBuilderTest().build()
+    const quiz = new Quiz({ name: 'Quiz 1', questions: [], subjectId: subject.id })
+    await subjectsRepository.save(subject)
     await quizzesRepository.save(quiz)
 
     const response = await client.get(`/quizzes/${quiz.id}`)

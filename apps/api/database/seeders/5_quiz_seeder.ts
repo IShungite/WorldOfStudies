@@ -4,6 +4,7 @@ import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 import { Id } from '#shared/id/domain/models/id'
+import { subjects } from '#database/seeders/1_subject_seeder'
 
 export default class extends BaseSeeder {
   async run() {
@@ -12,6 +13,7 @@ export default class extends BaseSeeder {
     const quizzes: Quiz[] = [
       QuizFactory.create({
         name: 'Quiz 1',
+        subjectId: subjects[0].id,
         questions: [
           {
             id: new Id('1'),
