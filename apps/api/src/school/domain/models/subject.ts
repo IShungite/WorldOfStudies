@@ -2,7 +2,6 @@ import { Id } from '#shared/id/domain/models/id'
 
 export type CreateSubjectDto = {
   name: string
-  promotionId: Id
 }
 
 export type UpdateSubjectDto = {

@@ -83,24 +83,6 @@ router
     ])
 
     router
-      .delete('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
-        SchoolsController,
-        'destroySubject',
-      ])
-      .where('idSchool', onlyNumbersRegex)
-      .where('idPromotion', onlyNumbersRegex)
-      .where('idSubject', onlyNumbersRegex)
-
-    router
-      .patch('schools/:idSchool/promotions/:idPromotion/subjects/:idSubject', [
-        SchoolsController,
-        'updateSubject',
-      ])
-      .where('idSchool', onlyNumbersRegex)
-      .where('idPromotion', onlyNumbersRegex)
-      .where('idSubject', onlyNumbersRegex)
-
-    router
       .delete('schools/:idSchool/promotions/:idPromotion', [SchoolsController, 'destroyPromotion'])
       .where('idSchool', onlyNumbersRegex)
       .where('idPromotion', onlyNumbersRegex)
@@ -155,7 +137,7 @@ router
 
     router.resource('promotions', PromotionsController).only(['store'])
 
-    router.resource('subjects', SubjectsController).only(['store'])
+    router.resource('subjects', SubjectsController).only(['store', 'update', 'destroy'])
 
     router.resource('shops', ShopsController).only(['store'])
     router.post('shops/:shopId/products/:productId/purchase', [PurchaseShopProductController])
