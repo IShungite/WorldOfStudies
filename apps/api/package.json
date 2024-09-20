@@ -22,7 +22,6 @@
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-
     "#character/*": "./src/character/*.js",
     "#infrastructure/*": "./src/infrastructure/*.js",
     "#inventory/*": "./src/inventory/*.js",
@@ -31,7 +30,6 @@
     "#school/*": "./src/school/*.js",
     "#shop/*": "./src/shop/*.js",
     "#user/*": "./src/user/*.js",
-
     "#shared/*": "./src/shared/*.js",
     "#utils/*": "./src/utils/*.js"
   },
@@ -60,6 +58,7 @@
     "@adonisjs/core": "^6.12.1",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/lucid": "^21.1.1",
+    "@adonisjs/static": "^1.1.1",
     "@types/jsonwebtoken": "^9.0.6",
     "@vinejs/vine": "^2.1.0",
     "@world-of-studies/api-types": "workspace:^",

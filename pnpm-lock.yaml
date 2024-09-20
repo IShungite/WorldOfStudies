@@ -29,6 +29,9 @@ importers:
       '@adonisjs/lucid':
         specifier: ^21.1.1
         version: 21.1.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(better-sqlite3@11.1.2)(luxon@3.4.4)(pg@8.12.0)
+      '@adonisjs/static':
+        specifier: ^1.1.1
+        version: 1.1.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))
       '@types/jsonwebtoken':
         specifier: ^9.0.6
         version: 9.0.6
@@ -566,6 +569,12 @@ packages:
   '@adonisjs/repl@4.0.1':
     resolution: {integrity: sha512-fgDRC5I8RBKHzsJPM4rRQF/OWI0K9cNihCIf4yHdqQt3mhFqWSOUjSi4sXWykdICLiddmyBO86au7i0d0dj5vQ==}
     engines: {node: '>=18.16.0'}
+
+  '@adonisjs/static@1.1.1':
+    resolution: {integrity: sha512-Ukd2WB21/eajKLNQbaQ3Chxdqn7HyeHSO41J29oWc8DQFEhxxQIUGq0C1Kv5cJFY7PvZm9RAKMBi/2JC58LFWQ==}
+    engines: {node: '>=18.16.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
 
   '@adonisjs/tsconfig@1.3.0':
     resolution: {integrity: sha512-+nOykDG44b4JSAdsrTdh5HuZqJpr6F+dHpfNYgHfYsFJIEtZo8plHilZAM7iabCRN5R49SPv5p8Ixcp47Rr50g==}
@@ -3541,6 +3550,10 @@ packages:
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
     engines: {node: '>=8.6'}
+
+  entities@4.5.0:
+    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
+    engines: {node: '>=0.12'}
 
   env-editor@0.4.2:
     resolution: {integrity: sha512-ObFo8v4rQJAE59M69QzwloxPZtd33TpYEIjtKD1rrFDcM1Gd7IkDxEBU+HriziN6HSHQnBJi8Dmy+JWkav5HKA==}
@@ -7811,6 +7824,13 @@ snapshots:
       '@poppinss/colors': 4.1.3
       string-width: 7.2.0
 
+  '@adonisjs/static@1.1.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))':
+    dependencies:
+      '@adonisjs/core': 6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0)
+      serve-static: 1.15.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@adonisjs/tsconfig@1.3.0': {}
 
   '@ampproject/remapping@2.3.0':
@@ -10309,7 +10329,7 @@ snapshots:
 
   '@swc/helpers@0.5.2':
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   '@swc/types@0.1.12':
     dependencies:
@@ -11813,6 +11833,8 @@ snapshots:
     dependencies:
       ansi-colors: 4.1.3
       strip-ansi: 6.0.1
+
+  entities@4.5.0: {}
 
   env-editor@0.4.2: {}
 
