@@ -1,4 +1,4 @@
-import { QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
+import { Question, QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
 
 export class QuestionApiMapper {
   static toResponse(question: Question) {
@@ -16,6 +16,7 @@ export class QuestionApiMapper {
       id: question.id.toString(),
       type: question.type,
       points: question.points,
+      text: question.text,
     }
   }
 
@@ -31,7 +32,6 @@ export class QuestionApiMapper {
 
   private static toResponseTextHole(question: QuestionTextHole) {
     return {
-      text: question.text,
       answers: question.answers,
     }
   }

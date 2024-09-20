@@ -10,17 +10,19 @@ export class QuizBuilderTest {
     {
       type: 'qcm',
       points: 1,
+      text: 'What is the capital of France?',
       choices: [
-        new QCMChoice({ label: 'Choice 1', isCorrect: true }),
-        new QCMChoice({ label: 'Choice 2', isCorrect: false }),
+        new QCMChoice({ label: 'Paris', isCorrect: true }),
+        new QCMChoice({ label: 'London', isCorrect: false }),
       ],
     },
     {
       type: 'qcm',
       points: 1,
+      text: 'What is the capital of UK?',
       choices: [
-        new QCMChoice({ label: 'Choice 3', isCorrect: false }),
-        new QCMChoice({ label: 'Choice 4', isCorrect: true }),
+        new QCMChoice({ label: 'Paris', isCorrect: false }),
+        new QCMChoice({ label: 'London', isCorrect: true }),
       ],
     },
     {

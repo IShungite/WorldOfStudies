@@ -17,6 +17,7 @@ export class QuestionStorageMapper {
           (choice: { id: string; label: string; isCorrect: boolean }) =>
             new QCMChoice({ ...choice, id: new Id(choice.id.toString()) })
         ),
+        text: extra.text,
       })
     }
 
@@ -25,7 +26,8 @@ export class QuestionStorageMapper {
         id: id,
         type: question.type,
         points: question.points,
-        ...extra,
+        text: extra.text,
+        answers: extra.answers,
       })
     }
 
