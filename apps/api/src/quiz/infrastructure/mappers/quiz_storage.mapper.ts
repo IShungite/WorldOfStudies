@@ -9,6 +9,7 @@ export class QuizStorageMapper {
       id: new Id(quizEntity.id.toString()),
       name: quizEntity.name,
       questions: quizEntity.questions.map((question) => QuestionStorageMapper.fromLucid(question)),
+      subjectId: new Id(quizEntity.subjectId.toString()),
     })
   }
 }

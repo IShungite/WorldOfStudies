@@ -1,22 +1,32 @@
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
-import { test } from '@japa/runner'
-import { StatusCodes } from 'http-status-codes'
-import createRepositories from '#tests/utils/create_repositories'
-import emptyRepositories from '#tests/utils/empty_repositories'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
 import { questionType } from '#quiz/domain/models/quiz/question'
-import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { Subject } from '#school/domain/models/subject'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
+import createRepositories from '#tests/utils/create_repositories'
+import emptyRepositories from '#tests/utils/empty_repositories'
+import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('Quizzes - update', (group) => {
   let quizzesRepository: IQuizzesRepository
+  let subjectsRepository: ISubjectsRepository
+
+  let subject: Subject
 
   group.setup(async () => {
-    ;[quizzesRepository] = await createRepositories([IQuizzesRepository])
+    ;[quizzesRepository, subjectsRepository] = await createRepositories([
+      IQuizzesRepository,
+      ISubjectsRepository,
+    ])
   })
 
   group.each.setup(async () => {
-    await emptyRepositories([quizzesRepository])
+    await emptyRepositories([quizzesRepository, subjectsRepository])
+
+    subject = await subjectsRepository.save(new SubjectBuilderTest().build())
   })
 
   test('It should return a 400 if the quiz does not exist', async ({ client }) => {
@@ -25,7 +35,7 @@ test.group('Quizzes - update', (group) => {
   })
 
   test('It should update the name of a quiz', async ({ client }) => {
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({ name: 'Quiz 1', questions: [], subjectId: subject.id })
     await quizzesRepository.save(quiz)
 
     const response = await client.patch(`/quizzes/${quiz.id}`).json({ name: 'Quiz 2' })
@@ -35,7 +45,7 @@ test.group('Quizzes - update', (group) => {
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({ name: 'Quiz 1', questions: [], subjectId: subject.id })
     await quizzesRepository.save(quiz)
 
     const response = await client.patch(`/quizzes/${quiz.id}`).json({
@@ -54,7 +64,7 @@ test.group('Quizzes - update', (group) => {
         { isCorrect: false, label: 'Choice 2' },
       ],
     })
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [question] })
+    const quiz = new Quiz({ name: 'Quiz 1', questions: [question], subjectId: subject.id })
     await quizzesRepository.save(quiz)
 
     const updatedQuestion = QuestionFactory.create({

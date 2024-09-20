@@ -1,9 +1,9 @@
-import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
-import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import CharacterEntity from '#character/infrastructure/entities/character'
 import SchoolEntity from '#school/infrastructure/entities/school'
 import SubjectEntity from '#school/infrastructure/entities/subject'
-import CharacterEntity from '#character/infrastructure/entities/character'
+import { BaseModel, belongsTo, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
+import { DateTime } from 'luxon'
 
 export default class Promotion extends BaseModel {
   @column({ isPrimary: true })
@@ -24,8 +24,8 @@ export default class Promotion extends BaseModel {
   @belongsTo(() => SchoolEntity)
   declare school: BelongsTo<typeof SchoolEntity>
 
-  @hasMany(() => SubjectEntity)
-  declare subjects: HasMany<typeof SubjectEntity>
+  @manyToMany(() => SubjectEntity)
+  declare subjects: ManyToMany<typeof SubjectEntity>
 
   @hasMany(() => CharacterEntity)
   declare characters: HasMany<typeof CharacterEntity>

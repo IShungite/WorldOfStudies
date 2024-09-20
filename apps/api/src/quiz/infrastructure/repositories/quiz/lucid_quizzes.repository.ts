@@ -19,6 +19,7 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
       {
         id: quizId,
         name: quiz.name,
+        subjectId: Number.parseInt(quiz.subjectId.toString(), 10),
       }
     )
 

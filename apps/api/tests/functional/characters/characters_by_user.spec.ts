@@ -8,6 +8,7 @@ import { ICharactersRepository } from '#character/domain/contracts/repositories/
 import { Character } from '#character/domain/models/character'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
 
 test.group('Characters - characters by user', (group) => {
   let charactersRepository: ICharactersRepository
@@ -50,11 +51,28 @@ test.group('Characters - characters by user', (group) => {
       usersRepository.save(new UserBuilderTest().build()),
       schoolsRepository.save(school),
     ])
-    const promotionId = school.promotions[0].id
     await Promise.all([
-      charactersRepository.save(new Character({ name: 'Shun', userId: user.id, promotionId })),
-      charactersRepository.save(new Character({ name: 'Shun2', userId: user.id, promotionId })),
-      charactersRepository.save(new Character({ name: 'Bou', userId: user2.id, promotionId })),
+      charactersRepository.save(
+        new CharacterBuilderTest()
+          .withName('Shun')
+          .withUser(user)
+          .withPromotion(school.promotions[0])
+          .build()
+      ),
+      charactersRepository.save(
+        new CharacterBuilderTest()
+          .withName('Shun2')
+          .withUser(user)
+          .withPromotion(school.promotions[0])
+          .build()
+      ),
+      charactersRepository.save(
+        new CharacterBuilderTest()
+          .withName('Bou')
+          .withUser(user2)
+          .withPromotion(school.promotions[0])
+          .build()
+      ),
     ])
 
     const response = await client.get(`/users/${user.id.toString()}/characters`).loginWith(user)

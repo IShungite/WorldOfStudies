@@ -22,6 +22,7 @@ export class UpdateQuizService {
       questions: updateQuizDto.questions
         ? updateQuizDto.questions.map((q) => QuestionFactory.create(q))
         : quiz.questions,
+      subjectId: updateQuizDto.subjectId ?? quiz.subjectId,
     })
 
     return this.quizzesRepository.save(newQuiz)

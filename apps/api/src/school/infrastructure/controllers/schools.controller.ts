@@ -17,7 +17,7 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 import { SchoolMapper } from '#school/infrastructure/mappers/school.mapper'
 import { updateSchoolValidator } from '#school/infrastructure/validators/school/update_school.validator'
 import { updateSubjectValidator } from '#school/infrastructure/validators/update_subject.validator'
-import { SubjectMapper } from '#school/infrastructure/mappers/subject.mapper'
+import { SubjectApiMapper } from '#school/infrastructure/mappers/subject_api.mapper'
 import { ShopApiMapper } from '#shop/infrastructure/mappers/shop_api.mapper'
 import { updatePromotionValidator } from '#school/infrastructure/validators/update_promotion.validator'
 import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
@@ -28,10 +28,8 @@ export default class SchoolsController {
     private readonly createSchoolService: CreateSchoolService,
     private readonly getSchoolService: GetSchoolService,
     private readonly deleteSchoolService: DeleteSchoolService,
-    private readonly deleteSubjectService: DeleteSubjectService,
     private readonly updateSchoolService: UpdateSchoolService,
     private readonly getShopBySchoolService: GetShopBySchoolService,
-    private readonly updateSubjectService: UpdateSubjectService,
     private readonly deletePromotionService: DeletePromotionService,
     private readonly updatePromotionService: UpdatePromotionService,
     private readonly deleteShopService: DeleteShopService
@@ -78,57 +76,6 @@ export default class SchoolsController {
     await this.deleteSchoolService.execute(id, user)
 
     return response.noContent()
-  }
-
-  /**
-   * Delete subject within a school
-   */
-
-  async destroySubject({ params }: HttpContext) {
-    const [idSchool, idSubject, idPromotion] = await Promise.all([
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idSchool,
-      }),
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idPromotion,
-      }),
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idSubject,
-      }),
-    ])
-
-    await this.deleteSubjectService.execute(idSchool, idSubject, idPromotion)
-  }
-
-  async updateSubject({ params, request, response }: HttpContext) {
-    const [idSchool, idSubject, idPromotion] = await Promise.all([
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idSchool,
-      }),
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idPromotion,
-      }),
-      vine.validate({
-        schema: domainIdValidator,
-        data: params.idSubject,
-      }),
-    ])
-
-    const payload = await vine.validate({ schema: updateSubjectValidator, data: request.all() })
-
-    const subject = await this.updateSubjectService.execute(
-      idSchool,
-      idSubject,
-      idPromotion,
-      payload
-    )
-
-    return response.ok(SubjectMapper.toResponse(subject))
   }
 
   async getShop({ params, response }: HttpContext) {

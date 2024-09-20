@@ -4,25 +4,29 @@ import { UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
 
 export type CreateQuizDto = {
   name: string
+  subjectId: Id
   questions: CreateQuestionDto[]
 }
 
 export type UpdateQuizDto = {
   name?: string
+  subjectId?: Id
   questions?: CreateQuestionDto[]
 }
 
-type QuizProps = { id?: Id; name: string; questions: Question[] }
+type QuizProps = { id?: Id; name: string; questions: Question[]; subjectId: Id }
 
 export class Quiz {
   readonly id: Id
   readonly name: string
   readonly questions: Question[]
+  readonly subjectId: Id
 
-  constructor({ id, name, questions }: QuizProps) {
+  constructor({ id, name, questions, subjectId }: QuizProps) {
     this.id = id ?? Id.factory()
     this.name = name
     this.questions = questions
+    this.subjectId = subjectId
   }
 
   getTotalUserPoints(userAnswers: UserAnswer[]): number {

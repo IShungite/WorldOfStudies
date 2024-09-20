@@ -13,6 +13,8 @@ import { ISchoolsRepository } from '#school/domain/contracts/repositories/school
 import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -20,6 +22,7 @@ test.group('Quizzes - show', (group) => {
   let usersRepository: IUsersRepository
   let schoolsRepository: ISchoolsRepository
   let charactersRepository: ICharactersRepository
+  let subjectsRepository: ISubjectsRepository
 
   group.setup(async () => {
     ;[
@@ -28,12 +31,14 @@ test.group('Quizzes - show', (group) => {
       usersRepository,
       schoolsRepository,
       charactersRepository,
+      subjectsRepository,
     ] = await createRepositories([
       IQuizzesRepository,
       IQuizzesInstanceRepository,
       IUsersRepository,
       ISchoolsRepository,
       ICharactersRepository,
+      ISubjectsRepository,
     ])
   })
 
@@ -44,17 +49,25 @@ test.group('Quizzes - show', (group) => {
       usersRepository,
       schoolsRepository,
       charactersRepository,
+      subjectsRepository,
     ])
   })
 
   test('It should return a 422 if the payload is invalid', async ({ client }) => {
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const subject = new SubjectBuilderTest().build()
     const character = new CharacterBuilderTest()
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: subject.id,
+    })
+
+    await subjectsRepository.save(subject)
 
     await Promise.all([
       quizzesRepository.save(quiz),
@@ -73,16 +86,23 @@ test.group('Quizzes - show', (group) => {
 
   test('It should return a 400 if the quiz is already started', async ({ client }) => {
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const subject = new SubjectBuilderTest().build()
     const character = new CharacterBuilderTest()
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: subject.id,
+    })
     const quizInstance = new QuizInstance({
       quiz,
       characterId: character.id,
     })
+
+    await subjectsRepository.save(subject)
 
     await Promise.all([
       quizzesRepository.save(quiz),
@@ -107,12 +127,19 @@ test.group('Quizzes - show', (group) => {
 
   test('It should start a quiz', async ({ client, assert }) => {
     const user = new UserBuilderTest().build()
-    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 1).build()
+    const school = new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).build()
+    const subject = new SubjectBuilderTest().build()
     const character = new CharacterBuilderTest()
       .withUser(user)
       .withPromotion(school.promotions[0])
       .build()
-    const quiz = new Quiz({ name: 'Quiz 1', questions: [] })
+    const quiz = new Quiz({
+      name: 'Quiz 1',
+      questions: [],
+      subjectId: subject.id,
+    })
+
+    await subjectsRepository.save(subject)
 
     await Promise.all([
       quizzesRepository.save(quiz),

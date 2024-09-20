@@ -3,5 +3,4 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 
 export const createSubjectValidator = vine.object({
   name: vine.string().trim(),
-  promotionId: domainIdValidator,
 })

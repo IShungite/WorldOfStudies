@@ -1,15 +1,14 @@
-import { test } from '@japa/runner'
-import { StatusCodes } from 'http-status-codes'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
-import { UnauthorizedException } from '#shared/domain/exceptions/unauthorized.exception'
-import { Character } from '#character/domain/models/character'
-import { Id } from '#shared/id/domain/models/id'
-import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
-import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('Characters - update', (group) => {
   let charactersRepository: ICharactersRepository
@@ -45,11 +44,10 @@ test.group('Characters - update', (group) => {
       schoolsRepository.save(school),
     ])
 
-    const character = new Character({
-      name: 'Character 1',
-      userId: user2.id,
-      promotionId: school.promotions[0].id,
-    })
+    const character = new CharacterBuilderTest()
+      .withUser(user2)
+      .withPromotion(school.promotions[0])
+      .build()
 
     await charactersRepository.save(character)
 
@@ -83,11 +81,10 @@ test.group('Characters - update', (group) => {
       usersRepository.save(new UserBuilderTest().withId('1').build()),
       schoolsRepository.save(school),
     ])
-    const character = new Character({
-      name: 'Character 1',
-      userId: new Id('2'),
-      promotionId: school.promotions[0].id,
-    })
+    const character = new CharacterBuilderTest()
+      .withUser(user)
+      .withPromotion(school.promotions[0])
+      .build()
 
     const response = await client
       .patch(`/characters/${character.id}`)
@@ -105,11 +102,10 @@ test.group('Characters - update', (group) => {
       usersRepository.save(new UserBuilderTest().build()),
       schoolsRepository.save(school),
     ])
-    const character = new Character({
-      name: 'Character 1',
-      userId: user.id,
-      promotionId: school.promotions[0].id,
-    })
+    const character = new CharacterBuilderTest()
+      .withUser(user)
+      .withPromotion(school.promotions[0])
+      .build()
 
     await charactersRepository.save(character)
 
