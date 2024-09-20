@@ -15,6 +15,7 @@ export default class extends BaseSeeder {
         promotionId: new Id('1'),
         userId: new Id('2'),
         berries: 100,
+        skin: 'default-skin.png',
       }),
       new Character({
         id: new Id('2'),
@@ -22,6 +23,7 @@ export default class extends BaseSeeder {
         promotionId: new Id('2'),
         userId: new Id('2'),
         berries: 100,
+        skin: 'default-skin.png',
       }),
       new Character({
         id: new Id('3'),
@@ -29,6 +31,7 @@ export default class extends BaseSeeder {
         promotionId: new Id('1'),
         userId: new Id('3'),
         berries: 100,
+        skin: 'default-skin.png',
       }),
     ]
     await Promise.all(characters.map((character) => repo.save(character)))

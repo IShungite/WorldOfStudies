@@ -10,6 +10,7 @@ export class CharacterStorageMapper {
       userId: new Id(newCharacter.userId.toString()),
       promotionId: new Id(newCharacter.promotionId.toString()),
       berries: newCharacter.berries,
+      skin: newCharacter.skin,
     })
   }
 }
