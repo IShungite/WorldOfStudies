@@ -1,5 +1,5 @@
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { QCMChoice, Question, questionType } from '#quiz/domain/models/quiz/question'
+import { CreateQuestionDtoChoice, Question, questionType } from '#quiz/domain/models/quiz/question'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
 import { Id } from '#shared/id/domain/models/id'
 
@@ -13,10 +13,11 @@ export class QuestionStorageMapper {
         id: id,
         type: question.type,
         points: question.points,
-        choices: extra.choices.map(
-          (choice: { id: string; label: string; isCorrect: boolean }) =>
-            new QCMChoice({ ...choice, id: new Id(choice.id.toString()) })
-        ),
+        choices: extra.choices.map((choice: CreateQuestionDtoChoice & { id: string }) => ({
+          id: new Id(choice.id.toString()),
+          label: choice.label,
+          isCorrect: choice.isCorrect,
+        })),
         text: extra.text,
       })
     }

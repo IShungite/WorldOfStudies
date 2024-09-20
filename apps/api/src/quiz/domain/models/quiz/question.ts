@@ -19,9 +19,15 @@ type CreateQuestionDtoBase = {
   text: string
 }
 
+export type CreateQuestionDtoChoice = {
+  id?: Id
+  label: string
+  isCorrect: boolean
+}
+
 export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
   type: 'qcm'
-  choices: QCMChoice[]
+  choices: CreateQuestionDtoChoice[]
 }
 
 export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {

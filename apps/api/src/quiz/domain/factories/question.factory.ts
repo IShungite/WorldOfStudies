@@ -18,8 +18,9 @@ export class QuestionFactory {
     if (createQuestionDto.type === questionType.QCM)
       return new QuestionQcm({
         id: createQuestionDto.id,
-        choices: createQuestionDto.choices,
+        choices: createQuestionDto.choices.map((choice) => new QCMChoice(choice)),
         points: createQuestionDto.points,
+        text: createQuestionDto.text,
       })
 
     if (createQuestionDto.type === questionType.TEXT_HOLE)

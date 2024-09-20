@@ -13,7 +13,6 @@ export const createQcmContentValidator = vine.object({
 
 export const createTextHoleContentValidator = vine.object({
   type: vine.literal(questionType.TEXT_HOLE),
-  text: vine.string(),
   answers: vine.array(vine.string()),
 })
 
@@ -29,5 +28,5 @@ export const createQuestionTypeUnionValidator = vine.group([
 ])
 
 export const createQuestionValidator = vine
-  .object({ points: vine.number(), type: vine.enum(questionType) })
+  .object({ points: vine.number(), type: vine.enum(questionType), text: vine.string() })
   .merge(createQuestionTypeUnionValidator)

@@ -59,9 +59,10 @@ test.group('Quizzes - update', (group) => {
     const question = QuestionFactory.create({
       type: questionType.QCM,
       points: 1,
+      text: 'Question 1',
       choices: [
-        new QCMChoice({ isCorrect: true, label: 'Choice 1' }),
-        new QCMChoice({ isCorrect: false, label: 'Choice 2' }),
+        { isCorrect: true, label: 'Choice 1' },
+        { isCorrect: false, label: 'Choice 2' },
       ],
     })
     const quiz = new Quiz({ name: 'Quiz 1', questions: [question], subjectId: subject.id })
@@ -71,10 +72,11 @@ test.group('Quizzes - update', (group) => {
       id: question.id,
       type: questionType.QCM,
       points: 2,
+      text: 'Updated question',
       choices: [
-        new QCMChoice({ id: question.choices[0].id, isCorrect: true, label: 'Choice 11' }),
-        new QCMChoice({ id: question.choices[1].id, isCorrect: false, label: 'Choice 22' }),
-        new QCMChoice({ isCorrect: false, label: 'Choice 3' }),
+        { id: question.choices[0].id, isCorrect: true, label: 'Choice 11' },
+        { id: question.choices[1].id, isCorrect: false, label: 'Choice 22' },
+        { isCorrect: false, label: 'Choice 3' },
       ],
     })
     const updatedQuestionFormattedForRequest = {
