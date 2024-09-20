@@ -3,6 +3,7 @@ import { CharacterNotFoundException } from '#character/domain/models/character_n
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
+import { QuestionQcm } from '#quiz/domain/models/quiz/question'
 import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { UserAnswerQcm, UserAnswerTextHole } from '#quiz/domain/models/user_answer/user_answer'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
@@ -175,7 +176,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz1.questions[0].id,
-          choiceId: quiz1.questions[0].choices[0].id,
+          choiceId: (quiz1.questions[0] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance1.id,
         })
       ),
@@ -183,7 +184,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz1.questions[1].id,
-          choiceId: quiz1.questions[1].choices[1].id,
+          choiceId: (quiz1.questions[1] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance1.id,
         })
       ),
@@ -201,7 +202,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz2.questions[0].id,
-          choiceId: quiz2.questions[0].choices[1].id,
+          choiceId: (quiz2.questions[0] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance2.id,
         })
       ),
@@ -209,7 +210,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz2.questions[1].id,
-          choiceId: quiz2.questions[1].choices[0].id,
+          choiceId: (quiz2.questions[1] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance2.id,
         })
       ),
@@ -227,7 +228,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz3.questions[0].id,
-          choiceId: quiz3.questions[0].choices[0].id,
+          choiceId: (quiz3.questions[0] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance3.id,
         })
       ),
@@ -235,7 +236,7 @@ test.group('Characters - characters by user', (group) => {
         new UserAnswerQcm({
           characterId: character.id,
           questionId: quiz3.questions[1].id,
-          choiceId: quiz3.questions[1].choices[1].id,
+          choiceId: (quiz3.questions[1] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance3.id,
         })
       ),
