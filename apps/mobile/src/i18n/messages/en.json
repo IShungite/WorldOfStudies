@@ -8,5 +8,9 @@
     "password": "Password",
     "registration_successful": "Registration successful, please log in.",
     "registration_failed": "Registration failed, please try again.",
-    "login": "Login"
+    "login": "Login",
+    "character": "Character",
+    "school": "School",
+    "promotion": "Promotion",
+    "balance": "Balance"
 }
