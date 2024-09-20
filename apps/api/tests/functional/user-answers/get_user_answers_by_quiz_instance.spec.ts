@@ -17,6 +17,7 @@ import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_insta
 import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
+import { QuizBuilderTest } from '#tests/builders/quiz_builder_test'
 
 test.group('User-answers - get by quiz instance', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -72,40 +73,20 @@ test.group('User-answers - get by quiz instance', (group) => {
       .withPromotion(school.promotions[0])
       .build()
 
-    const quiz = QuizFactory.create({
-      name: 'Quiz 1',
-      subjectId: subject.id,
-      questions: [
-        {
-          type: questionType.QCM,
-          points: 1,
-          choices: [
-            { isCorrect: true, label: 'Choice 1' },
-            { isCorrect: false, label: 'Choice 2' },
-          ],
-        },
-      ],
-    })
-
-    const quiz2 = QuizFactory.create({
-      name: 'Quiz 2',
-      subjectId: subject.id,
-      questions: [
-        {
-          type: questionType.QCM,
-          points: 1,
-          choices: [{ isCorrect: true, label: 'Choice 1' }],
-        },
-      ],
-    })
+    const [quiz, quiz2] = await Promise.all([
+      quizzesRepository.save(new QuizBuilderTest().withSubject(subject).build()),
+      quizzesRepository.save(new QuizBuilderTest().withSubject(subject).build()),
+    ])
 
     const quizInstance = new QuizInstance({
       quiz,
       characterId: character.id,
+      userAnswers: [],
     })
     const quizInstance2 = new QuizInstance({
       quiz: quiz2,
       characterId: character2.id,
+      userAnswers: [],
     })
 
     const question = quiz.questions[0] as QuestionQcm

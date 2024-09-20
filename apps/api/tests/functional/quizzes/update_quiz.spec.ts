@@ -1,6 +1,6 @@
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QCMChoice, questionType } from '#quiz/domain/models/quiz/question'
 import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { Subject } from '#school/domain/models/subject'
@@ -60,8 +60,8 @@ test.group('Quizzes - update', (group) => {
       type: questionType.QCM,
       points: 1,
       choices: [
-        { isCorrect: true, label: 'Choice 1' },
-        { isCorrect: false, label: 'Choice 2' },
+        new QCMChoice({ isCorrect: true, label: 'Choice 1' }),
+        new QCMChoice({ isCorrect: false, label: 'Choice 2' }),
       ],
     })
     const quiz = new Quiz({ name: 'Quiz 1', questions: [question], subjectId: subject.id })
@@ -72,9 +72,9 @@ test.group('Quizzes - update', (group) => {
       type: questionType.QCM,
       points: 2,
       choices: [
-        { id: question.choices[0].id, isCorrect: true, label: 'Choice 11' },
-        { id: question.choices[1].id, isCorrect: false, label: 'Choice 22' },
-        { isCorrect: false, label: 'Choice 3' },
+        new QCMChoice({ id: question.choices[0].id, isCorrect: true, label: 'Choice 11' }),
+        new QCMChoice({ id: question.choices[1].id, isCorrect: false, label: 'Choice 22' }),
+        new QCMChoice({ isCorrect: false, label: 'Choice 3' }),
       ],
     })
     const updatedQuestionFormattedForRequest = {

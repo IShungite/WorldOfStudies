@@ -20,7 +20,7 @@ type CreateQuestionDtoBase = {
 
 export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
   type: 'qcm'
-  choices: { id?: Id; label: string; isCorrect: boolean }[]
+  choices: QCMChoice[]
 }
 
 export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
@@ -47,22 +47,34 @@ export abstract class Question {
   abstract getUserAnswerPoints(userAnswer: UserAnswer): number
 }
 
+export class QCMChoice {
+  readonly id: Id
+  readonly label: string
+  readonly isCorrect: boolean
+
+  constructor({ id, label, isCorrect }: { id?: Id; label: string; isCorrect: boolean }) {
+    this.id = id ?? Id.factory()
+    this.label = label
+    this.isCorrect = isCorrect
+  }
+}
+
 export class QuestionQcm extends Question {
-  readonly choices: { id: Id; label: string; isCorrect: boolean }[]
+  readonly choices: QCMChoice[]
 
   constructor({
     id,
     points,
     choices,
   }: Omit<QuestionProps, 'type'> & {
-    choices: { id?: Id; label: string; isCorrect: boolean }[]
+    choices: QCMChoice[]
   }) {
     super({ id, points, type: questionType.QCM })
-    this.choices = choices.map((choice) => ({ ...choice, id: choice.id ?? Id.factory() }))
+    this.choices = choices
   }
 
   private isCorrectChoice(choiceId: Id): boolean {
-    const choice = this.choices.find((c) => c.id === choiceId)
+    const choice = this.choices.find((c) => c.id.equals(choiceId))
 
     if (!choice) {
       throw new ChoiceNotFoundException()

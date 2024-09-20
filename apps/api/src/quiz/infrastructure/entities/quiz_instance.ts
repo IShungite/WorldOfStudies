@@ -1,8 +1,9 @@
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import QuizEntity from '#quiz/infrastructure/entities/quiz'
 import CharacterEntity from '#character/infrastructure/entities/character'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
 
 export default class QuizInstance extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +20,9 @@ export default class QuizInstance extends BaseModel {
 
   @belongsTo(() => QuizEntity)
   declare quiz: BelongsTo<typeof QuizEntity>
+
+  @hasMany(() => UserAnswerEntity)
+  declare userAnswers: HasMany<typeof UserAnswerEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

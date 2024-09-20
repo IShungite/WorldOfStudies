@@ -8,6 +8,7 @@ import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { QuizBuilderTest } from '#tests/builders/quiz_builder_test'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
@@ -72,22 +73,7 @@ test.group('User-answers - store', (group) => {
       .withPromotion(school.promotions[0])
       .build()
 
-    const quiz = QuizFactory.create({
-      subjectId: subject.id,
-      name: 'Quiz 1',
-      questions: [
-        {
-          type: questionType.QCM,
-          points: 1,
-          choices: [
-            { isCorrect: true, label: 'Choice 1' },
-            { isCorrect: false, label: 'Choice 2' },
-          ],
-        },
-      ],
-    })
-
-    await subjectRepository.save(subject)
+    const quiz = await quizzesRepository.save(new QuizBuilderTest().withSubject(subject).build())
 
     await Promise.all([
       usersRepository.save(user),
@@ -100,6 +86,7 @@ test.group('User-answers - store', (group) => {
       new QuizInstance({
         quiz,
         characterId: character.id,
+        userAnswers: [],
       })
     )
 

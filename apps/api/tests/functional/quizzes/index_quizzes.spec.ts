@@ -9,6 +9,7 @@ import { Id } from '#shared/id/domain/models/id'
 import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
+import { Subject } from '#school/domain/models/subject'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository

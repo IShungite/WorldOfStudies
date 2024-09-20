@@ -25,11 +25,21 @@ export class LucidQuizzesInstanceRepository implements IQuizzesInstanceRepositor
   async getByQuizIdAndCharacterId(quizId: Id, characterId: Id): Promise<QuizInstance | null> {
     const quizInstance = await QuizInstanceEntity.query()
       .preload('quiz', (q) => q.preload('questions'))
+      .preload('userAnswers')
       .where('quizId', quizId.toString())
       .where('characterId', characterId.toString())
       .first()
 
     return quizInstance ? QuizInstanceStorageMapper.fromLucid(quizInstance) : null
+  }
+
+  async getQuizzesByCharacterId(characterId: Id): Promise<QuizInstance[]> {
+    const quizInstances = await QuizInstanceEntity.query()
+      .preload('quiz', (q) => q.preload('questions'))
+      .preload('userAnswers')
+      .where('characterId', characterId.toString())
+
+    return quizInstances.map((quizInstance) => QuizInstanceStorageMapper.fromLucid(quizInstance))
   }
 
   async empty(): Promise<void> {
