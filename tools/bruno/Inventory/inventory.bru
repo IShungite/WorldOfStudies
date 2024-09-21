@@ -1,0 +1,15 @@
+meta {
+  name: inventory
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{host}}/characters/1/inventory
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
