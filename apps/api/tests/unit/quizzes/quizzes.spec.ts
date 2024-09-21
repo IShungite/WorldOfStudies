@@ -9,6 +9,7 @@ test.group('Quizzes', () => {
   const questionQCM = QuestionFactory.create({
     id: new Id('1'),
     type: questionType.QCM,
+    text: 'Question 1',
     points: 2,
     choices: [
       {
@@ -36,6 +37,7 @@ test.group('Quizzes', () => {
     id: new Id('1'),
     name: 'My Exo',
     questions: [questionQCM, questionTextHole],
+    subjectId: new Id('1'),
   })
 
   test('It should return the good total amount of points', async ({ assert }) => {
@@ -57,6 +59,6 @@ test.group('Quizzes', () => {
       quizInstanceId: quiz.id,
     })
 
-    assert.equal(quiz.getTotalUserPoints([userAnswer1, userAnswers2]), 3)
+    assert.equal(quiz.getTotalPoints([userAnswer1, userAnswers2]), 3)
   })
 })

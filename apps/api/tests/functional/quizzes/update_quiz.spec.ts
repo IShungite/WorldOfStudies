@@ -1,6 +1,6 @@
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QCMChoice, questionType } from '#quiz/domain/models/quiz/question'
 import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { Subject } from '#school/domain/models/subject'
@@ -59,6 +59,7 @@ test.group('Quizzes - update', (group) => {
     const question = QuestionFactory.create({
       type: questionType.QCM,
       points: 1,
+      text: 'Question 1',
       choices: [
         { isCorrect: true, label: 'Choice 1' },
         { isCorrect: false, label: 'Choice 2' },
@@ -71,6 +72,7 @@ test.group('Quizzes - update', (group) => {
       id: question.id,
       type: questionType.QCM,
       points: 2,
+      text: 'Updated question',
       choices: [
         { id: question.choices[0].id, isCorrect: true, label: 'Choice 11' },
         { id: question.choices[1].id, isCorrect: false, label: 'Choice 22' },

@@ -29,15 +29,19 @@ export class Quiz {
     this.subjectId = subjectId
   }
 
-  getTotalUserPoints(userAnswers: UserAnswer[]): number {
+  getTotalPoints(userAnswers: UserAnswer[]): number {
     return this.questions.reduce((total, question) => {
-      const userAnswerForThisQuestion = userAnswers.find(
-        (userAnswer) => userAnswer.questionId === question.id
+      const userAnswerForThisQuestion = userAnswers.find((userAnswer) =>
+        userAnswer.questionId.equals(question.id)
       )
 
       if (!userAnswerForThisQuestion) return total
 
       return total + question.getUserAnswerPoints(userAnswerForThisQuestion)
     }, 0)
+  }
+
+  getMaxPoints(): number {
+    return this.questions.reduce((total, question) => total + question.points, 0)
   }
 }

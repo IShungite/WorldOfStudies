@@ -1,12 +1,7 @@
-import { Id } from '#shared/id/domain/models/id'
-import {
-  Question,
-  QuestionQcm,
-  QuestionTextHole,
-  questionType,
-} from '#quiz/domain/models/quiz/question'
-import { InvalidQuestionTypeException } from '#quiz/domain/models/quiz/exceptions/invalid_question_type.exception'
+import { QuestionFactory } from '#quiz/domain/factories/question.factory'
+import { CreateQuestionDtoChoice, Question, questionType } from '#quiz/domain/models/quiz/question'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
+import { Id } from '#shared/id/domain/models/id'
 
 export class QuestionStorageMapper {
   static fromLucid(question: QuestionEntity): Question {
@@ -14,22 +9,29 @@ export class QuestionStorageMapper {
     const id = new Id(question.id.toString())
 
     if (question.type === questionType.QCM) {
-      return new QuestionQcm({
+      return QuestionFactory.create({
         id: id,
+        type: question.type,
         points: question.points,
-        choices: extra.choices,
+        choices: extra.choices.map((choice: CreateQuestionDtoChoice & { id: string }) => ({
+          id: new Id(choice.id.toString()),
+          label: choice.label,
+          isCorrect: choice.isCorrect,
+        })),
+        text: extra.text,
       })
     }
 
     if (question.type === questionType.TEXT_HOLE) {
-      return new QuestionTextHole({
+      return QuestionFactory.create({
         id: id,
+        type: question.type,
         points: question.points,
         text: extra.text,
         answers: extra.answers,
       })
     }
 
-    throw new InvalidQuestionTypeException()
+    throw new Error('Invalid question type')
   }
 }

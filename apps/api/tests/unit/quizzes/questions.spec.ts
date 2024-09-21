@@ -9,6 +9,7 @@ test.group('QCM Question', () => {
     id: new Id('1'),
     type: questionType.QCM,
     points: 2,
+    text: 'Question 1',
     choices: [
       {
         id: new Id('1'),

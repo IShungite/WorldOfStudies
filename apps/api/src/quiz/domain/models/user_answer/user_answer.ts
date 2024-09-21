@@ -54,7 +54,7 @@ export class UserAnswerQcm extends UserAnswer {
     characterId,
     choiceId,
   }: Omit<UserAnswerProps, 'type'> & { choiceId: Id }) {
-    super({ id, quizInstanceId, questionId, characterId: characterId, type: questionType.QCM })
+    super({ id, quizInstanceId, questionId, characterId, type: questionType.QCM })
     this.choiceId = choiceId
   }
 }

@@ -9,11 +9,13 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+
+const GetCharacterStatsController = () =>
+  import('#character/infrastructure/controllers/get_character_stats.controller')
 const GetCharacterInventoryController = () =>
   import('#inventory/infrastructure/controllers/get_character_inventory.controller')
 const PurchaseShopProductController = () =>
   import('#shop/infrastructure/controllers/purchase_shop_product.controller')
-
 const StartQuizController = () => import('#quiz/infrastructure/controllers/start_quiz.controller')
 const StoreUserAnswerController = () =>
   import('#quiz/infrastructure/controllers/store_user_answer.controller')
@@ -132,6 +134,7 @@ router
       .only(['store', 'update', 'destroy'])
       .where('id', onlyNumbersRegex)
     router.get('characters/:id/inventory', [GetCharacterInventoryController])
+    router.get('characters/:id/stats', [GetCharacterStatsController])
 
     router.get('users/:id/characters', [CharactersController, 'charactersByUserId'])
 

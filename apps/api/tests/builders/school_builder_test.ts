@@ -36,4 +36,14 @@ export class SchoolBuilderTest {
     )
     return this
   }
+
+  withSubjects(subjects: Subject[]): this {
+    this._promotions = this._promotions.map((promotion) => {
+      return new Promotion({
+        ...promotion,
+        subjects: subjects,
+      })
+    })
+    return this
+  }
 }

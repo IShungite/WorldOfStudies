@@ -2,6 +2,7 @@ import {
   CreateQuestionDto,
   CreateQuestionDtoQcm,
   CreateQuestionDtoTextHole,
+  QCMChoice,
   Question,
   QuestionQcm,
   QuestionTextHole,
@@ -14,7 +15,13 @@ export class QuestionFactory {
   static create(createQuestionDto: CreateQuestionDtoTextHole): QuestionTextHole
   static create(createQuestionDto: CreateQuestionDto): Question
   static create(createQuestionDto: CreateQuestionDto): Question {
-    if (createQuestionDto.type === questionType.QCM) return new QuestionQcm(createQuestionDto)
+    if (createQuestionDto.type === questionType.QCM)
+      return new QuestionQcm({
+        id: createQuestionDto.id,
+        choices: createQuestionDto.choices.map((choice) => new QCMChoice(choice)),
+        points: createQuestionDto.points,
+        text: createQuestionDto.text,
+      })
 
     if (createQuestionDto.type === questionType.TEXT_HOLE)
       return new QuestionTextHole(createQuestionDto)

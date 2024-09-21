@@ -11,7 +11,7 @@ export default class Subject extends BaseModel {
   declare name: string
 
   @manyToMany(() => PromotionEntity)
-  declare subjects: ManyToMany<typeof PromotionEntity>
+  declare promotions: ManyToMany<typeof PromotionEntity>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

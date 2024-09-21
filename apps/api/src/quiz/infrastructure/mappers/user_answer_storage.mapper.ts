@@ -18,7 +18,7 @@ export class UserAnswerStorageMapper {
     if (userAnswerEntity.type === questionType.QCM) {
       return new UserAnswerQcm({
         id: id,
-        choiceId: new Id(extra.choiceId),
+        choiceId: new Id(extra.choiceId.toString()),
         characterId,
         questionId,
         quizInstanceId,

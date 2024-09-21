@@ -25,6 +25,14 @@ export class LucidSubjectsRepository implements ISubjectsRepository {
     return subject ? SubjectStorageMapper.fromLucid(subject) : null
   }
 
+  async getByPromotionId(promotionId: Id): Promise<Subject[]> {
+    const subjects = await SubjectEntity.query().preload('promotions', (query) =>
+      query.where('promotion_id', promotionId.toString())
+    )
+
+    return subjects.map((subject) => SubjectStorageMapper.fromLucid(subject))
+  }
+
   async delete(subjectId: Id): Promise<void> {
     await SubjectEntity.query().where('id', subjectId.toString()).delete()
   }
