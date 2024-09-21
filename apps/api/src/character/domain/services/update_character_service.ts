@@ -34,6 +34,7 @@ export class UpdateCharacterService {
     const newCharacter = new Character({
       ...character,
       name: updateCharacterDto.name ?? character.name,
+      berries: updateCharacterDto.berries ?? character.berries,
     })
 
     return this.charactersRepository.save(newCharacter)

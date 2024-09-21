@@ -16,6 +16,7 @@ export type CreateCharacterDto = {
 
 export type UpdateCharacterDto = {
   name?: string
+  berries?: number
 }
 
 export class Character {
