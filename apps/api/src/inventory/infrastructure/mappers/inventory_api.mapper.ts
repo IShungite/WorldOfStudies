@@ -8,6 +8,9 @@ export class InventoryApiMapper {
         items: inventory.items.map((item) => ({
           id: item.id.toString(),
           name: item.item.name,
+          type: item.item.type,
+          icon: item.item.icon,
+          image: item.item.image,
         })),
       },
     }
