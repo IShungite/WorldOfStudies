@@ -83,9 +83,15 @@ export default function TabLayout() {
         <Tabs.Screen
           name="statistics"
           options={{
-            title: 'Statistics',
-            // hidden tab
-            href: null,
+            tabBarLabel,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/exercices.webp`)}
+                label="Statistiques"
+                withBorderLeft={false}
+              />
+            ),
           }}
         />
       </Tabs>

@@ -186,6 +186,12 @@ importers:
       react-native-gesture-handler:
         specifier: ~2.16.1
         version: 2.16.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
+      react-native-gifted-charts:
+        specifier: ^1.4.41
+        version: 1.4.41(expo-linear-gradient@13.0.2(expo@51.0.31(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))))(react-native-linear-gradient@2.8.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1))(react-native-svg@15.6.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
+      react-native-linear-gradient:
+        specifier: ^2.8.3
+        version: 2.8.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
       react-native-reanimated:
         specifier: ~3.10.1
         version: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
@@ -4147,6 +4153,12 @@ packages:
   getopts@2.3.0:
     resolution: {integrity: sha512-5eDf9fuSXwxBL6q5HX+dhDj+dslFGWzU5thZ9kNKUkcPtaPdatmUFKwHFrLb/uf/WpA4BHET+AX3Scl56cAjpA==}
 
+  gifted-charts-core@0.1.41:
+    resolution: {integrity: sha512-17xzJ0kJw+BVbxX7J1JmDHHJt/Yp1n+h0sTrC6eK4rQg9Hzw0EC/MJcv5fLJzg6dkVo+3wQ3anWXL5itapP+nQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   github-from-package@0.0.0:
     resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
 
@@ -6043,10 +6055,30 @@ packages:
       react: '*'
       react-native: '*'
 
+  react-native-gifted-charts@1.4.41:
+    resolution: {integrity: sha512-UQ3E6ork24VFVTOhgAAbGkGplYB89mRjNEEPJKRAzwSYoJ1Gjtt1pleuY7OKpMb5TQychreFBA2oVBrwTLdeKw==}
+    peerDependencies:
+      expo-linear-gradient: '*'
+      react: '*'
+      react-native: '*'
+      react-native-linear-gradient: '*'
+      react-native-svg: '*'
+    peerDependenciesMeta:
+      expo-linear-gradient:
+        optional: true
+      react-native-linear-gradient:
+        optional: true
+
   react-native-helmet-async@2.0.4:
     resolution: {integrity: sha512-m3CkXWss6B1dd6mCMleLpzDCJJGGaHOLQsUzZv8kAASJmMfmVT4d2fx375iXKTRWT25ThBfae3dECuX5cq/8hg==}
     peerDependencies:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
+
+  react-native-linear-gradient@2.8.3:
+    resolution: {integrity: sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   react-native-ratings@8.1.0:
     resolution: {integrity: sha512-+QOJ4G3NjVkI1D+tk4EGx1dCvVfbD2nQdkrj9cXrcAoEiwmbep4z4bZbCKmWMpQ5h2dqbxABU8/eBnbDmvAc3g==}
@@ -11967,6 +11999,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
+    dependencies:
+      debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
+      eslint: 8.57.0
+      eslint-import-resolver-node: 0.3.9
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-plugin-es@3.0.1(eslint@8.57.0):
     dependencies:
       eslint: 8.57.0
@@ -12010,7 +12052,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
       hasown: 2.0.1
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -12763,6 +12805,11 @@ snapshots:
   getenv@1.0.0: {}
 
   getopts@2.3.0: {}
+
+  gifted-charts-core@0.1.41(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1)
 
   github-from-package@0.0.0: {}
 
@@ -14788,12 +14835,27 @@ snapshots:
       react: 18.3.1
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1)
 
+  react-native-gifted-charts@1.4.41(expo-linear-gradient@13.0.2(expo@51.0.31(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))))(react-native-linear-gradient@2.8.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1))(react-native-svg@15.6.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1):
+    dependencies:
+      gifted-charts-core: 0.1.41(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1)
+      react-native-svg: 15.6.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
+    optionalDependencies:
+      expo-linear-gradient: 13.0.2(expo@51.0.31(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2)))
+      react-native-linear-gradient: 2.8.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1)
+
   react-native-helmet-async@2.0.4(react@18.3.1):
     dependencies:
       invariant: 2.2.4
       react: 18.3.1
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
+
+  react-native-linear-gradient@2.8.3(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1)
 
   react-native-ratings@8.1.0(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.24.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.3.1))(react@18.3.1):
     dependencies:
