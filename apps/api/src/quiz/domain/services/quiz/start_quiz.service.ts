@@ -19,6 +19,7 @@ export class StartQuizService {
     const quizInstance = new QuizInstance({
       quiz,
       characterId,
+      userAnswers: [],
     })
     await this.quizzesInstanceRepository.save(quizInstance)
 

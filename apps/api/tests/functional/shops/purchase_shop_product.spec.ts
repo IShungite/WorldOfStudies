@@ -18,6 +18,7 @@ import { Price } from '#shop/domain/models/price'
 import { Promotion } from '#school/domain/models/promotion'
 import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
 import { Inventory } from '#inventory/domain/models/inventory'
+import { PurchaseProductResponse } from '@world-of-studies/api-types'
 
 test.group('Shops - purchase product', (group) => {
   let usersRepository: IUsersRepository
@@ -204,5 +205,45 @@ test.group('Shops - purchase product', (group) => {
     response.assertStatus(StatusCodes.OK)
     assert.lengthOf(characterItems, 1)
     assert.equal(characterItems[0].item.id.toString(), item.id.toString())
+  })
+
+  test('It should decrease the character berries', async ({ client, assert }) => {
+    const item = new Item({
+      name: 'Item 1',
+    })
+    const shopProduct = new ShopProduct({
+      item: item,
+      price: new Price(5),
+    })
+    const shop = new Shop({
+      schoolId: school.id,
+      categories: [
+        new ShopCategory({
+          name: 'Category 1',
+          products: [shopProduct],
+        }),
+      ],
+    })
+
+    await Promise.all([itemsRepository.save(item), schoolsRepository.save(school)])
+    await shopsRepository.save(shop)
+
+    const character = await charactersRepository.save(
+      new CharacterBuilderTest().withUser(user).withPromotion(promotion).withBerries(10).build()
+    )
+    await inventoriesRepository.saveForCharacter(character.id, new Inventory({ items: [] }))
+
+    const payload = {
+      characterId: character.id.toString(),
+    }
+
+    const response = await client
+      .post(`/shops/${shop.id.toString()}/products/${shopProduct.id.toString()}/purchase`)
+      .json(payload)
+      .loginWith(user)
+
+    const body: PurchaseProductResponse = response.body()
+
+    assert.equal(body.result.berries, character.berries - shopProduct.price.toNumber())
   })
 })
