@@ -8,7 +8,6 @@ import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
 export default function SubjectStatistics({ name, quizzes, average }: Readonly<SubjectStat>) {
-  // Sort quizzes by date (newest first) and take the 5 most recent
   const recentQuizzes = quizzes
     .slice()
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
