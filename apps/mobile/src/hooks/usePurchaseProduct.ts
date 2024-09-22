@@ -1,3 +1,4 @@
+import { PurchaseProductResponse } from '@world-of-studies/api-types/src/shop'
 import { useMutation } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
@@ -8,7 +9,7 @@ export const usePurchaseProduct = () => {
       const response = await kyInstance.post(`shops/${shopId}/products/${productId}/purchase`, {
         json: { characterId },
       })
-      return response.json() as Promise<{ success: boolean }>
+      return response.json() as Promise<PurchaseProductResponse>
     }
   )
 }

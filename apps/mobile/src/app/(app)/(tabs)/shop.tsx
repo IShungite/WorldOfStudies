@@ -12,8 +12,7 @@ import { usePurchaseProduct } from '@/hooks/usePurchaseProduct'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
-  const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse || null
+  const [selectedCharacter, setSelectedCharacter] = useAtom(selectedCharacterAtom)
 
   const purchaseMutation = usePurchaseProduct()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
@@ -42,13 +41,20 @@ const ShopScreen = () => {
     setOverlayVisible(true)
   }
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (selectedProduct && selectedCharacter) {
-      purchaseMutation.mutate({
-        shopId: selectedCharacter.schoolId,
-        productId: selectedProduct.id,
-        characterId: selectedCharacter.id,
-      })
+      purchaseMutation.mutate(
+        {
+          shopId: selectedCharacter.schoolId,
+          productId: selectedProduct.id,
+          characterId: selectedCharacter.id,
+        },
+        {
+          onSuccess: (data) => {
+            setSelectedCharacter({ ...selectedCharacter, berries: data.result.berries })
+          },
+        }
+      )
       setOverlayVisible(false)
     }
   }
