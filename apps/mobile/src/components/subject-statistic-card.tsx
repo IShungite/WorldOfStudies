@@ -8,7 +8,13 @@ import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
 export default function SubjectStatistics({ name, quizzes, average }: Readonly<SubjectStat>) {
-  const chartData = quizzes.map((quiz) => ({
+  // Sort quizzes by date (newest first) and take the 5 most recent
+  const recentQuizzes = quizzes
+    .slice()
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5)
+
+  const chartData = recentQuizzes.map((quiz) => ({
     value: quiz.score,
     label: new Date(quiz.date).toLocaleDateString(undefined, {
       month: '2-digit',
@@ -20,7 +26,8 @@ export default function SubjectStatistics({ name, quizzes, average }: Readonly<S
     <GradientContainer style={styles.cardContainer}>
       <Card title={name}>
         <View style={styles.cardContent}>
-          {quizzes.map((quiz) => (
+          <Text style={styles.quizText}>Derniers quiz:</Text>
+          {recentQuizzes.map((quiz) => (
             <Text key={quiz.name} style={styles.quizText}>
               {quiz.name}: {quiz.score}/20
             </Text>
@@ -36,7 +43,8 @@ export default function SubjectStatistics({ name, quizzes, average }: Readonly<S
             thickness={3}
             maxValue={20}
             color="#bfd4ff"
-            dataPointsColor="#fff"
+            dataPointsColor1="#fff"
+            textColor="#fff"
             isAnimated
             curved
             showValuesAsDataPointsText
