@@ -29,7 +29,7 @@ const Profile = () => {
         .get(`characters/${selectedCharacter.id}/inventory`)
         .json()) as CharacterInventoryResponse
       if (response) {
-        setOwnedSkins(response.result.items)
+        setOwnedSkins(response.result.items.filter((item) => item.type === 'SKIN'))
       }
     } catch (error) {
       alert(error)
