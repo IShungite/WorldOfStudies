@@ -33,3 +33,7 @@ docker exec -itu 1000 world-of-studies-api pnpm  --filter=api migration:run
 - Run migrations: `node ace migration:run` (in the docker container)
 - Create validator: `node ace make:validator userValidator`
 - List all commands `node ace list`
+
+## Credits
+
+[Aléatoire icônes créées par Freepik - Flaticon](https://www.flaticon.com/fr/icones-gratuites/aleatoire)
