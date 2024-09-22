@@ -40,6 +40,7 @@ export default class QuizzesController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
+    const all = request.all()
     const payload = await vine.validate({ schema: createQuizValidator, data: request.all() })
 
     const quiz = await this.createQuizService.execute(payload)

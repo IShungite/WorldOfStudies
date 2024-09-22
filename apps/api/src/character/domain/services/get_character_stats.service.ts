@@ -27,7 +27,7 @@ export default class GetCharacterStatsService {
 
       const quizStats: QuizStat[] = quizzesInSubject.map((quiz) => ({
         name: quiz.quiz.name,
-        score: (20 * quiz.getTotalPoints()) / quiz.getMaxPoints(),
+        score: (20 * quiz.getTotalUserPoints()) / quiz.getMaxPoints(),
         date: new Date().toString(),
       }))
 

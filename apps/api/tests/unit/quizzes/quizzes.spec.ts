@@ -59,6 +59,6 @@ test.group('Quizzes', () => {
       quizInstanceId: quiz.id,
     })
 
-    assert.equal(quiz.getTotalPoints([userAnswer1, userAnswers2]), 3)
+    assert.equal(quiz.getTotalUserPoints([userAnswer1, userAnswers2]), 3)
   })
 })
