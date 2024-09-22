@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
-import { LineChart } from 'react-native-gifted-charts'
 
 import Card from '@/components/shared/Card'
 import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
+import SubjectStatistics from '@/components/subject-statistic-card'
 import { useStatistics } from '@/hooks/useStatistics'
 
 export default function Statistics() {
@@ -32,47 +32,9 @@ export default function Statistics() {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.title}>Vos statistiques</Text>
 
-      {subjects.map((subject) => {
-        const chartData = subject.quizzes.map((quiz) => ({
-          value: quiz.score,
-          label: new Date(quiz.date).toLocaleDateString(undefined, {
-            month: '2-digit',
-            day: 'numeric',
-          }),
-        }))
-
-        return (
-          <GradientContainer key={subject.name} style={styles.cardContainer}>
-            <Card title={subject.name}>
-              <View style={styles.cardContent}>
-                {subject.quizzes.map((quiz) => (
-                  <Text key={quiz.name} style={styles.quizText}>
-                    {quiz.name}: {quiz.score}/20
-                  </Text>
-                ))}
-                <Text style={styles.subjectAverage}>
-                  {subject.name} Moyenne: {subject.average}/20
-                </Text>
-
-                <LineChart
-                  data={chartData}
-                  width={280}
-                  height={200}
-                  thickness={3}
-                  maxValue={20}
-                  color="#bfd4ff"
-                  dataPointsColor="#fff"
-                  isAnimated
-                  curved
-                  showValuesAsDataPointsText
-                  xAxisLabelTextStyle={styles.xAxisText}
-                  yAxisTextStyle={styles.xAxisText}
-                />
-              </View>
-            </Card>
-          </GradientContainer>
-        )
-      })}
+      {subjects.map((subject) => (
+        <SubjectStatistics key={subject.name} name={subject.name} quizzes={subject.quizzes} average={subject.average} />
+      ))}
 
       <GradientContainer style={styles.generalCardContainer}>
         <Card title="Moyenne générale">
@@ -95,27 +57,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  cardContainer: {
-    marginBottom: 16,
-    overflow: 'hidden',
-  },
-  cardContent: {
-    marginVertical: 10,
-    marginRight: 30,
-  },
-  quizText: {
-    fontSize: 18,
-    marginBottom: 5,
-    color: '#fff',
-    marginLeft: 10,
-  },
-  subjectAverage: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginTop: 10,
-    color: '#fff',
-    marginLeft: 10,
-  },
   generalCardContainer: {
     marginTop: 20,
   },
@@ -129,9 +70,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  xAxisText: {
-    fontSize: 12,
-    color: '#fff',
   },
 })
