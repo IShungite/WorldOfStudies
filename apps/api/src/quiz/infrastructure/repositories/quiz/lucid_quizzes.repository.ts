@@ -44,9 +44,10 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     return quiz ? QuizStorageMapper.fromLucid(quiz) : null
   }
 
-  async getAll(pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
+  async getAll(quizType: QuizType, pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
     const quizzes = await QuizEntity.query()
       .preload('questions')
+      .where('type', quizType)
       .orderBy('id', 'asc')
       .paginate(pagination.page, pagination.perPage)
 

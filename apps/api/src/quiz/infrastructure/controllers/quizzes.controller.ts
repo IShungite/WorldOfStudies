@@ -13,6 +13,7 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 import { updateQuizValidator } from '#quiz/infrastructure/validators/update_quiz.validator'
 import { PaginationApiMapper } from '#shared/pagination/infrastructure/mappers/pagination_api.mapper'
 import { QuizApiMapper } from '#quiz/infrastructure/mappers/quiz_api.mapper'
+import { quizTypeValidator } from '#quiz/infrastructure/validators/quiz_type.validator'
 
 @inject()
 export default class QuizzesController {
@@ -28,8 +29,11 @@ export default class QuizzesController {
    * Display a list of resource
    */
   async index({ request, response }: HttpContext) {
-    const pagination = await vine.validate({ schema: paginationValidator, data: request.qs() })
-    const data = await this.getQuizzesService.execute(new PaginationRequest(pagination))
+    const { type: typeQS, ...paginationQS } = request.qs()
+    const pagination = await vine.validate({ schema: paginationValidator, data: paginationQS })
+    const quizType = await vine.validate({ schema: quizTypeValidator, data: typeQS })
+
+    const data = await this.getQuizzesService.execute(quizType, new PaginationRequest(pagination))
 
     return response.ok(
       PaginationApiMapper.toResponse(data, (quiz) => QuizApiMapper.toResponse(quiz), request.url())
@@ -40,7 +44,6 @@ export default class QuizzesController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const all = request.all()
     const payload = await vine.validate({ schema: createQuizValidator, data: request.all() })
 
     const quiz = await this.createQuizService.execute(payload)
