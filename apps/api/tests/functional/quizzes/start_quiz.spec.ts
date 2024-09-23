@@ -1,21 +1,20 @@
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
-import { test } from '@japa/runner'
-import { StatusCodes } from 'http-status-codes'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
+import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { QuizInstanceBuilderTest } from '#tests/builders/quiz_instance_builder_test'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
+import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
-import { UserBuilderTest } from '#tests/builders/user_builder_test'
-import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
-import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
-import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
-import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
-import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
-import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
-import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
-import { QuizInstanceBuilderTest } from '#tests/builders/quiz_instance_builder_test'
+import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -156,15 +155,13 @@ test.group('Quizzes - show', (group) => {
       })
       .loginWith(user)
 
+    const body = response.body()
+
     response.assertStatus(StatusCodes.OK)
-    assert.containsSubset(response.body().result, {
-      quizId: quiz.id.toString(),
-      characterId: character.id.toString(),
-    })
-    const quizInstance = await quizzesInstanceRepository.getByQuizIdAndCharacterId(
-      quiz.id,
-      character.id
-    )
+
+    assert.isNotNull(body.result.quizInstanceId)
+
+    const quizInstance = await quizzesInstanceRepository.getById(body.result.quizInstanceId)
     assert.isNotNull(quizInstance)
   })
 })

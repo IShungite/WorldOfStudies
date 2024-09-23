@@ -1,7 +1,5 @@
-import { Id } from '#shared/id/domain/models/id'
-import { School } from '#school/domain/models/school'
-import { Promotion } from '#school/domain/models/promotion'
 import { Subject } from '#school/domain/models/subject'
+import { Id } from '#shared/id/domain/models/id'
 
 export class SubjectBuilderTest {
   private _id = Id.factory()

@@ -1,14 +1,15 @@
 import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
-import { CreateQuestionDto, QCMChoice } from '#quiz/domain/models/quiz/question'
+import { CreateQuestionDto } from '#quiz/domain/models/quiz/question'
 import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import { Subject } from '#school/domain/models/subject'
 import { Id } from '#shared/id/domain/models/id'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export class QuizBuilderTest {
   private _name = 'Quiz 1'
   private _questions: CreateQuestionDto[] = [
     {
-      type: 'qcm',
+      type: QuestionType.QCM,
       points: 1,
       text: 'What is the capital of France?',
       choices: [
@@ -17,7 +18,7 @@ export class QuizBuilderTest {
       ],
     },
     {
-      type: 'qcm',
+      type: QuestionType.QCM,
       points: 1,
       text: 'What is the capital of UK?',
       choices: [
@@ -26,7 +27,7 @@ export class QuizBuilderTest {
       ],
     },
     {
-      type: 'text-hole',
+      type: QuestionType.TEXT_HOLE,
       points: 1,
       text: 'The capital of France is @@',
       answers: ['Paris'],

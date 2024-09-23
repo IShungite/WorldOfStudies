@@ -1,6 +1,5 @@
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { QCMChoice, questionType } from '#quiz/domain/models/quiz/question'
 import { Quiz } from '#quiz/domain/models/quiz/quiz'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { Subject } from '#school/domain/models/subject'
@@ -8,6 +7,7 @@ import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import { test } from '@japa/runner'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 import { StatusCodes } from 'http-status-codes'
 
 test.group('Quizzes - update', (group) => {
@@ -57,7 +57,7 @@ test.group('Quizzes - update', (group) => {
 
   test('It should return a 200 and update the questions of a quiz', async ({ client }) => {
     const question = QuestionFactory.create({
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       points: 1,
       text: 'Question 1',
       choices: [
@@ -70,7 +70,7 @@ test.group('Quizzes - update', (group) => {
 
     const updatedQuestion = QuestionFactory.create({
       id: question.id,
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       points: 2,
       text: 'Updated question',
       choices: [

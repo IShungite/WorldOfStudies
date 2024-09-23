@@ -11,6 +11,7 @@ export type SubjectStat = {
 
 export type QuizStat = {
   name: string;
-  score: number;
   date: string;
+  score: number;
+  maxScore: number;
 };

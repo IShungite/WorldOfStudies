@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "exports": {
-      ".": "./src/index.ts"
+    ".": "./src/index.ts"
   },
   "scripts": {
     "lint": "eslint ."

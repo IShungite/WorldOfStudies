@@ -1,16 +1,15 @@
-import { Id } from '#shared/id/domain/models/id'
 import { ChoiceNotFoundException } from '#quiz/domain/models/quiz/exceptions/choice_not_found.exception'
 import {
   UserAnswer,
   UserAnswerQcm,
   UserAnswerTextHole,
 } from '#quiz/domain/models/user_answer/user_answer'
+import { Id } from '#shared/id/domain/models/id'
 
-export const questionType = {
-  QCM: 'qcm',
-  TEXT_HOLE: 'text-hole',
-} as const
-export type QuestionType = (typeof questionType)[keyof typeof questionType]
+export enum QuestionType {
+  QCM = 'qcm',
+  TEXT_HOLE = 'text-hole',
+}
 
 type CreateQuestionDtoBase = {
   id?: Id
@@ -26,12 +25,12 @@ export type CreateQuestionDtoChoice = {
 }
 
 export type CreateQuestionDtoQcm = CreateQuestionDtoBase & {
-  type: 'qcm'
+  type: QuestionType.QCM
   choices: CreateQuestionDtoChoice[]
 }
 
 export type CreateQuestionDtoTextHole = CreateQuestionDtoBase & {
-  type: 'text-hole'
+  type: QuestionType.TEXT_HOLE
   answers: string[]
 }
 
@@ -78,7 +77,7 @@ export class QuestionQcm extends Question {
   }: Omit<QuestionProps, 'type'> & {
     choices: QCMChoice[]
   }) {
-    super({ id, points, type: questionType.QCM, text })
+    super({ id, points, type: QuestionType.QCM, text })
     this.choices = choices
   }
 
@@ -108,7 +107,7 @@ export class QuestionTextHole extends Question {
   readonly answers: string[]
 
   constructor({ id, points, text, answers }: Omit<QuestionProps, 'type'> & { answers: string[] }) {
-    super({ id, points, type: questionType.TEXT_HOLE, text })
+    super({ id, points, type: QuestionType.TEXT_HOLE, text })
     this.answers = answers
   }
 

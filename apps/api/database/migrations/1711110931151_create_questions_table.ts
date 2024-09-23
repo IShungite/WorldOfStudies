@@ -1,5 +1,5 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export default class extends BaseSchema {
   protected tableName = 'questions'
@@ -8,7 +8,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.enum('type', [questionType.QCM, questionType.TEXT_HOLE]).notNullable()
+      table.enum('type', [QuestionType.QCM, QuestionType.TEXT_HOLE]).notNullable()
       table.float('points').notNullable()
       table.json('extra').notNullable()
       table.integer('quiz_id').unsigned().references('quizzes.id').onDelete('CASCADE').notNullable()

@@ -2,7 +2,7 @@ import { ICharactersRepository } from '#character/domain/contracts/repositories/
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
-import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
+import { QuestionQcm } from '#quiz/domain/models/quiz/question'
 import { QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
@@ -16,6 +16,7 @@ import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 import { test } from '@japa/runner'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 import { StatusCodes } from 'http-status-codes'
 
 test.group('User-answers - store', (group) => {
@@ -89,7 +90,7 @@ test.group('User-answers - store', (group) => {
     const question = quiz.questions[0] as QuestionQcm
 
     const payload = {
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       questionId: question.id.toString(),
       choiceId: question.choices[0].id.toString(),
       characterId: character.id.toString(),
@@ -104,7 +105,7 @@ test.group('User-answers - store', (group) => {
     response.assertStatus(StatusCodes.CREATED)
     response.assertBodyContains({
       result: {
-        type: questionType.QCM,
+        type: QuestionType.QCM,
         questionId: payload.questionId,
         characterId: payload.characterId,
       },
@@ -128,7 +129,7 @@ test.group('User-answers - store', (group) => {
         .withSubject(subject)
         .withQuestions([
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             points: 1,
             text: 'What is the capital of France?',
             choices: [
@@ -137,7 +138,7 @@ test.group('User-answers - store', (group) => {
             ],
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             points: 1,
             text: 'What is the capital of UK?',
             choices: [
@@ -163,7 +164,7 @@ test.group('User-answers - store', (group) => {
     const question = quiz.questions[0] as QuestionQcm
 
     const payload = {
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       questionId: question.id.toString(),
       choiceId: question.choices[0].id.toString(),
       characterId: character.id.toString(),
@@ -182,7 +183,7 @@ test.group('User-answers - store', (group) => {
     const question2 = quiz.questions[1] as QuestionQcm
 
     const payload2 = {
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       questionId: question2.id.toString(),
       choiceId: question2.choices[0].id.toString(),
       characterId: character.id.toString(),

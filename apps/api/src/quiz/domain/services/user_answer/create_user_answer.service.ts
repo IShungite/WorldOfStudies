@@ -4,7 +4,7 @@ import { CreateUserAnswerDto, UserAnswer } from '#quiz/domain/models/user_answer
 import { UserAnswerFactory } from '#quiz/domain/factories/user_answer.factory'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { QuizInstanceNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_instance_not_found.exception'
-import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
+import { QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import { UpdateQuizInstanceService } from '#quiz/domain/services/quiz/update_quiz_instance.service'
 
 @inject()

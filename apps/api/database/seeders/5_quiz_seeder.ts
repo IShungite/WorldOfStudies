@@ -5,6 +5,7 @@ import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 import { Id } from '#shared/id/domain/models/id'
 import { subjects } from '#database/seeders/1_subject_seeder'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export default class extends BaseSeeder {
   async run() {
@@ -18,7 +19,7 @@ export default class extends BaseSeeder {
         questions: [
           {
             id: new Id('1'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quel événement a marqué le début de la Révolution française ?',
             choices: [
               { id: new Id('1'), label: 'La Prise de la Bastille', isCorrect: true },
@@ -29,7 +30,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('2'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Qui était le roi de France pendant la Révolution française ?',
             choices: [
               { id: new Id('1'), label: 'Louis XIV', isCorrect: false },
@@ -40,7 +41,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('3'),
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'La révolution française a eu lieu en @@. Elle a entraîné la fin de la @@ en France.',
             answers: ['1789', 'monarchie'],
             points: 2,
@@ -54,7 +55,7 @@ export default class extends BaseSeeder {
         questions: [
           {
             id: new Id('4'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quel est le plus long fleuve de France ?',
             choices: [
               { id: new Id('1'), label: 'La Seine', isCorrect: false },
@@ -65,7 +66,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('5'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quelle est la capitale de l'Italie ?",
             choices: [
               { id: new Id('1'), label: 'Milan', isCorrect: false },
@@ -76,7 +77,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('6'),
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'Le désert du @@ est le plus grand désert chaud du monde, situé en Afrique.',
             answers: ['Sahara'],
             points: 2,
@@ -90,7 +91,7 @@ export default class extends BaseSeeder {
         questions: [
           {
             id: new Id('7'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quel est l\'élément chimique représenté par le symbole "O" ?',
             choices: [
               { id: new Id('1'), label: 'Or', isCorrect: false },
@@ -101,7 +102,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('8'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quelle est la planète la plus proche du Soleil ?',
             choices: [
               { id: new Id('1'), label: 'Vénus', isCorrect: false },
@@ -112,7 +113,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('9'),
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: "L'eau est composée de deux atomes d'@@ et d'un atome d'@@.",
             answers: ['hydrogène', 'oxygène'],
             points: 2,
@@ -126,7 +127,7 @@ export default class extends BaseSeeder {
         questions: [
           {
             id: new Id('10'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Combien font 7 + 5 ?',
             choices: [
               { id: new Id('1'), label: '10', isCorrect: false },
@@ -137,7 +138,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('11'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quelle est la formule de l'aire d'un cercle ?",
             choices: [
               { id: new Id('1'), label: 'πr²', isCorrect: true },
@@ -148,7 +149,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('12'),
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'Un triangle avec deux côtés de même longueur est appelé triangle @@.',
             answers: ['isocèle'],
             points: 2,
@@ -162,7 +163,7 @@ export default class extends BaseSeeder {
         questions: [
           {
             id: new Id('13'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'What is the past tense of the verb "go"?',
             choices: [
               { id: new Id('1'), label: 'Go', isCorrect: false },
@@ -173,7 +174,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('14'),
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'How do you say "chat" in English?',
             choices: [
               { id: new Id('1'), label: 'Dog', isCorrect: false },
@@ -184,7 +185,7 @@ export default class extends BaseSeeder {
           },
           {
             id: new Id('15'),
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'The @@ is shining today, it is a perfect day to go to the beach.',
             answers: ['sun'],
             points: 2,
@@ -201,7 +202,7 @@ export default class extends BaseSeeder {
         endAt: new Date(new Date().setDate(new Date().getDate() + 7)),
         questions: [
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quel traité a mis fin à la Première Guerre mondiale ?',
             choices: [
               { id: new Id('1'), label: 'Traité de Versailles', isCorrect: true },
@@ -211,13 +212,13 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: "L'empereur Napoléon Bonaparte a été battu à la bataille de @@ en 1815.",
             answers: ['Waterloo'],
             points: 2,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quel pays a déclenché la Première Guerre mondiale en envahissant la Serbie ?',
             choices: [
               { id: new Id('1'), label: 'Autriche-Hongrie', isCorrect: true },
@@ -227,13 +228,13 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: "La Seconde Guerre mondiale a débuté en @@ avec l'invasion de la Pologne.",
             answers: ['1939'],
             points: 2,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Qui a été le premier président de la République française ?',
             choices: [
               { id: new Id('1'), label: 'Louis-Napoléon Bonaparte', isCorrect: true },
@@ -252,7 +253,7 @@ export default class extends BaseSeeder {
         endAt: new Date(new Date().setDate(new Date().getDate() + 2)),
         questions: [
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Quelle est la plus grande mer intérieure du monde ?',
             choices: [
               { id: new Id('1'), label: 'La mer Caspienne', isCorrect: true },
@@ -262,13 +263,13 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: "Le point le plus élevé sur Terre est le mont @@, situé dans la chaîne de l'Himalaya.",
             answers: ['Everest'],
             points: 2,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quel continent est entièrement situé dans l'hémisphère Sud ?",
             choices: [
               { id: new Id('1'), label: "L'Australie", isCorrect: true },
@@ -278,7 +279,7 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quelle est la capitale de l'Australie ?",
             choices: [
               { id: new Id('1'), label: 'Sydney', isCorrect: false },
@@ -288,7 +289,7 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: "Le fleuve qui traverse l'Égypte et qui est essentiel à sa civilisation est le @@.",
             answers: ['Nil'],
             points: 2,
@@ -303,7 +304,7 @@ export default class extends BaseSeeder {
         endAt: new Date(new Date().setDate(new Date().getDate() + 7)),
         questions: [
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quel est l'organe principal du système circulatoire humain ?",
             choices: [
               { id: new Id('1'), label: 'Le cœur', isCorrect: true },
@@ -313,13 +314,13 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'La photosynthèse est un processus par lequel les plantes transforment la lumière solaire en @@.',
             answers: ['énergie'],
             points: 2,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: "Quel est l'élément chimique ayant pour symbole 'H' ?",
             choices: [
               { id: new Id('1'), label: 'Hydrogène', isCorrect: true },
@@ -329,7 +330,7 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'qcm',
+            type: QuestionType.QCM,
             text: 'Comment appelle-t-on un animal qui mange à la fois des plantes et de la viande ?',
             choices: [
               { id: new Id('1'), label: 'Omnivore', isCorrect: true },
@@ -339,7 +340,7 @@ export default class extends BaseSeeder {
             points: 1,
           },
           {
-            type: 'text-hole',
+            type: QuestionType.TEXT_HOLE,
             text: 'Le liquide qui circule dans le système circulatoire humain est le @@.',
             answers: ['sang'],
             points: 2,
