@@ -1,10 +1,12 @@
-import { inject } from '@adonisjs/core'
-import { Id } from '#shared/id/domain/models/id'
-import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
-import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
-import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
+import { ExamQuiz } from '#quiz/domain/models/quiz/exam_quiz'
+import { OnlyOneAttemptPerExamQuizException } from '#quiz/domain/models/quiz/exceptions/only_one_attempt_per_exam_quiz.exception'
+import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
+import { PracticeQuiz } from '#quiz/domain/models/quiz/practice_quiz'
+import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
+import { Id } from '#shared/id/domain/models/id'
+import { inject } from '@adonisjs/core'
 
 @inject()
 export class StartQuizService {
@@ -14,17 +16,21 @@ export class StartQuizService {
   ) {}
 
   async execute(quizId: Id, characterId: Id): Promise<QuizInstance> {
-    const quiz = await this.validate(quizId, characterId)
+    const { quiz, quizInstance } = await this.validate(quizId, characterId)
 
-    const quizInstance = new QuizInstance({
+    if (quizInstance) {
+      return quizInstance
+    }
+
+    const newQuizInstance = new QuizInstance({
       quiz,
       characterId,
       userAnswers: [],
       status: QuizInstanceStatus.IN_PROGRESS,
     })
-    await this.quizzesInstanceRepository.save(quizInstance)
+    await this.quizzesInstanceRepository.save(newQuizInstance)
 
-    return quizInstance
+    return newQuizInstance
   }
 
   private async validate(quizId: Id, characterId: Id) {
@@ -34,15 +40,22 @@ export class StartQuizService {
       throw new QuizNotFoundException(quizId)
     }
 
-    const gameQuiz = await this.quizzesInstanceRepository.getByQuizIdAndCharacterId(
+    const quizInstance = await this.quizzesInstanceRepository.getByQuizIdAndCharacterId(
       quiz.id,
       characterId
     )
 
-    if (gameQuiz) {
-      throw new QuizInstanceAlreadyExists(quiz.id)
+    const isExamQuiz = quizInstance && quiz instanceof ExamQuiz
+    const isCompleted = quizInstance?.status === QuizInstanceStatus.COMPLETED
+    if (isExamQuiz && isCompleted) {
+      throw new OnlyOneAttemptPerExamQuizException()
     }
 
-    return quiz
+    const isPracticeQuiz = quizInstance && quiz instanceof PracticeQuiz
+    if (isPracticeQuiz && !isCompleted) {
+      return { quiz, quizInstance }
+    }
+
+    return { quiz }
   }
 }

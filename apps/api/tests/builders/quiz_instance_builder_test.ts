@@ -9,6 +9,7 @@ export class QuizInstanceBuilderTest {
   private _characterId: Id = Id.factory()
   private _userAnswers: UserAnswer[] = []
   private _status: QuizInstanceStatus = QuizInstanceStatus.IN_PROGRESS
+
   build(): QuizInstance {
     return new QuizInstance({
       quiz: this._quiz,
@@ -25,6 +26,11 @@ export class QuizInstanceBuilderTest {
 
   withCharacterId(characterId: Id): this {
     this._characterId = characterId
+    return this
+  }
+
+  withStatus(status: QuizInstanceStatus): this {
+    this._status = status
     return this
   }
 }

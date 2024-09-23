@@ -1,5 +1,5 @@
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
+import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import QuizInstanceEntity from '#quiz/infrastructure/entities/quiz_instance'
 import { Id } from '#shared/id/domain/models/id'
 import { QuizInstanceStorageMapper } from '#quiz/infrastructure/mappers/quiz_instance_storage.mapper'
@@ -29,6 +29,7 @@ export class LucidQuizzesInstanceRepository implements IQuizzesInstanceRepositor
       .preload('userAnswers')
       .where('quizId', quizId.toString())
       .where('characterId', characterId.toString())
+      .orderBy('createdAt', 'desc')
       .first()
 
     return quizInstance ? QuizInstanceStorageMapper.fromLucid(quizInstance) : null

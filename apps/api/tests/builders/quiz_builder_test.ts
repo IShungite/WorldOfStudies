@@ -7,6 +7,7 @@ import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export class QuizBuilderTest {
   private _name = 'Quiz 1'
+  private _type: QuizType = QuizType.PRACTICE
   private _questions: CreateQuestionDto[] = [
     {
       type: QuestionType.QCM,
@@ -40,7 +41,9 @@ export class QuizBuilderTest {
       name: this._name,
       questions: this._questions,
       subjectId: this._subjectId,
-      type: QuizType.PRACTICE,
+      type: this._type,
+      startAt: new Date(),
+      endAt: new Date(),
     })
   }
 
@@ -56,6 +59,11 @@ export class QuizBuilderTest {
 
   withSubject(subject: Subject): this {
     this._subjectId = subject.id
+    return this
+  }
+
+  withType(type: QuizType): this {
+    this._type = type
     return this
   }
 }

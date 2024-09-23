@@ -18,7 +18,7 @@ type CreateUserAnswerDtoBase = {
 }
 
 export type CreateUserAnswerDtoQcm = CreateUserAnswerDtoBase & {
-  type: 'qcm'
+  type: QuestionType.QCM
   choiceId: Id
 }
 
