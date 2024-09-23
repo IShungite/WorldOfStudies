@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { Id } from '#shared/id/domain/models/id'
 import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
+import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
@@ -20,6 +20,7 @@ export class StartQuizService {
       quiz,
       characterId,
       userAnswers: [],
+      status: QuizInstanceStatus.IN_PROGRESS,
     })
     await this.quizzesInstanceRepository.save(quizInstance)
 

@@ -1,6 +1,6 @@
 import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 import { CreateQuestionDto, QCMChoice } from '#quiz/domain/models/quiz/question'
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import { Subject } from '#school/domain/models/subject'
 import { Id } from '#shared/id/domain/models/id'
 
@@ -39,6 +39,7 @@ export class QuizBuilderTest {
       name: this._name,
       questions: this._questions,
       subjectId: this._subjectId,
+      type: QuizType.PRACTICE,
     })
   }
 

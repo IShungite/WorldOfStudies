@@ -15,6 +15,7 @@ import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/quiz_instance_already_exists.exception'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { QuizInstanceBuilderTest } from '#tests/builders/quiz_instance_builder_test'
 
 test.group('Quizzes - show', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -97,10 +98,10 @@ test.group('Quizzes - show', (group) => {
       questions: [],
       subjectId: subject.id,
     })
-    const quizInstance = new QuizInstance({
-      quiz,
-      characterId: character.id,
-    })
+    const quizInstance = new QuizInstanceBuilderTest()
+      .withQuiz(quiz)
+      .withCharacterId(character.id)
+      .build()
 
     await subjectsRepository.save(subject)
 

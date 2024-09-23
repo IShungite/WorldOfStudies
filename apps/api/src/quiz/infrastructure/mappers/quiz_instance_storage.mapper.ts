@@ -13,6 +13,7 @@ export class QuizInstanceStorageMapper {
       userAnswers: quizInstanceEntity.userAnswers.map((userAnswer) =>
         UserAnswerStorageMapper.fromLucid(userAnswer, new Id(quizInstanceEntity.id.toString()))
       ),
+      status: quizInstanceEntity.status,
     })
   }
 }

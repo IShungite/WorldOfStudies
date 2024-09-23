@@ -3,9 +3,12 @@ import { UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
 import { Id } from '#shared/id/domain/models/id'
 
 export enum QuizInstanceStatus {
-  NOT_STARTED = 'not-started',
   IN_PROGRESS = 'in-progress',
   COMPLETED = 'completed',
+}
+
+export type UpdateQuizInstanceDto = {
+  status: QuizInstanceStatus
 }
 
 export class QuizInstance {
