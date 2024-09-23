@@ -1,5 +1,5 @@
 import { Id } from '#shared/id/domain/models/id'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 import {
   UserAnswer,
   UserAnswerQcm,
@@ -15,7 +15,7 @@ export class UserAnswerStorageMapper {
     const characterId = new Id(userAnswerEntity.characterId.toString())
     const questionId = new Id(userAnswerEntity.questionId.toString())
 
-    if (userAnswerEntity.type === questionType.QCM) {
+    if (userAnswerEntity.type === QuestionType.QCM) {
       return new UserAnswerQcm({
         id: id,
         choiceId: new Id(extra.choiceId.toString()),
@@ -23,7 +23,7 @@ export class UserAnswerStorageMapper {
         questionId,
         quizInstanceId,
       })
-    } else if (userAnswerEntity.type === questionType.TEXT_HOLE) {
+    } else if (userAnswerEntity.type === QuestionType.TEXT_HOLE) {
       return new UserAnswerTextHole({
         id: id,
         values: extra.values,

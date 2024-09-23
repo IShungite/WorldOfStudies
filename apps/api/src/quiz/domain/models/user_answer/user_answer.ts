@@ -1,5 +1,5 @@
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 import { Id } from '#shared/id/domain/models/id'
-import { questionType, QuestionType } from '#quiz/domain/models/quiz/question'
 
 type UserAnswerProps = {
   id?: Id
@@ -18,12 +18,12 @@ type CreateUserAnswerDtoBase = {
 }
 
 export type CreateUserAnswerDtoQcm = CreateUserAnswerDtoBase & {
-  type: 'qcm'
+  type: QuestionType.QCM
   choiceId: Id
 }
 
 export type CreateUserAnswerDtoTextHole = CreateUserAnswerDtoBase & {
-  type: 'text-hole'
+  type: QuestionType.TEXT_HOLE
   values: string[]
 }
 
@@ -54,7 +54,7 @@ export class UserAnswerQcm extends UserAnswer {
     characterId,
     choiceId,
   }: Omit<UserAnswerProps, 'type'> & { choiceId: Id }) {
-    super({ id, quizInstanceId, questionId, characterId, type: questionType.QCM })
+    super({ id, quizInstanceId, questionId, characterId, type: QuestionType.QCM })
     this.choiceId = choiceId
   }
 }
@@ -73,7 +73,7 @@ export class UserAnswerTextHole extends UserAnswer {
       quizInstanceId,
       questionId,
       characterId: characterId,
-      type: questionType.TEXT_HOLE,
+      type: QuestionType.TEXT_HOLE,
     })
     this.values = values
   }

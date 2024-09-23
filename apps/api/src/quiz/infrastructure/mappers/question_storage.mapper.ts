@@ -1,14 +1,15 @@
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { CreateQuestionDtoChoice, Question, questionType } from '#quiz/domain/models/quiz/question'
+import { CreateQuestionDtoChoice, Question } from '#quiz/domain/models/quiz/question'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
 import { Id } from '#shared/id/domain/models/id'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 export class QuestionStorageMapper {
   static fromLucid(question: QuestionEntity): Question {
     const extra = JSON.parse(question.extra)
     const id = new Id(question.id.toString())
 
-    if (question.type === questionType.QCM) {
+    if (question.type === QuestionType.QCM) {
       return QuestionFactory.create({
         id: id,
         type: question.type,
@@ -22,7 +23,7 @@ export class QuestionStorageMapper {
       })
     }
 
-    if (question.type === questionType.TEXT_HOLE) {
+    if (question.type === QuestionType.TEXT_HOLE) {
       return QuestionFactory.create({
         id: id,
         type: question.type,

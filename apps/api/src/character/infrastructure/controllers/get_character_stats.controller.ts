@@ -2,7 +2,7 @@ import GetCharacterStatsService from '#character/domain/services/get_character_s
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { UserStorageMapper } from '#user/infrastructure/mappers/user_storage.mapper'
 import { inject } from '@adonisjs/core'
-import { HttpContext } from '@adonisjs/core/build/standalone'
+import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import { CharacterStatsResponse } from '@world-of-studies/api-types'
 

@@ -6,7 +6,7 @@ import {
   createTextHoleContentValidator,
 } from '#quiz/infrastructure/validators/create_question.validator'
 import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 
 const updateQcmContentValidator = vine.object({
   ...createQcmContentValidator.getProperties(),
@@ -24,11 +24,11 @@ const updateTextHoleContentValidator = vine.object({
 
 const updateQuestionTypeUnionValidator = vine.group([
   vine.group.if(
-    (value) => questionType.QCM === value.type,
+    (value) => QuestionType.QCM === value.type,
     updateQcmContentValidator.getProperties()
   ),
   vine.group.if(
-    (value) => questionType.TEXT_HOLE === value.type,
+    (value) => QuestionType.TEXT_HOLE === value.type,
     updateTextHoleContentValidator.getProperties()
   ),
 ])

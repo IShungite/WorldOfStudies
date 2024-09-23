@@ -1,4 +1,4 @@
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { test } from '@japa/runner'
 import { StatusCodes } from 'http-status-codes'
@@ -10,6 +10,8 @@ import { getFullUrl } from '#shared/infra/api/utils/get_url'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { Subject } from '#school/domain/models/subject'
+import { PracticeQuiz } from '#quiz/domain/models/quiz/practice_quiz'
+import { ExamQuiz } from '#quiz/domain/models/quiz/exam_quiz'
 
 test.group('Quizzes - index', (group) => {
   let quizzesRepository: IQuizzesRepository
@@ -30,13 +32,23 @@ test.group('Quizzes - index', (group) => {
     subject = await subjectsRepository.save(new SubjectBuilderTest().build())
   })
 
-  test('It should return the list of paginated quizzes', async ({ client, assert }) => {
+  test('It should return the list of paginated practice quizzes', async ({ client, assert }) => {
     await Promise.all([
       quizzesRepository.save(
-        new Quiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+        new PracticeQuiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
       ),
       quizzesRepository.save(
-        new Quiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+        new PracticeQuiz({ id: new Id('2'), name: 'Quiz 2', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new ExamQuiz({
+          id: new Id('3'),
+          name: 'Quiz 3',
+          questions: [],
+          subjectId: subject.id,
+          startAt: new Date(),
+          endAt: new Date(),
+        })
       ),
     ])
 
@@ -158,5 +170,32 @@ test.group('Quizzes - index', (group) => {
         last: getFullUrl(`/api/quizzes?page=2&perPage=${perPage}`),
       },
     })
+  })
+
+  test('It should return only the exams quizzes', async ({ client, assert }) => {
+    await Promise.all([
+      quizzesRepository.save(
+        new PracticeQuiz({ id: new Id('1'), name: 'Quiz 1', questions: [], subjectId: subject.id })
+      ),
+      quizzesRepository.save(
+        new ExamQuiz({
+          id: new Id('2'),
+          name: 'Quiz 2',
+          questions: [],
+          subjectId: subject.id,
+          startAt: new Date(),
+          endAt: new Date(),
+        })
+      ),
+    ])
+
+    const response = await client.get(`/quizzes?type=${QuizType.EXAM}`)
+
+    response.assertStatus(StatusCodes.OK)
+
+    const body = response.body()
+
+    assert.lengthOf(body.results, 1)
+    assert.equal(body.results[0].result.id, '2')
   })
 })

@@ -14,18 +14,21 @@ export default class extends BaseSeeder {
         name: 'Character 1',
         promotionId: new Id('1'),
         userId: new Id('2'),
+        berries: 100,
       }),
       new Character({
         id: new Id('2'),
         name: 'Character 2',
         promotionId: new Id('2'),
         userId: new Id('2'),
+        berries: 100,
       }),
       new Character({
         id: new Id('3'),
         name: 'Character 3',
         promotionId: new Id('1'),
         userId: new Id('3'),
+        berries: 100,
       }),
     ]
     await Promise.all(characters.map((character) => repo.save(character)))

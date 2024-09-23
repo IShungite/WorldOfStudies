@@ -1,23 +1,22 @@
-import { test } from '@japa/runner'
-import { StatusCodes } from 'http-status-codes'
+import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
+import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
+import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
+import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
+import { QuestionQcm } from '#quiz/domain/models/quiz/question'
+import { UserAnswerQcm } from '#quiz/domain/models/user_answer/user_answer'
+import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
+import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
+import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
+import { QuizBuilderTest } from '#tests/builders/quiz_builder_test'
+import { QuizInstanceBuilderTest } from '#tests/builders/quiz_instance_builder_test'
+import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
+import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import createRepositories from '#tests/utils/create_repositories'
 import emptyRepositories from '#tests/utils/empty_repositories'
-import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
-import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
-import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
-import { QuestionQcm, questionType } from '#quiz/domain/models/quiz/question'
-import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
-import { UserAnswerQcm } from '#quiz/domain/models/user_answer/user_answer'
-import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
-import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
-import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
-import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
-import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
-import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
-import { QuizBuilderTest } from '#tests/builders/quiz_builder_test'
+import { test } from '@japa/runner'
+import { StatusCodes } from 'http-status-codes'
 
 test.group('User-answers - get by quiz instance', (group) => {
   let userAnswersRepository: IUserAnswersRepository
@@ -78,16 +77,14 @@ test.group('User-answers - get by quiz instance', (group) => {
       quizzesRepository.save(new QuizBuilderTest().withSubject(subject).build()),
     ])
 
-    const quizInstance = new QuizInstance({
-      quiz,
-      characterId: character.id,
-      userAnswers: [],
-    })
-    const quizInstance2 = new QuizInstance({
-      quiz: quiz2,
-      characterId: character2.id,
-      userAnswers: [],
-    })
+    const quizInstance = new QuizInstanceBuilderTest()
+      .withQuiz(quiz)
+      .withCharacterId(character.id)
+      .build()
+    const quizInstance2 = new QuizInstanceBuilderTest()
+      .withQuiz(quiz2)
+      .withCharacterId(character2.id)
+      .build()
 
     const question = quiz.questions[0] as QuestionQcm
     const question2 = quiz2.questions[0] as QuestionQcm

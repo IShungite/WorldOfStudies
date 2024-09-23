@@ -1,6 +1,4 @@
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
-import { Promotion } from '#school/domain/models/promotion'
-import { School } from '#school/domain/models/school'
 import { Subject } from '#school/domain/models/subject'
 import { SubjectNotFoundException } from '#school/domain/models/subject_not_found.exception'
 import { Id } from '#shared/id/domain/models/id'

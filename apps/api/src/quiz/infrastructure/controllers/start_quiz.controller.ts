@@ -1,10 +1,11 @@
+import { StartQuizService } from '#quiz/domain/services/quiz/start_quiz.service'
+import { QuestionApiMapper } from '#quiz/infrastructure/mappers/question_api.mapper'
+import { startQuizValidator } from '#quiz/infrastructure/validators/start_quiz.validator'
+import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
-import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_id.validator'
-import { StartQuizService } from '#quiz/domain/services/quiz/start_quiz.service'
-import { startQuizValidator } from '#quiz/infrastructure/validators/start_quiz.validator'
-import { QuizInstanceApiMapper } from '#quiz/infrastructure/mappers/quiz_instance_api.mapper'
+import { StartQuizResponse } from '@world-of-studies/api-types'
 
 @inject()
 export default class StartQuizController {
@@ -25,6 +26,19 @@ export default class StartQuizController {
     ])
 
     const quizInstance = await this.startQuizService.execute(quizId, characterId)
-    return response.ok(QuizInstanceApiMapper.toResponse(quizInstance))
+
+    const responseBody: StartQuizResponse = {
+      result: {
+        quizInstanceId: quizInstance.id.toString(),
+        questions: quizInstance.quiz.questions.map((question) => ({
+          isAnswered: !!quizInstance.userAnswers.find((userAnswer) =>
+            userAnswer.questionId.equals(question.id)
+          ),
+          question: QuestionApiMapper.toResponse(question),
+        })),
+      },
+    }
+
+    return response.ok(responseBody)
   }
 }

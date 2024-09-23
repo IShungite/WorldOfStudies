@@ -4,13 +4,13 @@ import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_instance.repository'
 import { IUserAnswersRepository } from '#quiz/domain/contracts/user_answers.repository'
 import { QuestionQcm } from '#quiz/domain/models/quiz/question'
-import { QuizInstance } from '#quiz/domain/models/quiz/quiz_instance'
 import { UserAnswerQcm, UserAnswerTextHole } from '#quiz/domain/models/user_answer/user_answer'
 import { ISchoolsRepository } from '#school/domain/contracts/repositories/schools.repository'
 import { ISubjectsRepository } from '#school/domain/contracts/repositories/subjects.repository'
 import { Id } from '#shared/id/domain/models/id'
 import { CharacterBuilderTest } from '#tests/builders/character_builder_test'
 import { QuizBuilderTest } from '#tests/builders/quiz_builder_test'
+import { QuizInstanceBuilderTest } from '#tests/builders/quiz_instance_builder_test'
 import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { SubjectBuilderTest } from '#tests/builders/subject_builder_test'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
@@ -149,25 +149,13 @@ test.group('Characters - characters by user', (group) => {
     ])
     const [quizInstance1, quizInstance2, quizInstance3] = await Promise.all([
       quizzesInstanceRepository.save(
-        new QuizInstance({
-          characterId: character.id,
-          quiz: quiz1,
-          userAnswers: [],
-        })
+        new QuizInstanceBuilderTest().withQuiz(quiz1).withCharacterId(character.id).build()
       ),
       quizzesInstanceRepository.save(
-        new QuizInstance({
-          characterId: character.id,
-          quiz: quiz2,
-          userAnswers: [],
-        })
+        new QuizInstanceBuilderTest().withQuiz(quiz2).withCharacterId(character.id).build()
       ),
       quizzesInstanceRepository.save(
-        new QuizInstance({
-          characterId: character.id,
-          quiz: quiz3,
-          userAnswers: [],
-        })
+        new QuizInstanceBuilderTest().withQuiz(quiz3).withCharacterId(character.id).build()
       ),
     ])
     await Promise.all([

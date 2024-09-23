@@ -1,13 +1,15 @@
 import testUtils from '@adonisjs/core/services/test_utils'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
-import { QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
+import { Question, QuestionQcm, QuestionTextHole } from '#quiz/domain/models/quiz/question'
 import { Id } from '#shared/id/domain/models/id'
 import { QuizStorageMapper } from '#quiz/infrastructure/mappers/quiz_storage.mapper'
 import { PaginationRequest } from '#shared/pagination/domain/models/pagination_request'
 import { PaginatedData } from '#shared/pagination/domain/models/paginated_data'
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import QuizEntity from '#quiz/infrastructure/entities/quiz'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
+import { ExamQuiz } from '#quiz/domain/models/quiz/exam_quiz'
+import { DateTime } from 'luxon'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {
@@ -20,38 +22,14 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
         id: quizId,
         name: quiz.name,
         subjectId: Number.parseInt(quiz.subjectId.toString(), 10),
+        type: quiz instanceof ExamQuiz ? QuizType.EXAM : QuizType.PRACTICE,
+        startAt: quiz instanceof ExamQuiz ? DateTime.fromJSDate(quiz.startAt) : null,
+        endAt: quiz instanceof ExamQuiz ? DateTime.fromJSDate(quiz.endAt) : null,
       }
     )
 
     await Promise.all(
-      quiz.questions.map((question) => {
-        let extra: Record<string, unknown> = {}
-        if (question instanceof QuestionQcm) {
-          extra = {
-            choices: question.choices.map((choice) => ({
-              id: Number.parseInt(choice.id.toString(), 10),
-              label: choice.label,
-              isCorrect: choice.isCorrect,
-            })),
-          }
-        } else if (question instanceof QuestionTextHole) {
-          extra = {
-            text: question.text,
-            answers: question.answers,
-          }
-        }
-
-        return QuestionEntity.updateOrCreate(
-          { id: Number.parseInt(question.id.toString(), 10) },
-          {
-            id: Number.parseInt(question.id.toString(), 10),
-            type: question.type,
-            points: question.points,
-            extra: JSON.stringify(extra),
-            quizId: quizId,
-          }
-        )
-      })
+      quiz.questions.map((question) => this.createOrUpdateQuestion(quiz.id, question))
     )
 
     return quiz
@@ -66,9 +44,10 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     return quiz ? QuizStorageMapper.fromLucid(quiz) : null
   }
 
-  async getAll(pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
+  async getAll(quizType: QuizType, pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
     const quizzes = await QuizEntity.query()
       .preload('questions')
+      .where('type', quizType)
       .orderBy('id', 'asc')
       .paginate(pagination.page, pagination.perPage)
 
@@ -93,5 +72,34 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
       .db()
       .truncate()
       .then((trunc) => trunc())
+  }
+
+  private async createOrUpdateQuestion(quizId: Id, question: Question): Promise<void> {
+    let extra: Record<string, unknown> = {}
+    if (question instanceof QuestionQcm) {
+      extra = {
+        choices: question.choices.map((choice) => ({
+          id: Number.parseInt(choice.id.toString(), 10),
+          label: choice.label,
+          isCorrect: choice.isCorrect,
+        })),
+      }
+    } else if (question instanceof QuestionTextHole) {
+      extra = {
+        text: question.text,
+        answers: question.answers,
+      }
+    }
+
+    await QuestionEntity.updateOrCreate(
+      { id: Number.parseInt(question.id.toString(), 10) },
+      {
+        id: Number.parseInt(question.id.toString(), 10),
+        type: question.type,
+        points: question.points,
+        extra: JSON.stringify(extra),
+        quizId: Number.parseInt(quizId.toString(), 10),
+      }
+    )
   }
 }

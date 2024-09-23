@@ -1,5 +1,5 @@
 import { QuestionFactory } from '#quiz/domain/factories/question.factory'
-import { questionType } from '#quiz/domain/models/quiz/question'
+import { QuestionType } from '#quiz/domain/models/quiz/question'
 import { Id } from '#shared/id/domain/models/id'
 import { test } from '@japa/runner'
 import { UserAnswerFactory } from '#quiz/domain/factories/user_answer.factory'
@@ -7,7 +7,7 @@ import { UserAnswerFactory } from '#quiz/domain/factories/user_answer.factory'
 test.group('QCM Question', () => {
   const questionQCM = QuestionFactory.create({
     id: new Id('1'),
-    type: questionType.QCM,
+    type: QuestionType.QCM,
     points: 2,
     text: 'Question 1',
     choices: [
@@ -28,7 +28,7 @@ test.group('QCM Question', () => {
     assert,
   }) => {
     const userAnswer = UserAnswerFactory.create({
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       id: new Id('1'),
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[0].id,
@@ -43,7 +43,7 @@ test.group('QCM Question', () => {
     assert,
   }) => {
     const userAnswer = UserAnswerFactory.create({
-      type: questionType.QCM,
+      type: QuestionType.QCM,
       id: new Id('1'),
       questionId: questionQCM.id,
       choiceId: questionQCM.choices[1].id,
@@ -58,7 +58,7 @@ test.group('QCM Question', () => {
 test.group('Text Hole Question', () => {
   const questionTextHole = QuestionFactory.create({
     id: new Id('1'),
-    type: questionType.TEXT_HOLE,
+    type: QuestionType.TEXT_HOLE,
     text: 'Question 1',
     points: 2,
     answers: ['hello', 'world'],
@@ -68,7 +68,7 @@ test.group('Text Hole Question', () => {
     assert,
   }) => {
     const userAnswer = UserAnswerFactory.create({
-      type: questionType.TEXT_HOLE,
+      type: QuestionType.TEXT_HOLE,
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: [...questionTextHole.answers],
@@ -83,7 +83,7 @@ test.group('Text Hole Question', () => {
     assert,
   }) => {
     const userAnswer = UserAnswerFactory.create({
-      type: questionType.TEXT_HOLE,
+      type: QuestionType.TEXT_HOLE,
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: ['hello'],
@@ -98,7 +98,7 @@ test.group('Text Hole Question', () => {
     assert,
   }) => {
     const userAnswer = UserAnswerFactory.create({
-      type: questionType.TEXT_HOLE,
+      type: QuestionType.TEXT_HOLE,
       id: new Id('1'),
       questionId: questionTextHole.id,
       values: ['aaa'],

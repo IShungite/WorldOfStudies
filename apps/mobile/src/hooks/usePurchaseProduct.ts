@@ -8,7 +8,7 @@ export const usePurchaseProduct = () => {
       const response = await kyInstance.post(`shops/${shopId}/products/${productId}/purchase`, {
         json: { characterId },
       })
-      return response.json()
+      return response.json() as Promise<{ success: boolean }>
     }
   )
 }

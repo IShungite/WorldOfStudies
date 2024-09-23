@@ -1,12 +1,22 @@
 import { CreateQuestionDto, Question } from '#quiz/domain/models/quiz/question'
 import { Id } from '#shared/id/domain/models/id'
 import { UserAnswer } from '#quiz/domain/models/user_answer/user_answer'
+import { CreatePracticeQuizDto } from '#quiz/domain/models/quiz/practice_quiz'
+import { CreateExamQuizDto } from '#quiz/domain/models/quiz/exam_quiz'
 
-export type CreateQuizDto = {
+export enum QuizType {
+  EXAM = 'exam',
+  PRACTICE = 'practice',
+}
+
+export type CreateBaseQuizDto = {
   name: string
   subjectId: Id
   questions: CreateQuestionDto[]
+  type: QuizType
 }
+
+export type CreateQuizDto = CreateExamQuizDto | CreatePracticeQuizDto
 
 export type UpdateQuizDto = {
   name?: string
@@ -29,7 +39,7 @@ export class Quiz {
     this.subjectId = subjectId
   }
 
-  getTotalPoints(userAnswers: UserAnswer[]): number {
+  getTotalUserPoints(userAnswers: UserAnswer[]): number {
     return this.questions.reduce((total, question) => {
       const userAnswerForThisQuestion = userAnswers.find((userAnswer) =>
         userAnswer.questionId.equals(question.id)
