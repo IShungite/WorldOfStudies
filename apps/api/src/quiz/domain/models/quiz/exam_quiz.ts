@@ -1,10 +1,11 @@
 import { Question } from '#quiz/domain/models/quiz/question'
-import { CreateQuizDto, Quiz } from '#quiz/domain/models/quiz/quiz'
+import { CreateBaseQuizDto, Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import { Id } from '#shared/id/domain/models/id'
 
-export type CreateExamQuizDto = CreateQuizDto & {
+export type CreateExamQuizDto = CreateBaseQuizDto & {
   startAt: Date
   endAt: Date
+  type: QuizType.EXAM
 }
 
 export class ExamQuiz extends Quiz {

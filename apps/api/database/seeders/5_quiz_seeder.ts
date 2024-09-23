@@ -1,6 +1,6 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import app from '@adonisjs/core/services/app'
-import { Quiz } from '#quiz/domain/models/quiz/quiz'
+import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 import { IQuizzesRepository } from '#quiz/domain/contracts/quizzes.repository'
 import { QuizFactory } from '#quiz/domain/factories/quiz.factory'
 import { Id } from '#shared/id/domain/models/id'
@@ -14,6 +14,7 @@ export default class extends BaseSeeder {
       QuizFactory.create({
         name: 'Quiz Histoire',
         subjectId: subjects[2].id, // Histoire
+        type: QuizType.PRACTICE,
         questions: [
           {
             id: new Id('1'),
@@ -49,6 +50,7 @@ export default class extends BaseSeeder {
       QuizFactory.create({
         name: 'Quiz Géographie',
         subjectId: subjects[3].id, // Géographie
+        type: QuizType.PRACTICE,
         questions: [
           {
             id: new Id('4'),
@@ -84,6 +86,7 @@ export default class extends BaseSeeder {
       QuizFactory.create({
         name: 'Quiz Science',
         subjectId: subjects[1].id, // Science
+        type: QuizType.PRACTICE,
         questions: [
           {
             id: new Id('7'),
@@ -119,6 +122,7 @@ export default class extends BaseSeeder {
       QuizFactory.create({
         name: 'Quiz Mathématiques',
         subjectId: subjects[0].id, // Maths
+        type: QuizType.PRACTICE,
         questions: [
           {
             id: new Id('10'),
@@ -154,6 +158,7 @@ export default class extends BaseSeeder {
       QuizFactory.create({
         name: 'Quiz Anglais',
         subjectId: subjects[4].id, // Anglais
+        type: QuizType.PRACTICE,
         questions: [
           {
             id: new Id('13'),
@@ -182,6 +187,161 @@ export default class extends BaseSeeder {
             type: 'text-hole',
             text: 'The @@ is shining today, it is a perfect day to go to the beach.',
             answers: ['sun'],
+            points: 2,
+          },
+        ],
+      }),
+
+      // EXAM
+      QuizFactory.create({
+        name: "Contrôle d'Histoire",
+        subjectId: subjects[2].id, // Histoire
+        type: QuizType.EXAM,
+        startAt: new Date(),
+        endAt: new Date(new Date().setDate(new Date().getDate() + 7)),
+        questions: [
+          {
+            type: 'qcm',
+            text: 'Quel traité a mis fin à la Première Guerre mondiale ?',
+            choices: [
+              { id: new Id('1'), label: 'Traité de Versailles', isCorrect: true },
+              { id: new Id('2'), label: 'Traité de Tordesillas', isCorrect: false },
+              { id: new Id('3'), label: 'Traité de Rome', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: "L'empereur Napoléon Bonaparte a été battu à la bataille de @@ en 1815.",
+            answers: ['Waterloo'],
+            points: 2,
+          },
+          {
+            type: 'qcm',
+            text: 'Quel pays a déclenché la Première Guerre mondiale en envahissant la Serbie ?',
+            choices: [
+              { id: new Id('1'), label: 'Autriche-Hongrie', isCorrect: true },
+              { id: new Id('2'), label: 'Allemagne', isCorrect: false },
+              { id: new Id('3'), label: 'Russie', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: "La Seconde Guerre mondiale a débuté en @@ avec l'invasion de la Pologne.",
+            answers: ['1939'],
+            points: 2,
+          },
+          {
+            type: 'qcm',
+            text: 'Qui a été le premier président de la République française ?',
+            choices: [
+              { id: new Id('1'), label: 'Louis-Napoléon Bonaparte', isCorrect: true },
+              { id: new Id('2'), label: 'Charles de Gaulle', isCorrect: false },
+              { id: new Id('3'), label: 'François Mitterrand', isCorrect: false },
+            ],
+            points: 1,
+          },
+        ],
+      }),
+      QuizFactory.create({
+        name: 'Contrôle de Géographie',
+        subjectId: subjects[3].id, // Géographie
+        type: QuizType.EXAM,
+        startAt: new Date(),
+        endAt: new Date(new Date().setDate(new Date().getDate() + 2)),
+        questions: [
+          {
+            type: 'qcm',
+            text: 'Quelle est la plus grande mer intérieure du monde ?',
+            choices: [
+              { id: new Id('1'), label: 'La mer Caspienne', isCorrect: true },
+              { id: new Id('2'), label: 'La mer Noire', isCorrect: false },
+              { id: new Id('3'), label: 'La mer Méditerranée', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: "Le point le plus élevé sur Terre est le mont @@, situé dans la chaîne de l'Himalaya.",
+            answers: ['Everest'],
+            points: 2,
+          },
+          {
+            type: 'qcm',
+            text: "Quel continent est entièrement situé dans l'hémisphère Sud ?",
+            choices: [
+              { id: new Id('1'), label: "L'Australie", isCorrect: true },
+              { id: new Id('2'), label: "L'Afrique", isCorrect: false },
+              { id: new Id('3'), label: "L'Amérique du Sud", isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'qcm',
+            text: "Quelle est la capitale de l'Australie ?",
+            choices: [
+              { id: new Id('1'), label: 'Sydney', isCorrect: false },
+              { id: new Id('2'), label: 'Canberra', isCorrect: true },
+              { id: new Id('3'), label: 'Melbourne', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: "Le fleuve qui traverse l'Égypte et qui est essentiel à sa civilisation est le @@.",
+            answers: ['Nil'],
+            points: 2,
+          },
+        ],
+      }),
+      QuizFactory.create({
+        name: 'Contrôle de Science',
+        subjectId: subjects[1].id, // Science
+        type: QuizType.EXAM,
+        startAt: new Date(new Date().setDate(new Date().getDate() + 2)),
+        endAt: new Date(new Date().setDate(new Date().getDate() + 7)),
+        questions: [
+          {
+            type: 'qcm',
+            text: "Quel est l'organe principal du système circulatoire humain ?",
+            choices: [
+              { id: new Id('1'), label: 'Le cœur', isCorrect: true },
+              { id: new Id('2'), label: 'Les poumons', isCorrect: false },
+              { id: new Id('3'), label: 'Le foie', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: 'La photosynthèse est un processus par lequel les plantes transforment la lumière solaire en @@.',
+            answers: ['énergie'],
+            points: 2,
+          },
+          {
+            type: 'qcm',
+            text: "Quel est l'élément chimique ayant pour symbole 'H' ?",
+            choices: [
+              { id: new Id('1'), label: 'Hydrogène', isCorrect: true },
+              { id: new Id('2'), label: 'Hélium', isCorrect: false },
+              { id: new Id('3'), label: 'Hafnium', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'qcm',
+            text: 'Comment appelle-t-on un animal qui mange à la fois des plantes et de la viande ?',
+            choices: [
+              { id: new Id('1'), label: 'Omnivore', isCorrect: true },
+              { id: new Id('2'), label: 'Carnivore', isCorrect: false },
+              { id: new Id('3'), label: 'Herbivore', isCorrect: false },
+            ],
+            points: 1,
+          },
+          {
+            type: 'text-hole',
+            text: 'Le liquide qui circule dans le système circulatoire humain est le @@.',
+            answers: ['sang'],
             points: 2,
           },
         ],

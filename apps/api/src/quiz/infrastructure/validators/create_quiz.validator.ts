@@ -4,17 +4,29 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 import { QuizType } from '#quiz/domain/models/quiz/quiz'
 import { quizTypeValidator } from '#quiz/infrastructure/validators/quiz_type.validator'
 
-export const createQuizValidator = vine.object({
-  name: vine.string().trim(),
-  subjectId: domainIdValidator,
-  questions: vine.array(createQuestionValidator),
-  type: quizTypeValidator,
-  startAt: vine
-    .date({ formats: { utc: true } })
-    .optional()
-    .requiredWhen('type', '=', QuizType.EXAM),
-  endAt: vine
-    .date({ formats: { utc: true } })
-    .optional()
-    .requiredWhen('type', '=', QuizType.EXAM),
+const createPracticeQuizValidator = vine.object({
+  type: vine.literal(QuizType.PRACTICE),
 })
+
+const createExamQuizValidator = vine.object({
+  type: vine.literal(QuizType.EXAM),
+  startAt: vine.date({ formats: { utc: true } }),
+  endAt: vine.date({ formats: { utc: true } }),
+})
+
+const createQuizTypeUnionValidator = vine.group([
+  vine.group.if(
+    (value) => QuizType.PRACTICE === value.type,
+    createPracticeQuizValidator.getProperties()
+  ),
+  vine.group.if((value) => QuizType.EXAM === value.type, createExamQuizValidator.getProperties()),
+])
+
+export const createQuizValidator = vine
+  .object({
+    name: vine.string().trim(),
+    subjectId: domainIdValidator,
+    questions: vine.array(createQuestionValidator),
+    type: quizTypeValidator,
+  })
+  .merge(createQuizTypeUnionValidator)
