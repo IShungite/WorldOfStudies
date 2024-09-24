@@ -1,7 +1,7 @@
 import { Character } from '@world-of-studies/api-types/src/character'
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
 import { useAtom } from 'jotai'
-import React, { useState } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import BerryIcon from '@/components/shared/BerryIcon'
@@ -22,11 +22,9 @@ type Props = {
 const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, onPurchase, product, character }) => {
   const purchaseMutation = usePurchaseProduct()
   const [, setSelectedCharacter] = useAtom(selectedCharacterAtom)
-  const [isLoading, setIsLoading] = useState(false)
 
   const handlePurchase = async () => {
     if (product && character) {
-      setIsLoading(true)
       purchaseMutation.mutate(
         {
           shopId: character.schoolId,
@@ -39,23 +37,14 @@ const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, onPurchas
           },
         }
       )
-      setIsLoading(false)
       onPurchase()
     }
-  }
-
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading...</Text>
-      </View>
-    )
   }
 
   return (
     <Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} title={product.name}>
       <View style={styles.content}>
-        <Button onPress={handlePurchase}>
+        <Button onPress={handlePurchase} loading={purchaseMutation.isLoading}>
           {({ color }) => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
               <Text style={{ color }}>{product.price}</Text>

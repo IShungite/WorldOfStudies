@@ -83,7 +83,6 @@ test.group('Characters - get inventory', (group) => {
 
   test('It should return a 200 if everything goes well', async ({ client, assert }) => {
     const item = await itemsRepository.save(new ItemBuilderTest().build())
-    await itemsRepository.save(item)
     await inventoriesRepository.saveForCharacter(
       character.id,
       new Inventory({ items: [new InventoryItem({ item })] })
