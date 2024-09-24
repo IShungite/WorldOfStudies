@@ -34,8 +34,8 @@ test.group('Quizzes - store', (group) => {
       questions: [],
       subjectId: subject.id.toString(),
       type: QuizType.EXAM,
-      startAt: startAt.toISOString(),
-      endAt: endAt.toISOString(),
+      startAt: startAt.toString(),
+      endAt: endAt.toString(),
     })
 
     response.assertStatus(StatusCodes.CREATED)
@@ -43,8 +43,8 @@ test.group('Quizzes - store', (group) => {
       result: {
         name: 'Quiz 1',
         type: QuizType.EXAM,
-        startAt: startAt.toISOString(),
-        endAt: endAt.toISOString(),
+        startAt: startAt.toString(),
+        endAt: endAt.toString(),
       },
     })
   })

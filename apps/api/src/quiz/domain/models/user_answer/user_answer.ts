@@ -7,6 +7,7 @@ type UserAnswerProps = {
   questionId: Id
   characterId: Id
   type: QuestionType
+  createdAt: Date
 }
 
 type CreateUserAnswerDtoBase = {
@@ -35,13 +36,21 @@ export abstract class UserAnswer {
   readonly questionId: Id
   readonly characterId: Id
   readonly type: QuestionType
-
-  protected constructor({ id, quizInstanceId, questionId, characterId, type }: UserAnswerProps) {
+  readonly createdAt: Date
+  protected constructor({
+    id,
+    quizInstanceId,
+    questionId,
+    characterId,
+    type,
+    createdAt,
+  }: UserAnswerProps) {
     this.id = id ?? Id.factory()
     this.quizInstanceId = quizInstanceId
     this.questionId = questionId
     this.characterId = characterId
     this.type = type
+    this.createdAt = createdAt
   }
 }
 
@@ -53,8 +62,9 @@ export class UserAnswerQcm extends UserAnswer {
     questionId,
     characterId,
     choiceId,
+    createdAt,
   }: Omit<UserAnswerProps, 'type'> & { choiceId: Id }) {
-    super({ id, quizInstanceId, questionId, characterId, type: QuestionType.QCM })
+    super({ id, quizInstanceId, questionId, characterId, type: QuestionType.QCM, createdAt })
     this.choiceId = choiceId
   }
 }
@@ -67,6 +77,7 @@ export class UserAnswerTextHole extends UserAnswer {
     questionId,
     characterId,
     values,
+    createdAt,
   }: Omit<UserAnswerProps, 'type'> & { values: string[] }) {
     super({
       id,
@@ -74,6 +85,7 @@ export class UserAnswerTextHole extends UserAnswer {
       questionId,
       characterId: characterId,
       type: QuestionType.TEXT_HOLE,
+      createdAt,
     })
     this.values = values
   }

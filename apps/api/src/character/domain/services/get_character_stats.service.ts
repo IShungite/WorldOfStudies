@@ -25,12 +25,7 @@ export default class GetCharacterStatsService {
     const subjectsStats: SubjectStat[] = subjects.map((subject) => {
       const quizzesInSubject = quizzes.filter((quiz) => quiz.quiz.subjectId.equals(subject.id))
 
-      const quizStats: QuizStat[] = quizzesInSubject.map((quiz) => ({
-        name: quiz.quiz.name,
-        score: (20 * quiz.getTotalUserPoints()) / quiz.getMaxPoints(),
-        maxScore: 20,
-        date: new Date().toString(),
-      }))
+      const quizStats: QuizStat[] = quizzesInSubject.map((quiz) => quiz.getStats())
 
       return {
         name: subject.name,

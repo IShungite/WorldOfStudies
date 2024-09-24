@@ -166,6 +166,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz1.questions[0].id,
           choiceId: (quiz1.questions[0] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance1.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -174,6 +175,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz1.questions[1].id,
           choiceId: (quiz1.questions[1] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance1.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -182,6 +184,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz1.questions[2].id,
           quizInstanceId: quizInstance1.id,
           values: ['Paris'],
+          createdAt: new Date(),
         })
       ),
 
@@ -192,6 +195,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz2.questions[0].id,
           choiceId: (quiz2.questions[0] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance2.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -200,6 +204,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz2.questions[1].id,
           choiceId: (quiz2.questions[1] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance2.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -208,6 +213,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz2.questions[2].id,
           quizInstanceId: quizInstance2.id,
           values: ['aaaa'],
+          createdAt: new Date(),
         })
       ),
 
@@ -218,6 +224,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz3.questions[0].id,
           choiceId: (quiz3.questions[0] as QuestionQcm).choices[0].id,
           quizInstanceId: quizInstance3.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -226,6 +233,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz3.questions[1].id,
           choiceId: (quiz3.questions[1] as QuestionQcm).choices[1].id,
           quizInstanceId: quizInstance3.id,
+          createdAt: new Date(),
         })
       ),
       userAnswersRepository.save(
@@ -234,6 +242,7 @@ test.group('Characters - characters by user', (group) => {
           questionId: quiz3.questions[2].id,
           quizInstanceId: quizInstance3.id,
           values: ['Paris'],
+          createdAt: new Date(),
         })
       ),
     ])

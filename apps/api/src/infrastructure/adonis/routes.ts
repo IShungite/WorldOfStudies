@@ -9,6 +9,8 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#infrastructure/adonis/kernel'
+const GetQuizInstanceStatsController = () =>
+  import('#quiz/infrastructure/controllers/get_quiz_instance_stats.controller')
 
 const GetCharacterStatsController = () =>
   import('#character/infrastructure/controllers/get_character_stats.controller')
@@ -83,6 +85,7 @@ router
     router.get('quiz-instances/:quizInstanceId/user-answers', [
       GetUserAnswersByQuizInstanceController,
     ])
+    router.get('quiz-instances/:quizInstanceId/stats', [GetQuizInstanceStatsController])
 
     router
       .delete('schools/:idSchool/promotions/:idPromotion', [SchoolsController, 'destroyPromotion'])

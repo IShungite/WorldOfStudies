@@ -12,8 +12,8 @@ export class QuizApiMapper {
         name: quiz.name,
         questions: quiz.questions.map((question) => QuestionApiMapper.toResponse(question)),
         type: isExam ? QuizType.EXAM : QuizType.PRACTICE,
-        startAt: isExam ? quiz.startAt.toISOString() : null,
-        endAt: isExam ? quiz.endAt.toISOString() : null,
+        startAt: isExam ? quiz.startAt.toString() : null,
+        endAt: isExam ? quiz.endAt.toString() : null,
       },
       _links: this.getLinks(quiz),
     }

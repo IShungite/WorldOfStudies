@@ -129,6 +129,7 @@ test.group('Quizzes - show', (group) => {
           quizInstanceId: quizInstance.id,
           characterId: character.id,
           choiceId: (quiz.questions[0] as QuestionQcm).choices[0].id,
+          createdAt: new Date(),
         })
       ),
     ])

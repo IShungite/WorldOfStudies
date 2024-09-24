@@ -94,18 +94,21 @@ test.group('User-answers - get by quiz instance', (group) => {
       choiceId: question.choices[0].id,
       questionId: question.id,
       quizInstanceId: quizInstance.id,
+      createdAt: new Date(),
     })
     const userAnswer2 = new UserAnswerQcm({
       characterId: character2.id,
       choiceId: question.choices[1].id,
       questionId: question.id,
       quizInstanceId: quizInstance.id,
+      createdAt: new Date(),
     })
     const userAnswer3 = new UserAnswerQcm({
       characterId: character2.id,
       choiceId: question2.choices[0].id,
       questionId: question2.id,
       quizInstanceId: quizInstance2.id,
+      createdAt: new Date(),
     })
 
     await Promise.all([

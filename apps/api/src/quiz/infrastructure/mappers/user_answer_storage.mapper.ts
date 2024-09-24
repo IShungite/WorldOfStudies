@@ -22,6 +22,7 @@ export class UserAnswerStorageMapper {
         characterId,
         questionId,
         quizInstanceId,
+        createdAt: userAnswerEntity.createdAt.toJSDate(),
       })
     } else if (userAnswerEntity.type === QuestionType.TEXT_HOLE) {
       return new UserAnswerTextHole({
@@ -30,6 +31,7 @@ export class UserAnswerStorageMapper {
         characterId,
         questionId,
         quizInstanceId,
+        createdAt: userAnswerEntity.createdAt.toJSDate(),
       })
     }
 
