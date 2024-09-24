@@ -13,6 +13,7 @@ import { Shop } from '#shop/domain/models/shop'
 import { Item } from '#item/domain/models/item'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
 import { ItemType } from '#shared/enums/item_type'
+import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Products - update', (group) => {
   let shopsRepository: IShopsRepository
@@ -64,12 +65,7 @@ test.group('Products - update', (group) => {
   })
 
   test('It should update a product', async ({ client, assert }) => {
-    const oldItem = new Item({
-      name: 'Item 2',
-      type: ItemType.Misc,
-      image: 'image.png',
-      icon: 'icon.png',
-    })
+    const oldItem = await itemsRepository.save(new ItemBuilderTest().withName('Old Item').build())
     const school = new School({ name: 'School 1' })
     const product = new ShopProduct({ item: oldItem, price: new Price(100) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })

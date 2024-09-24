@@ -6,8 +6,7 @@ import { ISchoolsRepository } from '#school/domain/contracts/repositories/school
 import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
 import { School } from '#school/domain/models/school'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
-import { Item } from '#item/domain/models/item'
-import { ItemType } from '#shared/enums/item_type'
+import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Shops - store', (group) => {
   let schoolsRepository: ISchoolsRepository
@@ -63,12 +62,7 @@ test.group('Shops - store', (group) => {
   })
 
   test('It should create a shop', async ({ client, assert }) => {
-    const item = new Item({
-      name: 'Item 1',
-      type: ItemType.Misc,
-      image: 'image.png',
-      icon: 'icon.png',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     const school = new School({
       name: 'School 1',
       promotions: [],

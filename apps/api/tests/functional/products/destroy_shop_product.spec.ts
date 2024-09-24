@@ -13,9 +13,8 @@ import { Shop } from '#shop/domain/models/shop'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { ShopProduct } from '#shop/domain/models/shop_product'
 import { Price } from '#shop/domain/models/price'
-import { Item } from '#item/domain/models/item'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
-import { ItemType } from '#shared/enums/item_type'
+import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Products - destroy', (group) => {
   let itemsRepository: IItemRepository
@@ -86,12 +85,7 @@ test.group('Products - destroy', (group) => {
   })
 
   test('It should delete a product', async ({ client, assert }) => {
-    const item = new Item({
-      name: 'Item 1',
-      type: ItemType.Misc,
-      image: 'image.png',
-      icon: 'icon.png',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     const school = new School({ name: 'School 1' })
     const product = new ShopProduct({ item, price: new Price(10.0) })
     const category = new ShopCategory({ name: 'Category 1', products: [product] })
