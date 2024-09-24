@@ -14,10 +14,12 @@ export class UserAnswerFactory {
   static create(createUserAnswer: CreateUserAnswerDtoTextHole): UserAnswerTextHole
   static create(createUserAnswer: CreateUserAnswerDto): UserAnswer
   static create(createUserAnswer: CreateUserAnswerDto): UserAnswer {
-    if (createUserAnswer.type === QuestionType.QCM) return new UserAnswerQcm(createUserAnswer)
+    const createdAt = new Date()
+    if (createUserAnswer.type === QuestionType.QCM)
+      return new UserAnswerQcm({ ...createUserAnswer, createdAt })
 
     if (createUserAnswer.type === QuestionType.TEXT_HOLE)
-      return new UserAnswerTextHole(createUserAnswer)
+      return new UserAnswerTextHole({ ...createUserAnswer, createdAt })
 
     throw new InvalidQuestionTypeException()
   }

@@ -22,6 +22,7 @@ import { QuizInstanceAlreadyExists } from '#quiz/domain/models/quiz/exceptions/q
 import { NotEnoughBerriesException } from '#shop/domain/exceptions/not_enough_berries.exception'
 import { ErrorResponse } from '@world-of-studies/api-types'
 import { OnlyOneAttemptPerExamQuizException } from '#quiz/domain/models/quiz/exceptions/only_one_attempt_per_exam_quiz.exception'
+import { QuizInstanceNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_instance_not_found.exception'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -82,7 +83,8 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       error instanceof ShopProductNotFoundException ||
       error instanceof QuizInstanceAlreadyExists ||
       error instanceof NotEnoughBerriesException ||
-      error instanceof OnlyOneAttemptPerExamQuizException
+      error instanceof OnlyOneAttemptPerExamQuizException ||
+      error instanceof QuizInstanceNotFoundException
     ) {
       ctx.response.status(StatusCodes.BAD_REQUEST).send(this.formatError(error.message))
       return

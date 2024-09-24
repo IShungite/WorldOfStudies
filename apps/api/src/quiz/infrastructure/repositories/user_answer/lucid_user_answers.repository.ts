@@ -8,6 +8,7 @@ import {
 import UserAnswerEntity from '#quiz/infrastructure/entities/user_answer'
 import { Id } from '#shared/id/domain/models/id'
 import { UserAnswerStorageMapper } from '#quiz/infrastructure/mappers/user_answer_storage.mapper'
+import { DateTime } from 'luxon'
 
 export class LucidUserAnswersRepository implements IUserAnswersRepository {
   async save(userAnswer: UserAnswer): Promise<UserAnswer> {
@@ -34,6 +35,7 @@ export class LucidUserAnswersRepository implements IUserAnswersRepository {
         questionId: Number.parseInt(userAnswer.questionId.toString(), 10),
         quizInstanceId: Number.parseInt(userAnswer.quizInstanceId.toString(), 10),
         extra: JSON.stringify(extra),
+        createdAt: DateTime.fromJSDate(userAnswer.createdAt),
       }
     )
 
