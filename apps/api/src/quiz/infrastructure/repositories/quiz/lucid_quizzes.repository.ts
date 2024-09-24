@@ -10,6 +10,7 @@ import QuizEntity from '#quiz/infrastructure/entities/quiz'
 import QuestionEntity from '#quiz/infrastructure/entities/question'
 import { ExamQuiz } from '#quiz/domain/models/quiz/exam_quiz'
 import { DateTime } from 'luxon'
+import QuizInstance from '#quiz/infrastructure/entities/quiz_instance'
 
 export class LucidQuizzesRepository implements IQuizzesRepository {
   async save(quiz: Quiz): Promise<Quiz> {
@@ -44,13 +45,17 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     return quiz ? QuizStorageMapper.fromLucid(quiz) : null
   }
 
-  async getAll(quizType: QuizType, pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
-    const quizzes = await QuizEntity.query()
-      .preload('questions')
-      .where('type', quizType)
-      .orderBy('id', 'asc')
-      .paginate(pagination.page, pagination.perPage)
+  async getAll(
+    quizType: QuizType | 'all',
+    pagination: PaginationRequest
+  ): Promise<PaginatedData<Quiz>> {
+    const query = QuizEntity.query().preload('questions').orderBy('id', 'asc')
 
+    if (quizType !== 'all') {
+      query.where('type', quizType)
+    }
+
+    const quizzes = await query.paginate(pagination.page, pagination.perPage)
     const { data, meta } = quizzes.toJSON()
 
     return new PaginatedData({
@@ -65,6 +70,56 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
 
   async deleteById(quizId: Id): Promise<void> {
     await QuizEntity.query().where('id', quizId.toString()).delete()
+  }
+
+  async getAllWithLastInstanceByCharacterId(
+    characterId: Id,
+    pagination: PaginationRequest
+  ): Promise<
+    PaginatedData<{
+      quiz: Quiz
+      last_quiz_instance_status: string
+    }>
+  > {
+    const quizzes = await QuizEntity.query()
+      .select('quizzes.*', 'qi.status as last_quiz_instance_status')
+      .preload('questions')
+      .joinRaw(
+        `
+        LEFT JOIN (
+          SELECT
+              quiz_id,
+              status,
+              created_at
+          FROM
+              quiz_instances
+          WHERE
+              character_id = ${characterId.toString()}
+          ORDER BY
+              created_at DESC
+          LIMIT 1
+        ) qi ON quizzes.id = qi.quiz_id
+      `
+      )
+      .orderBy('qi.created_at', 'desc')
+      .paginate(pagination.page, pagination.perPage)
+
+    const { data, meta } = quizzes.toJSON()
+
+    return new PaginatedData({
+      results: (data as QuizEntity[]).map((res) => {
+        const quiz = QuizStorageMapper.fromLucid(res)
+        return {
+          quiz,
+          last_quiz_instance_status: res.$extras.last_quiz_instance_status,
+        }
+      }),
+      totalResults: meta.total,
+      perPage: meta.perPage,
+      currentPage: meta.currentPage,
+      firstPage: meta.firstPage,
+      lastPage: meta.lastPage,
+    })
   }
 
   async empty(): Promise<void> {
