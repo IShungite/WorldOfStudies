@@ -76,7 +76,7 @@ const ShopScreen = () => {
           product={selectedProduct}
           character={selectedCharacter}
           isVisible={overlayVisible}
-          onClose={closeOverlay}
+          onPurchase={closeOverlay}
           onBackdropPress={closeOverlay}
         />
       )}
