@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   content: {
+    width: '100%',
     marginTop: -settings.border.width,
     borderWidth: settings.border.width,
     borderBottomLeftRadius: 20,

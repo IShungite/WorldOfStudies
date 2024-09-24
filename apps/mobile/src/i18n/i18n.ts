@@ -18,7 +18,7 @@ i18n
   .init({
     compatibilityJSON: 'v3',
     resources,
-    lng: 'en', // language to use (if you want to use a different language, make sure it's available in 'resources')
+    lng: 'fr', // language to use (if you want to use a different language, make sure it's available in 'resources')
     fallbackLng: 'en', // language to use if translations in user language are not available
 
     interpolation: {
