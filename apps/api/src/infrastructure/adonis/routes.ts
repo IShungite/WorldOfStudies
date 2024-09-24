@@ -8,10 +8,13 @@
 */
 
 import router from '@adonisjs/core/services/router'
+
 import { middleware } from '#infrastructure/adonis/kernel'
+
+const GetCharacterQuizzesController = () =>
+  import('#quiz/infrastructure/controllers/get_character_quizzes.controller')
 const GetQuizInstanceStatsController = () =>
   import('#quiz/infrastructure/controllers/get_quiz_instance_stats.controller')
-
 const GetCharacterStatsController = () =>
   import('#character/infrastructure/controllers/get_character_stats.controller')
 const GetCharacterInventoryController = () =>
@@ -138,6 +141,7 @@ router
       .where('id', onlyNumbersRegex)
     router.get('characters/:id/inventory', [GetCharacterInventoryController])
     router.get('characters/:id/stats', [GetCharacterStatsController])
+    router.get('characters/:id/quizzes', [GetCharacterQuizzesController])
 
     router.get('users/:id/characters', [CharactersController, 'charactersByUserId'])
 

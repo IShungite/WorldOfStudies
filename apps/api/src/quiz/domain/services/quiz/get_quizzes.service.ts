@@ -8,7 +8,10 @@ import { Quiz, QuizType } from '#quiz/domain/models/quiz/quiz'
 export class GetQuizzesService {
   constructor(private readonly quizzesRepository: IQuizzesRepository) {}
 
-  async execute(quizType: QuizType, pagination: PaginationRequest): Promise<PaginatedData<Quiz>> {
+  async execute(
+    quizType: QuizType | 'all',
+    pagination: PaginationRequest
+  ): Promise<PaginatedData<Quiz>> {
     return this.quizzesRepository.getAll(quizType, pagination)
   }
 }
