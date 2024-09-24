@@ -7,4 +7,5 @@ export * from "./quiz_of_character";
 export * from "./question-base";
 export * from "./qcm-question";
 export * from "./text-hole-question";
-export * from "./start-quiz-response";
+export * from "./user-answers";
+export * from "./quiz-response";

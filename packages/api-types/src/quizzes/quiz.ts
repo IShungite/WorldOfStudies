@@ -1,4 +1,5 @@
 import { Question } from "./question";
+import { QuizType } from "./quiz-type";
 
 export enum QuizType {
   EXAM = "exam",

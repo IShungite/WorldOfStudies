@@ -17,6 +17,7 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
 
   useEffect(() => {
     setSelectedChoiceId(null)
+    console.log('question', question)
   }, [question.id])
 
   const handleChoiceSelect = (choiceId: string) => {
@@ -31,32 +32,34 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
   }
 
   return (
-    <GradientContainer>
-      <Text style={styles.questionText}>Select the correct option(s):</Text>
-      {question.choices ? (
-        question.choices.map((choice) => (
-          <TouchableOpacity
-            key={choice.id}
-            style={[
-              styles.choiceButton,
-              selectedChoiceId === choice.id ? styles.selectedChoice : styles.unselectedChoice,
-            ]}
-            onPress={() => handleChoiceSelect(choice.id)}
-          >
-            <Text style={styles.choiceText}>{choice.label}</Text>
-          </TouchableOpacity>
-        ))
-      ) : (
-        <Text style={styles.errorText}>No choices available.</Text>
-      )}
-
-      <Button
-        title="Next"
-        onPress={handleNext}
-        color={selectedChoiceId ? 'green' : 'gray'}
-        style={[styles.nextButton, !selectedChoiceId && styles.inactiveButton]}
-      />
-    </GradientContainer>
+    <>
+      <Text style={styles.questionText}>{question.text}</Text>
+      <GradientContainer>
+        <Text style={styles.instructionText}>Select the correct option(s):</Text>
+        {question.choices ? (
+          question.choices.map((choice) => (
+            <TouchableOpacity
+              key={choice.id}
+              style={[
+                styles.choiceButton,
+                selectedChoiceId === choice.id ? styles.selectedChoice : styles.unselectedChoice,
+              ]}
+              onPress={() => handleChoiceSelect(choice.id)}
+            >
+              <Text style={styles.choiceText}>{choice.label}</Text>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text style={styles.errorText}>No choices available.</Text>
+        )}
+        <Button
+          title="Next"
+          onPress={handleNext}
+          color={selectedChoiceId ? 'green' : 'gray'}
+          style={[styles.nextButton, !selectedChoiceId && styles.inactiveButton]}
+        />
+      </GradientContainer>
+    </>
   )
 }
 
@@ -80,6 +83,12 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#fff',
     fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  instructionText: {
+    color: '#fff',
+    fontSize: 16,
     marginBottom: 10,
   },
   errorText: {

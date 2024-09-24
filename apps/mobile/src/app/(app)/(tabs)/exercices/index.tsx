@@ -1,19 +1,39 @@
-import { Quiz } from '@world-of-studies/api-types/src/quizzes/'
+import { useFocusEffect } from '@react-navigation/native'
+import { Quiz } from '@world-of-studies/api-types/src/quizzes/quiz'
+import { useCallback } from 'react'
 import { View } from 'react-native'
-import { useQuery } from 'react-query'
 
-import kyInstance from '@/api/kyInstance'
 import ExerciceCard from '@/components/exercice-card'
+import Text from '@/components/shared/Text'
+import { useQuizzes } from '@/hooks/useQuizzes'
 
 export default function ExercisesScreen() {
-  const { data } = useQuery({
-    queryKey: 'quizzes',
-    queryFn: async () => {
-      const response = await kyInstance.get('quizzes')
-      const { results } = (await response.json()) as { results: { result: Quiz }[] }
-      return results.map(({ result }) => result)
-    },
-  })
+  const { data, refetch, isLoading, error } = useQuizzes()
 
-  return <View>{data?.map((exercise) => <ExerciceCard key={exercise.id} exercice={exercise} />)}</View>
+  useFocusEffect(
+    useCallback(() => {
+      refetch()
+    }, [refetch])
+  )
+
+  // Handle loading state
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
+  // Handle error state
+  if (error) {
+    return <Text>Error loading quizzes</Text>
+  }
+
+  // Safely access data and map through it
+  return (
+    <View>
+      {Array.isArray(data) && data.length > 0 ? (
+        data.map((exercise: Quiz) => <ExerciceCard key={exercise.id} exercice={exercise} />)
+      ) : (
+        <Text>No quizzes available</Text>
+      )}
+    </View>
+  )
 }

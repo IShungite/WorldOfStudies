@@ -87,7 +87,7 @@ export default function TabLayout() {
             tabBarIcon: ({ focused }) => (
               <TabIcon
                 isSelected={focused}
-                icon={require(`@/assets/images/tabs/exercices.webp`)}
+                icon={require(`@/assets/images/tabs/statistics.webp`)}
                 label="Statistiques"
                 withBorderLeft={false}
               />
