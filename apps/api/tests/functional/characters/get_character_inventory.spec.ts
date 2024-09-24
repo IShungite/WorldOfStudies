@@ -11,10 +11,9 @@ import { SchoolBuilderTest } from '#tests/builders/school_builder_test'
 import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
 import { Inventory } from '#inventory/domain/models/inventory'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
-import { Item } from '#item/domain/models/item'
 import { InventoryItem } from '#inventory/domain/models/inventory_item'
 import { InventoryResponse } from '@world-of-studies/api-types'
-import { ItemType } from '#shared/enums/item_type'
+import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Characters - get inventory', (group) => {
   let charactersRepository: ICharactersRepository
@@ -83,12 +82,7 @@ test.group('Characters - get inventory', (group) => {
   })
 
   test('It should return a 200 if everything goes well', async ({ client, assert }) => {
-    const item = new Item({
-      name: 'Item 1',
-      type: ItemType.Misc,
-      image: 'image.png',
-      icon: 'icon.png',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     await itemsRepository.save(item)
     await inventoriesRepository.saveForCharacter(
       character.id,

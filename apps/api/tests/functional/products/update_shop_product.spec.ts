@@ -10,9 +10,7 @@ import { School } from '#school/domain/models/school'
 import { ShopProduct } from '#shop/domain/models/shop_product'
 import { ShopCategory } from '#shop/domain/models/shop_category'
 import { Shop } from '#shop/domain/models/shop'
-import { Item } from '#item/domain/models/item'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
-import { ItemType } from '#shared/enums/item_type'
 import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Products - update', (group) => {
@@ -20,12 +18,7 @@ test.group('Products - update', (group) => {
   let schoolsRepository: ISchoolsRepository
   let itemsRepository: IItemRepository
 
-  const item = new Item({
-    name: 'Item 1',
-    type: ItemType.Misc,
-    image: 'image.png',
-    icon: 'icon.png',
-  })
+  const item = new ItemBuilderTest().build()
   const price = new Price(55)
   const payload = { itemId: item.id.toString(), price: price.toNumber() }
 
