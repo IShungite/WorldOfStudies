@@ -217,6 +217,9 @@ test.group('Shops - purchase product', (group) => {
   test('It should decrease the character berries', async ({ client, assert }) => {
     const item = new Item({
       name: 'Item 1',
+      type: ItemType.Misc,
+      image: 'image.png',
+      icon: 'icon.png',
     })
     const shopProduct = new ShopProduct({
       item: item,
