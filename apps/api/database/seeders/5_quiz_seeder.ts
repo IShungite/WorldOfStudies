@@ -296,7 +296,7 @@ export const quizzes: Quiz[] = [
     name: 'Contrôle de Science',
     subjectId: subjects[1].id, // Science
     type: QuizType.EXAM,
-    startAt: new Date(new Date().setDate(new Date().getDate() + 2)),
+    startAt: new Date(),
     endAt: new Date(new Date().setDate(new Date().getDate() + 7)),
     questions: [
       {
