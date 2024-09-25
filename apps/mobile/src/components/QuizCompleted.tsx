@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 
 import Button from '@/components/shared/Button'

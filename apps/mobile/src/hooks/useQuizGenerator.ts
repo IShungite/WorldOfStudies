@@ -1,4 +1,4 @@
-import { QuestionType, Quiz } from '@world-of-studies/api-types/src/quizzes'
+import { QuestionType, QuizAi } from '@world-of-studies/api-types/src/quizzes'
 import { QuizType } from '@world-of-studies/api-types/src/quizzes/quiz-type'
 import { useMutation } from 'react-query'
 
@@ -27,7 +27,7 @@ const fakeApiCall = <T extends unknown>(data: T, delay: number = 1000): Promise<
 // }
 
 // Function to emulate the POST request and return a generated quiz
-const postQuizData = async ({ subject, theme }: { subject: string; theme: string }): Promise<Quiz> => {
+const postQuizData = async ({ subject, theme }: { subject: string; theme: string }): Promise<QuizAi> => {
   const requestBody = {
     'type': 'exercice',
     subject,
@@ -36,7 +36,7 @@ const postQuizData = async ({ subject, theme }: { subject: string; theme: string
   }
 
   // Simulating the response from API
-  const fakeQuizResponse: Quiz = {
+  const fakeQuizResponse: QuizAi = {
     name: `Quizz ${subject} les multiplications`,
     id: '1',
     type: QuizType.PRACTICE,

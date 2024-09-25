@@ -1,4 +1,5 @@
 import { Input } from '@rneui/base'
+import { TextHoleQuestionResponse } from '@world-of-studies/api-types/src/quizzes'
 import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
 import { QuestionTextHole } from '@world-of-studies/api-types/src/quizzes/text-hole-question'
 import { UserAnswerDtoTextHole } from '@world-of-studies/api-types/src/quizzes/user-answers'

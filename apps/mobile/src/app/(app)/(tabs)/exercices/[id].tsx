@@ -1,11 +1,13 @@
 import {
   CreateUserAnswerDto,
-  Question,
+  QCMQuestionResponse,
   QuestionType,
   Quiz,
+  QuizAi,
+  TextHoleQuestionResponse,
   UserAnswerDto,
 } from '@world-of-studies/api-types/src/quizzes'
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
@@ -21,11 +23,7 @@ import { useSubmitAnswer } from '@/hooks/useUserAnswers'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 type QuestionComponentProps = {
-  question: Question & {
-    choices?: { id: string; label: string; isCorrect?: boolean }[] // Make isCorrect optional
-    text?: string
-    answers?: string[]
-  }
+  question: QCMQuestionResponse | TextHoleQuestionResponse
   onNext: () => void
   handleSubmitAnswer: (questionId: string, answer: UserAnswerDto) => void
 }
@@ -52,18 +50,27 @@ export default function ExerciceDetail() {
   // Parse isAiMode as a boolean (checking for 'true' or 'false' strings)
   const isAi = isAiMode === 'true'
 
-  const quiz: Quiz = JSON.parse(exercice)
+  const quiz: Quiz | QuizAi = JSON.parse(exercice)
 
-  const currentQuestion = quiz.questions[currentQuestionIndex]
+  // Fetch the filtered questions
+  const {
+    mutate: startQuiz,
+    data: quizInstanceData,
+    isLoading: startQuizLoading,
+    error: startQuizError,
+  } = useStartQuiz()
 
-  const { mutate: startQuiz, data: quizInstanceId, isLoading: startQuizLoading, error: startQuizError } = useStartQuiz()
   const { mutate: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
+
+  const filteredQuestions = quizInstanceData?.questions || []
+
+  const currentQuestion = filteredQuestions[currentQuestionIndex] // Use the filtered questions
 
   const [answers, setAnswers] = useState<UserAnswerDto[]>([])
 
   // Prevent the useEffect from being triggered multiple times, start the quiz only if not in AI mode
   useEffect(() => {
-    if (selectedCharacter && !quizInstanceId && !startQuizLoading && !isAi) {
+    if (selectedCharacter && !quizInstanceData && !startQuizLoading && !isAi) {
       startQuiz(
         { quizId: quiz.id, characterId: selectedCharacter.id },
         {
@@ -73,7 +80,7 @@ export default function ExerciceDetail() {
         }
       )
     }
-  }, [quiz, selectedCharacter, quizInstanceId, startQuizLoading, startQuiz, isAi])
+  }, [quiz, selectedCharacter, quizInstanceData, startQuizLoading, startQuiz, isAi])
 
   const handleSubmitAnswer = async (questionId: string, answer: UserAnswerDto) => {
     // Skip submitting answers if in AI mode
@@ -82,7 +89,7 @@ export default function ExerciceDetail() {
       return
     }
 
-    if (!quizInstanceId || !selectedCharacter) return
+    if (!quizInstanceData?.quizInstanceId || !selectedCharacter) return
 
     const payload: CreateUserAnswerDto =
       answer.type === QuestionType.QCM
@@ -100,7 +107,7 @@ export default function ExerciceDetail() {
           }
 
     submitAnswer(
-      { quizInstanceId, questionId, payload },
+      { quizInstanceId: quizInstanceData.quizInstanceId, questionId, payload },
       {
         onSuccess: () => {
           console.log('Answer Submitted Successfully for Question ID:', questionId)
@@ -113,7 +120,7 @@ export default function ExerciceDetail() {
   }
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < (quiz?.questions.length ?? 0) - 1) {
+    if (currentQuestionIndex < filteredQuestions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1)
       console.log('Moving to the Next Question, Current Index:', currentQuestionIndex + 1)
     } else {
@@ -131,18 +138,18 @@ export default function ExerciceDetail() {
   }
 
   if (quizCompleted && isAi) {
-    return <QuizCompletedAi answers={answers} quiz={quiz} />
+    return <QuizCompletedAi answers={answers} quiz={quiz as QuizAi} />
   }
 
   if (quizCompleted) {
-    return <QuizCompleted quizInstanceId={quizInstanceId} />
+    return <QuizCompleted quizInstanceId={quizInstanceData?.quizInstanceId} />
   }
 
   return (
     <Card title={quiz.name}>
       {currentQuestion && (
         <QuestionComponent
-          question={currentQuestion}
+          question={currentQuestion.question}
           onNext={handleNextQuestion}
           handleSubmitAnswer={handleSubmitAnswer}
         />
