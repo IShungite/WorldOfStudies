@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { ActivityIndicator, StyleSheet } from 'react-native'
 
 import Button from '@/components/shared/Button'
 import GradientContainer from '@/components/shared/GradientContainer'
@@ -21,6 +21,7 @@ const QuizCompleted = ({ quizInstanceId }: Props) => {
   }
 
   if (isLoading) {
+    return <ActivityIndicator size="large" color="#0000ff" />
   }
 
   if (!data) {

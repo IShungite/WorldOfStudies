@@ -48,7 +48,7 @@ const QuizCompletedAi = ({ quiz, answers }: Props) => {
   const handleCloseQuiz = () => {
     router.push('/(app)/(tabs)/')
   }
-
+  Math.round(points)
   return (
     <GradientContainer>
       <Text>Terminé</Text>
