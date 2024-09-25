@@ -40,6 +40,7 @@ const SkinOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, skins }) => 
       alert(error)
     } finally {
       setIsLoading(false)
+      onBackdropPress()
     }
   }
 

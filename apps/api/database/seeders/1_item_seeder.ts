@@ -8,7 +8,7 @@ import { Item } from '#item/domain/models/item'
 export const items: Item[] = [
   new Item({
     id: new Id('1'),
-    name: 'Assassin',
+    name: 'Sorcier',
     type: ItemType.Skin,
     image: 'default-skin.png',
     icon: 'default-skin.png',

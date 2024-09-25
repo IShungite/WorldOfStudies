@@ -49,9 +49,10 @@ const Profile = () => {
 // Styles pour la page
 const styles = StyleSheet.create({
   avatar: {
-    width: 250,
-    height: 350,
+    width: 350,
+    height: 450,
     alignSelf: 'center',
+    resizeMode: 'contain',
   },
   centered: {
     flex: 1,
