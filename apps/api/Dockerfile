@@ -1,4 +1,14 @@
-FROM worldofstudies-apps-node-interpreter
+FROM node:20-slim AS base
+
+RUN apt-get update
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+FROM base
+
+COPY . /app
 
 # Set up the work directory
 WORKDIR /app
