@@ -19,11 +19,11 @@ export default class extends BaseSeeder {
       }),
       new User({
         id: new Id('2'),
-        firstName: 'student 1',
-        lastName: 'student 1',
-        email: 'student1@student1.com',
+        firstName: 'Jean',
+        lastName: 'Aff',
+        email: 'pres@pres.fr',
         role: 'student',
-        password: 'student1',
+        password: 'pres',
       }),
       new User({
         id: new Id('3'),

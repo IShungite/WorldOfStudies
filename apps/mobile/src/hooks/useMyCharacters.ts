@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import kyInstance from '@/api/kyInstance'
 
 export function useMyCharacters() {
-  const { isLoading, data } = useQuery<Character[]>({
+  const { isLoading, data, error } = useQuery<Character[]>({
     queryKey: 'user-characters',
     queryFn: async () => {
       const response = await kyInstance.get('me/characters')
@@ -14,5 +14,5 @@ export function useMyCharacters() {
     },
   })
 
-  return { isLoading, data }
+  return { isLoading, data, error }
 }

@@ -7,15 +7,15 @@ import { ICharactersRepository } from '#character/domain/contracts/repositories/
 export const characters: Character[] = [
   new Character({
     id: new Id('1'),
-    name: 'Character 1',
+    name: 'Pres1',
     promotionId: new Id('1'),
     userId: new Id('2'),
-    berries: 100,
+    berries: 98,
     skin: 'default-skin.png',
   }),
   new Character({
     id: new Id('2'),
-    name: 'Character 2',
+    name: 'Lutor',
     promotionId: new Id('2'),
     userId: new Id('2'),
     berries: 100,

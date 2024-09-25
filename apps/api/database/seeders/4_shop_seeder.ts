@@ -19,7 +19,7 @@ export default class extends BaseSeeder {
         categories: [
           new ShopCategory({
             id: new Id('1'),
-            name: 'Category 1-1',
+            name: 'Cosmétiques',
             products: [
               new ShopProduct({
                 id: new Id('1'),
@@ -41,21 +41,21 @@ export default class extends BaseSeeder {
                 item: items[4],
                 price: new Price(400),
               }),
-              new ShopProduct({
-                id: new Id('5'),
-                item: items[5],
-                price: new Price(500),
-              }),
             ],
           }),
           new ShopCategory({
             id: new Id('2'),
-            name: 'Category 1-2',
+            name: 'Divers',
             products: [
               new ShopProduct({
+                id: new Id('5'),
+                item: items[5],
+                price: new Price(700),
+              }),
+              new ShopProduct({
                 id: new Id('6'),
-                item: items[2],
-                price: new Price(150),
+                item: items[6],
+                price: new Price(500),
               }),
               new ShopProduct({
                 id: new Id('7'),
