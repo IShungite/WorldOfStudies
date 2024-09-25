@@ -16,7 +16,7 @@ const settings = {
 
 type Props = {
   title: string
-  children: React.ReactNode
+  children?: React.ReactNode
   containerStyle?: ViewStyle
 }
 

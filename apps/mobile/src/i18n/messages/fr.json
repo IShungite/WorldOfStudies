@@ -12,5 +12,12 @@
     "character": "Personnage",
     "school": "Ecole",
     "promotion": "Classe",
-    "balance": "Solde"
+    "balance": "Berries",
+    "tab_shop": "Boutique",
+    "tab_profile": "Profil",
+    "tab_home": "Accueil",
+    "tab_exercices": "Exercices",
+    "tab_statistics": "Statistiques",
+    "logout": "Déconnexion",
+    "home.exam_title": "Contrôles"
 }

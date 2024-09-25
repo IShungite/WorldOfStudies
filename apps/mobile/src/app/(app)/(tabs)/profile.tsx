@@ -1,75 +1,32 @@
-import { CharacterInventoryResponse } from '@world-of-studies/api-types/src/character/character_inventory_response'
-import { InventoryItem } from '@world-of-studies/api-types/src/inventory'
-import { useFocusEffect } from 'expo-router'
-import { useAtom } from 'jotai'
+import { useAtomValue } from 'jotai'
 import React, { useState } from 'react'
-import { Image, StyleSheet, ScrollView, View, Text, ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import kyInstance from '@/api/kyInstance'
 import ProfileCard from '@/components/profile-card'
+import PageLoader from '@/components/shared/PageLoader'
 import SkinOverlay from '@/components/skin-overlay'
+import { useInventory } from '@/hooks/useInventory'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const Profile = () => {
-  const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse || null
-  const [ownedSkins, setOwnedSkins] = useState<InventoryItem[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
+  const selectedCharacter = useAtomValue(selectedCharacterAtom)
   const [overlayVisible, setOverlayVisible] = useState(false)
 
-  const fetchInventory = async () => {
-    try {
-      if (!selectedCharacter) {
-        alert('No character selected')
-        return
-      }
-      const response = (await kyInstance
-        .get(`characters/${selectedCharacter.id}/inventory`)
-        .json()) as CharacterInventoryResponse
-      if (response) {
-        setOwnedSkins(response.result.items.filter((item) => item.type === 'SKIN'))
-      }
-    } catch (error) {
-      alert(error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // Trigger the API call when the component mounts
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchInventory()
-    }, [])
-  )
-
-  if (isLoading) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
+  const { data: inventory, isLoading: isInventoryLoading } = useInventory(selectedCharacter?.id ?? '')
 
   if (!selectedCharacter) {
-    return (
-      <View style={styles.centered}>
-        <Text>Character not selected</Text>
-      </View>
-    )
+    return null
   }
-
-  if (isLoading)
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading skins...</Text>
-      </View>
-    )
 
   const showOverlay = () => {
     setOverlayVisible(true)
   }
 
+  if (isInventoryLoading) return <PageLoader />
+
   return (
-    <ScrollView style={{ marginTop: 5 }}>
+    <ScrollView style={{ marginTop: 5, marginHorizontal: 5 }}>
       <ProfileCard character={selectedCharacter} />
       <TouchableOpacity onPress={showOverlay}>
         <Image
@@ -78,8 +35,12 @@ const Profile = () => {
         />
       </TouchableOpacity>
 
-      {overlayVisible && ownedSkins && (
-        <SkinOverlay isVisible={overlayVisible} skins={ownedSkins} onBackdropPress={() => setOverlayVisible(false)} />
+      {overlayVisible && (
+        <SkinOverlay
+          isVisible={overlayVisible}
+          skins={inventory ?? []}
+          onBackdropPress={() => setOverlayVisible(false)}
+        />
       )}
     </ScrollView>
   )

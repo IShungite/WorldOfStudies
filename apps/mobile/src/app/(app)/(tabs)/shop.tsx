@@ -8,6 +8,7 @@ import { useQuery } from 'react-query'
 import kyInstance from '@/api/kyInstance'
 import CategoryItem from '@/components/category-item'
 import ProductOverlay from '@/components/product-overlay'
+import PageLoader from '@/components/shared/PageLoader'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
@@ -51,11 +52,7 @@ const ShopScreen = () => {
   }
 
   if (isCategoriesLoading) {
-    return (
-      <View style={styles.centered}>
-        <Button title="Loading" loading />
-      </View>
-    )
+    return <PageLoader />
   }
 
   if (error || !categories) {

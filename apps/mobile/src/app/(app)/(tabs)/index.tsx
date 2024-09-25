@@ -1,25 +1,26 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { QuizOfCharacter } from '@world-of-studies/api-types/src/quizzes'
-import { useAtom } from 'jotai'
+import { useAtomValue } from 'jotai'
 import React, { useCallback, useState } from 'react'
-import { ScrollView, View, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
 
-import CategoryItem from '@/components/category-item'
 import ExamCard from '@/components/exam-card'
 import QuizGeneratorOverlay from '@/components/quiz-generator-overlay'
 import Button from '@/components/shared/Button'
 import Card from '@/components/shared/Card'
+import PageLoader from '@/components/shared/PageLoader'
 import Text from '@/components/shared/Text'
 import { useQuizzes } from '@/hooks/useQuizzes'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 export default function HomeScreen() {
-  const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse || null
+  const { t } = useTranslation()
+  const selectedCharacter = useAtomValue(selectedCharacterAtom)
 
   const { data, refetch, isLoading, error } = useQuizzes(selectedCharacter?.id ?? '')
 
-  const [overlayVisible, setOverlayVisible] = useState(false) // State for overlay visibility
+  const [overlayVisible, setOverlayVisible] = useState(false)
 
   useFocusEffect(
     useCallback(() => {
@@ -28,11 +29,7 @@ export default function HomeScreen() {
   )
 
   if (isLoading) {
-    return (
-      <View style={styles.centered}>
-        <Text>Loading...</Text>
-      </View>
-    )
+    return <PageLoader />
   }
 
   if (error) {
@@ -55,11 +52,13 @@ export default function HomeScreen() {
 
   return (
     <>
-      <Card title="Exams" children={undefined} />
+      <Card title={t('home.exam_title')} />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
-        {examQuizzes.map((exercise: QuizOfCharacter) => (
-          <ExamCard key={exercise.id} exercice={exercise} />
-        ))}
+        {examQuizzes
+          .filter((exercise) => exercise.last_quiz_instance_status !== 'completed')
+          .map((exercise: QuizOfCharacter) => (
+            <ExamCard key={exercise.id} exercice={exercise} />
+          ))}
       </ScrollView>
 
       {/* "Générer un quiz IA" Button */}

@@ -8,9 +8,10 @@ type Props = {
   label: string
   withBorderLeft?: boolean
   withBorderRight?: boolean
+  fontSize?: number
 }
 
-const TabIcon = ({ isSelected, icon, label, withBorderLeft = true, withBorderRight = true }: Props) => {
+const TabIcon = ({ isSelected, icon, label, withBorderLeft = true, withBorderRight = true, fontSize = 15 }: Props) => {
   return (
     <View
       style={{
@@ -28,7 +29,7 @@ const TabIcon = ({ isSelected, icon, label, withBorderLeft = true, withBorderRig
       }}
     >
       <Image source={icon} style={{ width: 40, height: 40 }} />
-      {isSelected && <Text style={{ fontSize: 15, marginBottom: 15, color: '#627291' }}>{label}</Text>}
+      {isSelected && <Text style={{ fontSize, marginBottom: 15, color: '#627291' }}>{label}</Text>}
     </View>
   )
 }

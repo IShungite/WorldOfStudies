@@ -17,10 +17,6 @@ export default function ExamCard({ exercice }: Props) {
   if (!exercice) {
     return <Text>Quiz indéfini</Text>
   }
-  // Don't render the exam if it's completed
-  if (exercice.last_quiz_instance_status === 'completed') {
-    return null
-  }
 
   const isStarted = dayjs().isAfter(dayjs(exercice.startAt))
   const dueTime = isStarted

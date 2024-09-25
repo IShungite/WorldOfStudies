@@ -2,6 +2,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { Redirect, Tabs } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useCallback, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import TabIcon from '@/components/TabIcon'
@@ -14,6 +15,8 @@ const tabBarLabel = () => {
 }
 
 export default function TabLayout() {
+  const { t } = useTranslation()
+
   const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
   const selectedCharacter = selectedCharacterResponse || null
 
@@ -48,43 +51,8 @@ export default function TabLayout() {
               <TabIcon
                 isSelected={focused}
                 icon={require(`@/assets/images/tabs/shop.webp`)}
-                label="Shop"
+                label={t('tab_shop')}
                 withBorderLeft={false}
-              />
-            ),
-          }}
-        />
-        {/* Home Tab */}
-        <Tabs.Screen
-          name="index"
-          options={{
-            tabBarLabel,
-            tabBarIcon: ({ focused }) => (
-              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/home.webp`)} label="Home" />
-            ),
-          }}
-        />
-        {/* Exercises Tab */}
-        <Tabs.Screen
-          name="exercices"
-          options={{
-            tabBarLabel,
-            tabBarIcon: ({ focused }) => (
-              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/exercices.webp`)} label="Exercises" />
-            ),
-          }}
-        />
-        {/* Statistics Tab */}
-        <Tabs.Screen
-          name="statistics"
-          options={{
-            tabBarLabel,
-            tabBarIcon: ({ focused }) => (
-              <TabIcon
-                isSelected={focused}
-                icon={require(`@/assets/images/tabs/statistics.webp`)}
-                label="Statistiques"
-                withBorderRight={false}
               />
             ),
           }}
@@ -98,7 +66,46 @@ export default function TabLayout() {
               <TabIcon
                 isSelected={focused}
                 icon={require(`@/assets/images/tabs/profile.png`)}
-                label="Profile"
+                label={t('tab_profile')}
+              />
+            ),
+          }}
+        />
+        {/* Home Tab */}
+        <Tabs.Screen
+          name="index"
+          options={{
+            tabBarLabel,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/home.webp`)} label={t('tab_home')} />
+            ),
+          }}
+        />
+        {/* Exercises Tab */}
+        <Tabs.Screen
+          name="exercices"
+          options={{
+            tabBarLabel,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/exercices.webp`)}
+                label={t('tab_exercices')}
+              />
+            ),
+          }}
+        />
+        {/* Statistics Tab */}
+        <Tabs.Screen
+          name="statistics"
+          options={{
+            tabBarLabel,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/statistics.webp`)}
+                label={t('tab_statistics')}
+                fontSize={13}
                 withBorderRight={false}
               />
             ),
