@@ -58,7 +58,6 @@ export default function ExerciceDetail() {
   // Prevent the useEffect from being triggered multiple times, start the quiz only if not in AI mode
   useEffect(() => {
     if (selectedCharacter && !quizInstanceId && !startQuizLoading && !isAi) {
-      console.log('Starting Quiz with Quiz ID:', quiz.id, 'and Character ID:', selectedCharacter.id)
       startQuiz(
         { quizId: quiz.id, characterId: selectedCharacter.id },
         {
@@ -84,7 +83,6 @@ export default function ExerciceDetail() {
         ? { type: 'qcm', questionId, choiceId: answer, characterId: selectedCharacter.id }
         : { type: 'text-hole', questionId, values: answer, characterId: selectedCharacter.id }
 
-    console.log('Submitting Answer for Question ID:', questionId, 'with Payload:', payload)
     submitAnswer(
       { quizInstanceId, questionId, payload },
       {

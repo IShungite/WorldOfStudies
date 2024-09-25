@@ -35,8 +35,6 @@ const postQuizData = async ({ subject, theme }: { subject: string; theme: string
     'moyenne': 10, // Hardcoded for now
   }
 
-  console.log('Sending request to API:', requestBody)
-
   // Simulating the response from API
   const fakeQuizResponse: Quiz = {
     name: `Quizz ${subject} les multiplications`,

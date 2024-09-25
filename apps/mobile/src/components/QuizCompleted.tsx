@@ -29,7 +29,7 @@ const QuizCompleted = ({ quizInstanceId }: Props) => {
 
   return (
     <GradientContainer>
-      <Text>VICTOIRE</Text>
+      <Text>Terminé</Text>
       <Text style={styles.pointsText}>
         Vous avez obtenu {data.result.score}/{data.result.maxScore} points.
       </Text>
@@ -39,6 +39,7 @@ const QuizCompleted = ({ quizInstanceId }: Props) => {
 }
 
 export default QuizCompleted
+
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',

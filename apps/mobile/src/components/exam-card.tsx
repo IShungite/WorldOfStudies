@@ -35,8 +35,6 @@ export default function ExamCard({ exercice }: Props) {
 
   const quizStatus = getExamStatus(exercice)
 
-  console.log('Mon exo: ', exercice)
-  console.log('Mon json: ', JSON.stringify(exercice))
   const myStringifiedExercice = JSON.stringify(exercice)
   return (
     <Pressable

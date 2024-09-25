@@ -14,8 +14,6 @@ export default function ExercisesScreen() {
   const selectedCharacter = selectedCharacterResponse || null
   const characterId = selectedCharacter?.id ?? ''
 
-  console.log('selectedCharacter', characterId)
-
   const { data, refetch, isLoading, error } = useQuizzes(characterId)
 
   useFocusEffect(

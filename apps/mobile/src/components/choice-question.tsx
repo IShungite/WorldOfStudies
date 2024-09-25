@@ -19,7 +19,6 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
 
   useEffect(() => {
     setSelectedChoiceId(null)
-    console.log('question', question)
   }, [question.id])
 
   const handleChoiceSelect = (choiceId: string) => {
