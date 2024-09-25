@@ -31,6 +31,8 @@ export const characters: Character[] = [
   }),
 ]
 
+export const character1 = characters[0]
+
 export default class extends BaseSeeder {
   async run() {
     const repo = await app.container.make(ICharactersRepository)
