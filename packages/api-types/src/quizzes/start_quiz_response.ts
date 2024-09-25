@@ -27,5 +27,4 @@ export type QCMQuestionResponse = BaseQuestion & {
 
 export type TextHoleQuestionResponse = BaseQuestion & {
   type: QuestionType.TEXT_HOLE;
-  answers: string[];
 };

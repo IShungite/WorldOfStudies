@@ -82,24 +82,36 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
     }>
   > {
     const quizzes = await QuizEntity.query()
-      .select('quizzes.*', 'qi.status as last_quiz_instance_status')
+      .select(
+        'quizzes.*',
+        'qi.status as last_quiz_instance_status',
+        'qi.created_at as last_quiz_instance_created_at'
+      )
       .preload('questions')
       .joinRaw(
         `
         LEFT JOIN (
           SELECT
-              quiz_id,
-              status,
-              created_at
+            qi1.quiz_id,
+            qi1.status,
+            qi1.created_at
           FROM
+            quiz_instances qi1
+          JOIN (
+            SELECT
+              quiz_id,
+              MAX(created_at) AS max_created_at
+            FROM
               quiz_instances
-          WHERE
+            WHERE
               character_id = ${characterId.toString()}
-          ORDER BY
-              created_at DESC
-          LIMIT 1
+            GROUP BY
+              quiz_id
+          ) qi2 ON qi1.quiz_id = qi2.quiz_id AND qi1.created_at = qi2.max_created_at
+          WHERE
+            qi1.character_id = ${characterId.toString()}
         ) qi ON quizzes.id = qi.quiz_id
-      `
+        `
       )
       .orderBy('qi.created_at', 'desc')
       .paginate(pagination.page, pagination.perPage)

@@ -42,7 +42,6 @@ export class QuestionApiMapper {
     return {
       ...this.toResponseBase(question),
       type: QuestionType.TEXT_HOLE,
-      answers: question.answers,
     }
   }
 }

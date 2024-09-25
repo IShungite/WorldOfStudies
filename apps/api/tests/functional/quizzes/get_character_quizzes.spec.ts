@@ -70,25 +70,50 @@ test.group('Quiz instance - stats', (group) => {
       new SchoolBuilderTest().withRandomPromotionsAndSubjects(1, 0).withSubjects([subject1]).build()
     )
 
-    const character = await charactersRepository.save(
-      new CharacterBuilderTest().withUser(user1).withPromotion(school.promotions[0]).build()
-    )
+    const [character, character2] = await Promise.all([
+      charactersRepository.save(
+        new CharacterBuilderTest().withUser(user1).withPromotion(school.promotions[0]).build()
+      ),
+      charactersRepository.save(
+        new CharacterBuilderTest().withUser(user1).withPromotion(school.promotions[0]).build()
+      ),
+    ])
 
-    const [quiz1] = await Promise.all([
+    const [quiz1, quiz2, quiz3] = await Promise.all([
       quizzesRepository.save(
         new QuizBuilderTest().withName('Quiz 1').withSubject(subject1).build()
       ),
       quizzesRepository.save(
         new QuizBuilderTest().withName('Quiz 2').withSubject(subject1).build()
       ),
+      quizzesRepository.save(
+        new QuizBuilderTest().withName('Quiz 3').withSubject(subject1).build()
+      ),
     ])
-    await quizzesInstanceRepository.save(
-      new QuizInstanceBuilderTest()
-        .withQuiz(quiz1)
-        .withCharacterId(character.id)
-        .withStatus(QuizInstanceStatus.COMPLETED)
-        .build()
-    )
+
+    await Promise.all([
+      quizzesInstanceRepository.save(
+        new QuizInstanceBuilderTest()
+          .withQuiz(quiz1)
+          .withCharacterId(character.id)
+          .withStatus(QuizInstanceStatus.COMPLETED)
+          .build()
+      ),
+      quizzesInstanceRepository.save(
+        new QuizInstanceBuilderTest()
+          .withQuiz(quiz2)
+          .withCharacterId(character.id)
+          .withStatus(QuizInstanceStatus.IN_PROGRESS)
+          .build()
+      ),
+      quizzesInstanceRepository.save(
+        new QuizInstanceBuilderTest()
+          .withQuiz(quiz3)
+          .withCharacterId(character2.id)
+          .withStatus(QuizInstanceStatus.IN_PROGRESS)
+          .build()
+      ),
+    ])
 
     const response = await client.get(`/characters/${character.id}/quizzes`).loginWith(user1)
 
@@ -96,10 +121,18 @@ test.group('Quiz instance - stats', (group) => {
 
     const body: PaginatedResponse<QuizOfCharacter> = response.body()
 
-    assert.equal(body.results.length, 2)
+    assert.equal(body.results.length, 3)
     assert.equal(
       body.results.find((quiz) => quiz.id === quiz1.id.toString())?.last_quiz_instance_status,
       QuizInstanceStatus.COMPLETED
+    )
+    assert.equal(
+      body.results.find((quiz) => quiz.id === quiz2.id.toString())?.last_quiz_instance_status,
+      QuizInstanceStatus.IN_PROGRESS
+    )
+    assert.equal(
+      body.results.find((quiz) => quiz.id === quiz3.id.toString())?.last_quiz_instance_status,
+      null
     )
   })
 })
