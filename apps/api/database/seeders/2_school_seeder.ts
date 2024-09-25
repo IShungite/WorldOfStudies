@@ -17,18 +17,18 @@ export default class extends BaseSeeder {
     const schools: School[] = [
       new School({
         id: new Id('1'),
-        name: 'School 1',
+        name: 'Ynov',
         admins: [admin!],
         promotions: [
           new Promotion({
             id: new Id('1'),
-            name: 'Promotion 1-1',
+            name: 'B1 Info',
             year: 2022,
             subjects: [subjects[0], subjects[1], subjects[2]],
           }),
           new Promotion({
             id: new Id('2'),
-            name: 'Promotion 1-2',
+            name: 'B2 Info',
             year: 2022,
             subjects: [subjects[3], subjects[4], subjects[5]],
           }),
