@@ -43,7 +43,7 @@ export class CreateUserAnswerService {
           status: QuizInstanceStatus.COMPLETED,
         }),
         this.updateCharacterService.execute(character.id, {
-          berries: character.berries + Math.ceil(quizInstance.getTotalUserPoints()),
+          berries: character.berries + Math.round(quizInstance.getTotalUserPoints()),
         }),
       ])
     }
