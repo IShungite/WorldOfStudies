@@ -212,5 +212,21 @@ class Exercice:
         self.processData()
         self.organize_requests()
 
+    def add_ids_final_json(self):
+        print("Start add_ids_final_json")
+        quizzCounter=1
+        questionCounter=1
+        choixCounter=1
+        self.very_final_json["id"]=str(quizzCounter)
+        quizzCounter+=1
+        for question in self.very_final_json["questions"]:
+            question["id"] = str(questionCounter)
+            questionCounter+=1
+            if question["type"]=="qcm":
+                for choix in question["choices"]:
+                    choix["id"] = str(choixCounter)
+                    choixCounter+=1
+
     def renvois_final_json(self):
+        self.add_ids_final_json()
         return self.very_final_json
