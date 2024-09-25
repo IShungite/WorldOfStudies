@@ -1,5 +1,4 @@
 import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
-import { Quiz } from '@world-of-studies/api-types/src/quizzes/quiz'
 import { QuizAi } from '@world-of-studies/api-types/src/quizzes/quiz-ai'
 import { UserAnswerDto } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import { useRouter } from 'expo-router'
