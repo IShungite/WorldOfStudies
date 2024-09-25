@@ -20,10 +20,10 @@ const ProfileCard: React.FC<Props> = ({ character }) => {
         {t('character')} : {character.name}
       </Text>
       <Text style={styles.productName}>
-        {t('school')} : {character.schoolId}
+        {t('school')} : {character.schoolName}
       </Text>
       <Text style={styles.productName}>
-        {t('promotion')} : {character.schoolId}
+        {t('promotion')} : {character.promotionName}
       </Text>
       <View style={styles.priceContainer}>
         <Text style={styles.productPrice}>

@@ -28,5 +28,6 @@
     "exam.status.not-started": "Pas commencé",
     "exam.begin_at": "Commence le",
     "exam.end_at": "Termine le",
-    "next": "Suivant"
+    "next": "Suivant",
+    "skins": "Apparences"
 }
