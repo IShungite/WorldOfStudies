@@ -26,11 +26,9 @@ export default function ExerciceCard({ exercice }: Readonly<Props>) {
       style={styles.pressable}
     >
       <GradientContainer>
-        {exercice.last_quiz_instance_status !== 'completed' && (
-          <View style={styles.statusContainer}>
-            <Text style={styles.statusText}>{t(`exam.status.${exercice.last_quiz_instance_status}`)}</Text>
-          </View>
-        )}
+        <View style={styles.statusContainer}>
+          <Text style={styles.statusText}>{t(`exam.status.${exercice.last_quiz_instance_status}`)}</Text>
+        </View>
 
         <Text style={styles.exerciseName}>{exercice.name}</Text>
 
