@@ -35,9 +35,7 @@ const ExamsContainer = () => {
     }
 
     const examQuizzes = data?.results.filter((quiz) => quiz.type === 'exam') ?? []
-    const availableQuizzes = examQuizzes
-      .filter((quiz) => quiz.last_quiz_instance_status !== 'completed')
-      .sort((a, b) => dayjs(a.startAt).diff(dayjs(b.startAt)))
+    const availableQuizzes = examQuizzes.sort((a, b) => dayjs(a.startAt).diff(dayjs(b.startAt)))
 
     if (availableQuizzes.length === 0) {
       return <Text style={{ textAlign: 'center' }}>{t('home.no_exams')}</Text>
