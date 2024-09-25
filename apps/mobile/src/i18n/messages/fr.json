@@ -19,5 +19,11 @@
     "tab_exercices": "Exercices",
     "tab_statistics": "Statistiques",
     "logout": "Déconnexion",
-    "home.exam_title": "Contrôles"
+    "home.exam_title": "Contrôles",
+    "home.no_exams": "Aucun contrôle en cours",
+    "exam.status.completed": "Terminé",
+    "exam.status.not-started": "En attente",
+    "exam.status.in-progress": "En cours",
+    "exam.begin_at": "Commence le",
+    "exam.end_at": "Termine le"
 }

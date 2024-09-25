@@ -2,8 +2,10 @@ import { QuizOfCharacter } from '@world-of-studies/api-types/src/quizzes/quiz_of
 import dayjs from 'dayjs'
 import { useRouter } from 'expo-router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Pressable, View } from 'react-native'
 
+import ExamStatus from '@/components/ExamStatus'
 import Container from '@/components/shared/Container'
 import Text from '@/components/shared/Text'
 
@@ -11,45 +13,33 @@ type Props = {
   exercice: QuizOfCharacter
 }
 
-export default function ExamCard({ exercice }: Props) {
+export default function ExamCard({ exercice }: Readonly<Props>) {
   const router = useRouter()
-
-  if (!exercice) {
-    return <Text>Quiz indéfini</Text>
-  }
+  const { t } = useTranslation()
 
   const isStarted = dayjs().isAfter(dayjs(exercice.startAt))
-  const dueTime = isStarted
-    ? `Due: ${dayjs(exercice.endAt).format('MMM DD, YYYY')}`
-    : `Starts: ${dayjs(exercice.startAt).format('MMM DD, YYYY')}`
-
-  const getExamStatus = (exercice: QuizOfCharacter) => {
-    if (exercice.last_quiz_instance_status === 'completed') return 'Completed'
-    if (exercice.last_quiz_instance_status === null) return 'Not Started'
-    return 'In Progress'
-  }
-
-  const quizStatus = getExamStatus(exercice)
+  const dueTime = dayjs(isStarted ? exercice.endAt : exercice.startAt).format('MMM DD, YYYY')
 
   const myStringifiedExercice = JSON.stringify(exercice)
   return (
     <Pressable
       onPress={() =>
         router.push({
-          pathname: `/(tabs)/exercices/[id]`, // Keep this path as it is correct
+          pathname: `/(tabs)/exercices/[id]`,
           params: { id: exercice.id, exercice: myStringifiedExercice },
         })
       }
-      style={styles.pressable}
     >
       <Container>
         <View style={styles.cardContent}>
           <View style={styles.statusContainer}>
-            <Text style={styles.statusText}>{quizStatus}</Text>
+            <ExamStatus status={exercice.last_quiz_instance_status} />
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.examName}>{exercice.name}</Text>
-            <Text style={styles.dueTime}>{dueTime}</Text>
+            <Text style={styles.dueTime}>
+              {isStarted ? t('exam.begin_at') : t('exam.end_at')} {dueTime}
+            </Text>
           </View>
         </View>
       </Container>
@@ -85,14 +75,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: '#ffdd57',
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-  },
-  statusText: {
-    fontSize: 12,
-    color: '#333',
-    fontWeight: 'bold',
   },
 })

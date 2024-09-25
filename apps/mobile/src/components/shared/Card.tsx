@@ -18,9 +18,10 @@ type Props = {
   title: string
   children?: React.ReactNode
   containerStyle?: ViewStyle
+  contentStyle?: ViewStyle
 }
 
-const Card = ({ title, children, containerStyle }: Props) => {
+const Card = ({ title, children, containerStyle, contentStyle }: Props) => {
   return (
     <View style={[{ alignItems: 'center' }, containerStyle]}>
       <View style={styles.title}>
@@ -32,7 +33,7 @@ const Card = ({ title, children, containerStyle }: Props) => {
           <Text style={styles.titleText}>{title}</Text>
         </GradientContainer>
       </View>
-      <View style={styles.content}>{children}</View>
+      <View style={[styles.content, contentStyle]}>{children}</View>
     </View>
   )
 }

@@ -19,5 +19,11 @@
     "tab_exercices": "Exercices",
     "tab_statistics": "Statistics",
     "logout": "Logout",
-    "home.exam_title": "Exams"
+    "home.exam_title": "Exams",
+    "home.no_exams": "No exams available",
+    "exam.status.completed": "Completed",
+    "exam.status.not-started": "Not Started",
+    "exam.status.in-progress": "In Progress",
+    "exam.begin_at": "Begins at",
+    "exam.end_at": "Ends at"
 }
