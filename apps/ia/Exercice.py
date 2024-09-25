@@ -1,3 +1,6 @@
+
+
+
 from openai import OpenAI
 import json
 import re
@@ -5,35 +8,26 @@ import random
 
 class Exercice:
     def __init__(self, data):
-        print("hfuerhjgvirjogrjfjfjkrjhfjerh")
+        self.very_final_json = {}
         self.data = data
         self.processData()
-        self.chatgpt_api_request()
-        self.fix_exercices()
+        self.organize_requests()
 
     def processData(self):
-        self.matiere_exercice = self.data["subject"]
+        self.subject_exercice_backend = self.data["subject"]
+        self.convert_subject_name()
+        self.sous_sujet = self.data["sous_sujet"]
+        self.very_final_json["name"] = f"Quizz {self.subject_exercice_backend} {self.sous_sujet}"
+        self.very_final_json["questions"] = []
+        # print(self.very_final_json)
         self.moyenne_matiere = self.data["moyenne"]
         self.exercice_difficulty = self.moyenne_to_diff()
-        self.generate_quiz(self.exercice_difficulty)
+        self.generate_quiz_questions()
         self.qcm_nbr_anwsers = 4
 
-    def generate_quiz(self, difficulty):
-        if difficulty == "simple":
-            maxExo = 5
-            random_int = random.randint(0, 5)
-            self.qcm_nbr_questions = random_int
-            self.text_hole_nbr_questions = maxExo-random_int
-        elif difficulty == "normal":
-            maxExo = 7
-            random_int = random.randint(0, 7)
-            self.qcm_nbr_questions = random_int
-            self.text_hole_nbr_questions = maxExo-random_int
-        else :
-            maxExo = 10
-            random_int = random.randint(0, 10)
-            self.qcm_nbr_questions = random_int
-            self.text_hole_nbr_questions = maxExo-random_int
+    def convert_subject_name(self):
+        dict_subject = {"Maths" : "mathématique", "Science" : "sciences", "History" : "histoire", "Geography" : "géographie", "English" : "anglais", "French" : "français", "Spanish" : "espagnol", "German" : "allemand"}
+        self.subject_exercice_IA = dict_subject[self.subject_exercice_backend]
 
     def moyenne_to_diff(self):
         if self.moyenne_matiere<=7:
@@ -42,25 +36,58 @@ class Exercice:
             return "normal"
         else:
             return "difficile"
-        
-    def chatgpt_api_request(self):
-        # if self.matiere_exercice == "Maths" : 
-            # api_key="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"
-        client = OpenAI(api_key="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")
 
+    def generate_quiz_questions(self):
+        if self.exercice_difficulty == "simple":
+            maxExo = 3
+            
+        elif self.exercice_difficulty == "normal":
+            maxExo = 5
+        else :
+            maxExo = 7
+        random_int = random.randint(0, maxExo)
+        self.qcm_nbr_questions = random_int
+        self.text_hole_nbr_questions = maxExo-random_int
+
+    def organize_requests(self):
+        if self.qcm_nbr_questions > 0:
+            self.exercice_type = "qcm"
+            self.chatgpt_api_request()
+            self.fix_exercices()
+        if self.text_hole_nbr_questions > 0:
+            self.exercice_type = "text-hole"
+            self.chatgpt_api_request()
+            self.fix_exercices()
+
+    def chatgpt_api_request(self):
+        client = OpenAI(api_key="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")
+        if self.exercice_type=="qcm" and self.subject_exercice_IA == "mathématique":
+            model="ft:gpt-4o-mini-2024-07-18:personal::A9QpFOC0:ckpt-step-200"
+            messages=[
+                        {"role": "system", "content": ""},
+                        {"role": "user", "content": f"{self.qcm_nbr_questions} QCM avec {self.qcm_nbr_anwsers} réponses possibles de difficulté {self.exercice_difficulty} en mathematique."}
+                    ]
+        elif self.exercice_type=="qcm" and self.subject_exercice_IA != "mathématique":
+            model="ft:gpt-4o-mini-2024-07-18:personal::A9QpFOC0:ckpt-step-200"
+            messages=[
+                        {"role": "system", "content": ""},
+                        {"role": "user", "content": f"{self.qcm_nbr_questions} QCM avec {self.qcm_nbr_anwsers} réponses possibles de difficulté {self.exercice_difficulty} en {self.subject_exercice_IA} sur {self.sous_sujet}."}
+                    ]
+        else : 
+            print(f" Ya ccbn de questions là ? Yen a {self.text_hole_nbr_questions}")
+            model="ft:gpt-4o-mini-2024-07-18:personal::AB7doJU7:ckpt-step-80"
+            messages=[
+                        {"role": "system", "content": ""},
+                        {"role": "user", "content": f"Génère un exercice de texte à trous comportant {self.text_hole_nbr_questions} textes qui ont chacun 1 trou portant sur {self.sous_sujet} en {self.subject_exercice_IA}."}
+                    ]
         # Boucle pour réessayer en cas de problème de formatage JSON
         while True:
             try:
-                # Effectuer la requête
                 response = client.chat.completions.create(
-                    model="ft:gpt-4o-mini-2024-07-18:personal::A9QpFOC0:ckpt-step-200",
-                    messages=[
-                        {"role": "system", "content": ""},
-                        {"role": "user", "content": f"{self.qcm_nbr_questions} QCM avec {self.qcm_nbr_anwsers} réponses possibles de difficulté {self.exercice_difficulty} en {self.matiere_exercice}."}
-                    ],
-                    temperature=1.0
+                    model=model,
+                    messages=messages,
+                    temperature=1.1
                 )
-
                 response_dict = response.model_dump()  
                 self.response_message = response_dict["choices"][0]["message"]["content"]
                 self.fix_json_structure()
@@ -73,11 +100,17 @@ class Exercice:
 
     def fix_json_structure(self):
         self.response_message = re.sub(r'\bquestion\b', 'text', self.response_message)
+        self.response_message = re.sub(r'\b<>\b', '@@', self.response_message)
     
     def fix_exercices(self):
-        if self.matiere_exercice == "Maths":
-            questions_to_keep = []
-            
+        questions_to_keep = []
+        print(f"jejkfoekfoekjfkeo {self.exercice_type}")
+        if self.exercice_type == "qcm":
+            for exercice in self.response_message_json["questions"]:
+                if self.remove_qcm_if_multiple_true(exercice) == False:
+                    self.response_message_json["questions"].remove(exercice)
+
+        if self.subject_exercice_backend == "Maths" and self.exercice_type == "qcm":
             for i in range(len(self.response_message_json["questions"])):
                 reponse_reelle = self.calculate_from_string(self.response_message_json["questions"][i]["text"])
                 
@@ -85,9 +118,40 @@ class Exercice:
                     fixed_reponses = self.fix_anwsers(reponse_reelle, self.response_message_json["questions"][i]["choices"])
                     self.response_message_json["questions"][i]["choices"] = fixed_reponses
                     questions_to_keep.append(self.response_message_json["questions"][i])
-            
             self.response_message_json["questions"] = questions_to_keep
-            
+        if self.exercice_type == "qcm":
+            print("OUAISSSS LA CEST UN QCM MON GARSSSSSSSSSSSSS")
+            # print(f"LE response_message_json LA CEST HEINNN {self.response_message_json}")
+            # print(f"LE VERY FINAL JSON LA CEST HEINNN {self.very_final_json}")
+            for exercice in self.response_message_json["questions"]:
+                self.very_final_json["questions"].append({"type" : self.exercice_type, "points" : exercice["points"], "question": exercice["text"], "choices" : exercice["choices"]})
+            # print(f"LE VERY FINAL JSON LA APRES AVOIR BIENNNNNN MANGEEEEEEE {json.dumps(self.very_final_json, ensure_ascii=False)}")
+        if self.exercice_type == "text-hole":
+            print("OUAISSSS LA CEST UN text-hole MON GARSSSSSSSSSSSSS")
+            print(self.response_message_json)
+            for exercice in self.response_message_json["questions"]:
+                if self.remove_text_hole_if_no_hole(exercice):
+                    self.very_final_json["questions"].append({"type" : self.exercice_type, "points" : exercice["points"], "text": exercice["text"], "answers" : exercice["answers"]})
+
+    def remove_qcm_if_multiple_true(self, exercice):
+        count_true = sum(choice['isCorrect'] for choice in exercice['choices'])
+        if count_true > 1:
+            print(count_true)
+            print(exercice)
+            print("Il y a plusieurs réponses correctes on dégage l'exo.")
+            return False
+        count_false = sum(not choice['isCorrect'] for choice in exercice['choices'])
+        if count_false >= 4:
+            print("Il y a trop de réponses incorrecte on dégage l'exo.")
+            return False
+        # else:
+        #     print("Wallah tout va bieng")
+
+    def remove_text_hole_if_no_hole(self, exercice):
+        if "@@" not in exercice["text"]:
+            return False
+        return True
+    
     def calculate_from_string(self, string):
         match_square_cube = re.search(r"Quel est le (carré|cube) de (\d+)", string)
         if match_square_cube:
@@ -149,10 +213,5 @@ class Exercice:
         return reponses_exercice
     
     def renvois_final_json(self):
-        print(self.response_message_json)
-        return self.response_message_json
-    
-    # def create_final_json(self):
-    #     print(self.response_message_json)
-    #     with open('outputExercice.json', 'w', encoding="utf-8") as outfile:
-    #         json.dump(self.response_message_json, outfile, ensure_ascii=False)
+        # print(self.response_message_json)
+        return self.very_final_json
