@@ -1,9 +1,5 @@
 import { Question } from "./question";
-
-export enum QuizType {
-  EXAM = "exam",
-  PRACTICE = "practice",
-}
+import { QuizType } from "./quiz-type";
 
 export type Quiz = {
   id: string;
