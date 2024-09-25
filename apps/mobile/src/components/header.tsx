@@ -27,7 +27,11 @@ export default function Header({ character, onClick }: Props) {
           <View style={styles.characterContainer}>
             <Avatar
               containerStyle={styles.avatarContainer}
-              source={require('../assets/images/avatars/avatar1.webp')}
+              source={
+                character.skin
+                  ? { uri: process.env.EXPO_PUBLIC_FOLDER_URL + '/' + character.skin }
+                  : require('../assets/images/avatars/avatar1.webp')
+              }
               avatarStyle={styles.avatar}
             />
             <View style={styles.characterInfoContainer}>
