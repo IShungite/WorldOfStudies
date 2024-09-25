@@ -27,5 +27,6 @@
     "exam.status.unavailable": "Indisponible",
     "exam.status.not-started": "Pas commencé",
     "exam.begin_at": "Commence le",
-    "exam.end_at": "Termine le"
+    "exam.end_at": "Termine le",
+    "next": "Suivant"
 }

@@ -2,6 +2,7 @@ import { QuestionType } from '@world-of-studies/api-types/src/quizzes'
 import { QuestionQcm } from '@world-of-studies/api-types/src/quizzes/qcm-question'
 import { UserAnswerDtoQcm } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import Button from '@/components/shared/Button'
@@ -16,6 +17,7 @@ type Props = {
 
 const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     setSelectedChoiceId(null)
@@ -58,7 +60,7 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
           <Text style={styles.errorText}>No choices available.</Text>
         )}
         <Button
-          title="Next"
+          title={t('next')}
           onPress={handleNext}
           color={selectedChoiceId ? 'green' : 'gray'}
           style={[styles.nextButton, !selectedChoiceId && styles.inactiveButton]}

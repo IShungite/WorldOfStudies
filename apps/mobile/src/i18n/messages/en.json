@@ -26,5 +26,6 @@
     "exam.status.in-progress": "In Progress",
     "exam.status.in-waiting": "In Waiting",
     "exam.begin_at": "Begins at",
-    "exam.end_at": "Ends at"
+    "exam.end_at": "Ends at",
+    "next": "Next"
 }

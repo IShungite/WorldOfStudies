@@ -4,6 +4,7 @@ import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
 import { QuestionTextHole } from '@world-of-studies/api-types/src/quizzes/text-hole-question'
 import { UserAnswerDtoTextHole } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
 import Button from '@/components/shared/Button'
@@ -18,6 +19,7 @@ type Props = {
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
   const [userInputs, setUserInputs] = useState<string[]>([])
+  const { t } = useTranslation()
 
   // Reset inputs when the question changes
   useEffect(() => {
@@ -59,7 +61,7 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
         </React.Fragment>
       ))}
       <Button
-        title="Next"
+        title={t('next')}
         onPress={handleSubmit}
         color={isAnswerComplete ? 'green' : 'gray'}
         style={[styles.nextButton, !isAnswerComplete && styles.inactiveButton]}
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   textholeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    color: '#fff',
+    color: '#91a6cf',
     justifyContent: 'center',
   },
   input: {
