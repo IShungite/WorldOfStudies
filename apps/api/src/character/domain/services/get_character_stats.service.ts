@@ -27,18 +27,35 @@ export default class GetCharacterStatsService {
 
       const quizStats: QuizStat[] = quizzesInSubject.map((quiz) => quiz.getStats())
 
+      const average =
+        quizStats.length === 0
+          ? null
+          : Number.parseFloat(
+              (quizStats.reduce((acc, quiz) => acc + quiz.score, 0) / quizStats.length).toPrecision(
+                2
+              )
+            ) || 0
+
       return {
         name: subject.name,
-        average: quizStats.reduce((acc, quiz) => acc + quiz.score, 0) / quizStats.length || 0,
+        average: average,
         quizzes: quizStats,
       }
     })
 
+    const subjectsStatsWithoutNull = subjectsStats.filter(
+      (subjectStats) => subjectStats.average !== null
+    )
+
     const characterStats: CharacterStat = {
       subjects: subjectsStats,
       generalAverage:
-        subjectsStats.reduce((acc, subject) => acc + subject.average, 0) / subjectsStats.length ||
-        0,
+        Number.parseFloat(
+          (
+            subjectsStatsWithoutNull.reduce((acc, subject) => acc + subject.average!, 0) /
+            subjectsStatsWithoutNull.length
+          ).toPrecision(2)
+        ) || 0,
     }
 
     return characterStats

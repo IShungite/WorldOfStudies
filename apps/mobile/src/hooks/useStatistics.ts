@@ -6,7 +6,7 @@ import kyInstance from '@/api/kyInstance'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 export const useStatistics = () => {
-  const [stats, setStats] = useState<CharacterStatsResponse | null>(null)
+  const [stats, setStats] = useState<CharacterStatsResponse['result'] | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedCharacter] = useAtom(selectedCharacterAtom)
 
@@ -18,7 +18,7 @@ export const useStatistics = () => {
           const response = await kyInstance.get(`characters/${selectedCharacter.id}/stats`)
 
           const data: CharacterStatsResponse = await response.json()
-          setStats(data)
+          setStats(data.result)
         } catch (error) {
           console.error('Failed to fetch character stats:', error)
         } finally {

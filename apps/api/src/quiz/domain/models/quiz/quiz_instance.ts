@@ -50,7 +50,9 @@ export class QuizInstance {
   getStats(): QuizStat {
     return {
       name: this.quiz.name,
-      score: (20 * this.getTotalUserPoints()) / this.getMaxPoints(),
+      score: Number.parseFloat(
+        ((20 * this.getTotalUserPoints()) / this.getMaxPoints()).toPrecision(2)
+      ),
       maxScore: 20,
       date:
         this.userAnswers

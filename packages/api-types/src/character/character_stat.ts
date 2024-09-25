@@ -5,7 +5,7 @@ export type CharacterStat = {
 
 export type SubjectStat = {
   name: string;
-  average: number;
+  average: number | null;
   quizzes: QuizStat[];
 };
 

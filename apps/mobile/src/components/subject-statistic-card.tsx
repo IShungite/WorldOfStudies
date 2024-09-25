@@ -25,31 +25,37 @@ export default function SubjectStatistics({ name, quizzes, average }: Readonly<S
     <GradientContainer style={styles.cardContainer}>
       <Card title={name}>
         <View style={styles.cardContent}>
-          <Text style={styles.quizText}>Derniers quiz:</Text>
-          {recentQuizzes.map((quiz) => (
-            <Text key={quiz.name} style={styles.quizText}>
-              {quiz.name}: {quiz.score}/20
-            </Text>
-          ))}
-          <Text style={styles.subjectAverage}>
-            {name} Moyenne: {average}/20
-          </Text>
+          {recentQuizzes.length > 0 ? (
+            <>
+              <Text style={styles.quizText}>Derniers quiz:</Text>
+              {recentQuizzes.map((quiz) => (
+                <Text key={quiz.name} style={styles.quizText}>
+                  {quiz.name}: {quiz.score}/20
+                </Text>
+              ))}
+              <Text style={styles.subjectAverage}>
+                {name} Moyenne: {average}/20
+              </Text>
 
-          <LineChart
-            data={chartData}
-            width={280}
-            height={200}
-            thickness={3}
-            maxValue={20}
-            color="#bfd4ff"
-            dataPointsColor1="#fff"
-            textColor="#fff"
-            isAnimated
-            curved
-            showValuesAsDataPointsText
-            xAxisLabelTextStyle={styles.xAxisText}
-            yAxisTextStyle={styles.xAxisText}
-          />
+              <LineChart
+                data={chartData}
+                width={280}
+                height={200}
+                thickness={3}
+                maxValue={20}
+                color="#bfd4ff"
+                dataPointsColor1="#fff"
+                textColor="#fff"
+                isAnimated
+                curved
+                showValuesAsDataPointsText
+                xAxisLabelTextStyle={styles.xAxisText}
+                yAxisTextStyle={styles.xAxisText}
+              />
+            </>
+          ) : (
+            <Text style={{ color: '#bfd4ff', textAlign: 'center' }}>Aucune note</Text>
+          )}
         </View>
       </Card>
     </GradientContainer>
