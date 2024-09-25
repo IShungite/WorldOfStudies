@@ -1,6 +1,7 @@
 import { QuizOfCharacter } from '@world-of-studies/api-types/src/quizzes/quiz_of_character'
 import { useRouter } from 'expo-router'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Pressable, View } from 'react-native'
 
 import GradientContainer from '@/components/shared/GradientContainer'
@@ -10,13 +11,9 @@ type Props = {
   exercice: QuizOfCharacter
 }
 
-export default function ExerciceCard({ exercice }: Props) {
+export default function ExerciceCard({ exercice }: Readonly<Props>) {
   const router = useRouter()
-
-  // Filter out quizzes with the type 'EXAM'
-  if (exercice.type === 'exam') {
-    return null // Do not render this card
-  }
+  const { t } = useTranslation()
 
   return (
     <Pressable
@@ -29,17 +26,9 @@ export default function ExerciceCard({ exercice }: Props) {
       style={styles.pressable}
     >
       <GradientContainer>
-        {exercice.last_quiz_instance_status && (
+        {exercice.last_quiz_instance_status !== 'completed' && (
           <View style={styles.statusContainer}>
-            <Text style={styles.statusText}>
-              {exercice.last_quiz_instance_status === 'in-progress'
-                ? 'En cours'
-                : exercice.last_quiz_instance_status === 'completed'
-                  ? 'Terminé'
-                  : exercice.last_quiz_instance_status === 'not_started'
-                    ? 'Non commencé'
-                    : exercice.last_quiz_instance_status}
-            </Text>
+            <Text style={styles.statusText}>{t(`exam.status.${exercice.last_quiz_instance_status}`)}</Text>
           </View>
         )}
 
@@ -72,13 +61,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: '#ffdd57', // Color for status background
+    backgroundColor: '#ffe26f',
     paddingVertical: 3,
     paddingHorizontal: 8,
     borderRadius: 4,
   },
   statusText: {
-    color: 'green', // Text color for status
+    color: '#333',
     fontSize: 12,
     fontWeight: 'bold',
   },

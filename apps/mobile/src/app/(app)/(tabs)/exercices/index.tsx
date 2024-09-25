@@ -35,8 +35,13 @@ export default function ExercisesScreen() {
   // Safely access data and map through it
   return (
     <View>
-      {data && data.results && data.results.length > 0 ? (
-        data.results.map((exercise: QuizOfCharacter) => <ExerciceCard key={exercise.id} exercice={exercise} />)
+      {data?.results && data.results.length > 0 ? (
+        data.results
+          .sort((a, b) => {
+            const getScore = (quiz: QuizOfCharacter) => (quiz.last_quiz_instance_status === 'in-progress' ? 1 : 2)
+            return getScore(a) - getScore(b)
+          })
+          .map((exercise: QuizOfCharacter) => <ExerciceCard key={exercise.id} exercice={exercise} />)
       ) : (
         <Text>No quizzes available</Text>
       )}
