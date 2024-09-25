@@ -33,8 +33,10 @@ const QuizCompletedAi = ({ quiz, answers }: Props) => {
       }
 
       if (question.type === QuestionType.TEXT_HOLE && answer.type === QuestionType.TEXT_HOLE && question.answers) {
+        console.log(question.answers)
+        console.log(answer.values)
         const totalGoodAnswers = question.answers.filter(
-          (questionAnswer, index) => questionAnswer === answer.values[index]
+          (questionAnswer, index) => questionAnswer?.toLowerCase() === answer.values[index]?.toLowerCase()
         ).length
 
         const totalAnswers = question.answers.length

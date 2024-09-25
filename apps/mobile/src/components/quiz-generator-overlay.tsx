@@ -17,7 +17,16 @@ export default function QuizGeneratorOverlay({ isVisible, onClose }: QuizGenerat
   const [theme, setTheme] = useState('')
 
   const { mutate: generateQuiz, data, isLoading } = useGenerateQuiz()
-
+  const dictSubject: { [key: string]: string } = {
+    Mathématique: 'Maths',
+    Science: 'Science',
+    Histoire: 'History',
+    Géographie: 'Geography',
+    Anglais: 'English',
+    Français: 'French',
+    Espagnol: 'Spanish',
+    Allemand: 'German',
+  }
   const router = useRouter()
 
   const handleValidate = () => {
@@ -26,7 +35,7 @@ export default function QuizGeneratorOverlay({ isVisible, onClose }: QuizGenerat
       {
         onSuccess: (generatedQuiz) => {
           // Generate a random ID for the quiz
-          const randomId = '56'
+          const randomId = Math.floor(Math.random() * 100000).toString()
 
           // Stringify the generated quiz for navigation
           const stringifiedQuiz = JSON.stringify(generatedQuiz)
@@ -59,8 +68,8 @@ export default function QuizGeneratorOverlay({ isVisible, onClose }: QuizGenerat
 
         {/* Subject Options */}
         <ScrollView style={styles.subjectList}>
-          {['Maths', 'Science', 'Geography', 'English', 'French', 'German', 'Spanish'].map((subject) => (
-            <Text key={subject} style={styles.subjectItem} onPress={() => setSelectedSubject(subject)}>
+          {Object.keys(dictSubject).map((subject) => (
+            <Text key={subject} style={styles.subjectItem} onPress={() => setSelectedSubject(dictSubject[subject])}>
               {subject}
             </Text>
           ))}

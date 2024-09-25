@@ -7,7 +7,28 @@ export type QuizFromGPT = {
   type: QuizType.PRACTICE;
   startAt: string | null;
   endAt: string | null;
-  questions: (QuestionQCM | QuestionTextHole)[];
+  questions: (QuestionQCMGPT | QuestionTextHoleGPT)[];
+};
+
+type QuestionBaseGPT = {
+  id: string;
+  points: number;
+};
+
+type QuestionQCMGPT = QuestionBaseGPT & {
+  type: QuestionType.QCM;
+  choices: {
+    id: string;
+    isCorrect: boolean;
+    label: string;
+  }[];
+  question: string;
+};
+
+type QuestionTextHoleGPT = QuestionBaseGPT & {
+  text: string;
+  type: QuestionType.TEXT_HOLE;
+  answers: string[];
 };
 
 export type QuizAi = {

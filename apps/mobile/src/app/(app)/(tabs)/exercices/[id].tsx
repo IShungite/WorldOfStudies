@@ -66,11 +66,16 @@ export default function ExerciceDetail() {
 
   const { mutateAsync: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
 
-  const filteredQuestions = quizInstanceData?.questions || (quiz as QuizAi).questions
+  console.log({ startQuizLoading })
+  console.log({ quizInstanceData: quizInstanceData?.questions })
+
+  const filteredQuestions = isAi ? (quiz as QuizAi).questions : quizInstanceData?.questions || []
 
   console.log({ filteredQuestions })
 
   const currentQuestion = filteredQuestions[currentQuestionIndex] // Use the filtered questions
+
+  console.log({ currentQuestion })
 
   const [answers, setAnswers] = useState<UserAnswerDto[]>([])
 

@@ -23,7 +23,7 @@ class Exercice:
         self.subject_exercice_backend = self.data["subject"]
         self.convert_subject_name()
         self.sous_sujet = self.data["sous_sujet"]
-        self.moyenne_matiere = self.data["moyenne"]
+        self.moyenne_matiere = int(self.data["moyenne"])
         self.exercice_difficulty = self.moyenne_to_diff()
         self.generate_quiz_questions()
         self.qcm_nbr_anwsers = 4
