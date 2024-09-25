@@ -1,4 +1,4 @@
-import { QuestionType, QuizAi } from '@world-of-studies/api-types/src/quizzes'
+import { QuestionType, QuizAi, QuizFromGPT } from '@world-of-studies/api-types/src/quizzes'
 import { QuizType } from '@world-of-studies/api-types/src/quizzes/quiz-type'
 import { useMutation } from 'react-query'
 
@@ -9,24 +9,6 @@ const fakeApiCall = <T extends unknown>(data: T, delay: number = 1000): Promise<
   })
 }
 
-// Define the type of the quiz
-// type GeneratedQuiz = {
-//   id: string
-//   name: string
-//   type: 'exercice'
-//   questions: {
-//     choices?: { id: string; isCorrect: boolean; label: string }[]
-//     answers?: string[]
-//     points: number
-//     question?: string
-//     text?: string
-//     type: 'qcm' | 'text-hole'
-//   }[]
-//   startAt: string | null
-//   endAt: string | null
-// }
-
-// Function to emulate the POST request and return a generated quiz
 const postQuizData = async ({ subject, theme }: { subject: string; theme: string }): Promise<QuizAi> => {
   const requestBody = {
     'type': 'exercice',
@@ -36,7 +18,7 @@ const postQuizData = async ({ subject, theme }: { subject: string; theme: string
   }
 
   // Simulating the response from API
-  const fakeQuizResponse: QuizAi = {
+  const fakeQuizResponse: QuizFromGPT = {
     name: `Quizz ${subject} les multiplications`,
     id: '1',
     type: QuizType.PRACTICE,
@@ -90,7 +72,19 @@ const postQuizData = async ({ subject, theme }: { subject: string; theme: string
   }
 
   // Simulate API delay
-  return fakeApiCall(fakeQuizResponse, 2000)
+  const data = await fakeApiCall(fakeQuizResponse, 2000)
+
+  return transform(data)
+}
+
+const transform = (data: QuizFromGPT): QuizAi => {
+  return {
+    ...data,
+    questions: data.questions.map((question) => ({
+      isAnswered: false,
+      question,
+    })),
+  }
 }
 
 // Hook to trigger the quiz generation

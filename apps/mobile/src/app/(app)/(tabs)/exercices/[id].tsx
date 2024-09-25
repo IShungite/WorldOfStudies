@@ -54,6 +54,8 @@ export default function ExerciceDetail() {
 
   const quiz: Quiz | QuizAi = JSON.parse(exercice)
 
+  console.log('Quiz:', quiz)
+
   // Fetch the filtered questions
   const {
     mutate: startQuiz,
@@ -64,7 +66,9 @@ export default function ExerciceDetail() {
 
   const { mutateAsync: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
 
-  const filteredQuestions = quizInstanceData?.questions || []
+  const filteredQuestions = quizInstanceData?.questions || (quiz as QuizAi).questions
+
+  console.log({ filteredQuestions })
 
   const currentQuestion = filteredQuestions[currentQuestionIndex] // Use the filtered questions
 
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     marginBottom: 20,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   titleContainer: {

@@ -3,7 +3,9 @@ import { QuizAi } from '@world-of-studies/api-types/src/quizzes/quiz-ai'
 import { UserAnswerDto } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+
+import Card from './shared/Card'
 
 import Button from '@/components/shared/Button'
 import GradientContainer from '@/components/shared/GradientContainer'
@@ -17,46 +19,51 @@ type Props = {
 const QuizCompletedAi = ({ quiz, answers }: Props) => {
   const router = useRouter()
 
-  const points = quiz.questions.reduce((acc, question, index) => {
-    const answer = answers[index]
+  const points = quiz.questions
+    .map((question) => question.question)
+    .reduce((acc, question, index) => {
+      const answer = answers[index]
 
-    if (question.type === QuestionType.QCM && answer.type === QuestionType.QCM && question.choices) {
-      const choice = question.choices.find((choice) => choice.id === answer.choiceId)
+      if (question.type === QuestionType.QCM && answer.type === QuestionType.QCM && question.choices) {
+        const choice = question.choices.find((choice) => choice.id === answer.choiceId)
 
-      if (choice) {
-        return acc + (choice.isCorrect ? question.points : 0)
+        if (choice) {
+          return acc + (choice.isCorrect ? question.points : 0)
+        }
       }
-    }
 
-    if (question.type === QuestionType.TEXT_HOLE && answer.type === QuestionType.TEXT_HOLE && question.answers) {
-      const totalGoodAnswers = question.answers.filter(
-        (questionAnswer, index) => questionAnswer === answer.values[index]
-      ).length
+      if (question.type === QuestionType.TEXT_HOLE && answer.type === QuestionType.TEXT_HOLE && question.answers) {
+        const totalGoodAnswers = question.answers.filter(
+          (questionAnswer, index) => questionAnswer === answer.values[index]
+        ).length
 
-      const totalAnswers = question.answers.length
+        const totalAnswers = question.answers.length
 
-      return acc + (totalGoodAnswers / totalAnswers) * question.points
-    }
+        return acc + (totalGoodAnswers / totalAnswers) * question.points
+      }
 
-    return acc
-  }, 0)
+      return acc
+    }, 0)
 
-  const totalPoints = quiz.questions.reduce((acc, question) => {
-    return acc + question.points
-  }, 0)
+  const totalPoints = quiz.questions
+    .map((question) => question.question)
+    .reduce((acc, question) => {
+      return acc + question.points
+    }, 0)
 
   const handleCloseQuiz = () => {
     router.push('/(app)/(tabs)/')
   }
   Math.round(points)
   return (
-    <GradientContainer>
-      <Text>Terminé</Text>
-      <Text style={styles.pointsText}>
-        Vous avez obtenu {points}/{totalPoints} points.
-      </Text>
-      <Button title="Fermer le quiz" onPress={handleCloseQuiz} />
-    </GradientContainer>
+    <View style={{ marginTop: 10, marginHorizontal: 40 }}>
+      <Card title={quiz.name}>
+        <Text style={styles.pointsText}>
+          Vous avez obtenu {points}/{totalPoints}.
+        </Text>
+        <Button title="Fermer le quiz" onPress={handleCloseQuiz} />
+      </Card>
+    </View>
   )
 }
 

@@ -1,9 +1,9 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { ActivityIndicator, StyleSheet } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 import Button from '@/components/shared/Button'
-import GradientContainer from '@/components/shared/GradientContainer'
+import Card from '@/components/shared/Card'
 import Text from '@/components/shared/Text'
 import { useQuizStats } from '@/hooks/useQuizStat'
 
@@ -29,13 +29,14 @@ const QuizCompleted = ({ quizInstanceId }: Props) => {
   }
 
   return (
-    <GradientContainer>
-      <Text>Terminé</Text>
-      <Text style={styles.pointsText}>
-        Vous avez obtenu {data.result.score}/{data.result.maxScore} points.
-      </Text>
-      <Button title="Fermer le quiz" onPress={handleCloseQuiz} />
-    </GradientContainer>
+    <View style={{ marginTop: 10, marginHorizontal: 40 }}>
+      <Card title={data.result.name}>
+        <Text style={styles.pointsText}>
+          Vous avez obtenu {data.result.score}/{data.result.maxScore}.
+        </Text>
+        <Button title="Fermer le quiz" onPress={handleCloseQuiz} />
+      </Card>
+    </View>
   )
 }
 
@@ -53,5 +54,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     fontSize: 20,
+    color: 'white',
   },
 })

@@ -23,17 +23,14 @@ export default function ExercisesScreen() {
     }, [refetch, characterId])
   )
 
-  // Handle loading state
   if (isLoading) {
     return <Text>Loading...</Text>
   }
 
-  // Handle error state
   if (error) {
     return <Text>Error loading quizzes</Text>
   }
 
-  // Safely access data and map through it
   return (
     <View style={{ marginHorizontal: 10 }}>
       {data?.results && data.results.length > 0 ? (

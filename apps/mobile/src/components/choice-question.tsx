@@ -41,7 +41,7 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
     <>
       <Text style={styles.questionText}>{question.text}</Text>
       <GradientContainer>
-        <Text style={styles.instructionText}>Select the correct option(s):</Text>
+        <Text style={styles.instructionText}>Sélectionnez la bonne réponse</Text>
 
         {question.choices ? (
           question.choices.map((choice) => (
@@ -57,7 +57,7 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
             </TouchableOpacity>
           ))
         ) : (
-          <Text style={styles.errorText}>No choices available.</Text>
+          <Text style={styles.errorText}>Pas de choix disponibles.</Text>
         )}
         <Button
           title={t('next')}
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     marginBottom: 10,
+    textAlign: 'center',
   },
   errorText: {
     color: 'red',
