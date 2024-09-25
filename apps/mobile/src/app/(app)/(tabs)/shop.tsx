@@ -1,4 +1,3 @@
-import { Button } from '@rneui/themed'
 import { ShopCategory, Product, ShopResponse } from '@world-of-studies/api-types/src/shop'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
