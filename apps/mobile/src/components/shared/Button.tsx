@@ -97,9 +97,6 @@ const Button = ({
       )
     }
 
-    if (disabled) {
-    }
-
     if (children) {
       return typeof children === 'function' ? children({ color: colorsToUse.text }) : children
     }
@@ -158,10 +155,6 @@ const styles = StyleSheet.create({
   },
   loaderText: {
     marginLeft: 6,
-  },
-  disabledText: {
-    color: '#999',
-    textAlign: 'center',
   },
 })
 
