@@ -1,5 +1,7 @@
 import { Input } from '@rneui/base'
+import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
 import { QuestionTextHole } from '@world-of-studies/api-types/src/quizzes/text-hole-question'
+import { UserAnswerDtoTextHole } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 
@@ -10,7 +12,7 @@ import Text from '@/components/shared/Text'
 type Props = {
   question: QuestionTextHole
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: string[]) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoTextHole) => void
 }
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
@@ -31,7 +33,10 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
 
   const handleSubmit = () => {
     if (isAnswerComplete) {
-      handleSubmitAnswer(question.id, userInputs)
+      handleSubmitAnswer(question.id, {
+        type: QuestionType.TEXT_HOLE,
+        values: userInputs,
+      })
       onNext()
     }
   }

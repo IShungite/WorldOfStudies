@@ -70,12 +70,7 @@ export default function TabLayout() {
           options={{
             tabBarLabel,
             tabBarIcon: ({ focused }) => (
-              <TabIcon
-                isSelected={focused}
-                icon={require(`@/assets/images/tabs/exercices.webp`)}
-                label="Exercises"
-                withBorderRight={false}
-              />
+              <TabIcon isSelected={focused} icon={require(`@/assets/images/tabs/exercices.webp`)} label="Exercises" />
             ),
           }}
         />
@@ -89,7 +84,7 @@ export default function TabLayout() {
                 isSelected={focused}
                 icon={require(`@/assets/images/tabs/statistics.webp`)}
                 label="Statistiques"
-                withBorderLeft={false}
+                withBorderRight={false}
               />
             ),
           }}

@@ -1,4 +1,6 @@
+import { QuestionType } from '@world-of-studies/api-types/src/quizzes'
 import { QuestionQcm } from '@world-of-studies/api-types/src/quizzes/qcm-question'
+import { UserAnswerDtoQcm } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
@@ -9,7 +11,7 @@ import Text from '@/components/shared/Text'
 type Props = {
   question: QuestionQcm
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: string) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoQcm) => void
 }
 
 const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
@@ -26,7 +28,10 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
 
   const handleNext = () => {
     if (selectedChoiceId) {
-      handleSubmitAnswer(question.id, selectedChoiceId)
+      handleSubmitAnswer(question.id, {
+        type: QuestionType.QCM,
+        choiceId: selectedChoiceId,
+      })
       onNext()
     }
   }

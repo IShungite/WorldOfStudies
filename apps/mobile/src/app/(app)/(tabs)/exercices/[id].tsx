@@ -1,14 +1,13 @@
-import { Quiz, Question, CreateUserAnswerDto } from '@world-of-studies/api-types/src/quizzes'
+import { Question, Quiz, UserAnswerDto } from '@world-of-studies/api-types/src/quizzes'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 
 import QuizCompleted from '@/components/QuizCompleted'
+import QuizCompletedAi from '@/components/QuizCompletedAi'
 import ChoiceQuestion from '@/components/choice-question'
-import Button from '@/components/shared/Button'
 import Card from '@/components/shared/Card'
-import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 import TextHoleQuestion from '@/components/texthole-question'
 import { useStartQuiz } from '@/hooks/useStartQuiz'
@@ -22,7 +21,7 @@ type QuestionComponentProps = {
     answers?: string[]
   }
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: any) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDto) => void
 }
 
 const QuestionComponent = ({ question, onNext, handleSubmitAnswer }: QuestionComponentProps) => {
@@ -39,7 +38,7 @@ export default function ExerciceDetail() {
     exercice: string
     isAiMode?: string
   }>()
-  const router = useRouter()
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedCharacter] = useAtom(selectedCharacterAtom)
   const [quizCompleted, setQuizCompleted] = useState(false)
@@ -54,6 +53,8 @@ export default function ExerciceDetail() {
   const { mutate: startQuiz, data: quizInstanceId, isLoading: startQuizLoading, error: startQuizError } = useStartQuiz()
   const { mutate: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
 
+  const [answers, setAnswers] = useState<UserAnswerDto[]>([])
+
   // Prevent the useEffect from being triggered multiple times, start the quiz only if not in AI mode
   useEffect(() => {
     if (selectedCharacter && !quizInstanceId && !startQuizLoading && !isAi) {
@@ -66,15 +67,13 @@ export default function ExerciceDetail() {
           },
         }
       )
-    } else if (isAi) {
-      // If it's AI mode, just calculate total points without starting the quiz
     }
   }, [quiz, selectedCharacter, quizInstanceId, startQuizLoading, startQuiz, isAi])
 
-  const handleSubmitAnswer = async (questionId: string, answer: any) => {
+  const handleSubmitAnswer = async (questionId: string, answer: UserAnswerDto) => {
     // Skip submitting answers if in AI mode
     if (isAi) {
-      console.log('AI Mode: No answers submitted.')
+      setAnswers((prev) => [...prev, answer])
       return
     }
 
@@ -118,16 +117,7 @@ export default function ExerciceDetail() {
   }
 
   if (quizCompleted && isAi) {
-    return (
-      <GradientContainer>
-        <Text>VICTOIRE</Text>
-        <Text style={styles.pointsText}>Vous avez terminé le quizz.</Text>
-        <Button title="Fermer le quiz" onPress={() => handleCloseQuiz} />
-      </GradientContainer>
-    )
-  }
-  const handleCloseQuiz = () => {
-    router.replace('/(app)/(tabs)/exercices')
+    return <QuizCompletedAi answers={answers} quiz={quiz} />
   }
 
   if (quizCompleted) {
@@ -140,9 +130,7 @@ export default function ExerciceDetail() {
         <QuestionComponent
           question={currentQuestion}
           onNext={handleNextQuestion}
-          handleSubmitAnswer={(questionId: string, answer: CreateUserAnswerDto) =>
-            handleSubmitAnswer(questionId, answer)
-          }
+          handleSubmitAnswer={handleSubmitAnswer}
         />
       )}
     </Card>
