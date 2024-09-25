@@ -345,8 +345,14 @@ export const quizzes: Quiz[] = [
   }),
 ]
 
+export const quizHistoire = quizzes[0]
+export const quizGeographie = quizzes[1]
 export const quizScience = quizzes[2]
 export const quizMaths = quizzes[3]
+export const quizAnglais = quizzes[4]
+export const controleHistoire = quizzes[5]
+export const controleGeographie = quizzes[6]
+export const controleScience = quizzes[7]
 
 export default class extends BaseSeeder {
   async run() {
