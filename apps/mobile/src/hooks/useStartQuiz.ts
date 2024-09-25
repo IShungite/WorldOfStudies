@@ -10,15 +10,16 @@ export const useStartQuiz = () => {
         json: { characterId },
       })
       const data: StartQuizResponse = await response.json()
-      return data.result.quizInstanceId // Return the quizInstanceId
-    } catch (error: any) {
-      // If the quiz is already started, retrieve the existing instance
-      if (error.message.includes('The Quiz is already started')) {
-        const response = await kyInstance.get(`quizzes/${quizId}/instances?characterId=${characterId}`)
-        const data: StartQuizResponse = await response.json()
-        return data.result.quizInstanceId // Return the existing quizInstanceId
+
+      const filteredQuestions = data.result.questions.filter((question) => !question.isAnswered)
+
+      // Return the filtered result
+      return {
+        ...data.result,
+        questions: filteredQuestions,
       }
-      throw error // Re-throw error if it's not handled
+    } catch (error: any) {
+      throw error
     }
   })
 }

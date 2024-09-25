@@ -1,5 +1,6 @@
 import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
 import { Quiz } from '@world-of-studies/api-types/src/quizzes/quiz'
+import { QuizAi } from '@world-of-studies/api-types/src/quizzes/quiz-ai'
 import { UserAnswerDto } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import { useRouter } from 'expo-router'
 import React from 'react'
@@ -10,7 +11,7 @@ import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
 type Props = {
-  quiz: Quiz
+  quiz: QuizAi
   answers: UserAnswerDto[]
 }
 
@@ -20,7 +21,7 @@ const QuizCompletedAi = ({ quiz, answers }: Props) => {
   const points = quiz.questions.reduce((acc, question, index) => {
     const answer = answers[index]
 
-    if (question.type === QuestionType.QCM && answer.type === QuestionType.QCM) {
+    if (question.type === QuestionType.QCM && answer.type === QuestionType.QCM && question.choices) {
       const choice = question.choices.find((choice) => choice.id === answer.choiceId)
 
       if (choice) {
@@ -28,7 +29,7 @@ const QuizCompletedAi = ({ quiz, answers }: Props) => {
       }
     }
 
-    if (question.type === QuestionType.TEXT_HOLE && answer.type === QuestionType.TEXT_HOLE) {
+    if (question.type === QuestionType.TEXT_HOLE && answer.type === QuestionType.TEXT_HOLE && question.answers) {
       const totalGoodAnswers = question.answers.filter(
         (questionAnswer, index) => questionAnswer === answer.values[index]
       ).length

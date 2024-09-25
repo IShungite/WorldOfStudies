@@ -9,3 +9,4 @@ export * from "./qcm-question";
 export * from "./text-hole-question";
 export * from "./user-answers";
 export * from "./quiz-response";
+export * from "./quiz-ai";
