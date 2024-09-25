@@ -148,7 +148,7 @@ export default function ExerciceDetail() {
   }
 
   return (
-    <Card title={quiz.name}>
+    <Card title={quiz.name} containerStyle={styles.titleContainer}>
       {currentQuestion && (
         <QuestionComponent
           question={currentQuestion.question}
@@ -166,6 +166,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  titleContainer: {
+    marginTop: 20,
+    marginHorizontal: 30,
   },
   errorText: {
     color: 'red',

@@ -1,4 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native'
+import { QuizType } from '@world-of-studies/api-types/src/quizzes/quiz-type'
 import { QuizOfCharacter } from '@world-of-studies/api-types/src/quizzes/quiz_of_character'
 import { useAtom } from 'jotai'
 import { useCallback } from 'react'
@@ -37,6 +38,7 @@ export default function ExercisesScreen() {
     <View>
       {data?.results && data.results.length > 0 ? (
         data.results
+          .filter((quiz) => quiz.type === QuizType.PRACTICE)
           .sort((a, b) => {
             const getScore = (quiz: QuizOfCharacter) => (quiz.last_quiz_instance_status === 'in-progress' ? 1 : 2)
             return getScore(a) - getScore(b)

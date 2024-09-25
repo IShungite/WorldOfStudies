@@ -28,8 +28,8 @@ export default function SubjectStatistics({ name, quizzes, average }: Readonly<S
           {recentQuizzes.length > 0 ? (
             <>
               <Text style={styles.quizText}>Derniers quiz:</Text>
-              {recentQuizzes.map((quiz) => (
-                <Text key={quiz.name} style={styles.quizText}>
+              {recentQuizzes.map((quiz, index) => (
+                <Text key={`${quiz.name}_index`} style={styles.quizText}>
                   {quiz.name}: {quiz.score}/20
                 </Text>
               ))}
