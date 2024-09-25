@@ -16,17 +16,15 @@ type Props = {
 }
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
-  const [userInputs, setUserInputs] = useState<string[]>(Array(question.answers.length).fill(''))
+  const [userInputs, setUserInputs] = useState<string[]>([])
 
   // Reset inputs when the question changes
   useEffect(() => {
-    setUserInputs(Array(question.answers.length).fill(''))
+    setUserInputs([])
   }, [question.id])
 
   const handleInputChange = (value: string, index: number) => {
-    const newInputs = [...userInputs]
-    newInputs[index] = value
-    setUserInputs(newInputs)
+    setUserInputs((prev) => prev.map((input, i) => (i === index ? value : input)))
   }
 
   const isAnswerComplete = userInputs.every((input) => input.trim() !== '') // Check if all inputs are filled
@@ -41,12 +39,15 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
     }
   }
 
+  const textSplit = question.text.split('@@')
+  const inputsNb = textSplit.length - 1
+
   return (
     <GradientContainer style={styles.textholeContainer}>
-      {question.text.split('@@').map((part, index) => (
-        <React.Fragment key={index}>
+      {textSplit.map((part, index) => (
+        <React.Fragment key={part}>
           <Text style={styles.part}>{part}</Text>
-          {index < question.answers.length && (
+          {index < inputsNb && (
             <Input
               placeholder="..."
               value={userInputs[index]}

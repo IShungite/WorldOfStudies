@@ -2,7 +2,6 @@ import { QuestionType } from "./question";
 
 type CreateUserAnswerDtoBase = {
   characterId: string;
-  quizInstanceId: string;
   questionId: string;
   type: QuestionType;
 };

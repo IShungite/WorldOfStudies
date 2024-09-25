@@ -1,4 +1,10 @@
-import { Question, Quiz, UserAnswerDto } from '@world-of-studies/api-types/src/quizzes'
+import {
+  CreateUserAnswerDto,
+  Question,
+  QuestionType,
+  Quiz,
+  UserAnswerDto,
+} from '@world-of-studies/api-types/src/quizzes'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
@@ -25,9 +31,9 @@ type QuestionComponentProps = {
 }
 
 const QuestionComponent = ({ question, onNext, handleSubmitAnswer }: QuestionComponentProps) => {
-  if (question.type === 'qcm' && question.choices) {
+  if (question.type === QuestionType.QCM) {
     return <ChoiceQuestion question={question} onNext={onNext} handleSubmitAnswer={handleSubmitAnswer} />
-  } else if (question.type === 'text-hole' && question.text && question.answers) {
+  } else if (question.type === QuestionType.TEXT_HOLE) {
     return <TextHoleQuestion question={question} onNext={onNext} handleSubmitAnswer={handleSubmitAnswer} />
   }
   return <Text style={styles.errorText}>Les données de la question sont manquantes.</Text>
@@ -78,10 +84,20 @@ export default function ExerciceDetail() {
 
     if (!quizInstanceId || !selectedCharacter) return
 
-    const payload =
-      currentQuestion?.type === 'qcm'
-        ? { type: 'qcm', questionId, choiceId: answer, characterId: selectedCharacter.id }
-        : { type: 'text-hole', questionId, values: answer, characterId: selectedCharacter.id }
+    const payload: CreateUserAnswerDto =
+      answer.type === QuestionType.QCM
+        ? {
+            type: QuestionType.QCM,
+            questionId,
+            choiceId: answer.choiceId,
+            characterId: selectedCharacter.id,
+          }
+        : {
+            type: QuestionType.TEXT_HOLE,
+            questionId,
+            values: answer.values,
+            characterId: selectedCharacter.id,
+          }
 
     submitAnswer(
       { quizInstanceId, questionId, payload },
