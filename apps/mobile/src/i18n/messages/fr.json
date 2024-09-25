@@ -21,9 +21,11 @@
     "logout": "Déconnexion",
     "home.exam_title": "Contrôles",
     "home.no_exams": "Aucun contrôle en cours",
-    "exam.status.completed": "Terminé",
-    "exam.status.not-started": "En attente",
+    "exam.status.completed": "Complété",
+    "exam.status.in-waiting": "En attente",
     "exam.status.in-progress": "En cours",
+    "exam.status.unavailable": "Indisponible",
+    "exam.status.not-started": "Pas commencé",
     "exam.begin_at": "Commence le",
     "exam.end_at": "Termine le"
 }

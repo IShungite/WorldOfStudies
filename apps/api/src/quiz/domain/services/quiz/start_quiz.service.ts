@@ -3,6 +3,7 @@ import { IQuizzesInstanceRepository } from '#quiz/domain/contracts/quizzes_insta
 import { ExamQuiz } from '#quiz/domain/models/quiz/exam_quiz'
 import { OnlyOneAttemptPerExamQuizException } from '#quiz/domain/models/quiz/exceptions/only_one_attempt_per_exam_quiz.exception'
 import { QuizNotFoundException } from '#quiz/domain/models/quiz/exceptions/quiz_not_found.exception'
+import { QuizNotYetAvailableException } from '#quiz/domain/models/quiz/exceptions/quiz_not_yet_available.exception'
 import { PracticeQuiz } from '#quiz/domain/models/quiz/practice_quiz'
 import { QuizInstance, QuizInstanceStatus } from '#quiz/domain/models/quiz/quiz_instance'
 import { Id } from '#shared/id/domain/models/id'
@@ -51,11 +52,15 @@ export class StartQuizService {
       throw new OnlyOneAttemptPerExamQuizException()
     }
 
+    if (isExamQuiz && quiz.startAt.getTime() > new Date().getTime()) {
+      throw new QuizNotYetAvailableException(quiz.startAt)
+    }
+
     const isPracticeQuiz = quizInstance && quiz instanceof PracticeQuiz
     if (isPracticeQuiz && !isCompleted) {
       return { quiz, quizInstance }
     }
 
-    return { quiz }
+    return { quiz, quizInstance: null }
   }
 }

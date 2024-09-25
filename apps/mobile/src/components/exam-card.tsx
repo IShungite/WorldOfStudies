@@ -17,8 +17,11 @@ export default function ExamCard({ exercice }: Readonly<Props>) {
   const router = useRouter()
   const { t } = useTranslation()
 
-  const isStarted = dayjs().isAfter(dayjs(exercice.startAt))
+  const today = dayjs()
+
+  const isStarted = today.isAfter(dayjs(exercice.startAt))
   const dueTime = dayjs(isStarted ? exercice.endAt : exercice.startAt).format('MMM DD, YYYY')
+  const isAvailable = isStarted && today.isBefore(exercice.endAt)
 
   const myStringifiedExercice = JSON.stringify(exercice)
   return (
@@ -29,20 +32,37 @@ export default function ExamCard({ exercice }: Readonly<Props>) {
           params: { id: exercice.id, exercice: myStringifiedExercice },
         })
       }
+      disabled={!isAvailable}
     >
       <Container>
         <View style={styles.cardContent}>
           <View style={styles.statusContainer}>
-            <ExamStatus status={exercice.last_quiz_instance_status} />
+            <ExamStatus
+              status={exercice.last_quiz_instance_status}
+              startAt={dayjs(exercice.startAt)}
+              endAt={dayjs(exercice.endAt)}
+            />
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.examName}>{exercice.name}</Text>
             <Text style={styles.dueTime}>
-              {isStarted ? t('exam.begin_at') : t('exam.end_at')} {dueTime}
+              {isStarted ? t('exam.end_at') : t('exam.begin_at')} {dueTime}
             </Text>
           </View>
         </View>
       </Container>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          backgroundColor: isAvailable ? 'transparent' : 'black',
+          opacity: 0.5,
+          borderRadius: 8,
+        }}
+      />
     </Pressable>
   )
 }
