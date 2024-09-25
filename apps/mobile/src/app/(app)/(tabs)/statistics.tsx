@@ -29,8 +29,13 @@ export default function Statistics() {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Text style={styles.title}>Vos statistiques</Text>
 
-      {subjects.map((subject) => (
-        <SubjectStatistics key={subject.name} name={subject.name} quizzes={subject.quizzes} average={subject.average} />
+      {subjects.map((subject, index) => (
+        <SubjectStatistics
+          key={`${subject.name}_${index}`}
+          name={subject.name}
+          quizzes={subject.quizzes}
+          average={subject.average}
+        />
       ))}
 
       <GradientContainer style={styles.generalCardContainer}>
