@@ -42,7 +42,7 @@ export default class extends BaseSeeder {
             id: new Id('3'),
             name: 'Promotion 2-1',
             year: 2022,
-            subjects: [subjects[6], subjects[7], subjects[1]],
+            subjects: [subjects[5], subjects[1]],
           }),
           new Promotion({
             id: new Id('4'),

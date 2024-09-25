@@ -7,12 +7,10 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 export const subjects = [
   new Subject({ id: new Id('1'), name: 'Maths' }),
   new Subject({ id: new Id('2'), name: 'Science' }),
-  new Subject({ id: new Id('3'), name: 'History' }),
-  new Subject({ id: new Id('4'), name: 'Geography' }),
-  new Subject({ id: new Id('5'), name: 'English' }),
-  new Subject({ id: new Id('6'), name: 'French' }),
-  new Subject({ id: new Id('7'), name: 'German' }),
-  new Subject({ id: new Id('8'), name: 'Spanish' }),
+  new Subject({ id: new Id('3'), name: 'Histoire' }),
+  new Subject({ id: new Id('4'), name: 'Géographie' }),
+  new Subject({ id: new Id('5'), name: 'Anglais' }),
+  new Subject({ id: new Id('6'), name: 'Français' }),
 ]
 
 export default class extends BaseSeeder {
