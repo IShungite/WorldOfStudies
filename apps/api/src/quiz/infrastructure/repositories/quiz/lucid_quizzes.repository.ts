@@ -150,6 +150,7 @@ export class LucidQuizzesRepository implements IQuizzesRepository {
           label: choice.label,
           isCorrect: choice.isCorrect,
         })),
+        text: question.text,
       }
     } else if (question instanceof QuestionTextHole) {
       extra = {
