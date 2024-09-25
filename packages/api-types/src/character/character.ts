@@ -5,4 +5,6 @@ export type Character = {
   schoolId: string;
   berries: number;
   skin: string;
+  schoolName: string;
+  promotionName: string;
 };

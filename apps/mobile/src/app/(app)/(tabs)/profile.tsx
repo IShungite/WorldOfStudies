@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai'
 import React, { useState } from 'react'
-import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from 'react-native'
+import { Image, ScrollView, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import ProfileCard from '@/components/profile-card'

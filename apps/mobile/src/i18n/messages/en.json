@@ -27,5 +27,7 @@
     "exam.status.in-waiting": "In Waiting",
     "exam.begin_at": "Begins at",
     "exam.end_at": "Ends at",
-    "next": "Next"
+    "next": "Next",
+    "skins": "Skins",
+    "current_balance": "My berries"
 }

@@ -1,8 +1,8 @@
 import { Character } from '@world-of-studies/api-types/src/character'
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
-import { useAtom, useSetAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 
 import BerryIcon from '@/components/shared/BerryIcon'
 import Button from '@/components/shared/Button'
@@ -44,7 +44,15 @@ const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, onPurchas
   return (
     <Overlay isVisible={isVisible} onBackdropPress={onBackdropPress} title={product.name}>
       <View style={styles.content}>
-        <Button onPress={handlePurchase} loading={purchaseMutation.isLoading}>
+        <Image
+          source={{ uri: process.env.EXPO_PUBLIC_FOLDER_URL + '/' + product.icon }}
+          style={{ width: 100, height: 100, marginBottom: 10, alignSelf: 'center' }}
+        />
+        <Button
+          onPress={handlePurchase}
+          loading={purchaseMutation.isLoading}
+          disabled={character.berries < product.price}
+        >
           {({ color }) => (
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
               <Text style={{ color }}>{product.price}</Text>

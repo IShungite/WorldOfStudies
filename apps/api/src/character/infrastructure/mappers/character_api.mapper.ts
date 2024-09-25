@@ -12,6 +12,9 @@ export class CharacterApiMapper {
         berries: character.berries,
         skin: character.skin,
         schoolId: school.id.toString(),
+        schoolName: school.name,
+        promotionName:
+          school.promotions.find(({ id }) => id.equals(character.promotionId))?.name ?? '',
       },
     }
   }
