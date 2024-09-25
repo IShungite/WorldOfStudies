@@ -1,13 +1,12 @@
-import { Input } from '@rneui/base'
 import { TextHoleQuestionResponse } from '@world-of-studies/api-types/src/quizzes'
 import { QuestionType } from '@world-of-studies/api-types/src/quizzes/question'
 import { QuestionTextHole } from '@world-of-studies/api-types/src/quizzes/text-hole-question'
 import { UserAnswerDtoTextHole } from '@world-of-studies/api-types/src/quizzes/user-answers'
 import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 
 import Button from '@/components/shared/Button'
+import Container from '@/components/shared/Container'
 import GradientContainer from '@/components/shared/GradientContainer'
 import Text from '@/components/shared/Text'
 
@@ -19,7 +18,6 @@ type Props = {
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
   const [userInputs, setUserInputs] = useState<string[]>([])
-  const { t } = useTranslation()
 
   // Reset inputs when the question changes
   useEffect(() => {
@@ -27,13 +25,19 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
   }, [question.id])
 
   const handleInputChange = (value: string, index: number) => {
-    setUserInputs((prev) => prev.map((input, i) => (i === index ? value : input)))
+    setUserInputs((prev) => {
+      const values = [...prev]
+      values[index] = value
+
+      return values
+    })
   }
 
   const isAnswerComplete = userInputs.every((input) => input.trim() !== '') // Check if all inputs are filled
 
   const handleSubmit = async () => {
     if (isAnswerComplete) {
+      console.log(userInputs)
       await handleSubmitAnswer(question.id, {
         type: QuestionType.TEXT_HOLE,
         values: userInputs,
@@ -47,21 +51,39 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
 
   return (
     <GradientContainer style={styles.textholeContainer}>
-      {textSplit.map((part, index) => (
-        <React.Fragment key={part}>
-          <Text style={styles.part}>{part}</Text>
-          {index < inputsNb && (
-            <Input
-              placeholder="..."
-              value={userInputs[index]}
-              onChangeText={(value) => handleInputChange(value, index)}
-              containerStyle={styles.input}
-            />
-          )}
-        </React.Fragment>
-      ))}
+      <View style={styles.mapContainer}>
+        {textSplit.map((part, index) => (
+          <React.Fragment key={part}>
+            {part.split(' ').map((word, index) => (
+              <View key={`${word}-${index}`}>
+                <Text style={styles.part}>{`${word} `}</Text>
+              </View>
+            ))}
+            {index < inputsNb && (
+              <TextInput
+                placeholder="..."
+                value={userInputs[index]}
+                onChangeText={(value) => handleInputChange(value, index)}
+                style={{
+                  color: '#fff',
+                  backgroundColor: '#000',
+                  opacity: 0.4,
+                  borderRadius: 5,
+                  width: 60,
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  textAlignVertical: 'top',
+                  marginBottom: 2,
+                  marginRight: 4,
+                }}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </View>
+
       <Button
-        title={t('next')}
+        title="Suivant"
         onPress={handleSubmit}
         color={isAnswerComplete ? 'green' : 'gray'}
         style={[styles.nextButton, !isAnswerComplete && styles.inactiveButton]}
@@ -74,13 +96,19 @@ const styles = StyleSheet.create({
   textholeContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    color: '#91a6cf',
+    color: '#fff',
     justifyContent: 'center',
   },
+  mapContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   input: {
-    width: 50,
+    width: 120,
     color: '#fff',
-    marginHorizontal: 5,
+    margin: 0,
+    padding: 0,
+    lineHeight: 0,
   },
   nextButton: {
     marginTop: 20,

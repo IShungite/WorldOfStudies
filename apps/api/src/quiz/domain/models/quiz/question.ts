@@ -115,7 +115,7 @@ export class QuestionTextHole extends Question {
     const correctAnswers: string[] = []
 
     this.answers.forEach((answer, index) => {
-      if (answer === answers[index]) {
+      if (answer?.toLowerCase() === answers[index]?.toLowerCase()) {
         correctAnswers.push(answer)
       }
     })
