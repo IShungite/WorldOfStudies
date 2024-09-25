@@ -17,6 +17,7 @@ export class CharacterBuilderTest {
       userId: this._userId,
       promotionId: this._promotionId,
       berries: this._berries,
+      skin: 'default-skin.png',
     })
   }
 

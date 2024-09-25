@@ -5,5 +5,6 @@ export type CharacterResponse = {
     userId: string;
     schoolId: string;
     berries: number;
+    skin: string;
   };
 };

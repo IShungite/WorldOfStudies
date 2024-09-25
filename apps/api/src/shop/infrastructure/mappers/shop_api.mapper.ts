@@ -11,6 +11,9 @@ export class ShopApiMapper {
         products: category.products.map((product) => ({
           id: product.id.toString(),
           name: product.item.name,
+          type: product.item.type,
+          image: product.item.image,
+          icon: product.item.icon,
           price: product.price.toNumber(),
         })),
       })),

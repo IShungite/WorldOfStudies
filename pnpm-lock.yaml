@@ -29,6 +29,9 @@ importers:
       '@adonisjs/lucid':
         specifier: ^21.1.1
         version: 21.1.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(better-sqlite3@11.1.2)(luxon@3.4.4)(pg@8.12.0)
+      '@adonisjs/static':
+        specifier: ^1.1.1
+        version: 1.1.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))
       '@types/jsonwebtoken':
         specifier: ^9.0.6
         version: 9.0.6
@@ -38,103 +41,6 @@ importers:
       '@world-of-studies/api-types':
         specifier: workspace:^
         version: link:../../packages/api-types
-      better-sqlite3:
-        specifier: ^11.1.2
-        version: 11.1.2
-      http-status-codes:
-        specifier: ^2.3.0
-        version: 2.3.0
-      jsonwebtoken:
-        specifier: ^9.0.2
-        version: 9.0.2
-      luxon:
-        specifier: ^3.4.4
-        version: 3.4.4
-      pg:
-        specifier: ^8.12.0
-        version: 8.12.0
-      reflect-metadata:
-        specifier: ^0.2.2
-        version: 0.2.2
-    devDependencies:
-      '@adonisjs/assembler':
-        specifier: ^7.7.0
-        version: 7.7.0(typescript@5.5.4)
-      '@adonisjs/eslint-config':
-        specifier: ^1.3.0
-        version: 1.3.0(eslint@8.57.0)(prettier@3.3.3)(typescript@5.5.4)
-      '@adonisjs/prettier-config':
-        specifier: ^1.3.0
-        version: 1.3.0
-      '@adonisjs/tsconfig':
-        specifier: ^1.3.0
-        version: 1.3.0
-      '@japa/api-client':
-        specifier: ^2.0.3
-        version: 2.0.3(@japa/assert@3.0.0(@japa/runner@3.1.4)(openapi-types@12.1.3))(@japa/runner@3.1.4)
-      '@japa/assert':
-        specifier: ^3.0.0
-        version: 3.0.0(@japa/runner@3.1.4)(openapi-types@12.1.3)
-      '@japa/plugin-adonisjs':
-        specifier: ^3.0.1
-        version: 3.0.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(@japa/api-client@2.0.3(@japa/assert@3.0.0(@japa/runner@3.1.4)(openapi-types@12.1.3))(@japa/runner@3.1.4))(@japa/runner@3.1.4)
-      '@japa/runner':
-        specifier: ^3.1.4
-        version: 3.1.4
-      '@stryker-mutator/core':
-        specifier: ^8.2.6
-        version: 8.2.6
-      '@swc/core':
-        specifier: ^1.7.3
-        version: 1.7.3(@swc/helpers@0.5.2)
-      '@types/luxon':
-        specifier: ^3.4.2
-        version: 3.4.2
-      '@types/node':
-        specifier: ^20.14.13
-        version: 20.14.13
-      c8:
-        specifier: ^10.1.2
-        version: 10.1.2
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      pino-pretty:
-        specifier: ^11.2.2
-        version: 11.2.2
-      prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@swc/core@1.7.3(@swc/helpers@0.5.2))(@types/node@20.14.13)(typescript@5.5.4)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
-
-  apps/api/build:
-    dependencies:
-      '@adonisjs/auth':
-        specifier: ^9.2.3
-        version: 9.2.3(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(@adonisjs/lucid@21.1.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(better-sqlite3@11.1.2)(luxon@3.4.4)(pg@8.12.0))(@japa/api-client@2.0.3(@japa/assert@3.0.0(@japa/runner@3.1.4)(openapi-types@12.1.3))(@japa/runner@3.1.4))(@japa/plugin-adonisjs@3.0.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(@japa/api-client@2.0.3(@japa/assert@3.0.0(@japa/runner@3.1.4)(openapi-types@12.1.3))(@japa/runner@3.1.4))(@japa/runner@3.1.4))
-      '@adonisjs/core':
-        specifier: ^6.12.1
-        version: 6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0)
-      '@adonisjs/cors':
-        specifier: ^2.2.1
-        version: 2.2.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))
-      '@adonisjs/lucid':
-        specifier: ^21.1.1
-        version: 21.1.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))(better-sqlite3@11.1.2)(luxon@3.4.4)(pg@8.12.0)
-      '@types/jsonwebtoken':
-        specifier: ^9.0.6
-        version: 9.0.6
-      '@vinejs/vine':
-        specifier: ^2.1.0
-        version: 2.1.0
-      '@world-of-studies/api-types':
-        specifier: workspace:^
-        version: link:../../../packages/api-types
       better-sqlite3:
         specifier: ^11.1.2
         version: 11.1.2
@@ -566,6 +472,12 @@ packages:
   '@adonisjs/repl@4.0.1':
     resolution: {integrity: sha512-fgDRC5I8RBKHzsJPM4rRQF/OWI0K9cNihCIf4yHdqQt3mhFqWSOUjSi4sXWykdICLiddmyBO86au7i0d0dj5vQ==}
     engines: {node: '>=18.16.0'}
+
+  '@adonisjs/static@1.1.1':
+    resolution: {integrity: sha512-Ukd2WB21/eajKLNQbaQ3Chxdqn7HyeHSO41J29oWc8DQFEhxxQIUGq0C1Kv5cJFY7PvZm9RAKMBi/2JC58LFWQ==}
+    engines: {node: '>=18.16.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
 
   '@adonisjs/tsconfig@1.3.0':
     resolution: {integrity: sha512-+nOykDG44b4JSAdsrTdh5HuZqJpr6F+dHpfNYgHfYsFJIEtZo8plHilZAM7iabCRN5R49SPv5p8Ixcp47Rr50g==}
@@ -7815,6 +7727,13 @@ snapshots:
       '@poppinss/colors': 4.1.3
       string-width: 7.2.0
 
+  '@adonisjs/static@1.1.1(@adonisjs/core@6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0))':
+    dependencies:
+      '@adonisjs/core': 6.12.1(@adonisjs/assembler@7.7.0(typescript@5.5.4))(@vinejs/vine@2.1.0)
+      serve-static: 1.15.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@adonisjs/tsconfig@1.3.0': {}
 
   '@ampproject/remapping@2.3.0':
@@ -10313,7 +10232,7 @@ snapshots:
 
   '@swc/helpers@0.5.2':
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
 
   '@swc/types@0.1.12':
     dependencies:
@@ -12096,16 +12015,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
-    dependencies:
-      debug: 3.2.7
-    optionalDependencies:
-      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
-      eslint: 8.57.0
-      eslint-import-resolver-node: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
   eslint-plugin-es@3.0.1(eslint@8.57.0):
     dependencies:
       eslint: 8.57.0
@@ -12149,7 +12058,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.1
       is-core-module: 2.13.1
       is-glob: 4.0.3

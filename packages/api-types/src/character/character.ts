@@ -4,4 +4,5 @@ export type Character = {
   userId: string;
   schoolId: string;
   berries: number;
+  skin: string;
 };

@@ -26,6 +26,9 @@ export default class Character extends BaseModel {
   @column()
   declare berries: number
 
+  @column()
+  declare skin: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

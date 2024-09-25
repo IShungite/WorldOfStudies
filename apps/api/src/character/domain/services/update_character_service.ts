@@ -35,6 +35,7 @@ export class UpdateCharacterService {
       ...character,
       name: updateCharacterDto.name ?? character.name,
       berries: updateCharacterDto.berries ?? character.berries,
+      skin: updateCharacterDto.skin ?? character.skin,
     })
 
     return this.charactersRepository.save(newCharacter)

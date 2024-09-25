@@ -8,14 +8,10 @@ import { useQuery } from 'react-query'
 import kyInstance from '@/api/kyInstance'
 import CategoryItem from '@/components/category-item'
 import ProductOverlay from '@/components/product-overlay'
-import { usePurchaseProduct } from '@/hooks/usePurchaseProduct'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
-  const [selectedCharacterResponse] = useAtom(selectedCharacterAtom)
-  const selectedCharacter = selectedCharacterResponse || null
-
-  const purchaseMutation = usePurchaseProduct()
+  const [selectedCharacter] = useAtom(selectedCharacterAtom)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [overlayVisible, setOverlayVisible] = useState(false)
 
@@ -42,15 +38,8 @@ const ShopScreen = () => {
     setOverlayVisible(true)
   }
 
-  const handlePurchase = () => {
-    if (selectedProduct && selectedCharacter) {
-      purchaseMutation.mutate({
-        shopId: selectedCharacter.schoolId,
-        productId: selectedProduct.id,
-        characterId: selectedCharacter.id,
-      })
-      setOverlayVisible(false)
-    }
+  const closeOverlay = () => {
+    setOverlayVisible(false)
   }
 
   if (!selectedCharacter) {
@@ -85,9 +74,10 @@ const ShopScreen = () => {
       {selectedProduct && (
         <ProductOverlay
           product={selectedProduct}
+          character={selectedCharacter}
           isVisible={overlayVisible}
-          onBackdropPress={() => setOverlayVisible(false)}
-          onPurchase={handlePurchase}
+          onPurchase={closeOverlay}
+          onBackdropPress={closeOverlay}
         />
       )}
     </ScrollView>

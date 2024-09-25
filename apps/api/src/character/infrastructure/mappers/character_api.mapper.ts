@@ -10,6 +10,7 @@ export class CharacterApiMapper {
         name: character.name,
         userId: character.userId.toString(),
         berries: character.berries,
+        skin: character.skin,
         schoolId: school.id.toString(),
       },
     }

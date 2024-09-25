@@ -6,7 +6,6 @@ import { ISchoolsRepository } from '#school/domain/contracts/repositories/school
 import { IShopsRepository } from '#shop/domain/contracts/repositories/shops.repository'
 import { School } from '#school/domain/models/school'
 import { IItemRepository } from '#item/domain/contracts/items_repository.contract'
-import { Item } from '#item/domain/models/item'
 import { UserBuilderTest } from '#tests/builders/user_builder_test'
 import { IUsersRepository } from '#user/domain/contracts/repositories/users.repository'
 import { ICharactersRepository } from '#character/domain/contracts/repositories/characters.repository'
@@ -19,6 +18,7 @@ import { Promotion } from '#school/domain/models/promotion'
 import { IInventoriesRepository } from '#inventory/domain/contracts/repositories/inventories.repository'
 import { Inventory } from '#inventory/domain/models/inventory'
 import { PurchaseProductResponse } from '@world-of-studies/api-types'
+import { ItemBuilderTest } from '#tests/builders/item_builder_test'
 
 test.group('Shops - purchase product', (group) => {
   let usersRepository: IUsersRepository
@@ -127,9 +127,7 @@ test.group('Shops - purchase product', (group) => {
   })
 
   test('It should return a 400 if character does not have enough berries', async ({ client }) => {
-    const item = new Item({
-      name: 'Item 1',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     const shopProduct = new ShopProduct({
       item: item,
       price: new Price(5),
@@ -166,9 +164,7 @@ test.group('Shops - purchase product', (group) => {
     client,
     assert,
   }) => {
-    const item = new Item({
-      name: 'Item 1',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     const shopProduct = new ShopProduct({
       item: item,
       price: new Price(5),
@@ -208,9 +204,7 @@ test.group('Shops - purchase product', (group) => {
   })
 
   test('It should decrease the character berries', async ({ client, assert }) => {
-    const item = new Item({
-      name: 'Item 1',
-    })
+    const item = await itemsRepository.save(new ItemBuilderTest().build())
     const shopProduct = new ShopProduct({
       item: item,
       price: new Price(5),

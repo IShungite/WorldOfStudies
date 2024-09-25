@@ -7,6 +7,9 @@ export class ItemStorageMapper {
     return new Item({
       id: new Id(lucidItem.id.toString()),
       name: lucidItem.name,
+      type: lucidItem.type,
+      image: lucidItem.image,
+      icon: lucidItem.icon,
     })
   }
 }

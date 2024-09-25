@@ -31,6 +31,7 @@ export default class CharactersController {
     const character = await this.createCharacterService.execute({
       ...payload,
       userId: new Id(user.id.toString()),
+      skin: 'default-skin.png',
     })
 
     const schools = await this.getSchoolsByCharacterIds.execute([character.id])

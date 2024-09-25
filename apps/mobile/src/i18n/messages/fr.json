@@ -8,5 +8,9 @@
     "password": "Mot de passe",
     "registration_successful": "Inscription réussie, veuillez vous connecter.",
     "registration_failed": "L'inscription a échoué, veuillez réessayer.",
-    "login": "Se connecter"
+    "login": "Se connecter",
+    "character": "Personnage",
+    "school": "Ecole",
+    "promotion": "Classe",
+    "balance": "Solde"
 }

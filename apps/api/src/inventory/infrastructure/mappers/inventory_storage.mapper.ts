@@ -15,6 +15,9 @@ export class InventoryStorageMapper {
             item: new Item({
               id: new Id(inventoryItemEntity.item.id.toString()),
               name: inventoryItemEntity.item.name,
+              icon: inventoryItemEntity.item.icon,
+              image: inventoryItemEntity.item.image,
+              type: inventoryItemEntity.item.type,
             }),
           })
       ),

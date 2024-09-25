@@ -12,7 +12,7 @@ services:
       - 9229:9229
     volumes:
       - ./${API_PATH}:/app/${API_PATH}
-      - ./${API_TYPES_PATH}/dist:/app/${API_TYPES_PATH}/dist
+      - ./${PACKAGES_PATH}:/app/${PACKAGES_PATH}
     depends_on:
       - node-interpreter
 

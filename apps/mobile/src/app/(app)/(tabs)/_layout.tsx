@@ -94,6 +94,21 @@ export default function TabLayout() {
             ),
           }}
         />
+        {/* Profile Tab */}
+        <Tabs.Screen
+          name="profile"
+          options={{
+            tabBarLabel,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon
+                isSelected={focused}
+                icon={require(`@/assets/images/tabs/profile.png`)}
+                label="Profile"
+                withBorderRight={false}
+              />
+            ),
+          }}
+        />
       </Tabs>
       <SelectCharacter sheetRef={bottomSheetModalRef} />
     </>
