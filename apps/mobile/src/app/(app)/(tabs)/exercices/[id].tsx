@@ -16,6 +16,7 @@ import ChoiceQuestion from '@/components/choice-question'
 import Card from '@/components/shared/Card'
 import Text from '@/components/shared/Text'
 import TextHoleQuestion from '@/components/texthole-question'
+import { useRefreshSelectedCharacter } from '@/hooks/useRefreshSelectedCharacter'
 import { useStartQuiz } from '@/hooks/useStartQuiz'
 import { useSubmitAnswer } from '@/hooks/useUserAnswers'
 import { selectedCharacterAtom } from '@/providers/selected-character'
@@ -27,7 +28,7 @@ type QuestionComponentProps = {
     answers?: string[]
   }
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: UserAnswerDto) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDto) => Promise<void>
 }
 
 const QuestionComponent = ({ question, onNext, handleSubmitAnswer }: QuestionComponentProps) => {
@@ -48,6 +49,7 @@ export default function ExerciceDetail() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedCharacter] = useAtom(selectedCharacterAtom)
   const [quizCompleted, setQuizCompleted] = useState(false)
+  const { refetch: refetchSelectedCharacter } = useRefreshSelectedCharacter()
 
   // Parse isAiMode as a boolean (checking for 'true' or 'false' strings)
   const isAi = isAiMode === 'true'
@@ -57,7 +59,7 @@ export default function ExerciceDetail() {
   const currentQuestion = quiz.questions[currentQuestionIndex]
 
   const { mutate: startQuiz, data: quizInstanceId, isLoading: startQuizLoading, error: startQuizError } = useStartQuiz()
-  const { mutate: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
+  const { mutateAsync: submitAnswer, isLoading: submitAnswerLoading } = useSubmitAnswer()
 
   const [answers, setAnswers] = useState<UserAnswerDto[]>([])
 
@@ -99,7 +101,7 @@ export default function ExerciceDetail() {
             characterId: selectedCharacter.id,
           }
 
-    submitAnswer(
+    await submitAnswer(
       { quizInstanceId, questionId, payload },
       {
         onSuccess: () => {
@@ -118,7 +120,7 @@ export default function ExerciceDetail() {
       console.log('Moving to the Next Question, Current Index:', currentQuestionIndex + 1)
     } else {
       setQuizCompleted(true)
-      console.log('Quiz Completed')
+      refetchSelectedCharacter()
     }
   }
 

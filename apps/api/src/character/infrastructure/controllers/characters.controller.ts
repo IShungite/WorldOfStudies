@@ -12,6 +12,7 @@ import { domainIdValidator } from '#shared/id/infrastructure/validators/domain_i
 import { updateCharacterValidator } from '#character/infrastructure/validators/update_character.validator'
 import { CharacterApiMapper } from '#character/infrastructure/mappers/character_api.mapper'
 import { GetSchoolsByCharacterIds } from '#school/domain/services/school/get_schools_by_character_ids'
+import { GetCharacterByIdService } from '#character/domain/services/get_character_by_id.service'
 
 @inject()
 export default class CharactersController {
@@ -20,8 +21,22 @@ export default class CharactersController {
     private readonly getCharactersByUserId: GetCharactersByUserIdService,
     private readonly updateCharacterService: UpdateCharacterService,
     private readonly deleteCharacterService: DeleteCharacterService,
+    private readonly getCharacterById: GetCharacterByIdService,
     private readonly getSchoolsByCharacterIds: GetSchoolsByCharacterIds
   ) {}
+
+  async show({ request, response, auth }: HttpContext) {
+    const userEntity = await auth.authenticate()
+    const user = UserStorageMapper.fromLucid(userEntity)
+
+    const id = await vine.validate({ schema: domainIdValidator, data: request.param('id') })
+
+    const character = await this.getCharacterById.execute(id, user)
+
+    const schools = await this.getSchoolsByCharacterIds.execute([character.id])
+
+    return response.ok(CharacterApiMapper.toResponse(character, schools[0]))
+  }
 
   async store({ request, response, auth }: HttpContext) {
     const userEntity = await auth.authenticate()

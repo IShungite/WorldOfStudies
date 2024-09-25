@@ -1,6 +1,6 @@
 import { Character } from '@world-of-studies/api-types/src/character'
 import { Product } from '@world-of-studies/api-types/src/shop/shop_product'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
@@ -21,7 +21,7 @@ type Props = {
 
 const ProductOverlay: React.FC<Props> = ({ isVisible, onBackdropPress, onPurchase, product, character }) => {
   const purchaseMutation = usePurchaseProduct()
-  const [, setSelectedCharacter] = useAtom(selectedCharacterAtom)
+  const setSelectedCharacter = useSetAtom(selectedCharacterAtom)
 
   const handlePurchase = async () => {
     if (product && character) {

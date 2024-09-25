@@ -12,7 +12,7 @@ import Text from '@/components/shared/Text'
 type Props = {
   question: QuestionTextHole
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoTextHole) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoTextHole) => Promise<void>
 }
 
 const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
@@ -29,9 +29,9 @@ const TextHoleQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswe
 
   const isAnswerComplete = userInputs.every((input) => input.trim() !== '') // Check if all inputs are filled
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isAnswerComplete) {
-      handleSubmitAnswer(question.id, {
+      await handleSubmitAnswer(question.id, {
         type: QuestionType.TEXT_HOLE,
         values: userInputs,
       })

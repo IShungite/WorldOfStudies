@@ -137,7 +137,7 @@ router
 
     router
       .resource('characters', CharactersController)
-      .only(['store', 'update', 'destroy'])
+      .only(['store', 'update', 'destroy', 'show'])
       .where('id', onlyNumbersRegex)
     router.get('characters/:id/inventory', [GetCharacterInventoryController])
     router.get('characters/:id/stats', [GetCharacterStatsController])

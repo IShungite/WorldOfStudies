@@ -11,7 +11,7 @@ import Text from '@/components/shared/Text'
 type Props = {
   question: QuestionQcm
   onNext: () => void
-  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoQcm) => void
+  handleSubmitAnswer: (questionId: string, answer: UserAnswerDtoQcm) => Promise<void>
 }
 
 const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer }) => {
@@ -25,9 +25,9 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
     setSelectedChoiceId(choiceId)
   }
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (selectedChoiceId) {
-      handleSubmitAnswer(question.id, {
+      await handleSubmitAnswer(question.id, {
         type: QuestionType.QCM,
         choiceId: selectedChoiceId,
       })

@@ -3,7 +3,7 @@ import { useFocusEffect } from 'expo-router'
 import { useAtomValue } from 'jotai'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 
 import ExamCard from '@/components/exam-card'
 import Card from '@/components/shared/Card'
