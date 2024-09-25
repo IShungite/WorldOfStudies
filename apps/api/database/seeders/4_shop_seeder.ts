@@ -23,27 +23,27 @@ export default class extends BaseSeeder {
             products: [
               new ShopProduct({
                 id: new Id('1'),
-                item: items[0],
+                item: items[1],
                 price: new Price(100),
               }),
               new ShopProduct({
                 id: new Id('2'),
-                item: items[1],
+                item: items[2],
                 price: new Price(200),
               }),
               new ShopProduct({
                 id: new Id('3'),
-                item: items[2],
+                item: items[3],
                 price: new Price(300),
               }),
               new ShopProduct({
                 id: new Id('4'),
-                item: items[3],
+                item: items[4],
                 price: new Price(400),
               }),
               new ShopProduct({
                 id: new Id('5'),
-                item: items[4],
+                item: items[5],
                 price: new Price(500),
               }),
             ],
@@ -54,12 +54,12 @@ export default class extends BaseSeeder {
             products: [
               new ShopProduct({
                 id: new Id('6'),
-                item: items[1],
+                item: items[2],
                 price: new Price(150),
               }),
               new ShopProduct({
                 id: new Id('7'),
-                item: items[6],
+                item: items[7],
                 price: new Price(250),
               }),
             ],
