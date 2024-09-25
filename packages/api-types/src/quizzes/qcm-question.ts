@@ -7,6 +7,6 @@ export type QuestionQcm = BaseQuestion & {
   choices: {
     id: string;
     label: string;
-    isCorrect: boolean;
+    isCorrect?: boolean;
   }[];
 };

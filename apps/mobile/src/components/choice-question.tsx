@@ -36,6 +36,7 @@ const ChoiceQuestion: React.FC<Props> = ({ question, onNext, handleSubmitAnswer 
       <Text style={styles.questionText}>{question.text}</Text>
       <GradientContainer>
         <Text style={styles.instructionText}>Select the correct option(s):</Text>
+
         {question.choices ? (
           question.choices.map((choice) => (
             <TouchableOpacity
