@@ -74,11 +74,13 @@ const Button = ({
   loading = false,
   style,
   children,
+  disabled = false,
 }: {
   title?: string
   onPress: () => void
   color?: keyof typeof colors
   loading?: boolean
+  disabled?: boolean
   children?: React.ReactNode | ((props: { color: string }) => React.ReactNode)
   style?: StyleProp<ViewStyle>
 }) => {
@@ -95,6 +97,9 @@ const Button = ({
       )
     }
 
+    if (disabled) {
+    }
+
     if (children) {
       return typeof children === 'function' ? children({ color: colorsToUse.text }) : children
     }
@@ -107,7 +112,7 @@ const Button = ({
       onPress={onPress}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
-      disabled={loading}
+      disabled={loading || disabled}
       style={style}
     >
       <GradientContainer
@@ -118,6 +123,18 @@ const Button = ({
       >
         {renderContent()}
       </GradientContainer>
+      <View
+        style={{
+          backgroundColor: '#000',
+          borderRadius: 8,
+          opacity: 0.4,
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
     </Pressable>
   )
 }
@@ -139,6 +156,10 @@ const styles = StyleSheet.create({
   },
   loaderText: {
     marginLeft: 6,
+  },
+  disabledText: {
+    color: '#999',
+    textAlign: 'center',
   },
 })
 

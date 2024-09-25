@@ -1,19 +1,24 @@
 import { ShopCategory, Product, ShopResponse } from '@world-of-studies/api-types/src/shop'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { View, Text, ScrollView, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import { useQuery } from 'react-query'
 
 import kyInstance from '@/api/kyInstance'
 import CategoryItem from '@/components/category-item'
 import ProductOverlay from '@/components/product-overlay'
+import BerryIcon from '@/components/shared/BerryIcon'
+import GradientContainer from '@/components/shared/GradientContainer'
 import PageLoader from '@/components/shared/PageLoader'
+import Text from '@/components/shared/Text'
 import { selectedCharacterAtom } from '@/providers/selected-character'
 
 const ShopScreen = () => {
   const [selectedCharacter] = useAtom(selectedCharacterAtom)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [overlayVisible, setOverlayVisible] = useState(false)
+  const { t } = useTranslation()
 
   const {
     data: categories,
@@ -63,20 +68,30 @@ const ShopScreen = () => {
   }
 
   return (
-    <ScrollView style={{ marginTop: 5 }}>
-      {categories.map((category) => (
-        <CategoryItem key={category.id} category={category} onProductPress={showOverlay} />
-      ))}
-      {selectedProduct && (
-        <ProductOverlay
-          product={selectedProduct}
-          character={selectedCharacter}
-          isVisible={overlayVisible}
-          onPurchase={closeOverlay}
-          onBackdropPress={closeOverlay}
-        />
-      )}
-    </ScrollView>
+    <>
+      <GradientContainer style={styles.gradientContainer}>
+        <View style={styles.priceContainer}>
+          <Text style={styles.categoryTitle}>
+            {t('current_balance')} : {selectedCharacter.berries}
+          </Text>
+          <BerryIcon size={24} />
+        </View>
+      </GradientContainer>
+      <ScrollView style={{ marginTop: 5 }}>
+        {categories.map((category) => (
+          <CategoryItem key={category.id} category={category} onProductPress={showOverlay} />
+        ))}
+        {selectedProduct && (
+          <ProductOverlay
+            product={selectedProduct}
+            character={selectedCharacter}
+            isVisible={overlayVisible}
+            onPurchase={closeOverlay}
+            onBackdropPress={closeOverlay}
+          />
+        )}
+      </ScrollView>
+    </>
   )
 }
 
@@ -85,6 +100,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  gradientContainer: {
+    marginHorizontal: 10,
+    marginBottom: 8,
+  },
+  categoryContainer: {
+    marginBottom: 20,
+  },
+  categoryTitle: {
+    textAlign: 'center',
+    color: '#fff',
+    letterSpacing: 2,
+    fontSize: 25,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
   },
 })
 
