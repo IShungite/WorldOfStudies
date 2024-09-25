@@ -35,7 +35,7 @@ export default function ExercisesScreen() {
 
   // Safely access data and map through it
   return (
-    <View>
+    <View style={{ marginHorizontal: 10 }}>
       {data?.results && data.results.length > 0 ? (
         data.results
           .filter((quiz) => quiz.type === QuizType.PRACTICE)
