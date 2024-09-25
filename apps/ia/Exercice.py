@@ -1,6 +1,3 @@
-
-
-
 from openai import OpenAI
 import json
 import re
@@ -8,18 +5,24 @@ import random
 
 class Exercice:
     def __init__(self, data):
-        self.very_final_json = {}
+        self.retry_count = 0
+        self.max_retries = 100
         self.data = data
-        self.processData()
-        self.organize_requests()
+        while self.retry_count < self.max_retries:
+            try:
+                self.processData()
+                self.organize_requests()
+                break  # Sortir de la boucle si tout se passe bien
+            except Exception as e:
+                self.retry_count += 1
+                print(f"Erreur rencontrée : {e}. Tentative {self.retry_count}/{self.max_retries}...")
+        else:
+            print(f"Le programme a échoué après {self.max_retries} tentatives.")
 
     def processData(self):
         self.subject_exercice_backend = self.data["subject"]
         self.convert_subject_name()
         self.sous_sujet = self.data["sous_sujet"]
-        self.very_final_json["name"] = f"Quizz {self.subject_exercice_backend} {self.sous_sujet}"
-        self.very_final_json["questions"] = []
-        # print(self.very_final_json)
         self.moyenne_matiere = self.data["moyenne"]
         self.exercice_difficulty = self.moyenne_to_diff()
         self.generate_quiz_questions()
@@ -48,8 +51,10 @@ class Exercice:
         random_int = random.randint(0, maxExo)
         self.qcm_nbr_questions = random_int
         self.text_hole_nbr_questions = maxExo-random_int
-
     def organize_requests(self):
+        self.very_final_json = {}
+        self.very_final_json["name"] = f"Quizz {self.subject_exercice_backend} {self.sous_sujet}"
+        self.very_final_json["questions"] = []
         if self.qcm_nbr_questions > 0:
             self.exercice_type = "qcm"
             self.chatgpt_api_request()
@@ -74,7 +79,6 @@ class Exercice:
                         {"role": "user", "content": f"{self.qcm_nbr_questions} QCM avec {self.qcm_nbr_anwsers} réponses possibles de difficulté {self.exercice_difficulty} en {self.subject_exercice_IA} sur {self.sous_sujet}."}
                     ]
         else : 
-            print(f" Ya ccbn de questions là ? Yen a {self.text_hole_nbr_questions}")
             model="ft:gpt-4o-mini-2024-07-18:personal::AB7doJU7:ckpt-step-80"
             messages=[
                         {"role": "system", "content": ""},
@@ -104,7 +108,6 @@ class Exercice:
     
     def fix_exercices(self):
         questions_to_keep = []
-        print(f"jejkfoekfoekjfkeo {self.exercice_type}")
         if self.exercice_type == "qcm":
             for exercice in self.response_message_json["questions"]:
                 if self.remove_qcm_if_multiple_true(exercice) == False:
@@ -120,32 +123,25 @@ class Exercice:
                     questions_to_keep.append(self.response_message_json["questions"][i])
             self.response_message_json["questions"] = questions_to_keep
         if self.exercice_type == "qcm":
-            print("OUAISSSS LA CEST UN QCM MON GARSSSSSSSSSSSSS")
-            # print(f"LE response_message_json LA CEST HEINNN {self.response_message_json}")
-            # print(f"LE VERY FINAL JSON LA CEST HEINNN {self.very_final_json}")
             for exercice in self.response_message_json["questions"]:
                 self.very_final_json["questions"].append({"type" : self.exercice_type, "points" : exercice["points"], "question": exercice["text"], "choices" : exercice["choices"]})
-            # print(f"LE VERY FINAL JSON LA APRES AVOIR BIENNNNNN MANGEEEEEEE {json.dumps(self.very_final_json, ensure_ascii=False)}")
         if self.exercice_type == "text-hole":
-            print("OUAISSSS LA CEST UN text-hole MON GARSSSSSSSSSSSSS")
-            print(self.response_message_json)
             for exercice in self.response_message_json["questions"]:
                 if self.remove_text_hole_if_no_hole(exercice):
                     self.very_final_json["questions"].append({"type" : self.exercice_type, "points" : exercice["points"], "text": exercice["text"], "answers" : exercice["answers"]})
+        if len(self.very_final_json["questions"]) == 0:
+            self.retry_generation()  # Étape 2: Relancer le programme
+
 
     def remove_qcm_if_multiple_true(self, exercice):
         count_true = sum(choice['isCorrect'] for choice in exercice['choices'])
         if count_true > 1:
-            print(count_true)
-            print(exercice)
             print("Il y a plusieurs réponses correctes on dégage l'exo.")
             return False
         count_false = sum(not choice['isCorrect'] for choice in exercice['choices'])
         if count_false >= 4:
             print("Il y a trop de réponses incorrecte on dégage l'exo.")
             return False
-        # else:
-        #     print("Wallah tout va bieng")
 
     def remove_text_hole_if_no_hole(self, exercice):
         if "@@" not in exercice["text"]:
@@ -212,6 +208,9 @@ class Exercice:
                             liste_de_toutes_les_reponses[i] = reponses_exercice[i]["label"]
         return reponses_exercice
     
+    def retry_generation(self):
+        self.processData()
+        self.organize_requests()
+
     def renvois_final_json(self):
-        # print(self.response_message_json)
         return self.very_final_json
