@@ -56,7 +56,7 @@ export class QuizInstance {
       maxScore: 20,
       date:
         this.userAnswers
-          .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+          .toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
           .at(-1)
           ?.createdAt.toString() ?? new Date().toString(),
     }
