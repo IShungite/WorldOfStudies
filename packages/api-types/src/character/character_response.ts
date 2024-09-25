@@ -6,5 +6,7 @@ export type CharacterResponse = {
     schoolId: string;
     berries: number;
     skin: string;
+    schoolName: string;
+    promotionName: string;
   };
 };
