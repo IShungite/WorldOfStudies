@@ -24,17 +24,17 @@ export default function QuizGeneratorOverlay({ isVisible, onClose }: QuizGenerat
     generateQuiz(
       { subject: selectedSubject, theme },
       {
-        onSuccess: (generatedQuiz: Quiz) => {
+        onSuccess: (quiz: Quiz) => {
           // Generate a random ID for the quiz
-          const randomId = '56'
+          const randomId = quiz.id
 
           // Stringify the generated quiz for navigation
-          const stringifiedQuiz = JSON.stringify(generatedQuiz)
+          const stringifiedQuiz = JSON.stringify(quiz)
 
           // Navigate to the exercice/[id] screen with the quiz data
           router.push({
             pathname: `/(tabs)/exercices/[id]`,
-            params: { id: randomId, exercice: stringifiedQuiz, isAiMode: 'true' },
+            params: { id: randomId, exercice: stringifiedQuiz, isAiMode: 'false' },
           })
         },
       }
